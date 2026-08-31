@@ -135,6 +135,8 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 let currentRoomRef = null;
+let roomListener = null;
+let joined = false; // عشان ميدخلش مرتين
 const userEmail = localStorage.getItem('userEmail') || 'guest';
 
 function show(t){
@@ -150,10 +152,14 @@ function generateCode(){
 }
 
 function goToLobby(code, player, type){
-  window.location.href = `lobby.html?room=${code}&player=${player}&type=${type}&name=${encodeURIComponent(userEmail)}`;
+  if(joined) return; // منع التكرار
+  joined = true;
+  if(roomListener) currentRoomRef.off('value', roomListener); // وقف الاستماع
+  window.location.href = `loby.html?room=${code}&player=${player}&type=${type}&name=${encodeURIComponent(userEmail)}`;
 }
 
 async function createRoom(type){
+  joined = false;
   const statusEl = document.getElementById('status-' + type);
   statusEl.textContent = 'جاري انشاء الغرفة...';
   
@@ -174,16 +180,18 @@ async function createRoom(type){
   document.getElementById('room-' + type).classList.add('active');
   statusEl.textContent = 'في انتظار لاعب 2...';
   
-  currentRoomRef.on('value', (snap) => {
+  roomListener = (snap) => {
     const data = snap.val();
-    if(data && data.player2){
+    if(data && data.player2 && !joined){
       statusEl.textContent = 'لاعب انضم! جاري الدخول للوبي...';
       setTimeout(()=> goToLobby(code, 1, type), 800)
     }
-  });
+  }
+  currentRoomRef.on('value', roomListener);
 }
 
 async function joinRoom(type){
+  joined = false;
   const code = document.getElementById('join-' + type).value.toUpperCase();
   if(code.length < 4) return alert('دخل كود صحيح');
   
