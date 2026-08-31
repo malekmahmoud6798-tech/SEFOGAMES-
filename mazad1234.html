@@ -7,12 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html, body{
-  width:400px;
-  margin:0 auto;
-  background:#000;
-  overflow-x:hidden;
-}
+html, body{width:400px;margin:0 auto;background:#000;overflow-x:hidden;}
 body{font-family:'Cairo';color:#fff;background:#000;min-height:100vh}
 
 .vs-bg{position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); font-family:'Orbitron'; font-size:180px; font-weight:900; background: linear-gradient(90deg, #ff0000 50%, #0066ff 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0.1; z-index:0; pointer-events:none;}
@@ -27,9 +22,8 @@ body{font-family:'Cairo';color:#fff;background:#000;min-height:100vh}
 .auction-name{font-size:14px; font-weight:700; color:#00ccff; flex-grow:1; display:flex; align-items:center; justify-content:center;}
 .pro-card{border-color:rgba(255,215,0,0.4)} .pro-card .auction-name{color:#ffd700}
 
-/* كارت مزاد المليار 16:9 */
 .billion-card{width:320px; height:180px; border-color:rgba(0,255,136,0.5)}
-.billion-card img{width:100%; height:140px; aspect-ratio:16/9; object-fit:cover} /* 16:9 */
+.billion-card img{width:100%; height:140px; aspect-ratio:16/9; object-fit:cover}
 .billion-card .auction-name{color:#00ff88; font-size:15px; padding-top:4px}
 
 .options-menu{display:none; background:rgba(0,0,0,0.9); backdrop-filter:blur(30px); border:2px solid #ffd700; border-radius:15px; padding:15px; margin-top:15px; width:320px; margin:15px auto 0 auto;}
@@ -65,8 +59,6 @@ body{font-family:'Cairo';color:#fff;background:#000;min-height:100vh}
       <img src="https://i.postimg.cc/pmPZBJZr/image.png">
       <div class="auction-name">العادي ⚽</div>
     </div>
-    
-    <!-- مزاد المليار 16:9 -->
     <div class="auction-card billion-card" onclick="show('billion')">
       <img src="https://i.postimg.cc/D8YTYNBy/image.png">
       <div class="auction-name">مزاد المليار 💰</div>
@@ -135,8 +127,6 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 let currentRoomRef = null;
-let roomListener = null;
-let joined = false; // عشان ميدخلش مرتين
 const userEmail = localStorage.getItem('userEmail') || 'guest';
 
 function show(t){
@@ -152,14 +142,11 @@ function generateCode(){
 }
 
 function goToLobby(code, player, type){
-  if(joined) return; // منع التكرار
-  joined = true;
-  if(roomListener) currentRoomRef.off('value', roomListener); // وقف الاستماع
+  // الاتنين هيروحو نفس الصفحه بنفس الباراميتر
   window.location.href = `loby.html?room=${code}&player=${player}&type=${type}&name=${encodeURIComponent(userEmail)}`;
 }
 
 async function createRoom(type){
-  joined = false;
   const statusEl = document.getElementById('status-' + type);
   statusEl.textContent = 'جاري انشاء الغرفة...';
   
@@ -180,18 +167,17 @@ async function createRoom(type){
   document.getElementById('room-' + type).classList.add('active');
   statusEl.textContent = 'في انتظار لاعب 2...';
   
-  roomListener = (snap) => {
+  // استنى لحد ما player2 يخش
+  currentRoomRef.on('value', (snap) => {
     const data = snap.val();
-    if(data && data.player2 && !joined){
+    if(data && data.player2){
       statusEl.textContent = 'لاعب انضم! جاري الدخول للوبي...';
-      setTimeout(()=> goToLobby(code, 1, type), 800)
+      setTimeout(()=> goToLobby(code, 1, type), 1000) // اللي عمل الغرفة player 1
     }
-  }
-  currentRoomRef.on('value', roomListener);
+  });
 }
 
 async function joinRoom(type){
-  joined = false;
   const code = document.getElementById('join-' + type).value.toUpperCase();
   if(code.length < 4) return alert('دخل كود صحيح');
   
@@ -207,7 +193,7 @@ async function joinRoom(type){
     player2: userEmail,
     status: 'ready'
   });
-  goToLobby(code, 2, type);
+  goToLobby(code, 2, type); // اللي دخل الكود player 2
 }
 
 function copyCode(id){
