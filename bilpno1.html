@@ -2,50 +2,51 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>مزاد المليار - صور اوتوماتيك</title>
+<meta name="viewport" content="width=400, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>مزاد المليار</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
-body{background:#000;color:#fff;font-family:'Cairo',sans-serif;text-align:center;padding:15px;margin:0}
-h1{color:gold;text-shadow:0 0 10px gold;margin:10px 0;font-size:22px}
-.stats{display:flex;justify-content:space-between;align-items:center;background:#111;padding:10px 20px;border-radius:12px;margin:10px auto;border:2px solid gold;max-width:700px;font-size:15px}
+html, body{width:400px;margin:0 auto;background:#000;overflow-x:hidden;}
+body{color:#fff;font-family:'Cairo',sans-serif;text-align:center;padding:10px;margin:0}
+h1{color:gold;text-shadow:0 0 10px gold;margin:10px 0;font-size:20px}
+.stats{display:flex;justify-content:space-between;align-items:center;background:#111;padding:8px 10px;border-radius:12px;margin:10px auto;border:2px solid gold;font-size:13px}
 .p1{color:#00aaff;font-weight:900}
 .p2{color:#ff4444;font-weight:900}
-#count{background:gold;color:#000;padding:5px 12px;border-radius:12px;font-weight:900}
-.turn{background:gold;color:#000;padding:8px;border-radius:6px;font-weight:900;margin:10px auto;font-size:14px;max-width:300px}
-.pitch{width:500px;height:250px;background:linear-gradient(#1a8a1a,#0d6e0d);border:4px solid #fff;border-radius:20px;position:relative;margin:15px auto;box-shadow:0 0 20px rgba(0,0,0,0.5)}
+#count{background:gold;color:#000;padding:4px 10px;border-radius:12px;font-weight:900}
+.turn{background:gold;color:#000;padding:6px;border-radius:6px;font-weight:900;margin:10px auto;font-size:13px}
+.pitch{width:380px;height:220px;background:linear-gradient(#1a8a1a,#0d6e0d);border:3px solid #fff;border-radius:20px;position:relative;margin:12px auto}
 .pitch::before{content:'';position:absolute;top:50%;left:0;width:100%;height:2px;background:#fff;opacity:0.3}
-.pitch::after{content:'';position:absolute;top:50%;left:50%;width:80px;height:80px;border:2px solid #fff;opacity:0.3;border-radius:50%;transform:translate(-50%,-50%)}
-.bench{width:500px;background:#111;border:3px solid #555;border-radius:12px;padding:10px;margin:10px auto}
-.bench-title{background:gold;color:#000;padding:6px;font-weight:900;border-radius:8px;margin-bottom:8px;font-size:14px}
-.bench-slots{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
-.team-title{font-size:20px;font-weight:900;margin:5px 0;text-shadow:0 0 8px}
+.pitch::after{content:'';position:absolute;top:50%;left:50%;width:70px;height:70px;border:2px solid #fff;opacity:0.3;border-radius:50%;transform:translate(-50%,-50%)}
+.bench{width:380px;background:#111;border:3px solid #555;border-radius:12px;padding:8px;margin:10px auto}
+.bench-title{background:gold;color:#000;padding:5px;font-weight:900;border-radius:8px;margin-bottom:6px;font-size:13px}
+.bench-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.team-title{font-size:18px;font-weight:900;margin:5px 0;text-shadow:0 0 8px}
 .title1{color:#00aaff}
 .title2{color:#ff4444}
-.card{border:3px solid gold;border-radius:15px;padding:15px;width:350px;margin:15px auto;background:#111}
-.card img{width:80px;height:80px;border-radius:50%;border:3px solid gold;object-fit:cover;margin-bottom:8px}
-.legend-tag{background:linear-gradient(45deg,gold,#ffaa00);color:#000;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:900;margin-top:3px;display:inline-block}
-.name{font-size:20px;color:gold;font-weight:900;margin:5px 0}
-.price{font-size:16px;color:#0f0;font-weight:700;margin-bottom:8px}
-input{width:130px;padding:8px;border-radius:6px;border:2px solid gold;background:#222;color:#fff;text-align:center;font-family:'Cairo';font-size:14px;margin:5px}
-button{padding:9px 15px;margin:4px;border:none;border-radius:6px;font-weight:900;cursor:pointer;font-family:'Cairo';font-size:14px}
+.card{border:3px solid gold;border-radius:15px;padding:12px;width:380px;margin:12px auto;background:#111}
+.legend-tag{background:linear-gradient(45deg,gold,#ffaa00);color:#000;padding:3px 8px;border-radius:12px;font-size:10px;font-weight:900;margin:5px 0;display:inline-block}
+.name{font-size:18px;color:gold;font-weight:900;margin:4px 0}
+.price{font-size:15px;color:#0f0;font-weight:700;margin-bottom:6px}
+input{width:120px;padding:7px;border-radius:6px;border:2px solid gold;background:#222;color:#fff;text-align:center;font-family:'Cairo';font-size:13px;margin:4px}
+button{padding:8px 12px;margin:3px;border:none;border-radius:6px;font-weight:900;cursor:pointer;font-family:'Cairo';font-size:13px}
 .bid{background:lime;color:#000}.take{background:red;color:#fff}.skip{background:#555;color:#fff}
 button:disabled{opacity:0.4;cursor:not-allowed}
-.player-circle{width:55px;height:55px;border-radius:50%;border:3px solid #fff;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;font-weight:900;position:absolute;color:#fff;transition:0.2s}
-.player-circle:hover{transform:scale(1.1);border-color:gold}
+
+.player-circle{width:65px;height:40px;border-radius:10px;border:2px solid #fff;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:8px;font-weight:900;position:absolute;color:#fff;padding:2px}
 .player-circle.filled{border-color:gold;background:#111}
-.player-circle img{width:28px;height:28px;border-radius:50%;object-fit:cover;margin-bottom:1px}
-.player-circle b{font-size:11px;margin-bottom:1px}
-.player-circle span{font-size:9px;opacity:0.7}
-.slot{border:2px solid #333;background:#000;padding:3px;border-radius:6px;font-size:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;min-height:45px;color:#fff}
+.player-circle b{font-size:9px;margin-bottom:2px;color:#0ff}
+.player-circle.p-name{font-size:8px;opacity:0.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60px;color:gold}
+
+.slot{border:2px solid #333;background:#000;padding:4px;border-radius:6px;font-size:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;min-height:40px;color:#fff}
 .slot.filled{border-color:gold;background:#111}
-.slot img{width:25px;height:25px;border-radius:50%;object-fit:cover;margin-bottom:1px}
-.slot b{color:gold;font-size:9px;margin-bottom:1px}
+.slot b{color:#0ff;font-size:9px;margin-bottom:2px}
+.slot.p-name{font-size:9px;opacity:0.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80px;color:gold}
 </style>
 </head>
 <body>
 
-<h1>🤖 مزاد المليار - الصور اوتوماتيك 🤖</h1>
+<h1>🤖 مزاد المليار - 🤖</h1>
 <div class="stats">
   <div class="p1">انت: <span id="m1">1,000,000,000</span>$</div>
   <div id="count">1 / 23</div>
@@ -55,17 +56,17 @@ button:disabled{opacity:0.4;cursor:not-allowed}
 
 <div class="team-title title1">فريقك</div>
 <div class="pitch" id="pitch1">
-  <div class="player-circle" id="p1-LB" style="top:15px;left:90px"><b>LB</b><span>-</span></div>
-  <div class="player-circle" id="p1-CB1" style="top:65px;left:90px"><b>CB1</b><span>-</span></div>
-  <div class="player-circle" id="p1-GK" style="top:95px;left:20px"><b>GK</b><span>-</span></div>
-  <div class="player-circle" id="p1-CB2" style="top:125px;left:90px"><b>CB2</b><span>-</span></div>
-  <div class="player-circle" id="p1-RB" style="top:175px;left:90px"><b>RB</b><span>-</span></div>
-  <div class="player-circle" id="p1-CM1" style="top:50px;left:180px"><b>CM1</b><span>-</span></div>
-  <div class="player-circle" id="p1-CM2" style="top:140px;left:180px"><b>CM2</b><span>-</span></div>
-  <div class="player-circle" id="p1-CAM" style="top:95px;left:250px"><b>CAM</b><span>-</span></div>
-  <div class="player-circle" id="p1-LW" style="top:30px;left:380px"><b>LW</b><span>-</span></div>
-  <div class="player-circle" id="p1-ST" style="top:95px;left:430px"><b>ST</b><span>-</span></div>
-  <div class="player-circle" id="p1-RW" style="top:160px;left:380px"><b>RW</b><span>-</span></div>
+  <div class="player-circle" id="p1-LB" style="top:15px;left:75px"><b>LB</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-CB1" style="top:65px;left:75px"><b>CB1</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-GK" style="top:90px;left:10px"><b>GK</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-CB2" style="top:125px;left:75px"><b>CB2</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-RB" style="top:170px;left:75px"><b>RB</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-CM1" style="top:45px;left:155px"><b>CM1</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-CM2" style="top:135px;left:155px"><b>CM2</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-CAM" style="top:90px;left:225px"><b>CAM</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-LW" style="top:25px;left:305px"><b>LW</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-ST" style="top:90px;left:340px"><b>ST</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-RW" style="top:155px;left:305px"><b>RW</b><div class="p-name">-</div></div>
 </div>
 <div class="bench">
   <div class="bench-title">الدكة 12 لاعب</div>
@@ -74,17 +75,17 @@ button:disabled{opacity:0.4;cursor:not-allowed}
 
 <div class="team-title title2">فريق AI</div>
 <div class="pitch" id="pitch2">
-  <div class="player-circle" id="p2-LB" style="top:15px;left:90px"><b>LB</b><span>-</span></div>
-  <div class="player-circle" id="p2-CB1" style="top:65px;left:90px"><b>CB1</b><span>-</span></div>
-  <div class="player-circle" id="p2-GK" style="top:95px;left:20px"><b>GK</b><span>-</span></div>
-  <div class="player-circle" id="p2-CB2" style="top:125px;left:90px"><b>CB2</b><span>-</span></div>
-  <div class="player-circle" id="p2-RB" style="top:175px;left:90px"><b>RB</b><span>-</span></div>
-  <div class="player-circle" id="p2-CM1" style="top:50px;left:180px"><b>CM1</b><span>-</span></div>
-  <div class="player-circle" id="p2-CM2" style="top:140px;left:180px"><b>CM2</b><span>-</span></div>
-  <div class="player-circle" id="p2-CAM" style="top:95px;left:250px"><b>CAM</b><span>-</span></div>
-  <div class="player-circle" id="p2-LW" style="top:30px;left:380px"><b>LW</b><span>-</span></div>
-  <div class="player-circle" id="p2-ST" style="top:95px;left:430px"><b>ST</b><span>-</span></div>
-  <div class="player-circle" id="p2-RW" style="top:160px;left:380px"><b>RW</b><span>-</span></div>
+  <div class="player-circle" id="p2-LB" style="top:15px;left:75px"><b>LB</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-CB1" style="top:65px;left:75px"><b>CB1</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-GK" style="top:90px;left:10px"><b>GK</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-CB2" style="top:125px;left:75px"><b>CB2</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-RB" style="top:170px;left:75px"><b>RB</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-CM1" style="top:45px;left:155px"><b>CM1</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-CM2" style="top:135px;left:155px"><b>CM2</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-CAM" style="top:90px;left:225px"><b>CAM</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-LW" style="top:25px;left:305px"><b>LW</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-ST" style="top:90px;left:340px"><b>ST</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-RW" style="top:155px;left:305px"><b>RW</b><div class="p-name">-</div></div>
 </div>
 <div class="bench">
   <div class="bench-title">دكة AI</div>
@@ -92,7 +93,6 @@ button:disabled{opacity:0.4;cursor:not-allowed}
 </div>
 
 <div class="card">
-  <img id="playerImg" src="https://ui-avatars.com/api/?name=Player&background=FFD700&color=000&size=128">
   <div id="legendBadge"></div>
   <div class="pos" id="pos" style="color:#aaa;font-size:13px">المركز</div>
   <div class="name" id="name">-</div>
@@ -104,107 +104,64 @@ button:disabled{opacity:0.4;cursor:not-allowed}
 </div>
 
 <script>
-const positions = ["GK","LB","CB1","CB2","RB","CM1","CM2","CAM","LW","ST","RW","SUB1","SUB2","SUB3","SUB4","SUB5","SUB6","SUB7","SUB8","SUB9","SUB10","SUB11","SUB12"];
-
-// قاعدة بيانات IDs من SoFIFA عشان الصور الحقيقية
-const PLAYER_IDS = {
-"Buffon":2721,"Casillas":41236,"Cech":374,"Kahn":375,"Schmeichel":376,
-"Roberto Carlos":431,"Maldini":438,"Ashley Cole":419,"Lahm":502,"Zanetti":439,
-"Nesta":441,"Cannavaro":440,"Ferdinand":442,"Terry":443,"Puyol":444,
-"Cafu":445,"Dani Alves":502,"Gary Neville":446,"Thuram":447,"Maicon":448,
-"Zidane":41236,"Pirlo":449,"Xavi":450,"Iniesta":451,"Gerrard":452,
-"Ronaldinho":110,"Kaka":453,"Figo":454,"Maradona":455,"Zico":456,
-"Giggs":457,"Rivaldo":458,"Overmars":459,
-"Ronaldo":16864,"Henry":461,"Shevchenko":462,"Batistuta":463,"Van Nistelrooy":464,
-"Beckham":465,"Joaquin":466,
-"Courtois":192448,"Alisson":188545,"Ter Stegen":192985,"Donnarumma":215698,"Oblak":193048,
-"Neuer":16795,"Ederson":213345,"E.Martinez":200145,"Maignan":208619,"Raya":201126,
-"Davies":237692,"Robertson":208722,"T.Hernandez":208921,"Cancelo":208921,"N.Mendes":237692,
-"L.Shaw":207862,"Chilwell":208722,"Dimarco":208921,"Estupinan":237692,"Balde":237692,
-"Van Dijk":203376,"R.Dias":208722,"Rudiger":208722,"Saliba":237692,"Militao":237692,
-"Araujo":237692,"Marquinhos":208722,"Gvardiol":237692,"Gabriel":208722,"Bastoni":208921,
-"Kim":237692,"Konate":237692,"Romero":237692,"De Ligt":237692,"Colwill":237692,
-"Hincapie":237692,"Bremer":208921,"Van de Ven":237692,"Pau Torres":208722,"Guehi":237692,
-"Hakimi":208722,"TAA":208722,"Walker":208722,"Reece James":237692,"Frimpong":237692,
-"Pavard":208722,"Trippier":208722,"Dumfries":208921,"Dalot":208722,"Porro":237692,
-"Rodri":208722,"Valverde":208722,"Kroos":16795,"Rice":208722,"Kimmich":16795,
-"Odegaard":208722,"Casemiro":208722,"Camavinga":237692,"Tchouameni":237692,"Barella":208921,
-"Modric":41236,"Gundogan":16795,"Bruno G":208722,"Caicedo":237692,"Enzo":237692,
-"Zubimendi":208722,"Tonali":208921,"Locatelli":208921,"Gravenberch":237692,"Mount":208722,
-"De Bruyne":208722,"Bellingham":237692,"B.Fernandes":208722,"B.Silva":208722,"Wirtz":237692,
-"Musiala":16795,"Griezmann":208722,"Maddison":208722,"Havertz":16795,
-"Vinicius":237692,"Leao":208921,"Sane":16795,"Rashford":208722,"Coman":16795,
-"Sterling":208722,"L.Diaz":237692,"Martinelli":208722,"Barcola":208722,"Gakpo":237692,
-"Haaland":239085,"Mbappe":231747,"Kane":16795,"Lautaro":208921,"Osimhen":208921,
-"Nunez":237692,"G.Jesus":208722,"Vlahovic":208921,"Isak":237692,"Lewandowski":16795,
-"Salah":208722,"Saka":208722,"Rodrygo":237692,"Foden":208722,"Dembele":208722,
-"Bowen":208722,"P.Neto":237692,"Grealish":208722,"Antony":237692
-};
-
-function getPlayerImg(name){
-  // لو لقينا ID نجيب الصورة الحقيقية من SoFIFA
-  if(PLAYER_IDS[name]){
-    return `https://cdn.sofifa.net/players/${PLAYER_IDS[name]}/24_128.png`;
-  }
-  // لو ملقناش نجيب صورة بالاسم
-  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=FFD700&color=000&size=128&bold=true`;
-}
+const positions = ["GK","LB","CB1","CB2","RB","CM1","CM2","CAM","LW","ST","RW","GK2","LB2","CB3","CB4","RB2","CM3","CM4","CAM2","LW2","ST2","RW2","MF"];
+const benchPositions = ["GK2","LB2","CB3","CB4","RB2","CM3","CM4","CAM2","LW2","ST2","RW2","MF"];
 
 const LEGENDS = {
-GK: [{n:"Buffon",p:20000000,legend:true},{n:"Casillas",p:19000000,legend:true},{n:"Cech",p:18000000,legend:true},{n:"Kahn",p:18500000,legend:true},{n:"Schmeichel",p:17000000,legend:true}],
-LB: [{n:"Roberto Carlos",p:45000000,legend:true},{n:"Maldini",p:48000000,legend:true},{n:"Ashley Cole",p:42000000,legend:true},{n:"Lahm",p:44000000,legend:true},{n:"Zanetti",p:43000000,legend:true}],
-CB: [{n:"Nesta",p:50000000,legend:true},{n:"Cannavaro",p:49000000,legend:true},{n:"Ferdinand",p:47000000,legend:true},{n:"Terry",p:46000000,legend:true},{n:"Puyol",p:48000000,legend:true}],
-RB: [{n:"Cafu",p:46000000,legend:true},{n:"Dani Alves",p:46500000,legend:true},{n:"Gary Neville",p:44000000,legend:true},{n:"Thuram",p:45000000,legend:true},{n:"Maicon",p:43500000,legend:true}],
-CM: [{n:"Zidane",p:60000000,legend:true},{n:"Pirlo",p:55000000,legend:true},{n:"Xavi",p:58000000,legend:true},{n:"Iniesta",p:57000000,legend:true},{n:"Gerrard",p:56000000,legend:true}],
-CAM: [{n:"Ronaldinho",p:65000000,legend:true},{n:"Kaka",p:63000000,legend:true},{n:"Figo",p:62000000,legend:true},{n:"Maradona",p:70000000,legend:true},{n:"Zico",p:60000000,legend:true}],
-LW: [{n:"Ronaldinho",p:65000000,legend:true},{n:"Figo",p:64000000,legend:true},{n:"Giggs",p:63000000,legend:true},{n:"Rivaldo",p:62000000,legend:true},{n:"Overmars",p:61000000,legend:true}],
-ST: [{n:"Ronaldo",p:70000000,legend:true},{n:"Henry",p:68000000,legend:true},{n:"Shevchenko",p:67000000,legend:true},{n:"Batistuta",p:66000000,legend:true},{n:"Van Nistelrooy",p:65000000,legend:true}],
-RW: [{n:"Beckham",p:65000000,legend:true},{n:"Figo",p:64000000,legend:true},{n:"Kaka",p:63000000,legend:true},{n:"Overmars",p:61000000,legend:true},{n:"Joaquin",p:58000000,legend:true}]
+GK: [{n:"Buffon",p:20000000,legend:true},{n:"Casillas",p:19000000,legend:true}],
+LB: [{n:"Roberto Carlos",p:45000000,legend:true},{n:"Maldini",p:48000000,legend:true}],
+CB: [{n:"Nesta",p:50000000,legend:true},{n:"Cannavaro",p:49000000,legend:true}],
+RB: [{n:"Cafu",p:46000000,legend:true},{n:"Dani Alves",p:46500000,legend:true}],
+CM: [{n:"Zidane",p:60000000,legend:true},{n:"Pirlo",p:55000000,legend:true}],
+CAM: [{n:"Ronaldinho",p:65000000,legend:true},{n:"Kaka",p:63000000,legend:true}],
+LW: [{n:"Ronaldinho",p:65000000,legend:true},{n:"Figo",p:64000000,legend:true}],
+ST: [{n:"Ronaldo",p:70000000,legend:true},{n:"Henry",p:68000000,legend:true}],
+RW: [{n:"Beckham",p:65000000,legend:true},{n:"Figo",p:64000000,legend:true}]
 };
 
 const playersDB = {
-GK: [{n:"Courtois",p:15000000},{n:"Alisson",p:14000000},{n:"Ter Stegen",p:13000000},{n:"Donnarumma",p:14500000},{n:"Oblak",p:13500000},{n:"Neuer",p:12000000},{n:"Ederson",p:12500000},{n:"E.Martinez",p:11000000},{n:"Maignan",p:10000000},{n:"Raya",p:9000000},...LEGENDS.GK],
-LB: [{n:"Davies",p:35000000},{n:"Robertson",p:30000000},{n:"T.Hernandez",p:32000000},{n:"Cancelo",p:33000000},{n:"N.Mendes",p:29000000},{n:"L.Shaw",p:25000000},{n:"Chilwell",p:22000000},{n:"Dimarco",p:28000000},{n:"Estupinan",p:24000000},{n:"Balde",p:27000000},...LEGENDS.LB],
-CB1: [{n:"Van Dijk",p:40000000},{n:"R.Dias",p:38000000},{n:"Rudiger",p:35000000},{n:"Saliba",p:37000000},{n:"Militao",p:33000000},{n:"Araujo",p:36000000},{n:"Marquinhos",p:34000000},{n:"Gvardiol",p:42000000},{n:"Gabriel",p:32000000},{n:"Bastoni",p:31000000},...LEGENDS.CB],
-CB2: [{n:"Kim",p:38000000},{n:"Konate",p:30000000},{n:"Romero",p:32000000},{n:"De Ligt",p:35000000},{n:"Colwill",p:28000000},{n:"Hincapie",p:27000000},{n:"Bremer",p:30000000},{n:"Van de Ven",p:29000000},{n:"Pau Torres",p:26000000},{n:"Guehi",p:25000000},...LEGENDS.CB],
-RB: [{n:"Hakimi",p:40000000},{n:"TAA",p:38000000},{n:"Walker",p:30000000},{n:"Reece James",p:35000000},{n:"Frimpong",p:27000000},{n:"Pavard",p:31000000},{n:"Trippier",p:28000000},{n:"Dumfries",p:26000000},{n:"Dalot",p:24000000},{n:"Porro",p:23000000},...LEGENDS.RB],
-CM1: [{n:"Rodri",p:45000000},{n:"Valverde",p:40000000},{n:"Kroos",p:35000000},{n:"Rice",p:42000000},{n:"Kimmich",p:38000000},{n:"Odegaard",p:40000000},{n:"Casemiro",p:28000000},{n:"Camavinga",p:38000000},{n:"Tchouameni",p:41000000},{n:"Barella",p:39000000},...LEGENDS.CM],
-CM2: [{n:"Modric",p:30000000},{n:"Gundogan",p:25000000},{n:"Bruno G",p:35000000},{n:"Caicedo",p:28000000},{n:"Enzo",p:35000000},{n:"Zubimendi",p:30000000},{n:"Tonali",p:32000000},{n:"Locatelli",p:27000000},{n:"Gravenberch",p:29000000},{n:"Mount",p:26000000},...LEGENDS.CM],
-CAM: [{n:"De Bruyne",p:50000000},{n:"Bellingham",p:55000000},{n:"B.Fernandes",p:45000000},{n:"B.Silva",p:42000000},{n:"Wirtz",p:50000000},{n:"Musiala",p:48000000},{n:"Griezmann",p:42000000},{n:"Maddison",p:35000000},{n:"Havertz",p:40000000},{n:"Odegaard",p:40000000},...LEGENDS.CAM],
-LW: [{n:"Vinicius",p:62000000},{n:"Leao",p:42000000},{n:"Sane",p:38000000},{n:"Rashford",p:41000000},{n:"Coman",p:38000000},{n:"Sterling",p:36000000},{n:"L.Diaz",p:39000000},{n:"Martinelli",p:40000000},{n:"Barcola",p:30000000},{n:"Gakpo",p:32000000},...LEGENDS.LW],
-ST: [{n:"Haaland",p:60000000},{n:"Mbappe",p:65000000},{n:"Kane",p:55000000},{n:"Lautaro",p:50000000},{n:"Osimhen",p:58000000},{n:"Nunez",p:32000000},{n:"G.Jesus",p:28000000},{n:"Vlahovic",p:45000000},{n:"Isak",p:35000000},{n:"Lewandowski",p:50000000},...LEGENDS.ST],
-RW: [{n:"Salah",p:50000000},{n:"Saka",p:45000000},{n:"Rodrygo",p:32000000},{n:"Foden",p:48000000},{n:"Dembele",p:41000000},{n:"Bowen",p:35000000},{n:"P.Neto",p:30000000},{n:"Grealish",p:28000000},{n:"Antony",p:35000000},{n:"Saka",p:45000000},...LEGENDS.RW],
-SUB1: Array(10).fill().map((_,i)=>({n:`SUB ${i+1}`,p:5000000})),
-SUB2: Array(10).fill().map((_,i)=>({n:`SUB ${i+11}`,p:5000000})),
-SUB3: Array(10).fill().map((_,i)=>({n:`SUB ${i+21}`,p:5000000})),
-SUB4: Array(10).fill().map((_,i)=>({n:`SUB ${i+31}`,p:5000000})),
-SUB5: Array(10).fill().map((_,i)=>({n:`SUB ${i+41}`,p:5000000})),
-SUB6: Array(10).fill().map((_,i)=>({n:`SUB ${i+51}`,p:5000000})),
-SUB7: Array(10).fill().map((_,i)=>({n:`SUB ${i+61}`,p:5000000})),
-SUB8: Array(10).fill().map((_,i)=>({n:`SUB ${i+71}`,p:5000000})),
-SUB9: Array(10).fill().map((_,i)=>({n:`SUB ${i+81}`,p:5000000})),
-SUB10: Array(10).fill().map((_,i)=>({n:`SUB ${i+91}`,p:5000000})),
-SUB11: Array(10).fill().map((_,i)=>({n:`SUB ${i+101}`,p:5000000})),
-SUB12: Array(10).fill().map((_,i)=>({n:`SUB ${i+111}`,p:5000000}))
+GK: [{n:"Courtois",p:15000000},{n:"Alisson",p:14000000},{n:"Ter Stegen",p:13000000},...LEGENDS.GK],
+LB: [{n:"Davies",p:35000000},{n:"Robertson",p:30000000},...LEGENDS.LB],
+CB1: [{n:"Van Dijk",p:40000000},{n:"R.Dias",p:38000000},...LEGENDS.CB],
+CB2: [{n:"Kim",p:38000000},{n:"Konate",p:30000000},...LEGENDS.CB],
+RB: [{n:"Hakimi",p:40000000},{n:"TAA",p:38000000},...LEGENDS.RB],
+CM1: [{n:"Rodri",p:45000000},{n:"Valverde",p:40000000},...LEGENDS.CM],
+CM2: [{n:"Modric",p:30000000},{n:"Gundogan",p:25000000},...LEGENDS.CM],
+CAM: [{n:"De Bruyne",p:50000000},{n:"Bellingham",p:55000000},...LEGENDS.CAM],
+LW: [{n:"Vinicius",p:62000000},{n:"Leao",p:42000000},...LEGENDS.LW],
+ST: [{n:"Haaland",p:60000000},{n:"Mbappe",p:65000000},...LEGENDS.ST],
+RW: [{n:"Salah",p:50000000},{n:"Saka",p:45000000},...LEGENDS.RW],
+
+// الدكة لعيبه حقيقين
+GK2: [{n:"Neuer",p:12000000},{n:"Ederson",p:12500000},{n:"Donnarumma",p:14500000}],
+LB2: [{n:"T.Hernandez",p:32000000},{n:"Cancelo",p:33000000},{n:"N.Mendes",p:29000000}],
+CB3: [{n:"Rudiger",p:35000000},{n:"Saliba",p:37000000},{n:"Militao",p:33000000}],
+CB4: [{n:"Araujo",p:36000000},{n:"Marquinhos",p:34000000},{n:"Gvardiol",p:42000000}],
+RB2: [{n:"Walker",p:30000000},{n:"Reece James",p:35000000},{n:"Frimpong",p:27000000}],
+CM3: [{n:"Kimmich",p:38000000},{n:"Odegaard",p:40000000},{n:"Casemiro",p:28000000}],
+CM4: [{n:"Camavinga",p:38000000},{n:"Tchouameni",p:41000000},{n:"Barella",p:39000000}],
+CAM2: [{n:"B.Fernandes",p:45000000},{n:"B.Silva",p:42000000},{n:"Wirtz",p:50000000}],
+LW2: [{n:"Sane",p:38000000},{n:"Rashford",p:41000000},{n:"Coman",p:38000000}],
+ST2: [{n:"Kane",p:55000000},{n:"Lautaro",p:50000000},{n:"Osimhen",p:58000000}],
+RW2: [{n:"Rodrygo",p:32000000},{n:"Foden",p:48000000},{n:"Dembele",p:41000000}],
+MF: [{n:"Rice",p:42000000},{n:"Enzo",p:35000000},{n:"Caicedo",p:28000000}]
 };
 
 let currentPosIndex=0, currentPlayer, currentBid=0, highestBidder=0;
-let turn=1, m1=1000000, m2=1000000;
+let turn=1, m1=1000000000000, m2=1000000000000;
 let t1={}, t2={};
 let aiThinking = false;
 
-positions.slice(11).forEach(pos=>{
-  document.getElementById('bench1').innerHTML += `<div class="slot" id="b1-${pos}"><b>${pos}</b><span>-</span></div>`;
-  document.getElementById('bench2').innerHTML += `<div class="slot" id="b2-${pos}"><b>${pos}</b><span>-</span></div>`;
+benchPositions.forEach(pos=>{
+  document.getElementById('bench1').innerHTML += `<div class="slot" id="b1-${pos}"><b>${pos}</b><div class="p-name">-</div></div>`;
+  document.getElementById('bench2').innerHTML += `<div class="slot" id="b2-${pos}"><b>${pos}</b><div class="p-name">-</div></div>`;
 })
 
 newPlayer();
 
 function getRandomPlayer(pos){
   let arr = playersDB[pos];
-  let p = arr[Math.floor(Math.random()*arr.length)];
-  p.img = getPlayerImg(p.n);
-  return p;
+  return arr[Math.floor(Math.random()*arr.length)];
 }
 
 function newPlayer(){
@@ -221,7 +178,6 @@ function newPlayer(){
 function show(){
   document.getElementById('pos').innerText="المركز: " + positions[currentPosIndex-1];
   document.getElementById('name').innerText=currentPlayer.n;
-  document.getElementById('playerImg').src=currentPlayer.img;
   document.getElementById('price').innerText="السعر: "+currentBid.toLocaleString()+"$";
   document.getElementById('bidInput').value=currentBid+10000000;
   document.getElementById('m1').innerText=m1.toLocaleString();
@@ -229,42 +185,27 @@ function show(){
   document.getElementById('count').innerText=currentPosIndex+" / 23";
   document.getElementById('turn').innerText = turn==1? "دورك" : "AI بيفكر...";
   document.getElementById('bidBtn').disabled = turn!=1;
-  document.getElementById('takeBtn').disabled = false;
   document.getElementById('legendBadge').innerHTML = currentPlayer.legend? '<div class="legend-tag">⭐ اسطورة ⭐</div>' : '';
   if(turn==2 &&!aiThinking){ aiThinking=true; setTimeout(aiTurn, 900); }
 }
 
 function aiTurn(){
   let aiMoney = m2;
-  let basePrice = currentPlayer.p;
-  let needPlayer =!t2[positions[currentPosIndex-1]];
-  let desire = 0;
-  if(currentPlayer.legend) desire += 0.5;
-  if(basePrice > 40000000) desire += 0.3;
-  if(needPlayer) desire += 0.2;
-  if(Math.random() < desire && aiMoney > currentBid*1.3){
-    let aiBid = currentBid + 10000000 + Math.floor(Math.random()*40000000);
-    if(aiBid <= aiMoney){
-      currentBid = aiBid; highestBidder = 2; turn = 1;
-      document.getElementById('turn').innerText = `AI زايد بـ ${aiBid.toLocaleString()}$ - دورك`;
-      show(); aiThinking=false; return;
-    }
+  if(Math.random() < 0.4 && aiMoney > currentBid*1.2){
+    let aiBid = currentBid + 10000000 + Math.floor(Math.random()*30000000);
+    if(aiBid <= aiMoney){ currentBid = aiBid; highestBidder = 2; turn = 1; show(); aiThinking=false; return; }
   }
-  if(highestBidder==2){ takeAI(); } else { turn=1; document.getElementById('turn').innerText="دورك"; aiThinking=false; }
+  if(highestBidder==2){ takeAI(); } else { turn=1; show(); aiThinking=false; }
 }
 
 function bid(){ if(turn!=1) return; let val=parseInt(document.getElementById('bidInput').value); if(val<=currentBid || val>m1) return alert("مزايدة غلط"); currentBid=val; highestBidder=1; turn=2; show(); }
 
 function giveToAI(){
   let pos=positions[currentPosIndex-1];
-  m2-=currentBid;
-  t2[pos]=currentPlayer;
-  highestBidder=2;
+  m2-=currentBid; t2[pos]=currentPlayer; highestBidder=2;
   let myPlayer = getRandomPlayer(pos);
-  t1[pos] = myPlayer;
-  m1 -= myPlayer.p;
-  updateTeams();
-  newPlayer();
+  t1[pos] = myPlayer; m1 -= myPlayer.p;
+  updateTeams(); newPlayer();
 }
 
 function takeAI(){ let pos=positions[currentPosIndex-1]; m2-=currentBid; t2[pos]=currentPlayer; updateTeams(); newPlayer(); }
@@ -272,14 +213,18 @@ function skip(){ if(turn!=1) return; turn=2; show(); }
 
 function updateTeams(){
   for(let pos in t1){
-    let el = pos.startsWith('SUB')? `b1-${pos}` : `p1-${pos}`;
-    if(document.getElementById(el)) document.getElementById(el).innerHTML=`<img src="${t1[pos].img}"><b>${pos}</b>`;
-    document.getElementById(el).classList.add('filled');
+    let el = benchPositions.includes(pos)? `b1-${pos}` : `p1-${pos}`;
+    if(document.getElementById(el)){
+      document.getElementById(el).querySelector('.p-name').innerText = t1[pos].n;
+      document.getElementById(el).classList.add('filled');
+    }
   }
   for(let pos in t2){
-    let el = pos.startsWith('SUB')? `b2-${pos}` : `p2-${pos}`;
-    if(document.getElementById(el)) document.getElementById(el).innerHTML=`<img src="${t2[pos].img}"><b>${pos}</b>`;
-    document.getElementById(el).classList.add('filled');
+    let el = benchPositions.includes(pos)? `b2-${pos}` : `p2-${pos}`;
+    if(document.getElementById(el)){
+      document.getElementById(el).querySelector('.p-name').innerText = t2[pos].n;
+      document.getElementById(el).classList.add('filled');
+    }
   }
 }
 </script>
