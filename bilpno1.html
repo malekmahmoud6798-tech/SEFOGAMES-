@@ -2,46 +2,46 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=400, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=340, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>مزاد المليار</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
-html, body{width:400px;margin:0 auto;background:#000;overflow-x:hidden;}
-body{color:#fff;font-family:'Cairo',sans-serif;text-align:center;padding:10px;margin:0}
-h1{color:gold;text-shadow:0 0 10px gold;margin:10px 0;font-size:20px}
-.stats{display:flex;justify-content:space-between;align-items:center;background:#111;padding:8px 10px;border-radius:12px;margin:10px auto;border:2px solid gold;font-size:13px}
+html, body{width:340px;margin:0 auto;background:#000;overflow-x:hidden;}
+body{color:#fff;font-family:'Cairo',sans-serif;text-align:center;padding:8px;margin:0}
+h1{color:gold;text-shadow:0 0 10px gold;margin:8px 0;font-size:18px}
+.stats{display:flex;justify-content:space-between;align-items:center;background:#111;padding:6px 8px;border-radius:10px;margin:8px auto;border:2px solid gold;font-size:12px}
 .p1{color:#00aaff;font-weight:900}
 .p2{color:#ff4444;font-weight:900}
-#count{background:gold;color:#000;padding:4px 10px;border-radius:12px;font-weight:900}
-.turn{background:gold;color:#000;padding:6px;border-radius:6px;font-weight:900;margin:10px auto;font-size:13px}
-.pitch{width:380px;height:220px;background:linear-gradient(#1a8a1a,#0d6e0d);border:3px solid #fff;border-radius:20px;position:relative;margin:12px auto}
+#count{background:gold;color:#000;padding:3px 8px;border-radius:10px;font-weight:900}
+.turn{background:gold;color:#000;padding:5px;border-radius:6px;font-weight:900;margin:8px auto;font-size:12px}
+.pitch{width:320px;height:190px;background:linear-gradient(#1a8a1a,#0d6e0d);border:2px solid #fff;border-radius:15px;position:relative;margin:10px auto}
 .pitch::before{content:'';position:absolute;top:50%;left:0;width:100%;height:2px;background:#fff;opacity:0.3}
-.pitch::after{content:'';position:absolute;top:50%;left:50%;width:70px;height:70px;border:2px solid #fff;opacity:0.3;border-radius:50%;transform:translate(-50%,-50%)}
-.bench{width:380px;background:#111;border:3px solid #555;border-radius:12px;padding:8px;margin:10px auto}
-.bench-title{background:gold;color:#000;padding:5px;font-weight:900;border-radius:8px;margin-bottom:6px;font-size:13px}
-.bench-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
-.team-title{font-size:18px;font-weight:900;margin:5px 0;text-shadow:0 0 8px}
+.pitch::after{content:'';position:absolute;top:50%;left:50%;width:60px;height:60px;border:2px solid #fff;opacity:0.3;border-radius:50%;transform:translate(-50%,-50%)}
+.bench{width:320px;background:#111;border:2px solid #555;border-radius:10px;padding:6px;margin:8px auto}
+.bench-title{background:gold;color:#000;padding:4px;font-weight:900;border-radius:6px;margin-bottom:5px;font-size:12px}
+.bench-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.team-title{font-size:16px;font-weight:900;margin:4px 0;text-shadow:0 0 8px}
 .title1{color:#00aaff}
 .title2{color:#ff4444}
-.card{border:3px solid gold;border-radius:15px;padding:12px;width:380px;margin:12px auto;background:#111}
-.legend-tag{background:linear-gradient(45deg,gold,#ffaa00);color:#000;padding:3px 8px;border-radius:12px;font-size:10px;font-weight:900;margin:5px 0;display:inline-block}
-.name{font-size:18px;color:gold;font-weight:900;margin:4px 0}
-.price{font-size:15px;color:#0f0;font-weight:700;margin-bottom:6px}
-input{width:120px;padding:7px;border-radius:6px;border:2px solid gold;background:#222;color:#fff;text-align:center;font-family:'Cairo';font-size:13px;margin:4px}
-button{padding:8px 12px;margin:3px;border:none;border-radius:6px;font-weight:900;cursor:pointer;font-family:'Cairo';font-size:13px}
+.card{border:2px solid gold;border-radius:12px;padding:10px;width:320px;margin:10px auto;background:#111}
+.legend-tag{background:linear-gradient(45deg,gold,#ffaa00);color:#000;padding:2px 6px;border-radius:10px;font-size:9px;font-weight:900;margin:4px 0;display:inline-block}
+.name{font-size:16px;color:gold;font-weight:900;margin:3px 0}
+.price{font-size:13px;color:#0f0;font-weight:700;margin-bottom:5px}
+input{width:100px;padding:6px;border-radius:5px;border:2px solid gold;background:#222;color:#fff;text-align:center;font-family:'Cairo';font-size:12px;margin:3px}
+button{padding:6px 10px;margin:2px;border:none;border-radius:5px;font-weight:900;cursor:pointer;font-family:'Cairo';font-size:12px}
 .bid{background:lime;color:#000}.take{background:red;color:#fff}.skip{background:#555;color:#fff}
 button:disabled{opacity:0.4;cursor:not-allowed}
 
-.player-circle{width:65px;height:40px;border-radius:10px;border:2px solid #fff;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:8px;font-weight:900;position:absolute;color:#fff;padding:2px}
+.player-circle{width:55px;height:35px;border-radius:8px;border:2px solid #fff;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:7px;font-weight:900;position:absolute;color:#fff;padding:1px}
 .player-circle.filled{border-color:gold;background:#111}
-.player-circle b{font-size:9px;margin-bottom:2px;color:#0ff}
-.player-circle.p-name{font-size:8px;opacity:0.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60px;color:gold}
+.player-circle b{font-size:8px;margin-bottom:1px;color:#0ff}
+.player-circle.p-name{font-size:7px;opacity:0.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:50px;color:gold}
 
-.slot{border:2px solid #333;background:#000;padding:4px;border-radius:6px;font-size:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;min-height:40px;color:#fff}
+.slot{border:2px solid #333;background:#000;padding:3px;border-radius:5px;font-size:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;min-height:35px;color:#fff}
 .slot.filled{border-color:gold;background:#111}
-.slot b{color:#0ff;font-size:9px;margin-bottom:2px}
-.slot.p-name{font-size:9px;opacity:0.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80px;color:gold}
+.slot b{color:#0ff;font-size:8px;margin-bottom:1px}
+.slot.p-name{font-size:8px;opacity:0.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70px;color:gold}
 </style>
 </head>
 <body>
@@ -56,17 +56,17 @@ button:disabled{opacity:0.4;cursor:not-allowed}
 
 <div class="team-title title1">فريقك</div>
 <div class="pitch" id="pitch1">
-  <div class="player-circle" id="p1-LB" style="top:15px;left:75px"><b>LB</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p1-CB1" style="top:65px;left:75px"><b>CB1</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p1-GK" style="top:90px;left:10px"><b>GK</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p1-CB2" style="top:125px;left:75px"><b>CB2</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p1-RB" style="top:170px;left:75px"><b>RB</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p1-CM1" style="top:45px;left:155px"><b>CM1</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p1-CM2" style="top:135px;left:155px"><b>CM2</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p1-CAM" style="top:90px;left:225px"><b>CAM</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p1-LW" style="top:25px;left:305px"><b>LW</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p1-ST" style="top:90px;left:340px"><b>ST</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p1-RW" style="top:155px;left:305px"><b>RW</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-LB" style="top:12px;left:65px"><b>LB</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-CB1" style="top:55px;left:65px"><b>CB1</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-GK" style="top:75px;left:8px"><b>GK</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-CB2" style="top:105px;left:65px"><b>CB2</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-RB" style="top:145px;left:65px"><b>RB</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-CM1" style="top:38px;left:135px"><b>CM1</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-CM2" style="top:112px;left:135px"><b>CM2</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-CAM" style="top:75px;left:195px"><b>CAM</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-LW" style="top:20px;left:265px"><b>LW</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-ST" style="top:75px;left:295px"><b>ST</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p1-RW" style="top:130px;left:265px"><b>RW</b><div class="p-name">-</div></div>
 </div>
 <div class="bench">
   <div class="bench-title">الدكة 12 لاعب</div>
@@ -75,17 +75,17 @@ button:disabled{opacity:0.4;cursor:not-allowed}
 
 <div class="team-title title2">فريق AI</div>
 <div class="pitch" id="pitch2">
-  <div class="player-circle" id="p2-LB" style="top:15px;left:75px"><b>LB</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p2-CB1" style="top:65px;left:75px"><b>CB1</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p2-GK" style="top:90px;left:10px"><b>GK</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p2-CB2" style="top:125px;left:75px"><b>CB2</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p2-RB" style="top:170px;left:75px"><b>RB</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p2-CM1" style="top:45px;left:155px"><b>CM1</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p2-CM2" style="top:135px;left:155px"><b>CM2</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p2-CAM" style="top:90px;left:225px"><b>CAM</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p2-LW" style="top:25px;left:305px"><b>LW</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p2-ST" style="top:90px;left:340px"><b>ST</b><div class="p-name">-</div></div>
-  <div class="player-circle" id="p2-RW" style="top:155px;left:305px"><b>RW</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-LB" style="top:12px;left:65px"><b>LB</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-CB1" style="top:55px;left:65px"><b>CB1</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-GK" style="top:75px;left:8px"><b>GK</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-CB2" style="top:105px;left:65px"><b>CB2</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-RB" style="top:145px;left:65px"><b>RB</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-CM1" style="top:38px;left:135px"><b>CM1</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-CM2" style="top:112px;left:135px"><b>CM2</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-CAM" style="top:75px;left:195px"><b>CAM</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-LW" style="top:20px;left:265px"><b>LW</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-ST" style="top:75px;left:295px"><b>ST</b><div class="p-name">-</div></div>
+  <div class="player-circle" id="p2-RW" style="top:130px;left:265px"><b>RW</b><div class="p-name">-</div></div>
 </div>
 <div class="bench">
   <div class="bench-title">دكة AI</div>
@@ -94,7 +94,7 @@ button:disabled{opacity:0.4;cursor:not-allowed}
 
 <div class="card">
   <div id="legendBadge"></div>
-  <div class="pos" id="pos" style="color:#aaa;font-size:13px">المركز</div>
+  <div class="pos" id="pos" style="color:#aaa;font-size:12px">المركز</div>
   <div class="name" id="name">-</div>
   <div class="price" id="price">-</div>
   <input id="bidInput" type="number" placeholder="المزايدة"><br>
@@ -131,8 +131,6 @@ CAM: [{n:"De Bruyne",p:50000000},{n:"Bellingham",p:55000000},...LEGENDS.CAM],
 LW: [{n:"Vinicius",p:62000000},{n:"Leao",p:42000000},...LEGENDS.LW],
 ST: [{n:"Haaland",p:60000000},{n:"Mbappe",p:65000000},...LEGENDS.ST],
 RW: [{n:"Salah",p:50000000},{n:"Saka",p:45000000},...LEGENDS.RW],
-
-// الدكة لعيبه حقيقين
 GK2: [{n:"Neuer",p:12000000},{n:"Ederson",p:12500000},{n:"Donnarumma",p:14500000}],
 LB2: [{n:"T.Hernandez",p:32000000},{n:"Cancelo",p:33000000},{n:"N.Mendes",p:29000000}],
 CB3: [{n:"Rudiger",p:35000000},{n:"Saliba",p:37000000},{n:"Militao",p:33000000}],
