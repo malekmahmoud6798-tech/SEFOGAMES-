@@ -128,7 +128,6 @@ const db = firebase.database();
 
 let currentRoomRef = null;
 const userEmail = localStorage.getItem('userEmail') || 'guest';
-let listeningNormalRoom = false; // عشان المزاد العادي بس
 
 function show(t){
   document.querySelectorAll('.options-menu').forEach(m=>m.classList.remove('active'))
@@ -143,7 +142,7 @@ function generateCode(){
 }
 
 function goToLobby(code, player, type){
-  window.location.href = `loby2.html?room=${code}&player=${player}&type=${type}&name=${encodeURIComponent(userEmail)}`; // <-- اتغيرت هنا
+  window.location.href = `loby2.html?room=${code}&player=${player}&type=${type}&name=${encodeURIComponent(userEmail)}`;
 }
 
 async function createRoom(type){
@@ -158,7 +157,7 @@ async function createRoom(type){
   
   await currentRoomRef.set({
     player1: userEmail,
-    player2: null,
+    player2: "", // فاضية مش null
     type: type,
     status: 'waiting'
   });
@@ -167,18 +166,15 @@ async function createRoom(type){
   document.getElementById('room-' + type).classList.add('active');
   statusEl.textContent = 'في انتظار لاعب 2...';
   
-  // التعديل ده للمزاد العادي بس
-  if(type === 'normal' && !listeningNormalRoom){
-    listeningNormalRoom = true;
-    currentRoomRef.on('value', (snap) => {
-      const data = snap.val();
-      if(data && data.player2 && data.status !== 'started'){
-        currentRoomRef.update({status: 'started'}); // عشان ميعملش ريدايركت مرتين
-        statusEl.textContent = 'لاعب انضم! جاري الدخول للوبي...';
-        setTimeout(()=> goToLobby(code, 1, type), 1000) // اللي عمل الغرفة player 1
-      }
-    });
-  }
+  // بقى بيشتغل لكل الانواع
+  currentRoomRef.on('value', (snap) => {
+    const data = snap.val();
+    if(data && data.player2 && data.player2 !== "" && data.status !== 'started'){
+      currentRoomRef.update({status: 'started'});
+      statusEl.textContent = 'لاعب انضم! جاري الدخول للوبي...';
+      setTimeout(()=> goToLobby(code, 1, type), 1000)
+    }
+  });
 }
 
 async function joinRoom(type){
@@ -191,17 +187,15 @@ async function joinRoom(type){
   if(!snapshot.exists()) return alert('الكود ده مش موجود');
   
   const data = snapshot.val();
-  if(data.player2) return alert('الغرفة ممتلئة');
+  // التعديل المهم هنا
+  if(data.player2 && data.player2 !== "") return alert('الغرفة ممتلئة');
   if(data.status === 'started') return alert('الجيم بدأ خلاص');
   
   await currentRoomRef.update({
     player2: userEmail
   });
 
-  // لو المزاد العادي روح علطول
-  if(type === 'normal'){
-    goToLobby(code, 2, type); // اللي دخل الكود player 2
-  }
+  goToLobby(code, 2, type);
 }
 
 function copyCode(id){
