@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مزاد النجوم | جاري الصيانة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+    --bg:#000;
+    --gold:#D4AF37;
+    --goldLight:#FFD700;
+    --text:#fff;
+    --muted:#777;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    background:var(--bg);
+    font-family:'Tajawal',sans-serif;
+    color:var(--text);
+    min-height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.bg-glow{
+    position:absolute;
+    width:800px;
+    height:800px;
+    background:radial-gradient(circle, rgba(212,175,55,0.12) 0%, transparent 70%);
+    border-radius:50%;
+    filter:blur(100px);
+    animation:glow 5s ease-in-out infinite;
+    z-index:1;
+}
+@keyframes glow{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.particles{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2}
+.content{
+    position:relative;
+    z-index:3;
+    text-align:center;
+    padding:20px;
+    animation:fadeIn 1.5s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+.logo{
+    font-size:24px;
+    font-weight:900;
+    color:var(--gold);
+    letter-spacing:6px;
+    margin-bottom:30px;
+}
+h1{
+    font-size:90px;
+    font-weight:900;
+    background:linear-gradient(90deg,var(--goldLight),var(--text),var(--goldLight));
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:shine 3s linear infinite;
+    margin-bottom:25px;
+}
+@keyframes shine{0%{background-position:0% center}100%{background-position:200% center}}
+.subtitle{
+    font-size:24px;
+    font-weight:300;
+    color:var(--muted);
+    line-height:2;
+    max-width:700px;
+    margin:0 auto 50px auto;
+}
+.line{
+    width:150px;
+    height:2px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    margin:0 auto 50px auto;
+}
+.status{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:15px;
+    font-size:20px;
+    font-weight:700;
+    color:var(--gold);
+    margin-bottom:30px;
+}
+.dot{
+    width:16px;
+    height:16px;
+    background:var(--gold);
+    border-radius:50%;
+    box-shadow:0 0 25px var(--gold);
+    animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:0.4}}
+.footer{
+    position:absolute;
+    bottom:30px;
+    width:100%;
+    text-align:center;
+    font-size:13px;
+    color:#222;
+    font-weight:700;
+    letter-spacing:2px;
+}
+@media(max-width:700px){
+    h1{font-size:50px}
+    .subtitle{font-size:18px}
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<canvas class="particles" id="particles"></canvas>
+
+<div class="content">
+    <div class="logo">STARS AUCTION</div>
+    <h1>نعود قريباً</h1>
+    <p class="subtitle">
+        نقوم بتطوير شامل للمنصة<br>
+        لتقديم تجربة مزادات لا مثيل لها
+    </p>
+    
+    <div class="line"></div>
+
+    <div class="status">
+        <div class="dot"></div>
+        <span>العمل جاري الآن</span>
+    </div>
+</div>
+
+<div class="footer">
+    © 2026 STARS AUCTION
+</div>
+
+<script>
+// 150 جزئية دهبية بتطير لفوق
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+for(let i=0;i<150;i++){
+    particles.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        r:Math.random()*2.5 + 0.5,
+        s:Math.random()*0.8 + 0.2,
+        o:Math.random()*0.5 + 0.3
+    });
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+        p.y -= p.s;
+        if(p.y < -10) p.y = canvas.height + 10;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle = `rgba(212,175,55,${p.o})`;
+        ctx.fill();
+    });
+    requestAnimationFrame(animate);
+}
+animate();
+
+window.addEventListener('resize',()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+});
+</script>
+
+</body>
+</html>
