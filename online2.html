@@ -29,9 +29,9 @@ button:disabled{opacity:0.5;cursor:not-allowed}
 <h1>⚽ مزاد خماسي ⚽</h1>
 
 <div class="stats">
-  <div class="p1"><span id="myName">انت</span>: <span class="money" id="m1">100,000,000</span>$</div>
+  <div class="p1"><span id="myName">...</span>: <span class="money" id="m1">100,000,000</span>$</div>
   <div id="count">1 / 5</div>
-  <div class="p2"><span id="enemyName">الخصم</span>: <span class="money" id="m2">100,000,000</span>$</div>
+  <div class="p2"><span id="enemyName">...</span>: <span class="money" id="m2">100,000,000</span>$</div>
 </div>
 
 <div class="turn" id="turn">-</div>
@@ -60,8 +60,15 @@ const db = firebase.database();
 const urlParams = new URLSearchParams(window.location.search);
 const ROOM_ID = urlParams.get('room');
 const playerNum = parseInt(urlParams.get('p'));
-let myName = urlParams.get('name');
-let enemyName = urlParams.get('enemy');
+let myEmail = urlParams.get('name');
+
+// خد اول جزء من الايميل بس
+function getFirstName(email){
+  if(!email) return "لاعب";
+  return email.split('@')[0].split('.')[0]; // ahmed.mahmoud@gmail -> ahmed
+}
+
+let myName = getFirstName(myEmail);
 
 const roomRef = db.ref('mazad5/' + ROOM_ID);
 
@@ -70,7 +77,6 @@ let currentPosIndex=0, currentPlayer, currentBid=0;
 let turn=1, m1=100000, m2=100000;
 let t1=Array(5).fill(null), t2=Array(5).fill(null);
 let usedPlayers = [];
-let initialized = false;
 
 const playersDB = {
 GK: [{n:"كورتوا ⭐", p:15000000},{n:"اليسون ⭐", p:14000000},{n:"تير شتيجن", p:13000000},{n:"دوناروما", p:14500000},{n:"اوبلاك", p:13500000}],
@@ -84,17 +90,25 @@ positions.forEach((pos,i)=>{
   document.getElementById('t2').innerHTML+=`<div class="slot" id="t2-${i}"><b>${pos}</b><br>-</div>`;
 })
 
-document.getElementById('myName').innerText = myName;
-document.getElementById('enemyName').innerText = enemyName;
+// سجل اسمك في الفايربيز عشان التاني يشوفه
+roomRef.update({['name'+playerNum]: myName})
 
-// نسمع الغرفة علطول
+// نسمع الغرفة
 roomRef.on('value', snap => {
   let data = snap.val() || {};
 
-  // لو مفيش state واللي داخل هو P1 يبدأ هو الجيم
-  if(!data.state && playerNum == 1 &&!initialized){
-    initialized = true;
-    newPlayer();
+  // حط الاسامي من الفايربيز للاتنين
+  if(data.name1) document.getElementById('myName').innerText = playerNum==1? data.name1 : data.name2;
+  if(data.name2) document.getElementById('enemyName').innerText = playerNum==1? data.name2 : data.name1;
+
+  // لو الاتنين موجودين والجيم لسه مبدأش
+  if(data.name1 && data.name2 &&!data.started){
+    roomRef.update({started: true}); // علم ان الجيم بدأ
+  }
+
+  // لو الجيم بدأ ولسه مفيش لاعب
+  if(data.started &&!data.state && playerNum == 1){
+    newPlayer(); // P1 بس اللي يطلع اول لاعب
   }
 
   // مزامنة حالة اللعب للاتنين
@@ -145,7 +159,8 @@ function show(){
   document.getElementById('m2').innerText=m2.toLocaleString();
   document.getElementById('count').innerText=(currentPosIndex+1)+" / 5";
   let myTurn = (turn==playerNum);
-  document.getElementById('turn').innerText = myTurn? "دورك" : "دور " + enemyName;
+  let enemyName = playerNum==1? roomRef.child('name2') : roomRef.child('name1');
+  document.getElementById('turn').innerText = myTurn? "دورك" : "دور " + document.getElementById('enemyName').innerText;
   document.getElementById('bidBtn').disabled =!myTurn;
   document.getElementById('takeBtn').disabled =!myTurn;
 }
