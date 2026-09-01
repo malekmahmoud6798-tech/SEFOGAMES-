@@ -143,32 +143,38 @@ const db = firebase.database();
 
 const urlParams = new URLSearchParams(window.location.search);
 const room = urlParams.get('room');
-const type = urlParams.get('type') || 'pro'; // لازم تبعت type من الصفحة اللي قبلها
+const type = urlParams.get('type') || 'pro';
 const email = urlParams.get('name');
-const amIHost = urlParams.get('player') == '1'; // غيرتها من host ل player
+const amIHost = urlParams.get('player') == '1';
 const myPlayer = amIHost? 1 : 2;
 
 const displayName = email.split('@')[0].split('.').slice(0,2).join(' ');
 document.getElementById('roomCode').innerText = room;
 document.getElementById('p' + myPlayer + 'Avatar').innerText = displayName[0].toUpperCase();
+document.getElementById('p' + myPlayer + 'Name').innerText = displayName;
 
-// المهم: نفس مسار التسجيل اللي في صفحة الانشاء
 const roomRef = db.ref('rooms/' + type + '/' + room);
+
 roomRef.child('player' + myPlayer).update({
   name: displayName,
   ready: false
 });
 
-// اسمع التغيرات من نفس المسار
 roomRef.on('value', (snapshot) => {
   let data = snapshot.val() || {};
 
   for(let i=1; i<=2; i++){
-    if(data['player'+i]?.name){
-      document.getElementById('p'+i+'Name').innerText = data['player'+i].name;
-      document.getElementById('p'+i+'Avatar').innerText = data['player'+i].name[0].toUpperCase();
-      document.getElementById('p'+i+'Status').innerText = data['player'+i].ready? 'جاهز' : '...';
-      if(data['player'+i].ready) {
+    let pData = data['player'+i];
+    if(typeof pData === 'string') {
+      pData = {name: pData.split('@')[0], ready: false};
+      roomRef.child('player'+i).set(pData);
+    }
+
+    if(pData?.name){
+      document.getElementById('p'+i+'Name').innerText = pData.name;
+      document.getElementById('p'+i+'Avatar').innerText = pData.name[0].toUpperCase();
+      document.getElementById('p'+i+'Status').innerText = pData.ready? 'جاهز' : '...';
+      if(pData.ready) {
         document.getElementById('p'+i+'Card').classList.add('ready');
       } else {
         document.getElementById('p'+i+'Card').classList.remove('ready');
@@ -176,9 +182,9 @@ roomRef.on('value', (snapshot) => {
     }
   }
 
-  // لما الاتنين جاهزين انقلهم ل online1.html
+  // المهم هنا: بيودي على online1.html
   if(data.player1?.ready && data.player2?.ready &&!data.started){
-    roomRef.update({started: true}); // عشان متكررش
+    roomRef.update({started: true});
     setTimeout(()=>{
       window.location.href = `online1.html?room=${room}&player=${myPlayer}&type=${type}&name=${encodeURIComponent(email)}`;
     }, 1000);
