@@ -142,7 +142,12 @@ function generateCode(){
 }
 
 function goToLobby(code, player, type){
-  window.location.href = `loby2.html?room=${code}&player=${player}&type=${type}&name=${encodeURIComponent(userEmail)}`;
+  // كل نوع ليه اللوبي بتاعه
+  let lobbyPage = 'loby.html'; // الذهبي default
+  if(type === 'normal') lobbyPage = 'loby2.html';
+  if(type === 'billion') lobbyPage = 'loby3.html';
+  
+  window.location.href = `${lobbyPage}?room=${code}&player=${player}&type=${type}&name=${encodeURIComponent(userEmail)}`;
 }
 
 async function createRoom(type){
@@ -166,7 +171,6 @@ async function createRoom(type){
   document.getElementById('room-' + type).classList.add('active');
   statusEl.textContent = 'في انتظار لاعب 2...';
   
-  // بقى بيشتغل لكل الانواع
   currentRoomRef.on('value', (snap) => {
     const data = snap.val();
     if(data && data.player2 && data.player2 !== "" && data.status !== 'started'){
@@ -187,7 +191,6 @@ async function joinRoom(type){
   if(!snapshot.exists()) return alert('الكود ده مش موجود');
   
   const data = snapshot.val();
-  // التعديل المهم هنا
   if(data.player2 && data.player2 !== "") return alert('الغرفة ممتلئة');
   if(data.status === 'started') return alert('الجيم بدأ خلاص');
   
