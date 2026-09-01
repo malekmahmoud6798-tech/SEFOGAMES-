@@ -22,16 +22,12 @@ input{width:130px;padding:8px;border-radius:8px;border:2px solid #ffd700;backgro
 button{padding:10px 15px;margin:4px;border:none;border-radius:8px;font-weight:900;cursor:pointer;font-family:'Cairo';font-size:16px}
 .bid{background:lime;color:#000}.take{background:red;color:#fff}.skip{background:#555;color:#fff}
 button:disabled{opacity:0.5;cursor:not-allowed}
-#waitScreen{font-size:22px;color:#00ff88;margin:50px 0;font-weight:900}
 </style>
 </head>
 <body>
 
 <h1>⚽ مزاد خماسي ⚽</h1>
 
-<div id="waitScreen">⏳ في انتظار اللاعب الثاني...</div>
-
-<div id="game" style="display:none">
 <div class="stats">
   <div class="p1"><span id="myName">انت</span>: <span class="money" id="m1">100,000,000</span>$</div>
   <div id="count">1 / 5</div>
@@ -52,7 +48,6 @@ button:disabled{opacity:0.5;cursor:not-allowed}
   <button class="take" id="takeBtn" onclick="take()">خده</button>
   <button class="skip" onclick="skip()">تخطي</button>
 </div>
-</div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -72,10 +67,10 @@ const roomRef = db.ref('mazad5/' + ROOM_ID);
 
 const positions = ["GK","CB","CM1","CM2","ST"];
 let currentPosIndex=0, currentPlayer, currentBid=0;
-let turn=1, m1=100000000, m2=100000000;
+let turn=1, m1=100000, m2=100000;
 let t1=Array(5).fill(null), t2=Array(5).fill(null);
 let usedPlayers = [];
-let gameStarted = false;
+let initialized = false;
 
 const playersDB = {
 GK: [{n:"كورتوا ⭐", p:15000000},{n:"اليسون ⭐", p:14000000},{n:"تير شتيجن", p:13000000},{n:"دوناروما", p:14500000},{n:"اوبلاك", p:13500000}],
@@ -89,25 +84,21 @@ positions.forEach((pos,i)=>{
   document.getElementById('t2').innerHTML+=`<div class="slot" id="t2-${i}"><b>${pos}</b><br>-</div>`;
 })
 
-// نسمع الغرفة
+document.getElementById('myName').innerText = myName;
+document.getElementById('enemyName').innerText = enemyName;
+
+// نسمع الغرفة علطول
 roomRef.on('value', snap => {
-  let data = snap.val();
-  if(!data) return;
+  let data = snap.val() || {};
 
-  // لو الاتنين دخلوا نبدأ الجيم
-  if(data.p1 && data.p2 &&!gameStarted){
-    gameStarted = true;
-    document.getElementById('waitScreen').style.display = 'none';
-    document.getElementById('game').style.display = 'block';
-
-    document.getElementById('myName').innerText = playerNum==1? data.p1 : data.p2;
-    document.getElementById('enemyName').innerText = playerNum==1? data.p2 : data.p1;
-
-    if(playerNum == 1) newPlayer(); // P1 بس اللي يبدأ اول لاعب
+  // لو مفيش state واللي داخل هو P1 يبدأ هو الجيم
+  if(!data.state && playerNum == 1 &&!initialized){
+    initialized = true;
+    newPlayer();
   }
 
-  // مزامنة حالة اللعب
-  if(data.state && gameStarted){
+  // مزامنة حالة اللعب للاتنين
+  if(data.state){
     currentPosIndex = data.state.pos;
     currentPlayer = data.state.player;
     currentBid = data.state.bid;
