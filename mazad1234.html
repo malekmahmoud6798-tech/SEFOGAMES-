@@ -128,6 +128,7 @@ const db = firebase.database();
 
 let currentRoomRef = null;
 const userEmail = localStorage.getItem('userEmail') || 'guest';
+let listeningNormalRoom = false; // عشان المزاد العادي بس
 
 function show(t){
   document.querySelectorAll('.options-menu').forEach(m=>m.classList.remove('active'))
@@ -142,8 +143,7 @@ function generateCode(){
 }
 
 function goToLobby(code, player, type){
-  // الاتنين هيروحو نفس الصفحه بنفس الباراميتر
-  window.location.href = `loby.html?room=${code}&player=${player}&type=${type}&name=${encodeURIComponent(userEmail)}`;
+  window.location.href = `loby2.html?room=${code}&player=${player}&type=${type}&name=${encodeURIComponent(userEmail)}`; // <-- اتغيرت هنا
 }
 
 async function createRoom(type){
@@ -167,14 +167,18 @@ async function createRoom(type){
   document.getElementById('room-' + type).classList.add('active');
   statusEl.textContent = 'في انتظار لاعب 2...';
   
-  // استنى لحد ما player2 يخش
-  currentRoomRef.on('value', (snap) => {
-    const data = snap.val();
-    if(data && data.player2){
-      statusEl.textContent = 'لاعب انضم! جاري الدخول للوبي...';
-      setTimeout(()=> goToLobby(code, 1, type), 1000) // اللي عمل الغرفة player 1
-    }
-  });
+  // التعديل ده للمزاد العادي بس
+  if(type === 'normal' && !listeningNormalRoom){
+    listeningNormalRoom = true;
+    currentRoomRef.on('value', (snap) => {
+      const data = snap.val();
+      if(data && data.player2 && data.status !== 'started'){
+        currentRoomRef.update({status: 'started'}); // عشان ميعملش ريدايركت مرتين
+        statusEl.textContent = 'لاعب انضم! جاري الدخول للوبي...';
+        setTimeout(()=> goToLobby(code, 1, type), 1000) // اللي عمل الغرفة player 1
+      }
+    });
+  }
 }
 
 async function joinRoom(type){
@@ -188,12 +192,16 @@ async function joinRoom(type){
   
   const data = snapshot.val();
   if(data.player2) return alert('الغرفة ممتلئة');
+  if(data.status === 'started') return alert('الجيم بدأ خلاص');
   
   await currentRoomRef.update({
-    player2: userEmail,
-    status: 'ready'
+    player2: userEmail
   });
-  goToLobby(code, 2, type); // اللي دخل الكود player 2
+
+  // لو المزاد العادي روح علطول
+  if(type === 'normal'){
+    goToLobby(code, 2, type); // اللي دخل الكود player 2
+  }
 }
 
 function copyCode(id){
