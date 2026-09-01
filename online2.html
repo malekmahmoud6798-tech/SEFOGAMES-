@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=340, initial-scale=1.0">
+<title>مزاد خماسي - الجيم</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+body{background:#0a0a0a;color:#fff;font-family:'Cairo',sans-serif;text-align:center;padding:10px;margin:0 auto;max-width:340px}
+.stats{display:flex;justify-content:space-around;align-items:center;background:#111;padding:12px;border-radius:10px;margin-bottom:10px;font-size:16px}
+.p1{color:#00aaff;font-weight:900}.p2{color:#ff4444;font-weight:900}
+.money{font-size:14px;color:#0f0;font-weight:700}
+.turn{background:#ffd700;color:#000;padding:8px;border-radius:8px;font-weight:700;margin:10px}
+.field{display:flex;justify-content:space-around;gap:5px}
+.team{width:48%;background:#111;border:2px solid #333;border-radius:10px;padding:8px}
+.slot{border:2px solid #555;background:#000;margin:5px;padding:10px;border-radius:8px;font-size:12px;min-height:25px;font-weight:700}
+.slot.filled{border-color:#ffd700;background:#1a1a1a}
+.card{border:3px solid #ffd700;border-radius:15px;padding:15px;margin:15px auto;background:#111}
+.name{font-size:22px;color:#ffd700;margin:5px;font-weight:900}
+.price{font-size:18px;color:#0f0;font-weight:700}
+input{width:130px;padding:8px;border-radius:8px;border:2px solid #ffd700;background:#222;color:#fff;text-align:center;font-family:'Cairo'}
+button{padding:10px 15px;margin:4px;border:none;border-radius:8px;font-weight:900;cursor:pointer;font-family:'Cairo';font-size:16px}
+.bid{background:lime;color:#000}.take{background:red;color:#fff}.skip{background:#555;color:#fff}
+button:disabled{opacity:0.5;cursor:not-allowed}
+#waitScreen{font-size:22px;color:#00ff88;margin:50px 0;font-weight:900}
+</style>
+</head>
+<body>
+
+<h1>⚽ مزاد خماسي ⚽</h1>
+
+<div id="waitScreen">⏳ في انتظار اللاعب الثاني...</div>
+
+<div id="game" style="display:none">
+<div class="stats">
+  <div class="p1"><span id="myName">انت</span>: <span class="money" id="m1">100,000,000</span>$</div>
+  <div id="count">1 / 5</div>
+  <div class="p2"><span id="enemyName">الخصم</span>: <span class="money" id="m2">100,000,000</span>$</div>
+</div>
+
+<div class="turn" id="turn">-</div>
+<div class="field">
+  <div class="team"><h3 class="p1">فريقك</h3><div id="t1"></div></div>
+  <div class="team"><h3 class="p2">فريق الخصم</h3><div id="t2"></div></div>
+</div>
+<div class="card">
+  <div id="pos" style="color:#aaa">المركز</div>
+  <div class="name" id="name">-</div>
+  <div class="price" id="price">-</div>
+  <input id="bidInput" type="number" placeholder="اكتب المزايدة"><br>
+  <button class="bid" id="bidBtn" onclick="bid()">مزايدة</button>
+  <button class="take" id="takeBtn" onclick="take()">خده</button>
+  <button class="skip" onclick="skip()">تخطي</button>
+</div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+<script>
+const firebaseConfig = { databaseURL: "https://mazad-noogom-default-rtdb.firebaseio.com" };
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+const urlParams = new URLSearchParams(window.location.search);
+const ROOM_ID = urlParams.get('room');
+const playerNum = parseInt(urlParams.get('p'));
+let myName = urlParams.get('name');
+let enemyName = urlParams.get('enemy');
+
+const roomRef = db.ref('mazad5/' + ROOM_ID);
+
+const positions = ["GK","CB","CM1","CM2","ST"];
+let currentPosIndex=0, currentPlayer, currentBid=0;
+let turn=1, m1=100000000, m2=100000000;
+let t1=Array(5).fill(null), t2=Array(5).fill(null);
+let usedPlayers = [];
+let gameStarted = false;
+
+const playersDB = {
+GK: [{n:"كورتوا ⭐", p:15000000},{n:"اليسون ⭐", p:14000000},{n:"تير شتيجن", p:13000000},{n:"دوناروما", p:14500000},{n:"اوبلاك", p:13500000}],
+CB: [{n:"فان دايك ⭐", p:40000000},{n:"روبن دياز ⭐", p:38000000},{n:"روديجر", p:35000000},{n:"اراوخو", p:36000000},{n:"ماركينيوس", p:34000000}],
+CM: [{n:"دي بروين ⭐", p:55000000},{n:"بيلينجهام ⭐", p:50000000},{n:"رودري", p:45000000},{n:"فالفيردي", p:40000000},{n:"بيدري", p:42000000}],
+ST: [{n:"هالاند ⭐", p:60000000},{n:"مبابي ⭐", p:65000000},{n:"صلاح ⭐", p:58000000},{n:"كين", p:55000000},{n:"ليفا", p:50000000}]
+};
+
+positions.forEach((pos,i)=>{
+  document.getElementById('t1').innerHTML+=`<div class="slot" id="t1-${i}"><b>${pos}</b><br>-</div>`;
+  document.getElementById('t2').innerHTML+=`<div class="slot" id="t2-${i}"><b>${pos}</b><br>-</div>`;
+})
+
+// نسمع الغرفة
+roomRef.on('value', snap => {
+  let data = snap.val();
+  if(!data) return;
+
+  // لو الاتنين دخلوا نبدأ الجيم
+  if(data.p1 && data.p2 &&!gameStarted){
+    gameStarted = true;
+    document.getElementById('waitScreen').style.display = 'none';
+    document.getElementById('game').style.display = 'block';
+
+    document.getElementById('myName').innerText = playerNum==1? data.p1 : data.p2;
+    document.getElementById('enemyName').innerText = playerNum==1? data.p2 : data.p1;
+
+    if(playerNum == 1) newPlayer(); // P1 بس اللي يبدأ اول لاعب
+  }
+
+  // مزامنة حالة اللعب
+  if(data.state && gameStarted){
+    currentPosIndex = data.state.pos;
+    currentPlayer = data.state.player;
+    currentBid = data.state.bid;
+    turn = data.state.turn;
+    m1 = data.state.m1; m2 = data.state.m2;
+    t1 = data.state.t1; t2 = data.state.t2;
+    usedPlayers = data.state.used || [];
+    if(currentPlayer) show();
+    update();
+  }
+});
+
+async function saveState(){
+  await roomRef.update({state: {
+    pos: currentPosIndex, player: currentPlayer, bid: currentBid, turn,
+    m1, m2, t1, t2, used: usedPlayers
+  }})
+}
+
+function getRandomPlayer(pos){
+  let key = pos.startsWith("CM")? "CM" : pos;
+  let arr = playersDB[key];
+  let available = arr.filter(p =>!usedPlayers.includes(p.n));
+  if(available.length === 0) {usedPlayers = []; available = arr;}
+  let player = available[Math.floor(Math.random()*available.length)];
+  usedPlayers.push(player.n);
+  return player;
+}
+
+function newPlayer(){
+  let posName=positions[currentPosIndex];
+  document.getElementById('pos').innerText="المركز: " + posName;
+  currentPlayer=getRandomPlayer(posName);
+  currentBid=currentPlayer.p;
+  show();
+  saveState();
+}
+
+function show(){
+  document.getElementById('name').innerText=currentPlayer.n;
+  document.getElementById('price').innerText="السعر: "+currentBid.toLocaleString()+"$";
+  document.getElementById('bidInput').value=currentBid+1000000;
+  document.getElementById('m1').innerText=m1.toLocaleString();
+  document.getElementById('m2').innerText=m2.toLocaleString();
+  document.getElementById('count').innerText=(currentPosIndex+1)+" / 5";
+  let myTurn = (turn==playerNum);
+  document.getElementById('turn').innerText = myTurn? "دورك" : "دور " + enemyName;
+  document.getElementById('bidBtn').disabled =!myTurn;
+  document.getElementById('takeBtn').disabled =!myTurn;
+}
+
+async function bid(){
+  if(turn!=playerNum) return;
+  let val=parseInt(document.getElementById('bidInput').value);
+  let money=playerNum==1?m1:m2;
+  if(isNaN(val) || val<=currentBid || val>money) return alert("مزايدة غلط");
+  currentBid=val;
+  turn = turn==1?2:1;
+  show(); saveState();
+}
+
+async function take(){
+  if(turn!=playerNum) return;
+  if(playerNum==1) m1 -= currentBid; else m2 -= currentBid;
+  if(playerNum==1) t1[currentPosIndex] = currentPlayer; else t2[currentPosIndex] = currentPlayer;
+  nextPos();
+}
+
+async function skip(){
+  if(turn!=playerNum) return;
+  let random1 = getRandomPlayer(positions[currentPosIndex]);
+  let random2 = getRandomPlayer(positions[currentPosIndex]);
+  t1[currentPosIndex] = random1;
+  t2[currentPosIndex] = random2;
+  m1 -= random1.p;
+  m2 -= random2.p;
+  nextPos();
+}
+
+function nextPos(){
+  currentPosIndex++;
+  if(currentPosIndex>=5){
+    let score1 = t1.reduce((a,p)=> a + (p? p.p : 0), 0);
+    let score2 = t2.reduce((a,p)=> a + (p? p.p : 0), 0);
+    alert(`انتهى المزاد!\n${(score1/1000000).toFixed(1)}M vs ${(score2/1000000).toFixed(1)}M`);
+    return;
+  }
+  turn=1;
+  newPlayer();
+}
+
+function update(){
+  t1.forEach((p,i)=>{if(p){document.getElementById('t1-'+i).innerHTML=`<b>${positions[i]}</b><br>${p.n}`;document.getElementById('t1-'+i).classList.add('filled')}});
+  t2.forEach((p,i)=>{if(p){document.getElementById('t2-'+i).innerHTML=`<b>${positions[i]}</b><br>${p.n}`;document.getElementById('t2-'+i).classList.add('filled')}});
+}
+</script>
+</body>
+</html>
