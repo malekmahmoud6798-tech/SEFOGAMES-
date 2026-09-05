@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>مزاد نجوم مصر - اساطير وحاليين</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+body{background:#0a0a0a;color:#fff;font-family:'Cairo',sans-serif;text-align:center;padding:10px;margin:0}
+.stats{display:flex;justify-content:space-around;background:#111;padding:10px;border-radius:10px;margin-bottom:10px}
+.p1{color:#c8102e}.p2{color:#fff}
+.turn{background:#ffd700;color:#000;padding:8px;border-radius:8px;font-weight:bold;margin:10px;font-weight:700}
+.card{border:3px solid #ffd700;border-radius:15px;padding:15px;width:350px;margin:15px auto;background:#111}
+.fields-wrapper{display:flex;flex-direction:column;align-items:center;gap:20px;width:100%}
+.pitch{
+  width:95%;max-width:900px;aspect-ratio: 16 / 9;
+  background-image: url('https://i.postimg.cc/JsW3xWN9/field.png');
+  background-size: 100% 100%;background-repeat: no-repeat;background-position: center;
+  border:3px solid #fff;border-radius:12px;position:relative
+}
+.team-label{position:absolute;top:8px;width:100%;text-align:center;font-weight:900;font-size:20px;text-shadow:2px 2px 5px #000}
+.player-slot{
+  position:absolute;width:38px;height:38px;background:rgba(0,0,0,0.9);border:2px solid #fff;
+  border-radius:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;
+  flex-direction:column;font-size:6px;font-weight:900;text-align:center;z-index:10;padding:1px
+}
+.player-slot.filled{border-color:#ffd700;background:rgba(255,215,0,0.3);box-shadow:0 0 8px #ffd700}
+.pos-name{color:#ddd;font-size:6px}.player-name{color:#fff;font-size:7px}
+
+/* احداثيات اللاعيبة */
+.pos-GK{left:5.5%;top:50%}
+.pos-CB1{left:18%;top:30%}.pos-CB2{left:18%;top:70%}
+.pos-LB{left:18%;top:8%}.pos-RB{left:18%;top:92%}
+.pos-CM1{left:42%;top:30%}.pos-CM2{left:42%;top:70%}
+.pos-CAM{left:58%;top:50%}
+.pos-LW{left:78%;top:22%}.pos-ST{left:90%;top:50%}.pos-RW{left:78%;top:78%}
+
+#loading{ position:fixed;top:0;left:0;width:100%;height:100%; background:radial-gradient(circle at center, #1a1a2e 0%, #0a0a0a 100%); display:none;justify-content:center; align-items:center;flex-direction:column;z-index:999; }
+.ball{ width:100px;height:100px;border-radius:50%; background:conic-gradient(from 0deg, #c8102e 0deg 90deg, #fff 90deg 180deg, #000 180deg 270deg, #fff 270deg 360deg); animation:spin 1.5s linear infinite; box-shadow:0 0 30px #ffd700; border:3px solid #ffd700; }
+@keyframes spin{100%{transform:rotate(360deg)}}
+#aiText{margin-top:20px;font-size:24px;color:#ffd700;font-weight:900}
+.result-box{ background:#111;border:2px solid #ffd700;border-radius:20px; padding:20px;margin-top:20px;width:80%;max-width:400px }
+.pos{color:#aaa;font-size:14px}.name{font-size:22px;color:#ffd700;margin:5px;font-weight:900}
+.price{font-size:18px;color:#0f0;font-weight:700}
+.bid-box{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.bid-box button{padding:10px 15px;border:none;border-radius:8px;font-weight:900;cursor:pointer;font-family:'Cairo';font-size:18px}
+.btn-minus{background:#ff4444;color:#fff;width:45px}
+.btn-plus{background:lime;color:#000;width:45px}
+.btn-take{background:red;color:#fff;padding:10px 20px;font-size:16px}
+.btn-bid{background:#00aaff;color:#fff;padding:10px 20px;font-size:16px}
+.current-bid-display{background:#222;border:2px solid #ffd700;border-radius:8px;padding:10px 15px;font-size:16px;font-weight:900;color:#ffd700;min-width:120px}
+button:disabled{opacity:0.5}
+.skip{background:#555;color:#fff;padding:10px 15px;margin-top:8px;border:none;border-radius:8px;font-weight:900;cursor:pointer;font-family:'Cairo';font-size:16px}
+</style>
+</head>
+<body>
+
+<h1>⚽ مزاد نجوم مصر - اساطير وحاليين ⚽</h1>
+<div class="stats"><div class="p1">انت: <span id="m1">200,000,000</span> جنيه</div><div id="count">1 / 11</div><div class="p2">AI: <span id="m2">200,000,000</span> جنيه</div></div>
+<div class="turn" id="turn">دور المزايدة: انت</div>
+
+<div class="fields-wrapper">
+  <div class="pitch"><div class="team-label p1">فريقك</div><div id="t1"></div></div>
+  <div class="pitch"><div class="team-label p2">فريق AI</div><div id="t2"></div></div>
+</div>
+
+<div class="card">
+  <div class="pos" id="pos"></div>
+  <div class="name" id="name"></div>
+  <div class="price" id="price"></div>
+  <div class="bid-box">
+    <button class="btn-minus" onclick="decreaseBid()">-</button>
+    <div class="current-bid-display" id="currentBidDisplay">0 جنيه</div>
+    <button class="btn-plus" onclick="increaseBid()">+</button>
+    <button class="btn-take" onclick="take()">خده</button>
+    <button class="btn-bid" onclick="bid()">مزايدة</button>
+  </div>
+  <button class="skip" onclick="skip()">تخطي</button>
+</div>
+
+<div id="loading"><div class="ball"></div><div id="aiText">الذكاء الاصطناعي يحلل</div><div class="result-box" id="resultBox" style="display:none;"></div></div>
+
+<script>
+const positions = ["GK","LB","CB1","CB2","RB","CAM","CM1","CM2","RW","ST","LW"];
+let usedPlayers = [];
+
+// قاعدة بيانات نجوم مصر - اساطير + حاليين
+const playersDB = {
+GK: {
+  star: [
+    {n:"عصام الحضري ⭐", p:10000000},{n:"محمد الشناوي ⭐", p:12000000},{n:"احمد الشناوي ⭐", p:8000000},
+    {n:"محمد ابو جبل ⭐", p:7000000},{n:"شريف اكرامي ⭐", p:6000000},{n:"نادر السيد ⭐", p:5000000}
+  ],
+  common: [
+    {n:"محمد صبحي", p:3000000},{n:"مهدي سليمان", p:2500000},{n:"عامر عامر", p:2000000},
+    {n:"محمد بسام", p:3500000},{n:"احمد عادل", p:1500000},{n:"محمد عواد", p:4000000}
+  ]
+},
+ST: {
+  star: [
+    {n:"محمود الخطيب ⭐", p:25000000},{n:"حسام حسن ⭐", p:20000000},{n:"عماد متعب ⭐", p:18000000},
+    {n:"مصطفى محمد ⭐", p:15000000},{n:"فلافيو ⭐", p:12000000},{n:"احمد حسن كوكا ⭐", p:13000000}
+  ],
+  common: [
+    {n:"احمد ياسر ريان", p:7000000},{n:"اسلام محارب", p:4000000},{n:"ناصر منسي", p:6000000},
+    {n:"سيف الجزيري", p:8000000},{n:"زياد طارق", p:3500000},{n:"احمد عاطف", p:5000000}
+  ]
+},
+RW: {
+  star: [
+    {n:"محمد ابو تريكة ⭐", p:22000000},{n:"وليد سليمان ⭐", p:15000000},{n:"عبد الله السعيد ⭐", p:17000000},
+    {n:"احمد سيد زيزو ⭐", p:16000000},{n:"رمضان صبحي ⭐", p:14000000},{n:"محمد صلاح ⭐", p:30000000}
+  ],
+  common: [
+    {n:"بيرسي تاو", p:9000000},{n:"طاهر محمد", p:6000000},{n:"احمد مصطفى", p:5000000},
+    {n:"يوسف اوباما", p:7000000},{n:"ابراهيم عادل", p:8000000},{n:"مصطفى فتحي", p:6500000}
+  ]
+},
+LW: {
+  star: [
+    {n:"محمد بركات ⭐", p:18000000},{n:"حسين الشحات ⭐", p:12000000},{n:"محمود كهربا ⭐", p:13000000},
+    {n:"شيكابالا ⭐", p:20000000},{n:"احمد عبد القادر ⭐", p:10000000},{n:"تريزيجيه ⭐", p:25000000}
+  ],
+  common: [
+    {n:"احمد سيد", p:6000000},{n:"كريم بامبو", p:4000000},{n:"مصطفى شلبي", p:7000000},
+    {n:"سيف جعفر", p:4500000},{n:"احمد شريف", p:5500000},{n:"يوسف اسامة", p:5000000}
+  ]
+},
+CAM: {
+  star: [
+    {n:"ابو تريكة CAM ⭐", p:22000000},{n:"عبد الله السعيد CAM ⭐", p:17000000},{n:"وليد سليمان CAM ⭐", p:15000000},
+    {n:"افشه ⭐", p:12000000},{n:"امام عاشور ⭐", p:14000000},{n:"محمد مجدي ⭐", p:11000000}
+  ],
+  common: [
+    {n:"ناصر ماهر", p:7000000},{n:"يوسف اسامة", p:5000000},{n:"محمد مجدي", p:6000000},
+    {n:"احمد رفعت", p:5500000},{n:"بن شرقي", p:11000000},{n:"زياد كمال", p:4500000}
+  ]
+},
+CM: {
+  star: [
+    {n:"حسام غالي ⭐", p:15000000},{n:"طارق حامد ⭐", p:14000000},{n:"ديانج ⭐", p:13000000},
+    {n:"مروان عطية ⭐", p:12000000},{n:"عمرو السولية ⭐", p:11000000},{n:"محمد النني ⭐", p:16000000}
+  ],
+  common: [
+    {n:"محمد عبد العاطي", p:6000000},{n:"نبيل عماد", p:7000000},{n:"محمد فتوح", p:8000000},
+    {n:"زكريا الوردي", p:5500000},{n:"احمد نبيل كوكا", p:5000000},{n:"اليو ديانج", p:9000000}
+  ]
+},
+CB: {
+  star: [
+    {n:"وائل جمعة ⭐", p:16000000},{n:"محمد عبد المنعم ⭐", p:14000000},{n:"محمود الونش ⭐", p:15000000},
+    {n:"محمد هاني CB ⭐", p:10000000},{n:"رامي ربيعة ⭐", p:12000000},{n:"احمد حجازي ⭐", p:17000000}
+  ],
+  common: [
+    {n:"محمود متولي", p:7000000},{n:"حسام عبد المجيد", p:6000000},{n:"احمد رمضان بيكهام", p:5000000},
+    {n:"ياسر ابراهيم", p:8000000},{n:"محمد عبد السلام", p:5500000},{n:"اسامة جلال", p:6500000}
+  ]
+},
+LB: {
+  star: [
+    {n:"محمد عبد الشافي ⭐", p:10000000},{n:"علي معلول ⭐", p:13000000},{n:"احمد فتوح ⭐", p:12000000},
+    {n:"كريم فؤاد ⭐", p:7000000},{n:"محمد حمدي ⭐", p:8000000},{n:"سيد معوض ⭐", p:9000000}
+  ],
+  common: [
+    {n:"محمد اشرف", p:4000000},{n:"احمد ابو الفتوح", p:3500000},{n:"كريم الدبيس", p:4500000},
+    {n:"احمد المحمدي LB", p:5000000},{n:"محمد طارق", p:3000000},{n:"احمد كامل", p:3500000}
+  ]
+},
+RB: {
+  star: [
+    {n:"احمد فتحي ⭐", p:12000000},{n:"اكرم توفيق ⭐", p:10000000},{n:"عمر جابر ⭐", p:9000000},
+    {n:"محمد هاني RB ⭐", p:11000000},{n:"حمزة المثلوثي ⭐", p:8000000},{n:"احمد المحمدي RB ⭐", p:13000000}
+  ],
+  common: [
+    {n:"كريم العرود", p:4000000},{n:"محمد عبد الغني", p:3500000},{n:"احمد توفيق", p:3000000},
+    {n:"مصطفى الزناري", p:4500000},{n:"عمر كمال", p:5000000},{n:"محمد لطفي", p:3500000}
+  ]
+}
+};
+
+let currentPosIndex=0, currentPlayer, currentBid=0, userBid=0, highestBidder=0;
+let turn=1, m1=200000000, m2=200000000;
+let t1=Array(11).fill(null), t2=Array(11).fill(null);
+let isAIThinking = false;
+
+positions.forEach((pos,i)=>{
+  document.getElementById('t1').innerHTML+=`<div class="player-slot pos-${pos}" id="t1-${i}"><div class="pos-name">${pos}</div><div class="player-name">-</div></div>`;
+  document.getElementById('t2').innerHTML+=`<div class="player-slot pos-${pos}" id="t2-${i}"><div class="pos-name">${pos}</div><div class="player-name">-</div></div>`;
+})
+
+function getRandomPlayer(pos){
+  let key = pos.startsWith("CB")? "CB" : pos.startsWith("CM")? "CM" : pos;
+  let data = playersDB[key];let allPlayers = [...data.star,...data.common];
+  let available = allPlayers.filter(p =>!usedPlayers.includes(p.n));
+  if(available.length === 0) {usedPlayers = []; available = allPlayers;}
+  let player = available[Math.floor(Math.random()*available.length)];usedPlayers.push(player.n);return player;
+}
+
+function newPlayer(){
+  isAIThinking = false;let posName=positions[currentPosIndex];
+  document.getElementById('pos').innerText="المركز: " + posName;
+  currentPlayer=getRandomPlayer(posName);currentBid=currentPlayer.p; userBid=currentBid+500000; highestBidder=0;
+  updateBidDisplay();show();
+  if(turn==2) setTimeout(aiMove, 1200);
+}
+
+function updateBidDisplay(){
+  document.getElementById('currentBidDisplay').innerText=userBid.toLocaleString()+" جنيه";
+}
+
+function increaseBid(){
+  let money=turn==1?m1:m2;
+  if(userBid+500000 > money){alert("مفيش فلوس كفاية");return}
+  userBid+=500000;updateBidDisplay();
+}
+
+function decreaseBid(){
+  if(userBid-500000 <= currentBid){alert("اقل حاجة "+(currentBid+500000).toLocaleString());return}
+  userBid-=500000;updateBidDisplay();
+}
+
+function show(){
+  document.getElementById('name').innerText=currentPlayer.n;
+  document.getElementById('price').innerText="السعر الحالي: "+currentBid.toLocaleString()+" جنيه";
+  document.getElementById('bidBtn').disabled = turn==2;document.getElementById('takeBtn').disabled = turn==2;
+}
+
+function bid(){
+  let money=turn==1?m1:m2;
+  if(userBid<=currentBid){alert("لازم تعلي عن "+currentBid.toLocaleString());return}
+  if(userBid>money){alert("مفيش فلوس معاك "+money.toLocaleString());return}
+  currentBid=userBid; highestBidder=turn;
+  document.getElementById('price').innerText="السعر الحالي: "+currentBid.toLocaleString()+" جنيه";
+  turn=turn==1?2:1;document.getElementById('turn').innerText="دور المزايدة: " + (turn==1?"انت":"AI");
+  userBid=currentBid+500000;updateBidDisplay();show();
+  if(turn==2) setTimeout(aiMove, 1200);
+}
+
+function take(){ if(highestBidder==0){alert("لازم حد يزايد الاول");return} doTake(highestBidder); }
+
+function doTake(winner){
+  let loser=winner==1?2:1;
+  if(winner==1){m1-=currentBid; t1[currentPosIndex]=currentPlayer;}
+  else{m2-=currentBid; t2[currentPosIndex]=currentPlayer;}
+  let rand=getRandomPlayer(positions[currentPosIndex]);
+  if(loser==1) t1[currentPosIndex]=rand;else t2[currentPosIndex]=rand;update();nextPos();
+}
+
+function skip(){nextPos()}
+
+function aiEvaluateTeam(team){let score=0;team.forEach(p=>{ if(p){ score += p.p; if(p.n.includes("⭐")) score += 2000000; } });return score}
+function aiShouldBid(){let aiScore = aiEvaluateTeam(t2);let myScore = aiEvaluateTeam(t1);let isStar = currentPlayer.n.includes("⭐");let diff = myScore - aiScore;if(isStar && diff > 0) return true;if(m2 < currentBid) return false;if(diff > 15000000) return true;if(Math.random() < 0.6) return true;return false;}
+
+function aiMove(){
+  if(isAIThinking) return;isAIThinking = true;
+  setTimeout(() => {
+    let shouldBid = aiShouldBid();
+    if(shouldBid && m2 > currentBid + 500000){
+      let increase = 500000 + Math.floor(Math.random()*1500000);
+      if(currentPlayer.n.includes("⭐")) increase += 1000000;
+      let newBid = currentBid + increase;if(newBid > m2) newBid = m2;
+      currentBid = newBid; highestBidder = 2;
+      document.getElementById('price').innerText="السعر الحالي: "+currentBid.toLocaleString()+" جنيه";
+      turn = 1; document.getElementById('turn').innerText="دور المزايدة: انت";
+      userBid=currentBid+500000;updateBidDisplay();show();
+    } else {
+      document.getElementById('turn').innerText="🤖 AI: خده!";
+      setTimeout(() => { doTake(1); }, 800);
+    }
+    isAIThinking = false;
+  }, 1200);
+}
+
+function nextPos(){
+  currentPosIndex++;
+  if(currentPosIndex>=11){
+    document.getElementById('loading').style.display = 'flex';
+    setTimeout(aiEvaluate, 3500);return;
+  }
+  document.getElementById('count').innerText=(currentPosIndex+1)+" / 11";
+  turn=1;document.getElementById('turn').innerText="دور المزايدة: انت";newPlayer();
+}
+
+function aiEvaluate(){
+  let score1 = 0, score2 = 0, stars1=0, stars2=0;
+  t1.forEach(p => { if(p){ score1 += p.p; if(p.n.includes("⭐")) {score1 += 2000000; stars1++;} } });
+  t2.forEach(p => { if(p){ score2 += p.p; if(p.n.includes("⭐")) {score2 += 2000000; stars2++;} } });
+  let winnerText = ""; let winnerColor = "#ffd700";
+  if(score1 > score2) {winnerText = "🏆 الفائز: انت"; winnerColor="lime";}
+  else if(score2 > score1) {winnerText = "🏆 الفائز: الذكاء الاصطناعي"; winnerColor="#ff4444";}
+  else {winnerText = "🤝 النتيجة: تعادل";}
+  document.getElementById('aiText').innerText = "اكتمل التحليل";
+  document.getElementById('resultBox').style.display = "block";
+  document.getElementById('resultBox').innerHTML = `<div style="font-size:24px;font-weight:900;color:${winnerColor};margin-bottom:15px">${winnerText}</div><div style="display:flex;justify-content:space-between;margin:10px 0"><span>فريقك:</span><span style="color:#c8102e;font-weight:700">${(score1/1000000).toFixed(1)} مليون | ${stars1} نجوم</span></div><div style="display:flex;justify-content:space-between;margin:10px 0"><span>فريق AI:</span><span style="color:#ff4444;font-weight:700">${(score2/1000000).toFixed(1)} مليون | ${stars2} نجوم</span></div><button onclick="location.reload()" style="margin-top:20px;width:100%;background:#ffd700;color:#000">🔄 العب تاني</button>`;
+}
+
+function update(){
+  document.getElementById('m1').innerText=m1.toLocaleString();
+  document.getElementById('m2').innerText=m2.toLocaleString();
+  t1.forEach((p,i)=>{if(p){document.getElementById('t1-'+i).querySelector('.player-name').innerText = p.n.split(' ')[0];document.getElementById('t1-'+i).classList.add('filled')}});
+  t2.forEach((p,i)=>{if(p){document.getElementById('t2-'+i).querySelector('.player-name').innerText = p.n.split(' ')[0];document.getElementById('t2-'+i).classList.add('filled')}});
+}
+
+newPlayer();
+</script>
+</body>
+</html>

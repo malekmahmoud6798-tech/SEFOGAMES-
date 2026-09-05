@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>كويز الكورة - L&S GAMES</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color: transparent}
+body{
+  font-family:'Cairo';color:#fff;background:#000;overflow-x:hidden;
+  background: radial-gradient(circle at 50% 20%, #1a0033 0%, #000 60%);
+  padding:15px; padding-top:70px; min-height:100vh;
+}
+
+.header {
+  position: fixed; top: 0; left: 0; width: 100%;
+  background: linear-gradient(135deg, #0f0c29, #302b63);
+  padding: 12px 15px; display: flex; align-items: center; justify-content:space-between;
+  border-bottom: 2px solid #ffd700; z-index: 999; height:60px;
+}
+.back-btn {font-size: 22px; cursor: pointer; color: #00ccff;}
+.header-title {font-size: 18px; font-weight: 900; color: #ffd700;}
+.tickets {background:linear-gradient(135deg,#FFD700,#FF8C00); padding:6px 12px; border-radius:15px; font-weight:900; font-size:14px;}
+
+.quiz-container {
+  max-width:500px; margin:0 auto; background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(15px); border:2px solid #00ccff; border-radius:20px;
+  padding:20px;
+}
+
+.progress-bar {
+  width:100%; height:8px; background:rgba(0,0,0,0.5); border-radius:10px; margin-bottom:15px; overflow:hidden;
+}
+.progress {
+  height:100%; background:linear-gradient(90deg,#00ccff,#ffd700); border-radius:10px;
+  transition:width 0.3s;
+}
+
+.question-count {
+  text-align:center; color:#aaa; font-size:14px; margin-bottom:15px;
+}
+
+.question-box {
+  background:rgba(0,0,0,0.4); padding:20px; border-radius:15px; margin-bottom:20px;
+  border:1px solid rgba(255,215,0,0.3);
+}
+.question {
+  font-size:18px; font-weight:900; color:#ffd700; text-align:center; line-height:1.6;
+}
+
+.answers {
+  display:flex; flex-direction:column; gap:12px;
+}
+.answer-btn {
+  background:rgba(255,255,255,0.05); border:2px solid rgba(0,204,255,0.3);
+  border-radius:12px; padding:15px; font-size:16px; font-weight:700;
+  color:#fff; cursor:pointer; transition:0.3s; font-family:'Cairo';
+}
+.answer-btn:active {transform:scale(0.97)}
+.answer-btn.correct {background:linear-gradient(90deg,#00ff88,#00cc66); border-color:#00ff88; color:#000; animation:correctPulse 0.5s}
+.answer-btn.wrong {background:linear-gradient(90deg,#ff4444,#cc0000); border-color:#ff4444; animation:shake 0.5s}
+.answer-btn.disabled {pointer-events:none; opacity:0.7}
+
+@keyframes correctPulse {0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes shake {0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+.result-screen {
+  display:none; text-align:center; padding:20px;
+}
+.result-icon {font-size:60px; margin-bottom:15px; animation:bounce 1s infinite;}
+@keyframes bounce {0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.result-title {font-size:24px; font-weight:900; color:#ffd700; margin-bottom:10px;}
+.result-score {font-size:18px; color:#aaa; margin-bottom:20px;}
+.reward {background:linear-gradient(135deg,#FFD700,#FF8C00); color:#000; padding:15px; border-radius:15px; font-size:20px; font-weight:900; margin-bottom:15px;}
+.back-home {
+  background:linear-gradient(90deg,#00ccff,#ffd700); border:none; padding:15px 30px;
+  border-radius:12px; font-size:18px; font-weight:900; cursor:pointer; color:#000; font-family:'Cairo'; width:100%;
+}
+
+.timer {
+  text-align:center; font-size:24px; font-weight:900; color:#ffd700; margin-bottom:15px;
+}
+.timer.danger {color:#ff4444; animation:blink 0.5s infinite;}
+@keyframes blink {0%,100%{opacity:1}50%{opacity:0.3}}
+
+.already-played {
+  text-align:center; padding:40px 20px;
+}
+.already-played-icon {font-size:50px; margin-bottom:15px;}
+.already-played-text {font-size:18px; color:#aaa; margin-bottom:20px;}
+</style>
+</head>
+<body>
+
+<audio id="correctSound" src="https://www.soundjay.com/buttons/sounds/button-4.mp3"></audio>
+<audio id="wrongSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+<audio id="tickSound" src="https://www.soundjay.com/clock/sounds/clock-ticking-1.mp3"></audio>
+<audio id="winSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
+
+<div class="header">
+  <div class="back-btn" onclick="window.location.href='games.html'">←</div>
+  <div class="header-title">❓ كويز الكورة</div>
+  <div class="tickets">🎟️ <span id="ticketCount">0</span></div>
+</div>
+
+<div class="quiz-container">
+  <div id="alreadyPlayedScreen" class="already-played" style="display:none">
+    <div class="already-played-icon">🔒</div>
+    <div class="already-played-text">انت لعبت الكويز خلاص النهاردة<br>تعالي بكرة</div>
+    <button class="back-home" onclick="window.location.href='games.html'">رجوع للالعاب</button>
+  </div>
+
+  <div id="quizArea">
+    <div class="progress-bar"><div class="progress" id="progressBar"></div></div>
+    <div class="question-count" id="questionCount">سؤال 1 من 20</div>
+    <div class="timer" id="timer">⏰ 30</div>
+
+    <div id="quizScreen">
+      <div class="question-box">
+        <div class="question" id="questionText">تحميل...</div>
+      </div>
+      <div class="answers" id="answersBox"></div>
+    </div>
+
+    <div class="result-screen" id="resultScreen">
+      <div class="result-icon" id="resultIcon">🏆</div>
+      <div class="result-title" id="resultTitle">احسنت!</div>
+      <div class="result-score" id="resultScore">جبت 8 من 20</div>
+      <div class="reward" id="reward">+5 تذاكر</div>
+      <button class="back-home" onclick="window.location.href='games.html'">رجوع للالعاب</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  // 10 الاولانيين
+  {q:"مين اكتر لاعب جاب اهداف في تاريخ كاس العالم؟", a:["ميسي","رونالدو","كلوزه","نيمار"], correct:2},
+  {q:"مين فاز بكاس العالم 2022؟", a:["فرنسا","الارجنتين","البرازيل","المانيا"], correct:1},
+  {q:"مين صاحب الهدف الذهبي في نهائي 2002؟", a:["رونالدو","ريفالدو","رونالدينيو","كافو"], correct:0},
+  {q:"اي نادي كسب دوري الابطال 2023؟", a:["ريال مدريد","مان سيتي","بايرن","برشلونة"], correct:1},
+  {q:"مين اسطورة الاهلي الملقب بالماجيكو؟", a:["ابو تريكة","الخطيب","بركات","متعب"], correct:0},
+  {q:"مين جاب 5 اهداف في ماتش واحد بدوري الابطال؟", a:["ميسي","ليفاندوفسكي","هالاند","رونالدو"], correct:2},
+  {q:"كام مرة مصر كسبت كاس افريقيا؟", a:["5","6","7","8"], correct:2},
+  {q:"مين المدرب اللي كسب دوري الابطال مع 3 اندية مختلفة؟", a:["جوارديولا","انشيلوتي","كلوب","مورينيو"], correct:1},
+  {q:"مين اسرع هدف في تاريخ كاس العالم؟", a:["11 ثانية","12 ثانية","15 ثانية","20 ثانية"], correct:0},
+  {q:"مين فاز بالكرة الذهبية 2023؟", a:["هالاند","مبابي","ميسي","دي بروين"], correct:2},
+
+  // 10 جداد
+  {q:"مين اكتر لاعب معاه كرات ذهبية؟", a:["رونالدو","ميسي","نيمار","مبابي"], correct:1},
+  {q:"مين فاز ببطولة افريقيا 2019؟", a:["مصر","الجزائر","السنغال","تونس"], correct:1},
+  {q:"مين هداف الدوري المصري 2023؟", a:["زيزو","كهربا","مصطفى شلبي","احمد سيد"], correct:0},
+  {q:"مين فاز بالدوري الانجليزي 2023؟", a:["ارسنال","مان سيتي","ليفربول","تشيلسي"], correct:1},
+  {q:"مين سجل هاتريك في نهائي كاس العالم؟", a:["مبابي","ميسي","بنزيما","جريزمان"], correct:0},
+  {q:"مين حارس ريال مدريد الاساسي؟", a:["كورتوا","لونين","كاسيس","نافاس"], correct:0},
+  {q:"مين لاعب الزمالك الملقب بالفهد؟", a:["شيكابالا","زيزو","بن شرقي","اوباما"], correct:1},
+  {q:"كام لاعب في الملعب من كل فريق؟", a:["10","11","12","9"], correct:1},
+  {q:"مين فاز ببطولة الكونفدرالية 2024؟", a:["الاهلي","الزمالك","نهضة بركان","بيراميدز"], correct:1},
+  {q:"مين مدرب الاهلي الحالي؟", a:["كولر","موسيماني","فايلر","يول"], correct:0}
+];
+
+let currentQ = 0;
+let score = 0;
+let timeLeft = 30;
+let timer;
+let tickets = parseInt(localStorage.getItem('التذاكر') || '0');
+
+const correctSound = document.getElementById('correctSound');
+const wrongSound = document.getElementById('wrongSound');
+const tickSound = document.getElementById('tickSound');
+const winSound = document.getElementById('winSound');
+
+document.getElementById('ticketCount').innerText = tickets;
+
+// تشيك لو لعب قبل كده
+let lastPlayed = localStorage.getItem('quizLastPlayed');
+let today = new Date().toDateString();
+if(lastPlayed === today){
+  document.getElementById('alreadyPlayedScreen').style.display = 'block';
+  document.getElementById('quizArea').style.display = 'none';
+} else {
+  loadQuestion();
+}
+
+function playSound(sound){
+  sound.currentTime = 0;
+  sound.play().catch(()=>{});
+}
+
+function vibrate(ms){
+  if(navigator.vibrate) navigator.vibrate(ms);
+}
+
+function loadQuestion(){
+  clearInterval(timer);
+  timeLeft = 30;
+  document.getElementById('timer').classList.remove('danger');
+  document.getElementById('timer').innerText = `⏰ ${timeLeft}`;
+
+  timer = setInterval(() => {
+    timeLeft--;
+    document.getElementById('timer').innerText = `⏰ ${timeLeft}`;
+
+    if(timeLeft <= 10){
+      document.getElementById('timer').classList.add('danger');
+      playSound(tickSound);
+      vibrate(50);
+    }
+
+    if(timeLeft <= 0){
+      clearInterval(timer);
+      playSound(wrongSound);
+      vibrate(200);
+      checkAnswer(-1);
+    }
+  }, 1000);
+
+  let q = questions[currentQ];
+  document.getElementById('questionText').innerText = q.q;
+  document.getElementById('questionCount').innerText = `سؤال ${currentQ+1} من ${questions.length}`;
+  document.getElementById('progressBar').style.width = `${((currentQ)/questions.length)*100}%`;
+
+  let answersBox = document.getElementById('answersBox');
+  answersBox.innerHTML = '';
+  q.a.forEach((answer, index) => {
+    let btn = document.createElement('button');
+    btn.className = 'answer-btn';
+    btn.innerText = answer;
+    btn.onclick = () => checkAnswer(index);
+    answersBox.appendChild(btn);
+  });
+}
+
+function checkAnswer(selected){
+  clearInterval(timer);
+  let q = questions[currentQ];
+  let buttons = document.querySelectorAll('.answer-btn');
+
+  buttons.forEach((btn, i) => {
+    btn.classList.add('disabled');
+    if(i === q.correct) btn.classList.add('correct');
+    if(i === selected && i!== q.correct) btn.classList.add('wrong');
+  });
+
+  if(selected === q.correct){
+    score++;
+    playSound(correctSound);
+    vibrate(100);
+  } else {
+    playSound(wrongSound);
+    vibrate(200);
+  }
+
+  setTimeout(() => {
+    currentQ++;
+    if(currentQ < questions.length){
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  }, 1500);
+}
+
+function showResult(){
+  document.getElementById('quizScreen').style.display = 'none';
+  document.getElementById('resultScreen').style.display = 'block';
+  document.getElementById('progressBar').style.width = '100%';
+  playSound(winSound);
+
+  // احفظ انه لعب النهاردة
+  localStorage.setItem('quizLastPlayed', new Date().toDateString());
+
+  let earnedTickets = 0;
+  if(score >= 16) earnedTickets = 10;
+  else if(score >= 12) earnedTickets = 7;
+  else if(score >= 8) earnedTickets = 5;
+  else earnedTickets = 2;
+
+  tickets += earnedTickets;
+  localStorage.setItem('التذاكر', tickets);
+
+  document.getElementById('resultScore').innerText = `جبت ${score} من ${questions.length}`;
+  document.getElementById('reward').innerText = `+${earnedTickets} تذاكر`;
+
+  if(score >= 16){
+    document.getElementById('resultIcon').innerText = '🏆';
+    document.getElementById('resultTitle').innerText = 'اسطورة الكورة!';
+  } else if(score >= 12){
+    document.getElementById('resultIcon').innerText = '👏';
+    document.getElementById('resultTitle').innerText = 'ممتاز!';
+  } else if(score >= 8){
+    document.getElementById('resultIcon').innerText = '👍';
+    document.getElementById('resultTitle').innerText = 'كويس';
+  } else {
+    document.getElementById('resultIcon').innerText = '😅';
+    document.getElementById('resultTitle').innerText = 'ذاكر شوية';
+  }
+  document.getElementById('ticketCount').innerText = tickets;
+}
+</script>
+</body>
+</html>

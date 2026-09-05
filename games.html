@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>العاب اضافية - L&S GAMES</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color: transparent}
+body{
+  font-family:'Cairo';color:#fff;background:#000;overflow-x:hidden;
+  background: radial-gradient(circle at 50% 20%, #1a0033 0%, #000 60%);
+  padding-bottom:90px; padding-top:70px;
+}
+
+/* الهيدر */
+.header {
+  position: fixed; top: 0; left: 0; width: 100%;
+  background: linear-gradient(135deg, #0f0c29, #302b63);
+  padding: 12px 15px; display: flex; align-items: center; gap: 12px;
+  border-bottom: 2px solid #ffd700; z-index: 999; height:60px;
+  box-shadow: 0 0 20px rgba(0,204,255,0.5);
+}
+.back-btn {font-size: 22px; cursor: pointer; color: #00ccff; padding:5px}
+.header-title {font-size: 18px; font-weight: 900; color: #ffd700;}
+
+/* العنوان */
+.page-title {
+  text-align:center; padding:20px 15px;
+}
+.page-title h1 {
+  font-family:'Orbitron'; font-size:32px; font-weight:900;
+  background:linear-gradient(90deg,#00ccff,#ffd700,#ff00ff);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  margin-bottom:5px;
+}
+.page-title p {color:#aaa; font-size:14px;}
+
+/* شبكة الالعاب */
+.games-container {
+  padding:15px; display:grid; grid-template-columns:repeat(2,1fr); gap:12px;
+  max-width:500px; margin:0 auto;
+}
+
+.game-box {
+  background:rgba(255,255,255,0.05); backdrop-filter:blur(15px);
+  border:2px solid rgba(0,204,255,0.3); border-radius:20px;
+  padding:20px 10px; text-align:center; cursor:pointer;
+  transition:0.3s; position:relative; overflow:hidden;
+}
+.game-box:active {transform:scale(0.95)}
+.game-box.locked {opacity:0.5; cursor:not-allowed;}
+
+.game-box::before {
+  content:''; position:absolute; top:-2px; left:-2px; right:-2px; bottom:-2px;
+  background:linear-gradient(45deg, #00ccff, #ffd700, #ff00ff);
+  border-radius:20px; z-index:-1; opacity:0; transition:0.3s;
+}
+.game-box:hover::before {opacity:1;}
+
+.game-icon {font-size:45px; margin-bottom:10px; display:block;}
+.game-name {font-size:16px; font-weight:900; color:#ffd700; margin-bottom:5px;}
+.game-desc {font-size:11px; color:#aaa;}
+.coming-soon {
+  position:absolute; top:8px; right:8px;
+  background:red; color:#fff; font-size:9px; font-weight:900;
+  padding:3px 8px; border-radius:10px;
+}
+
+/* شريط سفلي */
+.bottom-bar{
+  position:fixed;z-index:10;bottom:10px;left:50%;transform:translateX(-50%);
+  width:95%;height:65px;
+  background:rgba(10,10,10,0.8);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.1);border-radius:20px;
+  display:flex;justify-content:space-around;align-items:center;
+}
+.nav-btn{color:#888;text-align:center;cursor:pointer;font-size:11px;text-decoration:none}
+.nav-btn.active{color:#00ccff}
+.nav-btn i{font-size:24px;display:block;margin-bottom:3px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="back-btn" onclick="window.location.href='home.html'">←</div>
+  <div class="header-title">العاب اضافية</div>
+</div>
+
+<div class="page-title">
+  <h1>MINI GAMES</h1>
+  <p>اختار اللعبة اللي تعجبك واكسب تذاكر 🎟️</p>
+</div>
+
+<div class="games-container">
+  
+  <!-- لعبة 1 -->
+  <div class="game-box" onclick="goToGame('penalty.html')">
+    <div class="game-icon">🥅</div>
+    <div class="game-name">ضربات جزاء</div>
+    <div class="game-desc">سجل 5 ضربات واكسب</div>
+  </div>
+
+  <!-- لعبة 2 -->
+  <div class="game-box" onclick="goToGame('memory.html')">
+    <div class="game-icon">🧠</div>
+    <div class="game-name">اختبار الذاكرة</div>
+    <div class="game-desc">افتكر مكان الكروت</div>
+  </div>
+
+  <!-- لعبة 3 -->
+  <div class="game-box" onclick="goToGame('spin.html')">
+    <div class="game-icon">🎰</div>
+    <div class="game-name">عجلة الحظ</div>
+    <div class="game-desc">لف واكسب جوائز</div>
+  </div>
+
+  <!-- لعبة 4 -->
+  <div class="game-box" onclick="goToGame('quiz.html')">
+    <div class="game-icon">❓</div>
+    <div class="game-name">كويز الكورة</div>
+    <div class="game-desc">اختبر معلوماتك</div>
+  </div>
+
+  <!-- لعبة 5 -->
+  <div class="game-box" onclick="goToGame('clicker.html')">
+    <div class="game-icon">⚡</div>
+    <div class="game-name">اضغط بسرعة</div>
+    <div class="game-desc">اضغط في 10 ثواني</div>
+  </div>
+
+  <!-- لعبة 6 مقفلة -->
+  <div class="game-box locked">
+    <div class="coming-soon">قريبا</div>
+    <div class="game-icon">🏆</div>
+    <div class="game-name">بطولة سريعة</div>
+    <div class="game-desc">العب ضد صحابك</div>
+  </div>
+
+</div>
+
+<div class="bottom-bar">
+  <a href="home.html" class="nav-btn"><i>🏠</i>الرئيسية</a>
+  <a href="shop.html" class="nav-btn"><i>🛒</i>المتجر</a>
+  <a href="games.html" class="nav-btn active"><i>🎮</i>العاب</a>
+  <a href="ACCOUNT.html" class="nav-btn"><i>👤</i>الحساب</a>
+</div>
+
+<script>
+function goToGame(url){
+  // شاشة تحميل سريعة
+  document.body.style.opacity = '0.5';
+  setTimeout(() => {
+    window.location.href = url;
+  }, 300);
+}
+
+// تأثير الجزيئات الخفيفة
+for(let i=0; i<20; i++){
+  let p = document.createElement('div');
+  p.style.position='fixed';p.style.width='2px';p.style.height='2px';
+  p.style.background='#00aaff';p.style.borderRadius='50%';
+  p.style.left=Math.random()*100+'%';p.style.top=Math.random()*100+'%';
+  p.style.animation=`float ${5+Math.random()*10}s infinite linear`;
+  p.style.boxShadow='0 0 8px #00aaff';p.style.zIndex=-1;
+  document.body.appendChild(p);
+}
+document.head.insertAdjacentHTML('beforeend',`<style>@keyframes float{0%{transform:translateY(0)}100%{transform:translateY(-100vh)}}</style>`)
+</script>
+</body>
+</html>
