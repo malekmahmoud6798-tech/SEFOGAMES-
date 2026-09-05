@@ -2,56 +2,58 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>الاعدادات - L&S GAMES</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color: transparent}
 body{
   font-family:'Cairo';color:#fff;background:#000;
   background: radial-gradient(circle at 50% 20%, #1a0033 0%, #000 60%);
-  padding: 20px; padding-top: 80px;
+  padding: 15px; padding-top: 70px; min-height:100vh;
 }
 
 .header {
   position: fixed; top: 0; left: 0; width: 100%;
   background: linear-gradient(135deg, #0f0c29, #302b63);
-  padding: 15px; display: flex; align-items: center; gap: 15px;
-  border-bottom: 2px solid #ffd700; z-index: 999;
+  padding: 12px 15px; display: flex; align-items: center; gap: 12px;
+  border-bottom: 2px solid #ffd700; z-index: 999; height:60px;
 }
-.back-btn {font-size: 24px; cursor: pointer; color: #00ccff;}
-.header-title {font-size: 22px; font-weight: 900; color: #ffd700;}
+.back-btn {font-size: 22px; cursor: pointer; color: #00ccff; padding:5px}
+.header-title {font-size: 18px; font-weight: 900; color: #ffd700;}
 
-.container {max-width: 600px; margin: 0 auto;}
+.container {max-width: 100%; margin: 0 auto;}
 .section {
-  background: rgba(255,255,255,0.05); backdrop-filter: blur(20px);
-  border: 1px solid rgba(0,204,255,0.3); border-radius: 20px;
-  padding: 20px; margin-bottom: 20px;
+  background: rgba(255,255,255,0.05); backdrop-filter: blur(15px);
+  border: 1px solid rgba(0,204,255,0.3); border-radius: 15px;
+  padding: 15px; margin-bottom: 15px;
 }
 .section-title {
-  font-size: 18px; font-weight: 900; color: #00ccff;
-  margin-bottom: 15px; display: flex; align-items: center; gap: 10px;
+  font-size: 16px; font-weight: 900; color: #00ccff;
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
 }
 
 /* اختيار اللغة */
 .lang-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
 }
 .lang-item {
-  padding: 12px; background: rgba(0,0,0,0.4); border-radius: 12px;
+  padding: 12px 8px; background: rgba(0,0,0,0.4); border-radius: 10px;
   cursor: pointer; border: 2px solid transparent; transition: 0.3s;
-  text-align: center; font-weight: 700;
+  text-align: center; font-weight: 700; font-size:14px;
 }
-.lang-item:hover {border-color: #00ccff;}
+.lang-item:active {transform:scale(0.95)}
 .lang-item.active {border-color: #ffd700; background: rgba(255,215,0,0.2); color: #ffd700;}
 
 /* زرار التبديل */
 .toggle-row {
   display: flex; justify-content: space-between; align-items: center;
   padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size:15px; font-weight:700;
 }
 .toggle-row:last-child {border: none;}
 .toggle-switch {
-  width: 50px; height: 26px; background: #444; border-radius: 20px;
+  width: 48px; height: 26px; background: #444; border-radius: 20px;
   position: relative; cursor: pointer; transition: 0.3s;
 }
 .toggle-switch.active {background: linear-gradient(90deg, #00ccff, #ffd700);}
@@ -60,14 +62,15 @@ body{
   background: white; border-radius: 50%; top: 3px; right: 3px;
   transition: 0.3s;
 }
-.toggle-switch.active::after {right: 27px;}
+.toggle-switch.active::after {right: 25px;}
 
 /* الالعاب المفضلة */
 .games-check {
   display: flex; align-items: center; gap: 10px;
-  padding: 10px; background: rgba(0,0,0,0.3); border-radius: 10px;
-  margin-bottom: 10px; cursor: pointer;
+  padding: 12px; background: rgba(0,0,0,0.3); border-radius: 10px;
+  margin-bottom: 8px; cursor: pointer; font-size:15px; font-weight:700;
 }
+.games-check:active{background:rgba(0,204,255,0.2)}
 .games-check input {width: 20px; height: 20px; accent-color: #ffd700;}
 </style>
 </head>
@@ -181,7 +184,7 @@ function applyLanguage(lang) {
 
   document.querySelectorAll('[data-key]').forEach(el => {
     const key = el.getAttribute('data-key');
-    if(translations[lang][key]) {
+    if(translations[lang] && translations[lang][key]) {
       el.innerText = translations[lang][key];
     }
   });
