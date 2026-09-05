@@ -15,7 +15,6 @@ h1{font-size:28px;font-weight:900;color:#333;margin-bottom:10px;text-align:cente
 .input-group label{display:block;color:#555;font-weight:700;margin-bottom:8px;font-size:15px}
 .input-group input{width:100%;padding:14px 18px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-family:'Cairo';background:#f8f8f8}
 .input-group input:focus{outline:none;border-color:#667eea;background:#fff}
-.input-group input.error-border{border-color:#ff4444}
 .login-btn{width:100%;padding:16px;background: linear-gradient(90deg, #667eea, #764ba2);border:none;border-radius:12px;color:#fff;font-size:18px;font-weight:900;cursor:pointer;margin-top:10px;display:flex;justify-content:center;align-items:center;gap:10px}
 .login-btn:disabled{opacity:0.6;cursor:not-allowed}
 .google-btn{width:100%;padding:14px;background:#fff;border:2px solid #e0e0e0;border-radius:12px;color:#333;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:15px;font-family:'Cairo'}
@@ -27,7 +26,7 @@ h1{font-size:28px;font-weight:900;color:#333;margin-bottom:10px;text-align:cente
 .spinner{border:3px solid #f3f3f3;border-top:3px solid #fff;border-radius:50%;width:20px;height:20px;animation:spin 1s linear infinite;display:none}
 @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(102,126,234,0.9);display:none;justify-content:center;align-items:center;flex-direction:column;z-index:999;color:#fff;font-size:22px;font-weight:900}
-.overlay .spinner{width:60px;height:60px;border:5px solid rgba(255,255,255,0.3);border-top:5px solid #fff;margin-bottom:15px}
+.overlay.spinner{width:60px;height:60px;border:5px solid rgba(255,255,255,0.3);border-top:5px solid #fff;margin-bottom:15px}
 .forgot{ text-align: left; margin-top: -10px; margin-bottom: 15px; }
 .forgot a{color:#667eea;font-size:13px;font-weight:700;text-decoration:none;cursor:pointer}
 </style>
@@ -39,22 +38,22 @@ h1{font-size:28px;font-weight:900;color:#333;margin-bottom:10px;text-align:cente
   <p class="subtitle" id="formSubtitle">دخل بياناتك عشان تبدأ المزاد</p>
   <p class="error" id="errorMsg"></p>
   <p class="success" id="successMsg"></p>
-  
+
   <form id="authForm">
     <div class="input-group">
       <label>البريد الالكتروني</label>
       <input type="email" id="email" placeholder="example@email.com" required>
     </div>
-    
+
     <div class="input-group" id="passwordGroup">
       <label>كلمة السر</label>
       <input type="password" id="password" placeholder="6 حروف على الاقل" required minlength="6">
     </div>
-    
+
     <div class="forgot" id="forgotDiv">
       <a id="forgotBtn">نسيت كلمة السر؟</a>
     </div>
-    
+
     <button type="submit" class="login-btn" id="submitBtn">
       <span id="btnText">دخول</span>
       <div class="spinner" id="btnSpinner"></div>
@@ -62,16 +61,15 @@ h1{font-size:28px;font-weight:900;color:#333;margin-bottom:10px;text-align:cente
   </form>
 
   <div class="divider" id="divider">او</div>
-  
+
   <button type="button" class="google-btn" id="googleLogin">
     <img src="https://www.svgrepo.com/show/355037/google.svg" width="20">
     الدخول بحساب جوجل
   </button>
-  
+
   <p class="signup">معندكش حساب؟ <a id="toggleBtn">سجل الآن</a></p>
 </div>
 
-<!-- شاشة اللودينج -->
 <div class="overlay" id="overlay">
   <div class="spinner"></div>
   <p id="overlayText">جاري تسجيل الدخول...</p>
@@ -80,6 +78,7 @@ h1{font-size:28px;font-weight:900;color:#333;margin-bottom:10px;text-align:cente
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC_55Rv6wCni9EwQurtUILswB1WjkXp6hM",
@@ -93,7 +92,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getDatabase(app);
 const provider = new GoogleAuthProvider();
+provider.addScope('email'); // مهم عشان يجيب الايميل
+provider.addScope('profile'); // مهم عشان يجيب الصورة
 
 const errorMsg = document.getElementById('errorMsg');
 const successMsg = document.getElementById('successMsg');
@@ -106,20 +108,47 @@ const btnText = document.getElementById('btnText');
 const submitBtn = document.getElementById('submitBtn');
 const forgotBtn = document.getElementById('forgotBtn');
 
+// دالة واحدة تحفظ كل حاجة بجد
+function saveUserData(user) {
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('email', user.email); // الايميل الحقي من جوجل
+    localStorage.setItem('avatar', user.photoURL || 'https://i.imgur.com/8Km9tLL.png'); // الصورة الحقي
+    localStorage.setItem('uid', user.uid);
+    localStorage.setItem('displayName', user.displayName || user.email.split('@')[0]);
+}
+
+async function loadUserData(uid) {
+    const userRef = ref(db, 'users/' + uid);
+    const snapshot = await get(userRef);
+    if(snapshot.exists()){
+        const data = snapshot.val();
+        localStorage.setItem('xp', data.xp || 0);
+        localStorage.setItem('التذاكر', data.tickets || 5);
+    } else {
+        await set(userRef, { xp: 0, tickets: 5, email: auth.currentUser.email });
+        localStorage.setItem('xp', 0);
+        localStorage.setItem('التذاكر', 5);
+    }
+}
+
 // تشيك لو راجع من جوجل
-getRedirectResult(auth).then((result) => {
+getRedirectResult(auth).then(async (result) => {
   if(result && result.user){
-    localStorage.setItem('userEmail', result.user.email); // <- التعديل 1
-    window.location.href = 'home.html'; 
+    saveUserData(result.user);
+    await loadUserData(result.user.uid);
+    window.location.href = 'home.html';
   }
-}).catch((error) => { errorMsg.innerText = 'خطأ: ' + error.message; });
+}).catch((error) => {
+    if(error.code!== 'auth/no-auth-event') errorMsg.innerText = 'خطأ: ' + error.message;
+});
 
 // لو مسجل قبل كده روح للهوم
-onAuthStateChanged(auth, user => { 
-  if(user){ 
-    localStorage.setItem('userEmail', user.email); // <- التعديل 2
-    window.location.href = 'home.html'; 
-  } 
+onAuthStateChanged(auth, async user => {
+  if(user){
+    saveUserData(user);
+    await loadUserData(user.uid);
+    window.location.href = 'home.html';
+  }
 });
 
 let isLogin = true;
@@ -130,19 +159,18 @@ const forgotDiv = document.getElementById('forgotDiv');
 const divider = document.getElementById('divider');
 
 toggleBtn.onclick = () => {
-  isLogin = !isLogin;
-  formTitle.innerText = isLogin ? 'تسجيل الدخول' : 'انشاء حساب جديد';
-  formSubtitle.innerText = isLogin ? 'دخل بياناتك عشان تبدأ المزاد' : 'سجل بياناتك للانضمام';
-  btnText.innerText = isLogin ? 'دخول' : 'تسجيل';
-  toggleBtn.innerText = isLogin ? 'سجل الآن' : 'عندك حساب؟ سجل دخول';
-  forgotDiv.style.display = isLogin ? 'block' : 'none';
-  divider.style.display = isLogin ? 'block' : 'none';
-  document.getElementById('googleLogin').style.display = isLogin ? 'flex' : 'none';
+  isLogin =!isLogin;
+  formTitle.innerText = isLogin? 'تسجيل الدخول' : 'انشاء حساب جديد';
+  formSubtitle.innerText = isLogin? 'دخل بياناتك عشان تبدأ المزاد' : 'سجل بياناتك للانضمام';
+  btnText.innerText = isLogin? 'دخول' : 'تسجيل';
+  toggleBtn.innerText = isLogin? 'سجل الآن' : 'عندك حساب؟ سجل دخول';
+  forgotDiv.style.display = isLogin? 'block' : 'none';
+  divider.style.display = isLogin? 'block' : 'none';
+  document.getElementById('googleLogin').style.display = isLogin? 'flex' : 'none';
   errorMsg.innerText = '';
   successMsg.innerText = '';
 }
 
-// دالة التحقق
 function validateForm(email, password){
   errorMsg.innerText = '';
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -151,44 +179,44 @@ function validateForm(email, password){
   return true;
 }
 
-// نسيت كلمة السر
 forgotBtn.onclick = () => {
   const email = emailInput.value.trim();
   if(!email){ errorMsg.innerText = 'اكتب ايميلك الاول'; return; }
   overlay.style.display = 'flex';
   overlayText.innerText = 'جاري ارسال رابط الاستعادة...';
   sendPasswordResetEmail(auth, email)
-  .then(() => {
+ .then(() => {
     overlay.style.display = 'none';
     successMsg.innerText = '✅ تم ارسال رابط اعادة التعيين على ايميلك';
   })
-  .catch(() => {
+ .catch(() => {
     overlay.style.display = 'none';
     errorMsg.innerText = 'الايميل ده مش متسجل عندنا';
   });
 }
 
-// Email/Password
-document.getElementById('authForm').addEventListener('submit', (e) => {
+document.getElementById('authForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = emailInput.value.trim();
   const password = passwordInput.value.trim();
-  
+
   if(!validateForm(email, password)) return;
-  
+
   submitBtn.disabled = true;
   btnSpinner.style.display = 'block';
   btnText.innerText = 'جاري الدخول...';
   overlay.style.display = 'flex';
   overlayText.innerText = 'جاري تسجيل الدخول...';
-  
+
   if(isLogin){
     signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      localStorage.setItem('userEmail', email); // <- التعديل 3
+   .then(async (userCredential) => {
+      const user = userCredential.user;
+      saveUserData(user);
+      await loadUserData(user.uid);
       window.location.href = 'home.html'
     })
-    .catch(() => {
+   .catch(() => {
       overlay.style.display = 'none';
       submitBtn.disabled = false;
       btnSpinner.style.display = 'none';
@@ -197,11 +225,13 @@ document.getElementById('authForm').addEventListener('submit', (e) => {
     });
   } else {
     createUserWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      localStorage.setItem('userEmail', email); // <- التعديل 4
+   .then(async (userCredential) => {
+      const user = userCredential.user;
+      saveUserData(user);
+      await loadUserData(user.uid);
       window.location.href = 'home.html'
     })
-    .catch(() => {
+   .catch(() => {
       overlay.style.display = 'none';
       submitBtn.disabled = false;
       btnSpinner.style.display = 'none';
@@ -211,7 +241,6 @@ document.getElementById('authForm').addEventListener('submit', (e) => {
   }
 });
 
-// Google Login
 document.getElementById('googleLogin').addEventListener('click', () => {
   overlay.style.display = 'flex';
   overlayText.innerText = 'جاري تسجيل الدخول بجوجل...';
