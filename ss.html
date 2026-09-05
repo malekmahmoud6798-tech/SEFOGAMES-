@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>الاعدادات - L&S GAMES</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Cairo';color:#fff;background:#000;
+  background: radial-gradient(circle at 50% 20%, #1a0033 0%, #000 60%);
+  padding: 20px; padding-top: 80px;
+}
+
+.header {
+  position: fixed; top: 0; left: 0; width: 100%;
+  background: linear-gradient(135deg, #0f0c29, #302b63);
+  padding: 15px; display: flex; align-items: center; gap: 15px;
+  border-bottom: 2px solid #ffd700; z-index: 999;
+}
+.back-btn {font-size: 24px; cursor: pointer; color: #00ccff;}
+.header-title {font-size: 22px; font-weight: 900; color: #ffd700;}
+
+.container {max-width: 600px; margin: 0 auto;}
+.section {
+  background: rgba(255,255,255,0.05); backdrop-filter: blur(20px);
+  border: 1px solid rgba(0,204,255,0.3); border-radius: 20px;
+  padding: 20px; margin-bottom: 20px;
+}
+.section-title {
+  font-size: 18px; font-weight: 900; color: #00ccff;
+  margin-bottom: 15px; display: flex; align-items: center; gap: 10px;
+}
+
+/* اختيار اللغة */
+.lang-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+}
+.lang-item {
+  padding: 12px; background: rgba(0,0,0,0.4); border-radius: 12px;
+  cursor: pointer; border: 2px solid transparent; transition: 0.3s;
+  text-align: center; font-weight: 700;
+}
+.lang-item:hover {border-color: #00ccff;}
+.lang-item.active {border-color: #ffd700; background: rgba(255,215,0,0.2); color: #ffd700;}
+
+/* زرار التبديل */
+.toggle-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.toggle-row:last-child {border: none;}
+.toggle-switch {
+  width: 50px; height: 26px; background: #444; border-radius: 20px;
+  position: relative; cursor: pointer; transition: 0.3s;
+}
+.toggle-switch.active {background: linear-gradient(90deg, #00ccff, #ffd700);}
+.toggle-switch::after {
+  content: ''; position: absolute; width: 20px; height: 20px;
+  background: white; border-radius: 50%; top: 3px; right: 3px;
+  transition: 0.3s;
+}
+.toggle-switch.active::after {right: 27px;}
+
+/* الالعاب المفضلة */
+.games-check {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px; background: rgba(0,0,0,0.3); border-radius: 10px;
+  margin-bottom: 10px; cursor: pointer;
+}
+.games-check input {width: 20px; height: 20px; accent-color: #ffd700;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="back-btn" onclick="window.location.href='home.html'">←</div>
+  <div class="header-title" data-key="settings">الاعدادات</div>
+</div>
+
+<div class="container">
+
+  <!-- اللغة -->
+  <div class="section">
+    <div class="section-title">🌍 <span data-key="language">اللغة</span></div>
+    <div class="lang-grid" id="langGrid">
+      <div class="lang-item" data-lang="ar">العربية</div>
+      <div class="lang-item" data-lang="en">English</div>
+      <div class="lang-item" data-lang="fr">Français</div>
+      <div class="lang-item" data-lang="es">Español</div>
+      <div class="lang-item" data-lang="de">Deutsch</div>
+      <div class="lang-item" data-lang="tr">Türkçe</div>
+      <div class="lang-item" data-lang="ru">Русский</div>
+      <div class="lang-item" data-lang="hi">हिन्दी</div>
+    </div>
+  </div>
+
+  <!-- الاشعارات -->
+  <div class="section">
+    <div class="section-title">🔔 <span data-key="notifications">الاشعارات</span></div>
+    <div class="toggle-row">
+      <span data-key="allow_notifications">السماح بالاشعارات</span>
+      <div class="toggle-switch" id="notifToggle"></div>
+    </div>
+  </div>
+
+  <!-- الالعاب المفضلة -->
+  <div class="section">
+    <div class="section-title">⭐ <span data-key="favorite_games">الالعاب المفضلة</span></div>
+    <div id="favGames">
+      <label class="games-check">
+        <input type="checkbox" data-game="mazad">
+        <span data-key="auction">مزاد النجوم</span>
+      </label>
+      <label class="games-check">
+        <input type="checkbox" data-game="mini">
+        <span data-key="mini_games">العاب مصغرة</span>
+      </label>
+      <label class="games-check">
+        <input type="checkbox" data-game="deal">
+        <span>DEAL OR NO DEAL</span>
+      </label>
+      <label class="games-check">
+        <input type="checkbox" data-game="sombiro">
+        <span>السومبيرو</span>
+      </label>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ترجمات كل اللغات
+const translations = {
+  ar: {
+    settings: "الاعدادات", language: "اللغة", notifications: "الاشعارات",
+    allow_notifications: "السماح بالاشعارات", favorite_games: "الالعاب المفضلة",
+    auction: "مزاد النجوم", mini_games: "العاب مصغرة"
+  },
+  en: {
+    settings: "Settings", language: "Language", notifications: "Notifications",
+    allow_notifications: "Allow Notifications", favorite_games: "Favorite Games",
+    auction: "Stars Auction", mini_games: "Mini Games"
+  },
+  fr: {
+    settings: "Paramètres", language: "Langue", notifications: "Notifications",
+    allow_notifications: "Autoriser les notifications", favorite_games: "Jeux Favoris",
+    auction: "Enchères de Stars", mini_games: "Mini Jeux"
+  },
+  es: {
+    settings: "Ajustes", language: "Idioma", notifications: "Notificaciones",
+    allow_notifications: "Permitir Notificaciones", favorite_games: "Juegos Favoritos",
+    auction: "Subasta de Estrellas", mini_games: "Mini Juegos"
+  },
+  de: {
+    settings: "Einstellungen", language: "Sprache", notifications: "Benachrichtigungen",
+    allow_notifications: "Benachrichtigungen zulassen", favorite_games: "Lieblingsspiele",
+    auction: "Star-Auktion", mini_games: "Mini-Spiele"
+  },
+  tr: {
+    settings: "Ayarlar", language: "Dil", notifications: "Bildirimler",
+    allow_notifications: "Bildirimlere İzin Ver", favorite_games: "Favori Oyunlar",
+    auction: "Yıldız Müzayedesi", mini_games: "Mini Oyunlar"
+  },
+  ru: {
+    settings: "Настройки", language: "Язык", notifications: "Уведомления",
+    allow_notifications: "Разрешить уведомления", favorite_games: "Любимые игры",
+    auction: "Аукцион Звезд", mini_games: "Мини Игры"
+  },
+  hi: {
+    settings: "सेटिंग्स", language: "भाषा", notifications: "सूचनाएं",
+    allow_notifications: "सूचनाएं अनुमति दें", favorite_games: "पसंदीदा खेल",
+    auction: "स्टार नीलामी", mini_games: "मिनी गेम्स"
+  }
+};
+
+// تطبيق اللغة
+function applyLanguage(lang) {
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar'? 'rtl' : 'ltr';
+
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.getAttribute('data-key');
+    if(translations[lang][key]) {
+      el.innerText = translations[lang][key];
+    }
+  });
+
+  document.querySelectorAll('.lang-item').forEach(item => {
+    item.classList.remove('active');
+    if(item.dataset.lang === lang) item.classList.add('active');
+  });
+
+  localStorage.setItem('appLanguage', lang);
+}
+
+// تحميل الاعدادات
+function loadSettings() {
+  let savedLang = localStorage.getItem('appLanguage') || 'ar';
+  applyLanguage(savedLang);
+
+  let notif = localStorage.getItem('notifications') === 'true';
+  if(notif) document.getElementById('notifToggle').classList.add('active');
+
+  let favs = JSON.parse(localStorage.getItem('favoriteGames') || '[]');
+  document.querySelectorAll('#favGames input').forEach(input => {
+    if(favs.includes(input.dataset.game)) input.checked = true;
+  });
+}
+
+// احداث
+document.querySelectorAll('.lang-item').forEach(item => {
+  item.onclick = () => applyLanguage(item.dataset.lang);
+});
+
+document.getElementById('notifToggle').onclick = function() {
+  this.classList.toggle('active');
+  let status = this.classList.contains('active');
+  localStorage.setItem('notifications', status);
+  if(status && Notification.permission!== 'granted') {
+    Notification.requestPermission();
+  }
+};
+
+document.querySelectorAll('#favGames input').forEach(input => {
+  input.onchange = () => {
+    let favs = [];
+    document.querySelectorAll('#favGames input:checked').forEach(i => {
+      favs.push(i.dataset.game);
+    });
+    localStorage.setItem('favoriteGames', JSON.stringify(favs));
+  };
+});
+
+window.onload = loadSettings;
+</script>
+</body>
+</html>
