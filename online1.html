@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 <title>مزاد النجوم - Ultimate</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <style>
 
-/* =========================
-   GENERAL
-========================= */
+/* =====================================================
+GENERAL
+===================================================== */
 
 *{
     box-sizing:border-box;
@@ -60,9 +62,9 @@ h1{
     background:
     linear-gradient(
         90deg,
-        #ffffff,
+        #fff,
         #ffd700,
-        #ffffff,
+        #fff,
         #ffd700
     );
 
@@ -72,11 +74,10 @@ h1{
     color:transparent;
 
     animation:titleMove 5s linear infinite;
-
-    text-shadow:0 0 30px rgba(255,215,0,.25);
 }
 
 @keyframes titleMove{
+
     0%{
         background-position:0%;
     }
@@ -84,24 +85,20 @@ h1{
     100%{
         background-position:300%;
     }
+
 }
-
-
-/* =========================
-   MAIN WRAPPER
-========================= */
 
 .app{
     width:min(1450px,96%);
     margin:auto;
 }
 
-
-/* =========================
-   STATS
-========================= */
+/* =====================================================
+STATS
+===================================================== */
 
 .stats{
+
     display:grid;
 
     grid-template-columns:
@@ -134,6 +131,7 @@ h1{
 }
 
 .money-box{
+
     padding:12px;
 
     border-radius:14px;
@@ -148,20 +146,19 @@ h1{
 }
 
 .money-box.blue{
+
     color:#56c7ff;
 
-    box-shadow:
-    inset 0 0 20px rgba(0,170,255,.08);
 }
 
 .money-box.red{
+
     color:#ff7474;
 
-    box-shadow:
-    inset 0 0 20px rgba(255,60,60,.08);
 }
 
 .money-value{
+
     display:block;
 
     margin-top:4px;
@@ -174,6 +171,7 @@ h1{
 }
 
 #count{
+
     padding:10px 15px;
 
     border-radius:50px;
@@ -191,17 +189,14 @@ h1{
         #ffd700,
         #c98700
     );
-
-    box-shadow:
-    0 0 25px rgba(255,215,0,.25);
 }
 
-
-/* =========================
-   TURN
-========================= */
+/* =====================================================
+TURN
+===================================================== */
 
 .turn{
+
     margin:10px auto 18px;
 
     width:min(600px,95%);
@@ -209,8 +204,6 @@ h1{
     padding:12px 18px;
 
     border-radius:14px;
-
-    color:#fff;
 
     font-weight:900;
 
@@ -222,17 +215,14 @@ h1{
     );
 
     border:1px solid rgba(255,215,0,.4);
-
-    box-shadow:
-    0 10px 30px rgba(0,0,0,.3);
 }
 
-
-/* =========================
-   FIELDS
-========================= */
+/* =====================================================
+FIELDS
+===================================================== */
 
 .field-container{
+
     display:grid;
 
     grid-template-columns:
@@ -246,6 +236,7 @@ h1{
 }
 
 .team-wrap{
+
     border-radius:20px;
 
     overflow:hidden;
@@ -259,6 +250,7 @@ h1{
 }
 
 .team-title{
+
     padding:13px;
 
     font-size:18px;
@@ -267,7 +259,6 @@ h1{
 }
 
 .team-title.blue{
-    color:#fff;
 
     background:
     linear-gradient(
@@ -279,7 +270,6 @@ h1{
 }
 
 .team-title.red{
-    color:#fff;
 
     background:
     linear-gradient(
@@ -291,6 +281,7 @@ h1{
 }
 
 .pitch{
+
     width:100%;
 
     aspect-ratio:7/9;
@@ -317,6 +308,7 @@ h1{
 }
 
 .pitch::before{
+
     content:"";
 
     position:absolute;
@@ -333,6 +325,7 @@ h1{
 }
 
 .pitch::after{
+
     content:"";
 
     position:absolute;
@@ -353,6 +346,7 @@ h1{
 }
 
 .penalty{
+
     position:absolute;
 
     bottom:0;
@@ -372,6 +366,7 @@ h1{
 }
 
 .goal{
+
     position:absolute;
 
     bottom:0;
@@ -390,12 +385,12 @@ h1{
     border-bottom:none;
 }
 
-
-/* =========================
-   PLAYER ON FIELD
-========================= */
+/* =====================================================
+PLAYER ON FIELD
+===================================================== */
 
 .player-spot{
+
     position:absolute;
 
     width:82px;
@@ -408,6 +403,7 @@ h1{
 }
 
 .pos-label{
+
     position:absolute;
 
     top:-12px;
@@ -430,6 +426,7 @@ h1{
 }
 
 .mini-card{
+
     width:64px;
 
     height:76px;
@@ -455,18 +452,18 @@ h1{
     box-shadow:
     0 8px 15px rgba(0,0,0,.4);
 
-    transition:
-    transform .3s,
-    box-shadow .3s;
+    transition:.3s;
 }
 
 .mini-card:hover{
+
     transform:
     translateY(-5px)
     scale(1.08);
 }
 
 .mini-card::before{
+
     content:"";
 
     position:absolute;
@@ -482,6 +479,7 @@ h1{
 }
 
 .mini-card.empty{
+
     opacity:.3;
 
     filter:grayscale(1);
@@ -492,6 +490,7 @@ h1{
 }
 
 .mini-rating{
+
     position:absolute;
 
     top:5px;
@@ -506,6 +505,7 @@ h1{
 }
 
 .mini-pos{
+
     position:absolute;
 
     top:20px;
@@ -518,6 +518,7 @@ h1{
 }
 
 .mini-name{
+
     position:relative;
 
     z-index:2;
@@ -533,12 +534,12 @@ h1{
     text-overflow:ellipsis;
 }
 
-
-/* =========================
-   PLAYER CARD
-========================= */
+/* =====================================================
+CARD
+===================================================== */
 
 .card-area{
+
     display:flex;
 
     justify-content:center;
@@ -547,6 +548,7 @@ h1{
 }
 
 .player-card{
+
     width:min(360px,92vw);
 
     min-height:530px;
@@ -565,8 +567,6 @@ h1{
 
     justify-content:space-between;
 
-    transform:translateY(0);
-
     animation:cardEnter .6s ease;
 
     box-shadow:
@@ -576,32 +576,30 @@ h1{
 @keyframes cardEnter{
 
     0%{
+
         opacity:0;
 
         transform:
         scale(.75)
         rotateY(30deg);
+
     }
 
     100%{
+
         opacity:1;
 
         transform:
         scale(1)
         rotateY(0);
+
     }
 
 }
 
-
-/* =========================
-   GOLD CARD
-========================= */
-
 .card-gold{
 
     background:
-
     radial-gradient(
         circle at 50% 20%,
         #fff4a3,
@@ -618,15 +616,9 @@ h1{
     0 30px 60px rgba(0,0,0,.5);
 }
 
-
-/* =========================
-   ICON CARD
-========================= */
-
 .card-icon{
 
     background:
-
     radial-gradient(
         circle at 50% 20%,
         #fffdf0,
@@ -643,18 +635,12 @@ h1{
     0 30px 70px rgba(0,0,0,.55);
 }
 
-
-/* =========================
-   GOAT CARD
-========================= */
-
 .card-goat{
 
     background:
-
     radial-gradient(
         circle at 50% 10%,
-        #ffffff,
+        #fff,
         #ffd700 25%,
         #7a00ff 58%,
         #090014 100%
@@ -697,12 +683,8 @@ h1{
 
 }
 
-
-/* =========================
-   CARD CONTENT
-========================= */
-
 .card-top{
+
     display:flex;
 
     justify-content:space-between;
@@ -715,6 +697,7 @@ h1{
 }
 
 .rating{
+
     font-family:'Orbitron';
 
     font-size:48px;
@@ -725,6 +708,7 @@ h1{
 }
 
 .position{
+
     font-family:'Orbitron';
 
     font-size:17px;
@@ -735,6 +719,7 @@ h1{
 }
 
 .card-type{
+
     padding:7px 12px;
 
     border-radius:20px;
@@ -749,6 +734,7 @@ h1{
 }
 
 .player-photo{
+
     width:220px;
 
     height:220px;
@@ -783,6 +769,7 @@ h1{
 }
 
 .player-name{
+
     position:relative;
 
     z-index:2;
@@ -796,9 +783,6 @@ h1{
     text-align:center;
 
     margin-top:5px;
-
-    text-shadow:
-    0 2px 5px rgba(0,0,0,.25);
 }
 
 .card-price{
@@ -818,10 +802,9 @@ h1{
     font-weight:900;
 }
 
-
-/* =========================
-   CONTROLS
-========================= */
+/* =====================================================
+CONTROLS
+===================================================== */
 
 .controls{
 
@@ -838,7 +821,6 @@ h1{
     border-radius:22px;
 
     background:
-
     linear-gradient(
         145deg,
         rgba(20,25,24,.96),
@@ -881,9 +863,7 @@ h1{
     display:grid;
 
     grid-template-columns:
-    1fr
-    1fr
-    1fr;
+    1fr 1fr 1fr;
 
     gap:8px;
 }
@@ -904,23 +884,19 @@ button{
 
     font-size:14px;
 
-    transition:
-    transform .2s,
-    filter .2s;
+    transition:.2s;
 }
 
 button:hover:not(:disabled){
 
-    transform:
-    translateY(-3px);
+    transform:translateY(-3px);
 
     filter:brightness(1.12);
 }
 
 button:active:not(:disabled){
 
-    transform:
-    scale(.96);
+    transform:scale(.96);
 }
 
 button:disabled{
@@ -966,10 +942,9 @@ button:disabled{
     color:#fff;
 }
 
-
-/* =========================
-   TIMER / RESULT
-========================= */
+/* =====================================================
+TIMER
+===================================================== */
 
 .timer{
 
@@ -1023,10 +998,9 @@ button:disabled{
     0 0 40px rgba(255,215,0,.2);
 }
 
-
-/* =========================
-   POSITIONS
-========================= */
+/* =====================================================
+POSITIONS
+===================================================== */
 
 .pos-GK{
     bottom:7%;
@@ -1083,10 +1057,420 @@ button:disabled{
     left:86%;
 }
 
+/* =====================================================
+MATCH RESULT
+===================================================== */
 
-/* =========================
-   MOBILE
-========================= */
+.match-result{
+
+    width:min(1100px,96%);
+
+    margin:35px auto 70px;
+
+    padding:25px;
+
+    border-radius:30px;
+
+    background:
+
+    radial-gradient(
+        circle at 50% 0%,
+        rgba(255,215,0,.14),
+        transparent 40%
+    ),
+
+    linear-gradient(
+        145deg,
+        #101715,
+        #030605
+    );
+
+    border:2px solid rgba(255,215,0,.45);
+
+    box-shadow:
+    0 30px 90px rgba(0,0,0,.65),
+    0 0 50px rgba(255,215,0,.12);
+
+    animation:matchEnter .8s ease;
+}
+
+@keyframes matchEnter{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        scale(.88)
+        translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        scale(1)
+        translateY(0);
+
+    }
+
+}
+
+.match-header{
+
+    font-family:'Orbitron';
+
+    font-size:14px;
+
+    color:#ffd700;
+
+    letter-spacing:2px;
+
+    margin-bottom:18px;
+}
+
+.match-teams{
+
+    display:grid;
+
+    grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+    gap:15px;
+
+    align-items:center;
+}
+
+.match-team{
+
+    padding:18px;
+
+    border-radius:22px;
+
+    min-height:120px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-weight:900;
+}
+
+.match-team.blue{
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(0,170,255,.22),
+        rgba(0,75,120,.12)
+    );
+
+    border:1px solid rgba(0,170,255,.45);
+}
+
+.match-team.red{
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(255,50,50,.22),
+        rgba(120,0,0,.12)
+    );
+
+    border:1px solid rgba(255,60,60,.45);
+}
+
+.team-name-result{
+
+    font-size:20px;
+
+    margin-bottom:8px;
+}
+
+.team-score{
+
+    font-family:'Orbitron';
+
+    font-size:55px;
+
+    line-height:1;
+
+}
+
+.vs{
+
+    font-family:'Orbitron';
+
+    font-size:20px;
+
+    color:#ffd700;
+
+}
+
+.winner-badge{
+
+    display:inline-block;
+
+    margin-top:8px;
+
+    padding:4px 12px;
+
+    border-radius:20px;
+
+    background:#ffd700;
+
+    color:#111;
+
+    font-size:11px;
+
+}
+
+.match-score-title{
+
+    margin:25px 0 15px;
+
+    font-size:18px;
+
+    font-weight:900;
+
+}
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:10px;
+
+}
+
+.match-stat{
+
+    padding:14px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.045);
+
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.stat-label{
+
+    display:block;
+
+    font-size:12px;
+
+    color:#bbb;
+
+    margin-bottom:8px;
+}
+
+.stat-values{
+
+    display:grid;
+
+    grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+    align-items:center;
+
+    gap:8px;
+
+    font-family:'Orbitron';
+
+    font-size:18px;
+}
+
+.stat-values .blue-value{
+
+    color:#56c7ff;
+
+    text-align:right;
+}
+
+.stat-values .red-value{
+
+    color:#ff7474;
+
+    text-align:left;
+}
+
+.stat-values .icon{
+
+    font-family:'Cairo';
+
+    font-size:13px;
+
+}
+
+.possession{
+
+    grid-column:1/-1;
+}
+
+.possession-bar{
+
+    height:16px;
+
+    width:100%;
+
+    display:flex;
+
+    overflow:hidden;
+
+    border-radius:20px;
+
+    background:#222;
+
+    margin-top:10px;
+}
+
+.pos-blue{
+
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        #0077aa,
+        #00c8ff
+    );
+}
+
+.pos-red{
+
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ff3333,
+        #a00000
+    );
+}
+
+.possession-numbers{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:7px;
+
+    font-family:'Orbitron';
+
+    font-size:13px;
+}
+
+.match-man{
+
+    margin-top:20px;
+
+    padding:18px;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,215,0,.13),
+        rgba(255,255,255,.03)
+    );
+
+    border:1px solid rgba(255,215,0,.3);
+}
+
+.man-title{
+
+    color:#ffd700;
+
+    font-size:12px;
+
+    font-weight:900;
+}
+
+.man-name{
+
+    font-family:'Orbitron';
+
+    font-size:22px;
+
+    margin-top:5px;
+}
+
+.formations{
+
+    margin-top:25px;
+
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr;
+
+    gap:20px;
+}
+
+.formation-box{
+
+    padding:15px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.formation-title{
+
+    font-weight:900;
+
+    margin-bottom:12px;
+}
+
+.formation-list{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:7px;
+}
+
+.formation-player{
+
+    padding:7px;
+
+    border-radius:9px;
+
+    background:rgba(0,0,0,.25);
+
+    font-size:10px;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+}
+
+/* =====================================================
+MOBILE
+===================================================== */
 
 @media(max-width:900px){
 
@@ -1113,6 +1497,65 @@ button:disabled{
 
 }
 
+@media(max-width:600px){
+
+    .match-result{
+
+        padding:12px;
+
+    }
+
+    .match-teams{
+
+        gap:7px;
+
+    }
+
+    .match-team{
+
+        padding:12px 5px;
+
+        min-height:100px;
+
+    }
+
+    .team-name-result{
+
+        font-size:14px;
+
+    }
+
+    .team-score{
+
+        font-size:42px;
+
+    }
+
+    .stats-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .possession{
+
+        grid-column:auto;
+
+    }
+
+    .formations{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .formation-list{
+
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
 </style>
 
 </head>
@@ -1125,52 +1568,50 @@ button:disabled{
 
 <div class="stats">
 
-```
 <div class="money-box blue">
 
-    <span id="name1">
-        اللاعب الأول
-    </span>
+<span id="name1">
+اللاعب الأول
+</span>
 
-    <span class="money-value">
-        <span id="m1">
-            200,000,000
-        </span> $
-    </span>
+<span class="money-value">
+
+<span id="m1">
+200,000,000
+</span>
+
+$
+
+</span>
 
 </div>
-
 
 <div id="count">
-    1 / 11
+1 / 11
 </div>
-
 
 <div class="money-box red">
 
-    <span id="name2">
-        اللاعب الثاني
-    </span>
+<span id="name2">
+اللاعب الثاني
+</span>
 
-    <span class="money-value">
+<span class="money-value">
 
-        <span id="m2">
-            200,000,000
-        </span> $
+<span id="m2">
+200,000,000
+</span>
 
-    </span>
+$
+
+</span>
 
 </div>
-```
 
 </div>
 
 <div class="turn" id="turn">
-
-```
 جاري تحميل المزاد...
-```
-
 </div>
 
 <div class="timer" id="timer"></div>
@@ -1179,462 +1620,348 @@ button:disabled{
 
 <div class="field-container">
 
-```
 <div class="team-wrap">
 
-    <div
-    class="team-title blue"
-    id="team1Title">
+<div
+class="team-title blue"
+id="team1Title">
 
-        الفريق الأزرق
-
-    </div>
-
-    <div
-    class="pitch"
-    id="pitch1">
-
-        <div class="penalty"></div>
-
-        <div class="goal"></div>
-
-    </div>
+الفريق الأزرق
 
 </div>
 
+<div
+class="pitch"
+id="pitch1">
+
+<div class="penalty"></div>
+
+<div class="goal"></div>
+
+</div>
+
+</div>
 
 <div class="team-wrap">
 
-    <div
-    class="team-title red"
-    id="team2Title">
+<div
+class="team-title red"
+id="team2Title">
 
-        الفريق الأحمر
-
-    </div>
-
-    <div
-    class="pitch"
-    id="pitch2">
-
-        <div class="penalty"></div>
-
-        <div class="goal"></div>
-
-    </div>
+الفريق الأحمر
 
 </div>
-```
+
+<div
+class="pitch"
+id="pitch2">
+
+<div class="penalty"></div>
+
+<div class="goal"></div>
+
+</div>
+
+</div>
 
 </div>
 
 <div class="card-area">
 
-```
 <div
 id="auctionCard"
 class="player-card card-gold">
 
+<div class="card-top">
 
-    <div class="card-top">
+<div>
 
-        <div>
+<div
+class="rating"
+id="rating">
+90
+</div>
 
-            <div
-            class="rating"
-            id="rating">
-
-                90
-
-            </div>
-
-            <div
-            class="position"
-            id="pos">
-
-                ST
-
-            </div>
-
-        </div>
-
-
-        <div
-        class="card-type"
-        id="cardType">
-
-            GOLD PLAYER
-
-        </div>
-
-    </div>
-
-
-    <div class="player-photo">
-
-        <img
-        id="playerImg"
-        src="https://ui-avatars.com/api/?name=PLAYER&background=222&color=fff&size=300">
-
-    </div>
-
-
-    <div
-    class="player-name"
-    id="name">
-
-        PLAYER
-
-    </div>
-
-
-    <div
-    class="card-price"
-    id="price">
-
-        1,000,000 $
-
-    </div>
+<div
+class="position"
+id="pos">
+ST
+</div>
 
 </div>
-```
+
+<div
+class="card-type"
+id="cardType">
+GOLD PLAYER
+</div>
+
+</div>
+
+<div class="player-photo">
+
+<img
+id="playerImg"
+src="https://ui-avatars.com/api/?name=PLAYER&background=222&color=fff&size=300">
+
+</div>
+
+<div
+class="player-name"
+id="name">
+PLAYER
+</div>
+
+<div
+class="card-price"
+id="price">
+1,000,000 $
+</div>
+
+</div>
 
 </div>
 
 <div class="controls">
 
-```
 <input
 id="bidInput"
 type="number"
 placeholder="اكتب قيمة المزايدة">
 
-
 <div class="buttons">
 
-    <button
-    class="bid"
-    id="bidBtn"
-    onclick="bid()">
+<button
+class="bid"
+id="bidBtn"
+onclick="bid()">
 
-        💰 مزايدة
+💰 مزايدة
 
-    </button>
+</button>
 
+<button
+class="take"
+id="takeBtn"
+onclick="take()">
 
-    <button
-    class="take"
-    id="takeBtn"
-    onclick="take()">
+🔥 خده
 
-        🔥 خده
+</button>
 
-    </button>
+<button
+class="skip"
+id="skipBtn"
+onclick="skip()">
 
+⏭ تخطي
 
-    <button
-    class="skip"
-    id="skipBtn"
-    onclick="skip()">
-
-        ⏭ تخطي
-
-    </button>
-
-</div>
-```
+</button>
 
 </div>
 
 </div>
+
+</div>
+
 
 <script>
 
-/* =====================================
-   FIREBASE
-===================================== */
+/* =====================================================
+FIREBASE
+===================================================== */
 
-const firebaseConfig = {
+const firebaseConfig={
 
-    apiKey:
-    "AIzaSyC_55Rv6wCni9EwQurtUILswB1WjkXp6hM",
+apiKey:"AIzaSyC_55Rv6wCni9EwQurtUILswB1WjkXp6hM",
 
-    authDomain:
-    "mazad-noogom.firebaseapp.com",
+authDomain:"mazad-noogom.firebaseapp.com",
 
-    databaseURL:
-    "https://mazad-noogom-default-rtdb.firebaseio.com",
+databaseURL:"https://mazad-noogom-default-rtdb.firebaseio.com",
 
-    projectId:
-    "mazad-noogom",
+projectId:"mazad-noogom",
 
-    storageBucket:
-    "mazad-noogom.firebasestorage.app",
+storageBucket:"mazad-noogom.firebasestorage.app",
 
-    messagingSenderId:
-    "183884985831",
+messagingSenderId:"183884985831",
 
-    appId:
-    "1:183884985831:web:db231949dace2b0798b942"
+appId:"1:183884985831:web:db231949dace2b0798b942"
 
 };
 
-
 firebase.initializeApp(firebaseConfig);
 
-
-const db =
-firebase.database();
+const db=firebase.database();
 
 
+/* =====================================================
+URL
+===================================================== */
 
-/* =====================================
-   URL
-===================================== */
-
-const urlParams =
+const urlParams=
 new URLSearchParams(
-    window.location.search
+window.location.search
 );
 
-
-const room =
+const room=
 urlParams.get('room');
 
+const type=
+urlParams.get('type')||'pro';
 
-const type =
-urlParams.get('type') ||
-'pro';
+const amIHost=
+urlParams.get('player')=='1';
 
-
-const amIHost =
-urlParams.get('player') == '1';
-
-
-const myPlayer =
-amIHost
-?
-1
-:
-2;
+const myPlayer=
+amIHost?1:2;
 
 
+/* =====================================================
+GAME
+===================================================== */
 
-/* =====================================
-   GAME DATA
-===================================== */
+const positions=[
 
-const positions = [
-
-    "GK",
-    "LB",
-    "CB1",
-    "CB2",
-    "RB",
-    "CM1",
-    "CM2",
-    "CAM",
-    "LW",
-    "ST",
-    "RW"
+"GK",
+"LB",
+"CB1",
+"CB2",
+"RB",
+"CM1",
+"CM2",
+"CAM",
+"LW",
+"ST",
+"RW"
 
 ];
 
-
-const PRICE =
-1000000;
+const PRICE=1000000;
 
 
+/* =====================================================
+PLAYERS
+===================================================== */
 
-/* =====================================
-   PLAYERS
-===================================== */
-
-const playersDB = {
-
+const playersDB={
 
 GK:[
 
 {n:"Yashin",p:PRICE,r:99,tag:"legend"},
-
 {n:"Buffon",p:PRICE,r:98,tag:"legend"},
-
 {n:"Casillas",p:PRICE,r:97,tag:"legend"},
-
 {n:"Kahn",p:PRICE,r:97,tag:"legend"},
-
 {n:"Courtois",p:PRICE,r:92,tag:"current"},
-
 {n:"Alisson",p:PRICE,r:91,tag:"current"},
-
 {n:"Donnarumma",p:PRICE,r:90,tag:"current"}
 
 ],
 
-
 LB:[
 
 {n:"Maldini",p:PRICE,r:99,tag:"legend"},
-
 {n:"Roberto Carlos",p:PRICE,r:98,tag:"legend"},
-
 {n:"Ashley Cole",p:PRICE,r:94,tag:"legend"},
-
 {n:"Davies",p:PRICE,r:87,tag:"current"},
-
 {n:"Robertson",p:PRICE,r:88,tag:"current"},
-
 {n:"T.Hernandez",p:PRICE,r:89,tag:"current"}
 
 ],
 
-
 CB1:[
 
 {n:"Beckenbauer",p:PRICE,r:99,tag:"legend"},
-
 {n:"Nesta",p:PRICE,r:97,tag:"legend"},
-
 {n:"Cannavaro",p:PRICE,r:97,tag:"legend"},
-
 {n:"Van Dijk",p:PRICE,r:91,tag:"current"},
-
 {n:"R.Dias",p:PRICE,r:90,tag:"current"},
-
 {n:"Saliba",p:PRICE,r:89,tag:"current"}
 
 ],
 
-
 CB2:[
 
 {n:"Baresi",p:PRICE,r:98,tag:"legend"},
-
 {n:"Sergio Ramos",p:PRICE,r:96,tag:"legend"},
-
 {n:"Puyol",p:PRICE,r:95,tag:"legend"},
-
 {n:"Rudiger",p:PRICE,r:89,tag:"current"},
-
 {n:"Araujo",p:PRICE,r:88,tag:"current"},
-
 {n:"Marquinhos",p:PRICE,r:89,tag:"current"}
 
 ],
 
-
 RB:[
 
 {n:"Cafu",p:PRICE,r:98,tag:"legend"},
-
 {n:"Lahm",p:PRICE,r:97,tag:"legend"},
-
 {n:"Dani Alves",p:PRICE,r:96,tag:"legend"},
-
 {n:"Hakimi",p:PRICE,r:90,tag:"current"},
-
 {n:"TAA",p:PRICE,r:89,tag:"current"},
-
 {n:"Frimpong",p:PRICE,r:88,tag:"current"}
 
 ],
 
-
 CM1:[
 
 {n:"Zidane",p:PRICE,r:99,tag:"legend"},
-
 {n:"Pirlo",p:PRICE,r:98,tag:"legend"},
-
 {n:"Xavi",p:PRICE,r:97,tag:"legend"},
-
 {n:"Rodri",p:PRICE,r:92,tag:"current"},
-
 {n:"Valverde",p:PRICE,r:90,tag:"current"},
-
 {n:"Kimmich",p:PRICE,r:89,tag:"current"}
 
 ],
 
-
 CM2:[
 
 {n:"Maradona",p:PRICE,r:99,tag:"legend"},
-
 {n:"Gullit",p:PRICE,r:97,tag:"legend"},
-
 {n:"Matthaus",p:PRICE,r:97,tag:"legend"},
-
 {n:"Modric",p:PRICE,r:91,tag:"current"},
-
 {n:"Barella",p:PRICE,r:89,tag:"current"},
-
 {n:"Camavinga",p:PRICE,r:88,tag:"current"}
 
 ],
 
-
 CAM:[
 
 {n:"Messi",p:PRICE,r:99,tag:"goat"},
-
 {n:"Ronaldinho",p:PRICE,r:98,tag:"legend"},
-
 {n:"Kaka",p:PRICE,r:97,tag:"legend"},
-
 {n:"De Bruyne",p:PRICE,r:92,tag:"current"},
-
 {n:"Bellingham",p:PRICE,r:91,tag:"current"},
-
 {n:"Musiala",p:PRICE,r:90,tag:"current"}
 
 ],
 
-
 LW:[
 
 {n:"Cristiano",p:PRICE,r:99,tag:"goat"},
-
 {n:"Henry",p:PRICE,r:98,tag:"legend"},
-
 {n:"Neymar",p:PRICE,r:91,tag:"current"},
-
 {n:"Vinicius",p:PRICE,r:92,tag:"current"},
-
 {n:"Leao",p:PRICE,r:89,tag:"current"}
 
 ],
 
-
 ST:[
 
 {n:"Ronaldo Nazario",p:PRICE,r:99,tag:"legend"},
-
 {n:"Van Basten",p:PRICE,r:98,tag:"legend"},
-
 {n:"Drogba",p:PRICE,r:96,tag:"legend"},
-
 {n:"Haaland",p:PRICE,r:93,tag:"current"},
-
 {n:"Mbappe",p:PRICE,r:94,tag:"current"},
-
 {n:"Kane",p:PRICE,r:91,tag:"current"}
 
 ],
 
-
 RW:[
 
 {n:"Messi RW",p:PRICE,r:99,tag:"goat"},
-
 {n:"Cristiano Ronaldo",p:PRICE,r:99,tag:"goat"},
-
 {n:"Beckham",p:PRICE,r:98,tag:"legend"},
-
 {n:"Garrincha",p:PRICE,r:97,tag:"legend"},
-
 {n:"Salah",p:PRICE,r:92,tag:"current"},
-
 {n:"Saka",p:PRICE,r:90,tag:"current"}
 
 ]
@@ -1642,1691 +1969,1881 @@ RW:[
 };
 
 
+/* =====================================================
+VARIABLES
+===================================================== */
 
-/* =====================================
-   VARIABLES
-===================================== */
+let currentPosIndex=0;
 
-let currentPosIndex =
-0;
+let currentPlayer=null;
 
+let currentBid=0;
 
-let currentPlayer =
-null;
+let highestBidder=0;
 
+let turn=1;
 
-let currentBid =
-0;
+let m1=200000000;
 
+let m2=200000000;
 
-let highestBidder =
-0;
+let t1={};
 
+let t2={};
 
-let turn =
-1;
+let filled1={};
 
+let filled2={};
 
-let m1 =
-200000000;
+let usedPlayers={};
 
+let availablePlayers={};
 
-let m2 =
-200000000;
-
-
-let t1 =
-{};
+let timerInterval=null;
 
 
-let t2 =
-{};
+/* =====================================================
+AUDIO
+===================================================== */
 
-
-let filled1 =
-{};
-
-
-let filled2 =
-{};
-
-
-let usedPlayers =
-{};
-
-
-let availablePlayers =
-{};
-
-
-let timerInterval =
-null;
-
-
-
-/* =====================================
-   AUDIO
-   صوت دفع فلوس بدون ملف خارجي
-===================================== */
-
-let audioContext =
-null;
-
+let audioContext=null;
 
 function playMoneySound(){
 
-    try{
+try{
 
-        if(!audioContext){
+if(!audioContext){
 
-            audioContext =
-            new(
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
+audioContext=
+new(
+window.AudioContext||
+window.webkitAudioContext
+)();
 
-        }
+}
 
+const now=
+audioContext.currentTime;
 
-        const now =
-        audioContext.currentTime;
+const oscillator=
+audioContext.createOscillator();
 
+const gain=
+audioContext.createGain();
 
-        const oscillator =
-        audioContext.createOscillator();
+oscillator.type="sine";
 
+oscillator.frequency.setValueAtTime(
+520,
+now
+);
 
-        const gain =
-        audioContext.createGain();
+oscillator.frequency.exponentialRampToValueAtTime(
+180,
+now+.25
+);
 
+gain.gain.setValueAtTime(
+.001,
+now
+);
 
-        oscillator.type =
-        "sine";
+gain.gain.exponentialRampToValueAtTime(
+.35,
+now+.03
+);
 
+gain.gain.exponentialRampToValueAtTime(
+.001,
+now+.3
+);
 
-        oscillator.frequency.setValueAtTime(
-            520,
-            now
-        );
+oscillator.connect(gain);
 
+gain.connect(
+audioContext.destination
+);
 
-        oscillator.frequency.exponentialRampToValueAtTime(
-            180,
-            now + .25
-        );
+oscillator.start(now);
 
+oscillator.stop(
+now+.32
+);
 
-        gain.gain.setValueAtTime(
-            .001,
-            now
-        );
-
-
-        gain.gain.exponentialRampToValueAtTime(
-            .35,
-            now + .03
-        );
-
-
-        gain.gain.exponentialRampToValueAtTime(
-            .001,
-            now + .3
-        );
-
-
-        oscillator.connect(gain);
-
-
-        gain.connect(
-            audioContext.destination
-        );
-
-
-        oscillator.start(now);
-
-
-        oscillator.stop(
-            now + .32
-        );
-
-    }
-
-    catch(e){}
+}catch(e){}
 
 }
 
 
-
-/* =====================================
-   GET IMAGE
-===================================== */
+/* =====================================================
+IMAGE
+===================================================== */
 
 function getPlayerImg(name){
 
-    return
-
-    `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=111&color=ffd700&size=400&rounded=true&bold=true`;
+return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=111&color=ffd700&size=400&rounded=true&bold=true`;
 
 }
 
 
-
-/* =====================================
-   CARD TYPE
-===================================== */
+/* =====================================================
+CARD TYPE
+===================================================== */
 
 function getCardInfo(player){
 
-    const name =
-    player.n
-    .toLowerCase();
+const name=
+player.n.toLowerCase();
 
+if(
 
-    if(
+player.tag==="goat"||
+name.includes("messi")||
+name.includes("cristiano")
 
-        player.tag === "goat" ||
+){
 
-        name.includes("messi") ||
+return{
 
-        name.includes("cristiano")
+className:"card-goat",
 
-    ){
+title:"👑 ULTIMATE GOAT 👑"
 
-        return{
+};
 
-            className:
-            "card-goat",
+}
 
-            title:
-            "👑 ULTIMATE GOAT 👑"
+if(player.tag==="legend"){
 
-        };
+return{
 
-    }
+className:"card-icon",
 
+title:"⭐ ICON LEGEND ⭐"
 
-    if(
-        player.tag === "legend"
-    ){
+};
 
-        return{
+}
 
-            className:
-            "card-icon",
+return{
 
-            title:
-            "⭐ ICON LEGEND ⭐"
+className:"card-gold",
 
-        };
+title:"🌟 GOLD ELITE 🌟"
 
-    }
-
-
-    return{
-
-        className:
-        "card-gold",
-
-        title:
-        "🌟 GOLD ELITE 🌟"
-
-    };
+};
 
 }
 
 
-
-/* =====================================
-   DRAW PITCH
-===================================== */
+/* =====================================================
+DRAW PITCH
+===================================================== */
 
 function drawPitch(){
 
-    positions.forEach(pos=>{
+positions.forEach(pos=>{
 
+document.getElementById('pitch1').innerHTML+=`
 
-        document
-        .getElementById('pitch1')
-        .innerHTML +=
+<div
+class="player-spot pos-${pos}"
+id="p1-${pos}">
 
-        `
+<div class="pos-label">
+${pos}
+</div>
 
-        <div
-        class="player-spot pos-${pos}"
-        id="p1-${pos}">
+<div class="mini-card empty">
 
-            <div
-            class="pos-label">
+<div class="mini-rating">
+-
+</div>
 
-                ${pos}
+<div class="mini-pos">
+${pos}
+</div>
 
-            </div>
+<div class="mini-name">
+-
+</div>
 
+</div>
 
-            <div
-            class="mini-card empty">
+</div>
 
-                <div
-                class="mini-rating">
+`;
 
-                    -
+document.getElementById('pitch2').innerHTML+=`
 
-                </div>
+<div
+class="player-spot pos-${pos}"
+id="p2-${pos}">
 
+<div class="pos-label">
+${pos}
+</div>
 
-                <div
-                class="mini-pos">
+<div class="mini-card empty">
 
-                    ${pos}
+<div class="mini-rating">
+-
+</div>
 
-                </div>
+<div class="mini-pos">
+${pos}
+</div>
 
+<div class="mini-name">
+-
+</div>
 
-                <div
-                class="mini-name">
+</div>
 
-                    -
+</div>
 
-                </div>
+`;
 
-            </div>
-
-        </div>
-
-        `;
-
-
-        document
-        .getElementById('pitch2')
-        .innerHTML +=
-
-        `
-
-        <div
-        class="player-spot pos-${pos}"
-        id="p2-${pos}">
-
-            <div
-            class="pos-label">
-
-                ${pos}
-
-            </div>
-
-
-            <div
-            class="mini-card empty">
-
-                <div
-                class="mini-rating">
-
-                    -
-
-                </div>
-
-
-                <div
-                class="mini-pos">
-
-                    ${pos}
-
-                </div>
-
-
-                <div
-                class="mini-name">
-
-                    -
-
-                </div>
-
-            </div>
-
-        </div>
-
-        `;
-
-    });
+});
 
 }
-
 
 drawPitch();
 
 
+/* =====================================================
+ROOM
+===================================================== */
 
-/* =====================================
-   FIREBASE ROOM
-===================================== */
-
-const roomRef =
+const roomRef=
 db.ref(
-    'rooms/' +
-    type +
-    '/' +
-    room
+'rooms/'+
+type+'/'+
+room
 );
-
 
 roomRef.on(
 'value',
-
 async snapshot=>{
 
+const data=snapshot.val();
 
-    const data =
-    snapshot.val();
+if(!data)
+return;
 
+document.getElementById('name1').innerText=
+data.player1?.name||'الأزرق';
 
-    if(!data)
-        return;
+document.getElementById('name2').innerText=
+data.player2?.name||'الأحمر';
 
+document.getElementById('team1Title').innerText=
+data.player1?.name||'الفريق الأزرق';
 
-    document
-    .getElementById('name1')
-    .innerText =
+document.getElementById('team2Title').innerText=
+data.player2?.name||'الفريق الأحمر';
 
-    data.player1?.name ||
-    'الأزرق';
-
-
-    document
-    .getElementById('name2')
-    .innerText =
-
-    data.player2?.name ||
-    'الأحمر';
-
-
-    document
-    .getElementById('team1Title')
-    .innerText =
-
-    data.player1?.name ||
-    'الفريق الأزرق';
-
-
-    document
-    .getElementById('team2Title')
-    .innerText =
-
-    data.player2?.name ||
-    'الفريق الأحمر';
-
-
-    await loadData(data);
+await loadData(data);
 
 });
 
 
-
-/* =====================================
-   LOAD DATA
-===================================== */
+/* =====================================================
+LOAD
+===================================================== */
 
 async function loadData(data){
 
+currentPosIndex=data.currentPos||0;
 
-    currentPosIndex =
-    data.currentPos || 0;
+currentBid=data.currentBid||0;
 
+highestBidder=data.highestBidder||0;
 
-    currentBid =
-    data.currentBid || 0;
+turn=data.turn||1;
 
+m1=data.m1??200000000;
 
-    highestBidder =
-    data.highestBidder || 0;
+m2=data.m2??200000000;
 
+t1=data.t1||{};
 
-    turn =
-    data.turn || 1;
+t2=data.t2||{};
 
+currentPlayer=data.currentPlayer||null;
 
-    m1 =
-    data.m1 ?? 200000000;
+filled1=data.filled1||{};
 
+filled2=data.filled2||{};
 
-    m2 =
-    data.m2 ?? 200000000;
+usedPlayers=data.usedPlayers||{};
 
-
-    t1 =
-    data.t1 || {};
-
-
-    t2 =
-    data.t2 || {};
+availablePlayers=
+data.availablePlayers||
+JSON.parse(
+JSON.stringify(playersDB)
+);
 
 
-    currentPlayer =
-    data.currentPlayer || null;
+/* =====================================================
+لو النتيجة موجودة بالفعل
+===================================================== */
 
+if(data.matchResult){
 
-    filled1 =
-    data.filled1 || {};
+showMatchResult(
+data.matchResult
+);
 
-
-    filled2 =
-    data.filled2 || {};
-
-
-    usedPlayers =
-    data.usedPlayers || {};
-
-
-    availablePlayers =
-    data.availablePlayers ||
-
-    JSON.parse(
-        JSON.stringify(playersDB)
-    );
-
-
-    if(
-        currentPosIndex >=
-        positions.length
-    ){
-
-        showWinner();
-
-        return;
-
-    }
-
-
-    const currentPos =
-    positions[
-        currentPosIndex
-    ];
-
-
-    if(
-
-        filled1[currentPos] &&
-
-        filled2[currentPos] &&
-
-        !timerInterval &&
-
-        amIHost
-
-    ){
-
-        startTimer();
-
-        return;
-
-    }
-
-
-    if(
-
-        !currentPlayer &&
-
-        !filled1[currentPos] &&
-
-        !filled2[currentPos] &&
-
-        amIHost
-
-    ){
-
-        newPlayer();
-
-    }
-
-
-    updatePitch();
-
-
-    show();
+return;
 
 }
 
 
+/* =====================================================
+نهاية المزاد
+===================================================== */
 
-/* =====================================
-   TIMER
-===================================== */
+if(currentPosIndex>=positions.length){
+
+if(amIHost){
+
+createMatchResult();
+
+}
+
+return;
+
+}
+
+
+const currentPos=
+positions[currentPosIndex];
+
+if(
+
+filled1[currentPos]&&
+filled2[currentPos]&&
+!timerInterval&&
+amIHost
+
+){
+
+startTimer();
+
+return;
+
+}
+
+if(
+
+!currentPlayer&&
+!filled1[currentPos]&&
+!filled2[currentPos]&&
+amIHost
+
+){
+
+newPlayer();
+
+}
+
+updatePitch();
+
+show();
+
+}
+
+
+/* =====================================================
+TIMER
+===================================================== */
 
 function startTimer(){
 
-    document
-    .querySelector('.controls')
-    .style.display =
-    'none';
+document.querySelector('.controls').style.display='none';
 
+document.getElementById('auctionCard').style.display='none';
 
-    document
-    .getElementById('auctionCard')
-    .style.display =
-    'none';
+const timer=
+document.getElementById('timer');
 
+timer.style.display='block';
 
-    const timer =
-    document
-    .getElementById('timer');
+let count=3;
 
+timerInterval=setInterval(()=>{
 
-    timer.style.display =
-    'block';
+const next=
+positions[currentPosIndex+1]||
+'النهاية';
 
+timer.innerText=
+`المركز القادم: ${next} بعد ${count}`;
 
-    let count =
-    3;
+count--;
 
+if(count<0){
 
-    timerInterval =
-    setInterval(()=>{
+clearInterval(timerInterval);
 
+timerInterval=null;
 
-        const next =
-        positions[
-            currentPosIndex + 1
-        ] ||
-        'النهاية';
+timer.style.display='none';
 
+document.querySelector('.controls').style.display='block';
 
-        timer.innerText =
-        `المركز القادم: ${next} بعد ${count}`;
+document.getElementById('auctionCard').style.display='flex';
 
+roomRef.update({
 
-        count--;
+currentPos:
+currentPosIndex+1
 
+});
 
-        if(count < 0){
+}
 
-
-            clearInterval(
-                timerInterval
-            );
-
-
-            timerInterval =
-            null;
-
-
-            timer.style.display =
-            'none';
-
-
-            document
-            .querySelector('.controls')
-            .style.display =
-            'block';
-
-
-            document
-            .getElementById('auctionCard')
-            .style.display =
-            'flex';
-
-
-            roomRef.update({
-
-                currentPos:
-                currentPosIndex + 1
-
-            });
-
-        }
-
-
-    },1000);
+},1000);
 
 }
 
 
-
-/* =====================================
-   RANDOM PLAYER
-===================================== */
+/* =====================================================
+RANDOM PLAYER
+===================================================== */
 
 function getRandomPlayer(pos){
 
+if(
 
-    if(
+!availablePlayers[pos]||
+availablePlayers[pos].length===0
 
-        !availablePlayers[pos] ||
-
-        availablePlayers[pos]
-        .length === 0
-
-    ){
-
-        availablePlayers[pos] =
-
-        JSON.parse(
-            JSON.stringify(
-                playersDB[pos]
-            )
-        );
-
-    }
-
-
-    const data =
-    availablePlayers[pos];
-
-
-    return data[
-        Math.floor(
-            Math.random() *
-            data.length
-        )
-    ];
-
-}
-
-
-
-/* =====================================
-   REMOVE PLAYER
-===================================== */
-
-function removePlayerFromPool(
-    pos,
-    playerName
 ){
 
+availablePlayers[pos]=
+JSON.parse(
+JSON.stringify(playersDB[pos])
+);
 
-    if(
-        !availablePlayers[pos]
-    )
-        return;
+}
 
+const data=
+availablePlayers[pos];
 
-    availablePlayers[pos] =
-
-    availablePlayers[pos]
-    .filter(
-
-        p =>
-        p.n !== playerName
-
-    );
-
-
-    usedPlayers[
-        playerName
-    ] = true;
+return data[
+Math.floor(
+Math.random()*data.length
+)
+];
 
 }
 
 
+/* =====================================================
+REMOVE PLAYER
+===================================================== */
 
-/* =====================================
-   NEW PLAYER
-===================================== */
+function removePlayerFromPool(
+pos,
+playerName
+){
+
+if(!availablePlayers[pos])
+return;
+
+availablePlayers[pos]=
+availablePlayers[pos].filter(
+p=>p.n!==playerName
+);
+
+usedPlayers[playerName]=true;
+
+}
+
+
+/* =====================================================
+NEW PLAYER
+===================================================== */
 
 function newPlayer(){
 
+const posName=
+positions[currentPosIndex];
 
-    const posName =
-    positions[
-        currentPosIndex
-    ];
+const player=
+getRandomPlayer(posName);
 
+removePlayerFromPool(
+posName,
+player.n
+);
 
-    const player =
-    getRandomPlayer(
-        posName
-    );
+roomRef.update({
 
+currentBid:player.p,
 
-    removePlayerFromPool(
-        posName,
-        player.n
-    );
+currentPlayer:player,
 
+highestBidder:0,
 
-    roomRef.update({
+turn:1,
 
-        currentBid:
-        player.p,
+usedPlayers,
 
+availablePlayers
 
-        currentPlayer:
-        player,
-
-
-        highestBidder:
-        0,
-
-
-        turn:
-        1,
-
-
-        usedPlayers,
-
-
-        availablePlayers
-
-    });
+});
 
 }
 
 
-
-/* =====================================
-   SHOW CARD
-===================================== */
+/* =====================================================
+SHOW
+===================================================== */
 
 function show(){
 
+if(!currentPlayer)
+return;
 
-    if(
-        !currentPlayer
-    )
-        return;
+const info=
+getCardInfo(currentPlayer);
 
+const card=
+document.getElementById('auctionCard');
 
-    const info =
-    getCardInfo(
-        currentPlayer
-    );
+card.className=
+'player-card '+
+info.className;
 
+document.getElementById('rating').innerText=
+currentPlayer.r||85;
 
-    const card =
-    document
-    .getElementById(
-        'auctionCard'
-    );
+document.getElementById('pos').innerText=
+positions[currentPosIndex];
 
+document.getElementById('cardType').innerText=
+info.title;
 
-    card.className =
+document.getElementById('name').innerText=
+currentPlayer.n;
 
-    'player-card ' +
-    info.className;
+document.getElementById('playerImg').src=
+getPlayerImg(currentPlayer.n);
 
+document.getElementById('price').innerText=
+currentBid.toLocaleString()+' $';
 
-    document
-    .getElementById(
-        'rating'
-    )
-    .innerText =
-    currentPlayer.r ||
-    85;
+document.getElementById('bidInput').value=
+currentBid+1000000;
 
+const myTurn=
+turn==myPlayer;
 
-    document
-    .getElementById(
-        'pos'
-    )
-    .innerText =
+document.getElementById('bidBtn').disabled=!myTurn;
 
-    positions[
-        currentPosIndex
-    ];
+document.getElementById('takeBtn').disabled=!myTurn;
 
+document.getElementById('skipBtn').disabled=!myTurn;
 
-    document
-    .getElementById(
-        'cardType'
-    )
-    .innerText =
-    info.title;
+const currentName=
+turn==1
+?
+document.getElementById('name1').innerText
+:
+document.getElementById('name2').innerText;
 
-
-    document
-    .getElementById(
-        'name'
-    )
-    .innerText =
-    currentPlayer.n;
-
-
-    document
-    .getElementById(
-        'playerImg'
-    )
-    .src =
-    getPlayerImg(
-        currentPlayer.n
-    );
-
-
-    document
-    .getElementById(
-        'price'
-    )
-    .innerText =
-
-    currentBid
-    .toLocaleString() +
-
-    ' $';
-
-
-    document
-    .getElementById(
-        'bidInput'
-    )
-    .value =
-
-    currentBid +
-    1000000;
-
-
-    const myTurn =
-    turn == myPlayer;
-
-
-    document
-    .getElementById(
-        'bidBtn'
-    )
-    .disabled =
-    !myTurn;
-
-
-    document
-    .getElementById(
-        'takeBtn'
-    )
-    .disabled =
-    !myTurn;
-
-
-    document
-    .getElementById(
-        'skipBtn'
-    )
-    .disabled =
-    !myTurn;
-
-
-    const currentName =
-
-    turn == 1
-
-    ?
-
-    document
-    .getElementById('name1')
-    .innerText
-
-    :
-
-    document
-    .getElementById('name2')
-    .innerText;
-
-
-    document
-    .getElementById(
-        'turn'
-    )
-    .innerText =
-
-    "دور المزايدة: " +
-
-    currentName +
-
-    (
-
-        myTurn
-
-        ?
-
-        " - 🔥 دورك الآن"
-
-        :
-
-        ""
-
-    );
+document.getElementById('turn').innerText=
+"دور المزايدة: "+
+currentName+
+(myTurn?" - 🔥 دورك الآن":"");
 
 }
 
 
-
-/* =====================================
-   BID
-===================================== */
+/* =====================================================
+BID
+===================================================== */
 
 function bid(){
 
+if(turn!=myPlayer)
+return;
 
-    if(
-        turn != myPlayer
-    )
-        return;
+const val=
+parseInt(
+document.getElementById('bidInput').value
+);
 
+const money=
+myPlayer==1?m1:m2;
 
-    const val =
-    parseInt(
+if(isNaN(val)){
 
-        document
-        .getElementById(
-            'bidInput'
-        )
-        .value
+alert("اكتب رقم صحيح");
 
-    );
+return;
 
+}
 
-    const money =
+if(val<=currentBid){
 
-    myPlayer == 1
+alert("لازم تزود عن السعر الحالي");
 
-    ?
+return;
 
-    m1
+}
 
-    :
+if(val>money){
 
-    m2;
+alert("مفيش فلوس كفاية");
 
+return;
 
-    if(
-        isNaN(val)
-    ){
+}
 
-        alert(
-            "اكتب رقم صحيح"
-        );
+playMoneySound();
 
-        return;
+roomRef.update({
 
-    }
+currentBid:val,
 
+highestBidder:myPlayer,
 
-    if(
-        val <= currentBid
-    ){
+turn:myPlayer==1?2:1
 
-        alert(
-            "لازم تزود عن السعر الحالي"
-        );
-
-        return;
-
-    }
-
-
-    if(
-        val > money
-    ){
-
-        alert(
-            "مفيش فلوس كفاية"
-        );
-
-        return;
-
-    }
-
-
-    roomRef.update({
-
-        currentBid:
-        val,
-
-
-        highestBidder:
-        myPlayer,
-
-
-        turn:
-
-        myPlayer == 1
-
-        ?
-
-        2
-
-        :
-
-        1
-
-    });
+});
 
 }
 
 
-
-/* =====================================
-   TAKE PLAYER
-===================================== */
+/* =====================================================
+TAKE
+===================================================== */
 
 function take(){
 
+if(turn!=myPlayer)
+return;
 
-    if(
-        turn != myPlayer
-    )
-        return;
+if(!currentPlayer)
+return;
 
+const pos=
+positions[currentPosIndex];
 
-    if(
-        !currentPlayer
-    )
-        return;
+const taker=
+highestBidder||myPlayer;
 
+const other=
+taker==1?2:1;
 
-    const pos =
-    positions[
-        currentPosIndex
-    ];
+const updates={};
 
+if(taker==1){
 
-    const taker =
+if(currentBid>m1){
 
-    highestBidder ||
+alert(
+"اللاعب الأول معندوش فلوس كفاية"
+);
 
-    myPlayer;
+return;
 
+}
 
-    const other =
+updates["m1"]=
+m1-currentBid;
 
-    taker == 1
+updates["t1/"+pos]=
+currentPlayer;
 
-    ?
+updates["filled1/"+pos]=
+true;
 
-    2
+}else{
 
-    :
+if(currentBid>m2){
 
-    1;
+alert(
+"اللاعب الثاني معندوش فلوس كفاية"
+);
 
+return;
 
-    const updates =
-    {};
+}
 
+updates["m2"]=
+m2-currentBid;
 
-    /* =====================
-       خصم فلوس اللاعب
-    ===================== */
+updates["t2/"+pos]=
+currentPlayer;
 
-    if(
-        taker == 1
-    ){
-
-
-        if(
-            currentBid > m1
-        ){
-
-            alert(
-                "اللاعب الأول معندوش فلوس كفاية"
-            );
-
-            return;
-
-        }
-
-
-        updates["m1"] =
-        m1 -
-        currentBid;
-
-
-        updates[
-            "t1/" + pos
-        ] =
-        currentPlayer;
-
-
-        updates[
-            "filled1/" + pos
-        ] =
-        true;
-
-
-    }
-
-    else{
-
-
-        if(
-            currentBid > m2
-        ){
-
-            alert(
-                "اللاعب الثاني معندوش فلوس كفاية"
-            );
-
-            return;
-
-        }
-
-
-        updates["m2"] =
-        m2 -
-        currentBid;
-
-
-        updates[
-            "t2/" + pos
-        ] =
-        currentPlayer;
-
-
-        updates[
-            "filled2/" + pos
-        ] =
-        true;
-
-    }
-
-
-    /* =====================
-       اللاعب الثاني يحصل
-       على لاعب عشوائي
-    ===================== */
-
-    const randomPlayer =
-    getRandomPlayer(pos);
-
-
-    removePlayerFromPool(
-        pos,
-        randomPlayer.n
-    );
-
-
-    if(
-        other == 1
-    ){
-
-
-        updates[
-            "t1/" + pos
-        ] =
-        randomPlayer;
-
-
-        updates[
-            "filled1/" + pos
-        ] =
-        true;
-
-
-    }
-
-    else{
-
-
-        updates[
-            "t2/" + pos
-        ] =
-        randomPlayer;
-
-
-        updates[
-            "filled2/" + pos
-        ] =
-        true;
-
-    }
-
-
-    /* =====================
-       RESET AUCTION
-    ===================== */
-
-    updates[
-        "currentPlayer"
-    ] =
-    null;
-
-
-    updates[
-        "currentBid"
-    ] =
-    0;
-
-
-    updates[
-        "highestBidder"
-    ] =
-    0;
-
-
-    updates[
-        "turn"
-    ] =
-    1;
-
-
-    updates[
-        "usedPlayers"
-    ] =
-    usedPlayers;
-
-
-    updates[
-        "availablePlayers"
-    ] =
-    availablePlayers;
-
-
-    /* صوت الدفع */
-
-    playMoneySound();
-
-
-    roomRef.update(
-        updates
-    );
+updates["filled2/"+pos]=
+true;
 
 }
 
 
+/* اللاعب الآخر */
 
-/* =====================================
-   SKIP
-===================================== */
+const randomPlayer=
+getRandomPlayer(pos);
+
+removePlayerFromPool(
+pos,
+randomPlayer.n
+);
+
+if(other==1){
+
+updates["t1/"+pos]=
+randomPlayer;
+
+updates["filled1/"+pos]=
+true;
+
+}else{
+
+updates["t2/"+pos]=
+randomPlayer;
+
+updates["filled2/"+pos]=
+true;
+
+}
+
+
+/* RESET */
+
+updates.currentPlayer=null;
+
+updates.currentBid=0;
+
+updates.highestBidder=0;
+
+updates.turn=1;
+
+updates.usedPlayers=usedPlayers;
+
+updates.availablePlayers=availablePlayers;
+
+playMoneySound();
+
+roomRef.update(updates);
+
+}
+
+
+/* =====================================================
+SKIP
+===================================================== */
 
 function skip(){
 
+if(turn!=myPlayer)
+return;
 
-    if(
-        turn != myPlayer
-    )
-        return;
+const pos=
+positions[currentPosIndex];
 
+const p1=
+getRandomPlayer(pos);
 
-    const pos =
-    positions[
-        currentPosIndex
-    ];
+removePlayerFromPool(
+pos,
+p1.n
+);
 
+const p2=
+getRandomPlayer(pos);
 
-    const p1 =
-    getRandomPlayer(pos);
+removePlayerFromPool(
+pos,
+p2.n
+);
 
+const updates={};
 
-    removePlayerFromPool(
-        pos,
-        p1.n
-    );
+updates["t1/"+pos]=p1;
 
+updates["t2/"+pos]=p2;
 
-    const p2 =
-    getRandomPlayer(pos);
+updates["filled1/"+pos]=true;
 
+updates["filled2/"+pos]=true;
 
-    removePlayerFromPool(
-        pos,
-        p2.n
-    );
+updates.currentPlayer=null;
 
+updates.currentBid=0;
 
-    const updates =
-    {};
+updates.highestBidder=0;
 
+updates.turn=1;
 
-    updates[
-        "t1/" + pos
-    ] =
-    p1;
+updates.usedPlayers=usedPlayers;
 
+updates.availablePlayers=availablePlayers;
 
-    updates[
-        "t2/" + pos
-    ] =
-    p2;
-
-
-    updates[
-        "filled1/" + pos
-    ] =
-    true;
-
-
-    updates[
-        "filled2/" + pos
-    ] =
-    true;
-
-
-    updates[
-        "currentPlayer"
-    ] =
-    null;
-
-
-    updates[
-        "currentBid"
-    ] =
-    0;
-
-
-    updates[
-        "highestBidder"
-    ] =
-    0;
-
-
-    updates[
-        "turn"
-    ] =
-    1;
-
-
-    updates[
-        "usedPlayers"
-    ] =
-    usedPlayers;
-
-
-    updates[
-        "availablePlayers"
-    ] =
-    availablePlayers;
-
-
-    roomRef.update(
-        updates
-    );
+roomRef.update(updates);
 
 }
 
 
-
-/* =====================================
-   UPDATE PITCH
-===================================== */
+/* =====================================================
+UPDATE PITCH
+===================================================== */
 
 function updatePitch(){
 
+document.getElementById('m1').innerText=
+m1.toLocaleString();
 
-    document
-    .getElementById('m1')
-    .innerText =
-    m1.toLocaleString();
+document.getElementById('m2').innerText=
+m2.toLocaleString();
 
+document.getElementById('count').innerText=
+(currentPosIndex+1)+
+" / "+
+positions.length;
 
-    document
-    .getElementById('m2')
-    .innerText =
-    m2.toLocaleString();
+for(const pos of positions){
 
+if(t1[pos]){
 
-    document
-    .getElementById('count')
-    .innerText =
+const player=t1[pos];
 
-    (currentPosIndex + 1) +
+const info=getCardInfo(player);
 
-    " / " +
+document.getElementById(
+'p1-'+pos
+).innerHTML=`
 
-    positions.length;
+<div class="pos-label">
+${pos}
+</div>
 
+<div class="mini-card ${info.className}">
 
-    for(
-        const pos of positions
-    ){
+<div class="mini-rating">
+${player.r}
+</div>
 
+<div class="mini-pos">
+${pos}
+</div>
 
-        if(
-            t1[pos]
-        ){
+<div class="mini-name">
+${player.n}
+</div>
 
-            const player =
-            t1[pos];
+</div>
 
+`;
 
-            const info =
-            getCardInfo(player);
+}
 
+if(t2[pos]){
 
-            document
-            .getElementById(
-                'p1-' + pos
-            )
-            .innerHTML =
+const player=t2[pos];
 
-            `
+const info=getCardInfo(player);
 
-            <div
-            class="pos-label">
+document.getElementById(
+'p2-'+pos
+).innerHTML=`
 
-                ${pos}
+<div class="pos-label">
+${pos}
+</div>
 
-            </div>
+<div class="mini-card ${info.className}">
 
+<div class="mini-rating">
+${player.r}
+</div>
 
-            <div
-            class="mini-card ${info.className}">
+<div class="mini-pos">
+${pos}
+</div>
 
-                <div
-                class="mini-rating">
+<div class="mini-name">
+${player.n}
+</div>
 
-                    ${player.r}
+</div>
 
-                </div>
+`;
 
+}
 
-                <div
-                class="mini-pos">
-
-                    ${pos}
-
-                </div>
-
-
-                <div
-                class="mini-name">
-
-                    ${player.n}
-
-                </div>
-
-            </div>
-
-            `;
-
-        }
-
-
-        if(
-            t2[pos]
-        ){
-
-            const player =
-            t2[pos];
-
-
-            const info =
-            getCardInfo(player);
-
-
-            document
-            .getElementById(
-                'p2-' + pos
-            )
-            .innerHTML =
-
-            `
-
-            <div
-            class="pos-label">
-
-                ${pos}
-
-            </div>
-
-
-            <div
-            class="mini-card ${info.className}">
-
-                <div
-                class="mini-rating">
-
-                    ${player.r}
-
-                </div>
-
-
-                <div
-                class="mini-pos">
-
-                    ${pos}
-
-                </div>
-
-
-                <div
-                class="mini-name">
-
-                    ${player.n}
-
-                </div>
-
-            </div>
-
-            `;
-
-        }
-
-    }
+}
 
 }
 
 
+/* =====================================================
+MATCH RESULT GENERATOR
+===================================================== */
 
-/* =====================================
-   WINNER
-===================================== */
+function createMatchResult(){
 
-function showWinner(){
+/*
+    بنحسب قوة كل فريق
+*/
 
+let power1=0;
 
-    document
-    .querySelector('.controls')
-    .style.display =
-    'none';
+let power2=0;
 
+positions.forEach(pos=>{
 
-    document
-    .getElementById(
-        'auctionCard'
-    )
-    .style.display =
-    'none';
+power1+=
+t1[pos]?.r||
+80;
 
+power2+=
+t2[pos]?.r||
+80;
 
-    document
-    .getElementById(
-        'timer'
-    )
-    .style.display =
-    'none';
+});
 
 
-    let score1 =
-    0;
+/*
+    فرق القوة
+*/
+
+const totalPower=
+power1+power2;
+
+let possession1=
+Math.round(
+50+
+((power1-power2)/totalPower)*35+
+(Math.random()*6-3)
+);
+
+possession1=
+Math.max(
+35,
+Math.min(
+65,
+possession1
+)
+);
+
+const possession2=
+100-possession1;
 
 
-    let score2 =
-    0;
+/*
+    الأهداف
+*/
+
+const strengthDifference=
+power1-power2;
+
+let goals1=
+Math.round(
+2+
+strengthDifference/40+
+(Math.random()*3-1.5)
+);
+
+let goals2=
+Math.round(
+2-
+strengthDifference/40+
+(Math.random()*3-1.5)
+);
+
+goals1=
+Math.max(
+0,
+Math.min(7,goals1)
+);
+
+goals2=
+Math.max(
+0,
+Math.min(7,goals2)
+);
 
 
-    positions.forEach(pos=>{
+/*
+    تسديدات
+*/
+
+const shots1=
+Math.max(
+goals1+2,
+Math.round(
+8+
+power1/14+
+Math.random()*6
+)
+);
+
+const shots2=
+Math.max(
+goals2+2,
+Math.round(
+8+
+power2/14+
+Math.random()*6
+)
+);
+
+const onTarget1=
+Math.min(
+shots1,
+Math.max(
+goals1,
+Math.round(shots1*(.35+Math.random()*.25))
+)
+);
+
+const onTarget2=
+Math.min(
+shots2,
+Math.max(
+goals2,
+Math.round(shots2*(.35+Math.random()*.25))
+)
+);
 
 
-        if(
-            t1[pos]
-        ){
+/*
+    ركنيات
+*/
 
-            score1 +=
-            t1[pos].r ||
-            80;
+const corners1=
+Math.max(
+1,
+Math.round(
+2+
+possession1/15+
+Math.random()*3
+)
+);
 
-        }
-
-
-        if(
-            t2[pos]
-        ){
-
-            score2 +=
-            t2[pos].r ||
-            80;
-
-        }
-
-    });
-
-
-    let result =
-    "";
+const corners2=
+Math.max(
+1,
+Math.round(
+2+
+possession2/15+
+Math.random()*3
+)
+);
 
 
-    if(
-        score1 > score2
-    ){
+/*
+    بطاقات
+*/
 
-        result =
+const yellow1=
+Math.floor(Math.random()*4);
 
-        `🏆 ${document.getElementById('name1').innerText} كسب!
+const yellow2=
+Math.floor(Math.random()*4);
 
-        <br>
+const red1=
+Math.random()<.12?1:0;
 
-        ${score1} - ${score2}`;
-
-    }
-
-    else if(
-        score2 > score1
-    ){
-
-        result =
-
-        `🏆 ${document.getElementById('name2').innerText} كسب!
-
-        <br>
-
-        ${score2} - ${score1}`;
-
-    }
-
-    else{
+const red2=
+Math.random()<.12?1:0;
 
 
-        result =
+/*
+    أخطاء
+*/
 
-        `🤝 تعادل!
+const fouls1=
+Math.round(
+7+Math.random()*9
+);
 
-        <br>
+const fouls2=
+Math.round(
+7+Math.random()*9
+);
 
-        ${score1} - ${score2}`;
 
-    }
+/*
+    التمريرات
+*/
+
+const passes1=
+Math.round(
+280+
+power1*1.8+
+Math.random()*100
+);
+
+const passes2=
+Math.round(
+280+
+power2*1.8+
+Math.random()*100
+);
 
 
-    document
-    .getElementById(
-        'result'
-    )
-    .innerHTML =
+/*
+    رجل المباراة
+*/
 
-    `
+let manTeam;
 
-    <div
-    class="result">
+if(goals1>goals2){
 
-        ${result}
+manTeam=1;
 
-        <br>
+}else if(goals2>goals1){
 
-        <small>
+manTeam=2;
 
-            النتيجة حسب قوة
-            وتقييم اللاعبين
+}else{
 
-        </small>
-
-    </div>
-
-    `;
+manTeam=
+power1>=power2?1:2;
 
 }
+
+const manPlayers=
+manTeam===1?t1:t2;
+
+let manPlayer=null;
+
+positions.forEach(pos=>{
+
+const p=manPlayers[pos];
+
+if(!p)
+return;
+
+if(
+!manPlayer||
+(p.r||0)>(manPlayer.r||0)
+){
+
+manPlayer=p;
+
+}
+
+});
+
+
+/*
+    تحديد الفائز
+*/
+
+let winner=0;
+
+if(goals1>goals2){
+
+winner=1;
+
+}else if(goals2>goals1){
+
+winner=2;
+
+}
+
+
+/*
+    البيانات كلها في Firebase
+*/
+
+const matchResult={
+
+goals1,
+goals2,
+
+possession1,
+possession2,
+
+shots1,
+shots2,
+
+onTarget1,
+onTarget2,
+
+corners1,
+corners2,
+
+yellow1,
+yellow2,
+
+red1,
+red2,
+
+fouls1,
+fouls2,
+
+passes1,
+passes2,
+
+power1,
+power2,
+
+winner,
+
+manPlayer:
+manPlayer?
+manPlayer.n:
+"أفضل لاعب",
+
+manTeam
+
+};
+
+
+roomRef.update({
+
+matchResult:matchResult,
+
+currentPos:positions.length
+
+});
+
+}
+
+
+/* =====================================================
+SHOW MATCH RESULT
+===================================================== */
+
+function showMatchResult(data){
+
+/*
+    إخفاء المزاد
+*/
+
+document.querySelector('.controls').style.display='none';
+
+document.getElementById('auctionCard').style.display='none';
+
+document.getElementById('timer').style.display='none';
+
+document.getElementById('turn').innerText=
+"🏁 انتهى المزاد — المباراة النهائية";
+
+
+/*
+    تحديث الملعب
+*/
+
+updatePitch();
+
+
+/*
+    أسماء الفرق
+*/
+
+const name1=
+document.getElementById('name1').innerText;
+
+const name2=
+document.getElementById('name2').innerText;
+
+
+/*
+    حالة الفوز
+*/
+
+let badge1="";
+
+let badge2="";
+
+if(data.winner===1){
+
+badge1=
+`<span class="winner-badge">🏆 الفائز</span>`;
+
+}
+
+if(data.winner===2){
+
+badge2=
+`<span class="winner-badge">🏆 الفائز</span>`;
+
+}
+
+
+/*
+    النتيجة
+*/
+
+const resultHTML=`
+
+<div class="match-result">
+
+<div class="match-header">
+⚽ FULL TIME • MATCH RESULT ⚽
+</div>
+
+
+<div class="match-teams">
+
+
+<div class="match-team blue">
+
+<div class="team-name-result">
+${name1}
+</div>
+
+<div class="team-score">
+${data.goals1}
+</div>
+
+${badge1}
+
+</div>
+
+
+<div class="vs">
+VS
+</div>
+
+
+<div class="match-team red">
+
+<div class="team-name-result">
+${name2}
+</div>
+
+<div class="team-score">
+${data.goals2}
+</div>
+
+${badge2}
+
+</div>
+
+
+</div>
+
+
+<div class="match-score-title">
+📊 إحصائيات المباراة
+</div>
+
+
+<div class="stats-grid">
+
+
+<!-- الاستحواذ -->
+
+<div class="match-stat possession">
+
+<span class="stat-label">
+الاستحواذ
+</span>
+
+<div class="possession-numbers">
+
+<span>
+${data.possession1}%
+</span>
+
+<span>
+${data.possession2}%
+</span>
+
+</div>
+
+<div class="possession-bar">
+
+<div
+class="pos-blue"
+style="width:${data.possession1}%">
+</div>
+
+<div
+class="pos-red"
+style="width:${data.possession2}%">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- التسديدات -->
+
+<div class="match-stat">
+
+<span class="stat-label">
+🎯 التسديدات
+</span>
+
+<div class="stat-values">
+
+<span class="blue-value">
+${data.shots1}
+</span>
+
+<span class="icon">
+🎯
+</span>
+
+<span class="red-value">
+${data.shots2}
+</span>
+
+</div>
+
+</div>
+
+
+<!-- على المرمى -->
+
+<div class="match-stat">
+
+<span class="stat-label">
+🥅 على المرمى
+</span>
+
+<div class="stat-values">
+
+<span class="blue-value">
+${data.onTarget1}
+</span>
+
+<span class="icon">
+🥅
+</span>
+
+<span class="red-value">
+${data.onTarget2}
+</span>
+
+</div>
+
+</div>
+
+
+<!-- الركنيات -->
+
+<div class="match-stat">
+
+<span class="stat-label">
+🚩 الركنيات
+</span>
+
+<div class="stat-values">
+
+<span class="blue-value">
+${data.corners1}
+</span>
+
+<span class="icon">
+🚩
+</span>
+
+<span class="red-value">
+${data.corners2}
+</span>
+
+</div>
+
+</div>
+
+
+<!-- البطاقات الصفراء -->
+
+<div class="match-stat">
+
+<span class="stat-label">
+🟨 البطاقات الصفراء
+</span>
+
+<div class="stat-values">
+
+<span class="blue-value">
+${data.yellow1}
+</span>
+
+<span class="icon">
+🟨
+</span>
+
+<span class="red-value">
+${data.yellow2}
+</span>
+
+</div>
+
+</div>
+
+
+<!-- البطاقات الحمراء -->
+
+<div class="match-stat">
+
+<span class="stat-label">
+🟥 البطاقات الحمراء
+</span>
+
+<div class="stat-values">
+
+<span class="blue-value">
+${data.red1}
+</span>
+
+<span class="icon">
+🟥
+</span>
+
+<span class="red-value">
+${data.red2}
+</span>
+
+</div>
+
+</div>
+
+
+<!-- الأخطاء -->
+
+<div class="match-stat">
+
+<span class="stat-label">
+🦵 الأخطاء
+</span>
+
+<div class="stat-values">
+
+<span class="blue-value">
+${data.fouls1}
+</span>
+
+<span class="icon">
+🦵
+</span>
+
+<span class="red-value">
+${data.fouls2}
+</span>
+
+</div>
+
+</div>
+
+
+<!-- التمريرات -->
+
+<div class="match-stat">
+
+<span class="stat-label">
+🎯 التمريرات
+</span>
+
+<div class="stat-values">
+
+<span class="blue-value">
+${data.passes1}
+</span>
+
+<span class="icon">
+📋
+</span>
+
+<span class="red-value">
+${data.passes2}
+</span>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- رجل المباراة -->
+
+<div class="match-man">
+
+<div class="man-title">
+⭐ رجل المباراة
+</div>
+
+<div class="man-name">
+${data.manPlayer}
+</div>
+
+<div style="font-size:11px;margin-top:5px;color:#aaa">
+
+فريق
+${data.manTeam===1?name1:name2}
+
+</div>
+
+</div>
+
+
+<!-- قوة الفريقين -->
+
+<div class="match-score-title">
+💪 تقييم الفريقين
+</div>
+
+<div class="stats-grid">
+
+<div class="match-stat">
+
+<span class="stat-label">
+قوة ${name1}
+</span>
+
+<div
+style="
+font-family:Orbitron;
+font-size:25px;
+color:#56c7ff;
+">
+
+${data.power1}
+
+</div>
+
+</div>
+
+<div class="match-stat">
+
+<span class="stat-label">
+قوة ${name2}
+</span>
+
+<div
+style="
+font-family:Orbitron;
+font-size:25px;
+color:#ff7474;
+">
+
+${data.power2}
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- التشكيلات -->
+
+<div class="match-score-title">
+📋 تشكيل الفريقين
+</div>
+
+<div class="formations">
+
+
+<div class="formation-box">
+
+<div
+class="formation-title"
+style="color:#56c7ff">
+
+${name1}
+
+</div>
+
+<div class="formation-list">
+
+${createFormationHTML(t1)}
+
+</div>
+
+</div>
+
+
+<div class="formation-box">
+
+<div
+class="formation-title"
+style="color:#ff7474">
+
+${name2}
+
+</div>
+
+<div class="formation-list">
+
+${createFormationHTML(t2)}
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div
+style="
+margin-top:25px;
+font-size:12px;
+color:#777;
+">
+
+🏁 FULL TIME — انتهت المباراة
+
+</div>
+
+
+</div>
+
+`;
+
+document.getElementById('result').innerHTML=
+resultHTML;
+
+
+/*
+    صوت النهاية
+*/
+
+playFinalSound();
+
+}
+
+
+/* =====================================================
+FORMATION
+===================================================== */
+
+function createFormationHTML(team){
+
+let html="";
+
+positions.forEach(pos=>{
+
+const p=team[pos];
+
+if(!p)
+return;
+
+html+=`
+
+<div class="formation-player">
+
+<strong>
+${pos}
+</strong>
+
+<br>
+
+${p.n}
+
+<br>
+
+<span style="color:#ffd700">
+${p.r}
+</span>
+
+</div>
+
+`;
+
+});
+
+return html;
+
+}
+
+
+/* =====================================================
+FINAL SOUND
+===================================================== */
+
+function playFinalSound(){
+
+try{
+
+if(!audioContext){
+
+audioContext=
+new(
+window.AudioContext||
+window.webkitAudioContext
+)();
+
+}
+
+const now=
+audioContext.currentTime;
+
+const notes=[
+523.25,
+659.25,
+783.99,
+1046.50
+];
+
+notes.forEach(
+(freq,i)=>{
+
+const osc=
+audioContext.createOscillator();
+
+const gain=
+audioContext.createGain();
+
+osc.type="triangle";
+
+osc.frequency.value=freq;
+
+gain.gain.setValueAtTime(
+.001,
+now+i*.13
+);
+
+gain.gain.exponentialRampToValueAtTime(
+.25,
+now+i*.13+.04
+);
+
+gain.gain.exponentialRampToValueAtTime(
+.001,
+now+i*.13+.3
+);
+
+osc.connect(gain);
+
+gain.connect(
+audioContext.destination
+);
+
+osc.start(
+now+i*.13
+);
+
+osc.stop(
+now+i*.13+.32
+);
+
+});
+
+}catch(e){}
+
+}
+
+
+/* =====================================================
+WINNER OLD FUNCTION
+===================================================== */
+
+/*
+    لم نعد نستخدم نتيجة التقييم القديمة.
+    النتيجة النهائية أصبحت مباراة كاملة
+    ويتم حفظها في Firebase.
+*/
 
 </script>
 
