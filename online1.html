@@ -1,336 +1,3334 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>مزاد النجوم</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>مزاد النجوم - Ultimate</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
 <style>
-body{background:#0a5c36;color:#fff;font-family:'Cairo',sans-serif;text-align:center;padding:10px}
-.stats{display:flex;justify-content:space-around;background:rgba(17,17,17,0.9);padding:10px;border-radius:10px;margin-bottom:10px}
-.p1{color:#00aaff}.p2{color:#ff4444}
-.turn{background:#ffd700;color:#000;padding:8px;border-radius:8px;font-weight:bold;margin:10px;font-weight:700}
-.timer{font-size:24px;color:#0f0;font-weight:900;background:rgba(0,0,0,0.7);padding:10px;border-radius:10px;margin:10px}
-.field-container{display:flex;justify-content:center;gap:25px;margin-top:40px;flex-wrap:wrap}
-.pitch{width:420px;height:600px;background:#0a5c36;border:3px solid #fff;border-radius:10px;position:relative;overflow:hidden;margin-top:10px}
-.pitch::before{content:'';position:absolute;top:45%;left:0;width:100%;height:2px;background:#fff}
-.pitch::after{content:'';position:absolute;top:45%;left:50%;width:100px;height:100px;border:2px solid #fff;border-radius:50%;transform:translate(-50%,-50%)}
-.penalty{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:260px;height:130px;border:2px solid #fff;border-bottom:none}
-.goal{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:130px;height:45px;border:2px solid #fff;border-bottom:none}
-.team-title{padding:8px;font-weight:900;font-size:17px;border-radius:8px 8px 0 0;margin-bottom:5px}
-.team-title.blue{background:#00aaff;color:#000}
-.team-title.red{background:#ff4444;color:#fff}
-.player-spot{position:absolute;width:90px;text-align:center;transform:translate(-50%,-50%)}
-.player-spot img{width:58px;height:58px;border-radius:50%;border:3px solid #fff;object-fit:cover;background:#222}
-.player-spot.name{font-size:11px;font-weight:900;margin-top:3px;text-shadow:1px 1px 3px #000;color:#ffd700}
-.player-spot.pos-label{font-size:9px;color:#fff;font-weight:700;position:absolute;top:-18px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.6);padding:1px 5px;border-radius:4px}
-.player-spot.empty img{opacity:0.2;border:2px dashed #888}
-.pos-GK{bottom:-0.01%;left:50%}.pos-CB1{bottom:6%;left:33%}.pos-CB2{bottom:6%;left:67%}.pos-LB{bottom:15%;left:15%}.pos-RB{bottom:15%;left:85%}
-.pos-CM1{bottom:30%;left:32%}.pos-CM2{bottom:30%;left:68%}.pos-CAM{bottom:45%;left:50%}.pos-LW{bottom:63%;left:14%}.pos-ST{bottom:67%;left:50%}.pos-RW{bottom:63%;left:86%}
-.card{border:3px solid #ffd700;border-radius:15px;padding:15px;width:360px;margin:15px auto;background:rgba(17,17,17,0.95)}
-.card img{width:110px;height:110px;border-radius:50%;border:3px solid #ffd700;object-fit:cover;margin-bottom:10px}
-.pos{color:#aaa;font-size:14px;font-weight:400}
-.name{font-size:24px;color:#ffd700;margin:5px;font-weight:900}
-.price{font-size:18px;color:#0f0;font-weight:700}
-input{width:140px;padding:8px;border-radius:8px;border:2px solid #ffd700;background:#222;color:#fff;text-align:center;font-family:'Cairo'}
-button{padding:10px 15px;margin:4px;border:none;border-radius:8px;font-weight:900;cursor:pointer;font-family:'Cairo';font-size:16px}
-.bid{background:lime;color:#000}.take{background:red;color:#fff}.skip{background:#555;color:#fff}
-button:disabled{opacity:0.5;cursor:not-allowed}
-.result{font-size:28px;font-weight:900;color:#ffd700;background:rgba(0,0,0,0.8);padding:20px;border-radius:15px;margin:20px}
-.tag{font-size:10px;padding:2px 5px;border-radius:4px;margin-left:5px}
-.legend{background:gold;color:#000}.current{background:#00aaff;color:#fff}
+
+/* =========================
+   GENERAL
+========================= */
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:'Cairo',sans-serif;
+    color:#fff;
+    text-align:center;
+    overflow-x:hidden;
+
+    background:
+    radial-gradient(circle at 50% 0%,#183f33 0%,#071511 35%,#020504 100%);
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.15;
+
+    background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+
+    background-size:35px 35px;
+}
+
+h1{
+    margin:0;
+    padding:18px 10px 8px;
+
+    font-size:clamp(22px,5vw,40px);
+
+    font-family:'Orbitron','Cairo',sans-serif;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ffffff,
+        #ffd700,
+        #ffffff,
+        #ffd700
+    );
+
+    background-size:300%;
+
+    -webkit-background-clip:text;
+    color:transparent;
+
+    animation:titleMove 5s linear infinite;
+
+    text-shadow:0 0 30px rgba(255,215,0,.25);
+}
+
+@keyframes titleMove{
+    0%{
+        background-position:0%;
+    }
+
+    100%{
+        background-position:300%;
+    }
+}
+
+
+/* =========================
+   MAIN WRAPPER
+========================= */
+
+.app{
+    width:min(1450px,96%);
+    margin:auto;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+    gap:10px;
+
+    align-items:center;
+
+    margin:15px auto;
+
+    padding:12px;
+
+    border-radius:18px;
+
+    border:1px solid rgba(255,215,0,.35);
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(20,25,24,.95),
+        rgba(5,8,7,.95)
+    );
+
+    box-shadow:
+    0 15px 50px rgba(0,0,0,.45),
+    inset 0 1px rgba(255,255,255,.08);
+}
+
+.money-box{
+    padding:12px;
+
+    border-radius:14px;
+
+    font-size:15px;
+
+    font-weight:900;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.money-box.blue{
+    color:#56c7ff;
+
+    box-shadow:
+    inset 0 0 20px rgba(0,170,255,.08);
+}
+
+.money-box.red{
+    color:#ff7474;
+
+    box-shadow:
+    inset 0 0 20px rgba(255,60,60,.08);
+}
+
+.money-value{
+    display:block;
+
+    margin-top:4px;
+
+    color:#fff;
+
+    font-family:'Orbitron';
+
+    font-size:18px;
+}
+
+#count{
+    padding:10px 15px;
+
+    border-radius:50px;
+
+    color:#111;
+
+    font-family:'Orbitron';
+
+    font-weight:900;
+
+    background:
+    linear-gradient(
+        135deg,
+        #fff7b0,
+        #ffd700,
+        #c98700
+    );
+
+    box-shadow:
+    0 0 25px rgba(255,215,0,.25);
+}
+
+
+/* =========================
+   TURN
+========================= */
+
+.turn{
+    margin:10px auto 18px;
+
+    width:min(600px,95%);
+
+    padding:12px 18px;
+
+    border-radius:14px;
+
+    color:#fff;
+
+    font-weight:900;
+
+    background:
+    linear-gradient(
+        135deg,
+        #17231f,
+        #0a0f0d
+    );
+
+    border:1px solid rgba(255,215,0,.4);
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.3);
+}
+
+
+/* =========================
+   FIELDS
+========================= */
+
+.field-container{
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,minmax(300px,1fr));
+
+    gap:25px;
+
+    margin:25px auto;
+
+    align-items:start;
+}
+
+.team-wrap{
+    border-radius:20px;
+
+    overflow:hidden;
+
+    background:#07100c;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.4);
+}
+
+.team-title{
+    padding:13px;
+
+    font-size:18px;
+
+    font-weight:900;
+}
+
+.team-title.blue{
+    color:#fff;
+
+    background:
+    linear-gradient(
+        90deg,
+        #0077aa,
+        #00aaff,
+        #006699
+    );
+}
+
+.team-title.red{
+    color:#fff;
+
+    background:
+    linear-gradient(
+        90deg,
+        #a40000,
+        #ff3333,
+        #990000
+    );
+}
+
+.pitch{
+    width:100%;
+
+    aspect-ratio:7/9;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+
+    repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,.025) 0,
+        rgba(255,255,255,.025) 10%,
+        transparent 10%,
+        transparent 20%
+    ),
+
+    linear-gradient(
+        180deg,
+        #168b49,
+        #0b542d
+    );
+}
+
+.pitch::before{
+    content:"";
+
+    position:absolute;
+
+    top:45%;
+
+    left:0;
+
+    width:100%;
+
+    height:2px;
+
+    background:rgba(255,255,255,.7);
+}
+
+.pitch::after{
+    content:"";
+
+    position:absolute;
+
+    top:45%;
+
+    left:50%;
+
+    width:100px;
+
+    height:100px;
+
+    border:2px solid rgba(255,255,255,.7);
+
+    border-radius:50%;
+
+    transform:translate(-50%,-50%);
+}
+
+.penalty{
+    position:absolute;
+
+    bottom:0;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:60%;
+
+    height:22%;
+
+    border:
+    2px solid rgba(255,255,255,.8);
+
+    border-bottom:none;
+}
+
+.goal{
+    position:absolute;
+
+    bottom:0;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:28%;
+
+    height:7%;
+
+    border:
+    2px solid rgba(255,255,255,.9);
+
+    border-bottom:none;
+}
+
+
+/* =========================
+   PLAYER ON FIELD
+========================= */
+
+.player-spot{
+    position:absolute;
+
+    width:82px;
+
+    transform:translate(-50%,-50%);
+
+    text-align:center;
+
+    z-index:5;
+}
+
+.pos-label{
+    position:absolute;
+
+    top:-12px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    padding:2px 6px;
+
+    border-radius:8px;
+
+    background:rgba(0,0,0,.7);
+
+    font-size:9px;
+
+    font-family:'Orbitron';
+
+    z-index:10;
+}
+
+.mini-card{
+    width:64px;
+
+    height:76px;
+
+    margin:auto;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:10px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:flex-end;
+
+    padding:5px;
+
+    border:2px solid #777;
+
+    box-shadow:
+    0 8px 15px rgba(0,0,0,.4);
+
+    transition:
+    transform .3s,
+    box-shadow .3s;
+}
+
+.mini-card:hover{
+    transform:
+    translateY(-5px)
+    scale(1.08);
+}
+
+.mini-card::before{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,255,255,.2),
+        transparent 45%
+    );
+}
+
+.mini-card.empty{
+    opacity:.3;
+
+    filter:grayscale(1);
+
+    background:#222;
+
+    border-style:dashed;
+}
+
+.mini-rating{
+    position:absolute;
+
+    top:5px;
+
+    right:6px;
+
+    font-family:'Orbitron';
+
+    font-size:12px;
+
+    font-weight:900;
+}
+
+.mini-pos{
+    position:absolute;
+
+    top:20px;
+
+    right:6px;
+
+    font-size:8px;
+
+    font-weight:900;
+}
+
+.mini-name{
+    position:relative;
+
+    z-index:2;
+
+    font-size:8px;
+
+    font-weight:900;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+
+/* =========================
+   PLAYER CARD
+========================= */
+
+.card-area{
+    display:flex;
+
+    justify-content:center;
+
+    margin:25px auto 40px;
+}
+
+.player-card{
+    width:min(360px,92vw);
+
+    min-height:530px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:28px;
+
+    padding:20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    transform:translateY(0);
+
+    animation:cardEnter .6s ease;
+
+    box-shadow:
+    0 30px 70px rgba(0,0,0,.55);
+}
+
+@keyframes cardEnter{
+
+    0%{
+        opacity:0;
+
+        transform:
+        scale(.75)
+        rotateY(30deg);
+    }
+
+    100%{
+        opacity:1;
+
+        transform:
+        scale(1)
+        rotateY(0);
+    }
+
+}
+
+
+/* =========================
+   GOLD CARD
+========================= */
+
+.card-gold{
+
+    background:
+
+    radial-gradient(
+        circle at 50% 20%,
+        #fff4a3,
+        #dba700 40%,
+        #8d5b00 100%
+    );
+
+    border:3px solid #fff0a6;
+
+    color:#181000;
+
+    box-shadow:
+    0 0 35px rgba(255,215,0,.4),
+    0 30px 60px rgba(0,0,0,.5);
+}
+
+
+/* =========================
+   ICON CARD
+========================= */
+
+.card-icon{
+
+    background:
+
+    radial-gradient(
+        circle at 50% 20%,
+        #fffdf0,
+        #e6c878 45%,
+        #7e5a1c 100%
+    );
+
+    border:3px solid #fff4bc;
+
+    color:#1a1300;
+
+    box-shadow:
+    0 0 50px rgba(255,215,0,.55),
+    0 30px 70px rgba(0,0,0,.55);
+}
+
+
+/* =========================
+   GOAT CARD
+========================= */
+
+.card-goat{
+
+    background:
+
+    radial-gradient(
+        circle at 50% 10%,
+        #ffffff,
+        #ffd700 25%,
+        #7a00ff 58%,
+        #090014 100%
+    );
+
+    border:3px solid #fff;
+
+    color:#fff;
+
+    box-shadow:
+    0 0 25px #fff,
+    0 0 50px #ffd700,
+    0 0 90px #7a00ff,
+    0 30px 70px rgba(0,0,0,.6);
+
+    animation:
+    cardEnter .6s ease,
+    goatGlow 2s infinite alternate;
+}
+
+@keyframes goatGlow{
+
+    from{
+
+        box-shadow:
+        0 0 25px #fff,
+        0 0 45px #ffd700,
+        0 0 70px #7a00ff;
+
+    }
+
+    to{
+
+        box-shadow:
+        0 0 35px #fff,
+        0 0 70px #ffd700,
+        0 0 110px #7a00ff;
+
+    }
+
+}
+
+
+/* =========================
+   CARD CONTENT
+========================= */
+
+.card-top{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    position:relative;
+
+    z-index:2;
+}
+
+.rating{
+    font-family:'Orbitron';
+
+    font-size:48px;
+
+    font-weight:900;
+
+    line-height:1;
+}
+
+.position{
+    font-family:'Orbitron';
+
+    font-size:17px;
+
+    font-weight:900;
+
+    margin-top:5px;
+}
+
+.card-type{
+    padding:7px 12px;
+
+    border-radius:20px;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    background:rgba(0,0,0,.15);
+
+    border:1px solid rgba(255,255,255,.35);
+}
+
+.player-photo{
+    width:220px;
+
+    height:220px;
+
+    margin:auto;
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+}
+
+.player-photo img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:5px solid rgba(255,255,255,.65);
+
+    box-shadow:
+    0 20px 30px rgba(0,0,0,.25);
+}
+
+.player-name{
+    position:relative;
+
+    z-index:2;
+
+    font-family:'Orbitron','Cairo';
+
+    font-size:28px;
+
+    font-weight:900;
+
+    text-align:center;
+
+    margin-top:5px;
+
+    text-shadow:
+    0 2px 5px rgba(0,0,0,.25);
+}
+
+.card-price{
+
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
+
+    margin-top:8px;
+
+    font-family:'Orbitron';
+
+    font-size:20px;
+
+    font-weight:900;
+}
+
+
+/* =========================
+   CONTROLS
+========================= */
+
+.controls{
+
+    position:relative;
+
+    z-index:5;
+
+    width:min(450px,95%);
+
+    margin:18px auto;
+
+    padding:18px;
+
+    border-radius:22px;
+
+    background:
+
+    linear-gradient(
+        145deg,
+        rgba(20,25,24,.96),
+        rgba(4,6,5,.98)
+    );
+
+    border:1px solid rgba(255,215,0,.35);
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.4);
+}
+
+#bidInput{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:10px;
+
+    border-radius:12px;
+
+    border:2px solid #d5aa19;
+
+    outline:none;
+
+    background:#080b0a;
+
+    color:#fff;
+
+    text-align:center;
+
+    font-family:'Orbitron';
+
+    font-size:16px;
+}
+
+.buttons{
+
+    display:grid;
+
+    grid-template-columns:
+    1fr
+    1fr
+    1fr;
+
+    gap:8px;
+}
+
+button{
+
+    padding:13px 8px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-family:'Cairo';
+
+    font-weight:900;
+
+    font-size:14px;
+
+    transition:
+    transform .2s,
+    filter .2s;
+}
+
+button:hover:not(:disabled){
+
+    transform:
+    translateY(-3px);
+
+    filter:brightness(1.12);
+}
+
+button:active:not(:disabled){
+
+    transform:
+    scale(.96);
+}
+
+button:disabled{
+
+    opacity:.4;
+
+    cursor:not-allowed;
+}
+
+.bid{
+
+    background:
+    linear-gradient(
+        135deg,
+        #50ff85,
+        #00a43a
+    );
+
+    color:#001b09;
+}
+
+.take{
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff5252,
+        #a80000
+    );
+
+    color:#fff;
+}
+
+.skip{
+
+    background:
+    linear-gradient(
+        135deg,
+        #555,
+        #222
+    );
+
+    color:#fff;
+}
+
+
+/* =========================
+   TIMER / RESULT
+========================= */
+
+.timer{
+
+    display:none;
+
+    width:min(500px,92%);
+
+    margin:20px auto;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    font-family:'Orbitron';
+
+    font-size:22px;
+
+    color:#ffd700;
+
+    background:#090b0a;
+
+    border:1px solid #d5aa19;
+}
+
+.result{
+
+    width:min(700px,94%);
+
+    margin:25px auto;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    font-size:28px;
+
+    font-weight:900;
+
+    color:#ffd700;
+
+    background:
+    linear-gradient(
+        145deg,
+        #121513,
+        #050605
+    );
+
+    border:2px solid #ffd700;
+
+    box-shadow:
+    0 0 40px rgba(255,215,0,.2);
+}
+
+
+/* =========================
+   POSITIONS
+========================= */
+
+.pos-GK{
+    bottom:7%;
+    left:50%;
+}
+
+.pos-CB1{
+    bottom:20%;
+    left:33%;
+}
+
+.pos-CB2{
+    bottom:20%;
+    left:67%;
+}
+
+.pos-LB{
+    bottom:31%;
+    left:14%;
+}
+
+.pos-RB{
+    bottom:31%;
+    left:86%;
+}
+
+.pos-CM1{
+    bottom:45%;
+    left:32%;
+}
+
+.pos-CM2{
+    bottom:45%;
+    left:68%;
+}
+
+.pos-CAM{
+    bottom:58%;
+    left:50%;
+}
+
+.pos-LW{
+    bottom:76%;
+    left:14%;
+}
+
+.pos-ST{
+    bottom:80%;
+    left:50%;
+}
+
+.pos-RW{
+    bottom:76%;
+    left:86%;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+    .field-container{
+
+        grid-template-columns:1fr;
+
+        width:min(500px,96%);
+
+    }
+
+    .stats{
+
+        grid-template-columns:1fr;
+
+    }
+
+    #count{
+
+        order:-1;
+
+        justify-self:center;
+    }
+
+}
+
 </style>
+
 </head>
+
 <body>
 
-<h1>⚽ مزاد النجوم ⚽</h1>
-<div class="stats"><div class="p1"><span id="name1">انت</span>: <span id="m1">200,000,000</span>$</div><div id="count">1 / 11</div><div class="p2"><span id="name2">الخصم</span>: <span id="m2">200,000,000</span>$</div></div>
-<div class="turn" id="turn">دور المزايدة:...</div>
-<div class="timer" id="timer" style="display:none"></div>
+<div class="app">
+
+<h1>⚽ مزاد النجوم ULTIMATE ⚽</h1>
+
+<div class="stats">
+
+```
+<div class="money-box blue">
+
+    <span id="name1">
+        اللاعب الأول
+    </span>
+
+    <span class="money-value">
+        <span id="m1">
+            200,000,000
+        </span> $
+    </span>
+
+</div>
+
+
+<div id="count">
+    1 / 11
+</div>
+
+
+<div class="money-box red">
+
+    <span id="name2">
+        اللاعب الثاني
+    </span>
+
+    <span class="money-value">
+
+        <span id="m2">
+            200,000,000
+        </span> $
+
+    </span>
+
+</div>
+```
+
+</div>
+
+<div class="turn" id="turn">
+
+```
+جاري تحميل المزاد...
+```
+
+</div>
+
+<div class="timer" id="timer"></div>
+
 <div id="result"></div>
 
 <div class="field-container">
-  <div><div class="team-title blue" id="team1Title">الفريق الازرق</div><div class="pitch" id="pitch1"><div class="penalty"></div><div class="goal"></div></div></div>
-  <div><div class="team-title red" id="team2Title">الفريق الاحمر</div><div class="pitch" id="pitch2"><div class="penalty"></div><div class="goal"></div></div></div>
+
+```
+<div class="team-wrap">
+
+    <div
+    class="team-title blue"
+    id="team1Title">
+
+        الفريق الأزرق
+
+    </div>
+
+    <div
+    class="pitch"
+    id="pitch1">
+
+        <div class="penalty"></div>
+
+        <div class="goal"></div>
+
+    </div>
+
 </div>
 
-<div class="card" id="auctionCard">
-  <img id="playerImg" src="https://ui-avatars.com/api/?name=PLAYER&background=333&color=ffd700&size=110&rounded=true">
-  <div class="pos" id="pos"></div>
-  <div class="name" id="name"></div>
-  <div class="price" id="price"></div>
-  <input id="bidInput" type="number" placeholder="اكتب المزايدة"><br>
-  <button class="bid" id="bidBtn" onclick="bid()">مزايدة</button>
-  <button class="take" id="takeBtn" onclick="take()">خده</button>
-  <button class="skip" onclick="skip()">تخطي</button>
+
+<div class="team-wrap">
+
+    <div
+    class="team-title red"
+    id="team2Title">
+
+        الفريق الأحمر
+
+    </div>
+
+    <div
+    class="pitch"
+    id="pitch2">
+
+        <div class="penalty"></div>
+
+        <div class="goal"></div>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<div class="card-area">
+
+```
+<div
+id="auctionCard"
+class="player-card card-gold">
+
+
+    <div class="card-top">
+
+        <div>
+
+            <div
+            class="rating"
+            id="rating">
+
+                90
+
+            </div>
+
+            <div
+            class="position"
+            id="pos">
+
+                ST
+
+            </div>
+
+        </div>
+
+
+        <div
+        class="card-type"
+        id="cardType">
+
+            GOLD PLAYER
+
+        </div>
+
+    </div>
+
+
+    <div class="player-photo">
+
+        <img
+        id="playerImg"
+        src="https://ui-avatars.com/api/?name=PLAYER&background=222&color=fff&size=300">
+
+    </div>
+
+
+    <div
+    class="player-name"
+    id="name">
+
+        PLAYER
+
+    </div>
+
+
+    <div
+    class="card-price"
+    id="price">
+
+        1,000,000 $
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<div class="controls">
+
+```
+<input
+id="bidInput"
+type="number"
+placeholder="اكتب قيمة المزايدة">
+
+
+<div class="buttons">
+
+    <button
+    class="bid"
+    id="bidBtn"
+    onclick="bid()">
+
+        💰 مزايدة
+
+    </button>
+
+
+    <button
+    class="take"
+    id="takeBtn"
+    onclick="take()">
+
+        🔥 خده
+
+    </button>
+
+
+    <button
+    class="skip"
+    id="skipBtn"
+    onclick="skip()">
+
+        ⏭ تخطي
+
+    </button>
+
+</div>
+```
+
+</div>
+
 </div>
 
 <script>
-const firebaseConfig = {apiKey: "AIzaSyC_55Rv6wCni9EwQurtUILswB1WjkXp6hM",authDomain: "mazad-noogom.firebaseapp.com",databaseURL: "https://mazad-noogom-default-rtdb.firebaseio.com",projectId: "mazad-noogom",storageBucket: "mazad-noogom.firebasestorage.app",messagingSenderId: "183884985831",appId: "1:183884985831:web:db231949dace2b0798b942"};
-firebase.initializeApp(firebaseConfig);const db = firebase.database();
-const urlParams = new URLSearchParams(window.location.search);const room = urlParams.get('room');const type = urlParams.get('type') || 'pro';const amIHost = urlParams.get('player') == '1';let myPlayer = amIHost? 1 : 2;
-const positions = ["GK","LB","CB1","CB2","RB","CM1","CM2","CAM","LW","ST","RW"];const PRICE = 1000000;
 
-function getPlayerImg(name){
-  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff&size=120&rounded=true&bold=true`
-}
+/* =====================================
+   FIREBASE
+===================================== */
 
-const playersDB = {
-GK: [
-{n:"Yashin", p:PRICE, r:99, tag:"legend"},{n:"Buffon", p:PRICE, r:98, tag:"legend"},{n:"Casillas", p:PRICE, r:97, tag:"legend"},{n:"Kahn", p:PRICE, r:97, tag:"legend"},{n:"Schmeichel", p:PRICE, r:96, tag:"legend"},
-{n:"Cech", p:PRICE, r:95, tag:"legend"},{n:"Van Der Sar", p:PRICE, r:95, tag:"legend"},{n:"Chilavert", p:PRICE, r:94, tag:"legend"},{n:"Zoff", p:PRICE, r:94, tag:"legend"},{n:"Banks", p:PRICE, r:93, tag:"legend"},
-{n:"Courtois", p:PRICE, r:92, tag:"current"},{n:"Alisson", p:PRICE, r:91, tag:"current"},{n:"Ter Stegen", p:PRICE, r:90, tag:"current"},{n:"Donnarumma", p:PRICE, r:90, tag:"current"},{n:"Oblak", p:PRICE, r:89, tag:"current"},
-{n:"Neuer", p:PRICE, r:89, tag:"current"},{n:"Ederson", p:PRICE, r:88, tag:"current"},{n:"E.Martinez", p:PRICE, r:87, tag:"current"},{n:"Maignan", p:PRICE, r:87, tag:"current"},{n:"Raya", p:PRICE, r:86, tag:"current"}
-],
-LB: [
-{n:"Maldini", p:PRICE, r:99, tag:"legend"},{n:"Roberto Carlos", p:PRICE, r:98, tag:"legend"},{n:"Brehme", p:PRICE, r:96, tag:"legend"},{n:"Nilton Santos", p:PRICE, r:95, tag:"legend"},{n:"Facchetti", p:PRICE, r:95, tag:"legend"},
-{n:"Junior", p:PRICE, r:94, tag:"legend"},{n:"Zambrotta", p:PRICE, r:93, tag:"legend"},{n:"Lizarazu", p:PRICE, r:93, tag:"legend"},{n:"Ashley Cole", p:PRICE, r:92, tag:"legend"},{n:"G.Bale", p:PRICE, r:91, tag:"legend"},
-{n:"Davies", p:PRICE, r:85, tag:"current"},{n:"Robertson", p:PRICE, r:88, tag:"current"},{n:"T.Hernandez", p:PRICE, r:86, tag:"current"},{n:"Cancelo", p:PRICE, r:87, tag:"current"},{n:"N.Mendes", p:PRICE, r:84, tag:"current"},
-{n:"L.Shaw", p:PRICE, r:83, tag:"current"},{n:"Chilwell", p:PRICE, r:82, tag:"current"},{n:"Dimarco", p:PRICE, r:84, tag:"current"},{n:"Estupinan", p:PRICE, r:82, tag:"current"},{n:"Balde", p:PRICE, r:83, tag:"current"}
-],
-CB1: [
-{n:"Beckenbauer", p:PRICE, r:99, tag:"legend"},{n:"Maldini CB", p:PRICE, r:98, tag:"legend"},{n:"Nesta", p:PRICE, r:97, tag:"legend"},{n:"Cannavaro", p:PRICE, r:97, tag:"legend"},{n:"Sergio Ramos", p:PRICE, r:96, tag:"legend"},
-{n:"Baresi", p:PRICE, r:96, tag:"legend"},{n:"Stam", p:PRICE, r:95, tag:"legend"},{n:"Vidic", p:PRICE, r:94, tag:"legend"},{n:"Ferdinand", p:PRICE, r:94, tag:"legend"},{n:"Puyol", p:PRICE, r:93, tag:"legend"},
-{n:"Van Dijk", p:PRICE, r:90, tag:"current"},{n:"R.Dias", p:PRICE, r:89, tag:"current"},{n:"Rudiger", p:PRICE, r:88, tag:"current"},{n:"Saliba", p:PRICE, r:86, tag:"current"},{n:"Militao", p:PRICE, r:85, tag:"current"},
-{n:"Araujo", p:PRICE, r:87, tag:"current"},{n:"Marquinhos", p:PRICE, r:88, tag:"current"},{n:"Gvardiol", p:PRICE, r:86, tag:"current"},{n:"Gabriel", p:PRICE, r:85, tag:"current"},{n:"Bastoni", p:PRICE, r:85, tag:"current"}
-],
-CB2: [
-{n:"Koeman", p:PRICE, r:97, tag:"legend"},{n:"Hierro", p:PRICE, r:96, tag:"legend"},{n:"Thiago Silva", p:PRICE, r:95, tag:"legend"},{n:"Lucio", p:PRICE, r:94, tag:"legend"},{n:"Gamarra", p:PRICE, r:94, tag:"legend"},
-{n:"Adams", p:PRICE, r:93, tag:"legend"},{n:"Campbell", p:PRICE, r:93, tag:"legend"},{n:"Desailly", p:PRICE, r:92, tag:"legend"},{n:"Hyypia", p:PRICE, r:91, tag:"legend"},{n:"Ayala", p:PRICE, r:91, tag:"legend"},
-{n:"Kim", p:PRICE, r:86, tag:"current"},{n:"Konate", p:PRICE, r:84, tag:"current"},{n:"Romero", p:PRICE, r:85, tag:"current"},{n:"De Ligt", p:PRICE, r:86, tag:"current"},{n:"Colwill", p:PRICE, r:82, tag:"current"},
-{n:"Hincapie", p:PRICE, r:82, tag:"current"},{n:"Bremer", p:PRICE, r:85, tag:"current"},{n:"Van de Ven", p:PRICE, r:84, tag:"current"},{n:"Pau", p:PRICE, r:83, tag:"current"},{n:"Guehi", p:PRICE, r:83, tag:"current"}
-],
-RB: [
-{n:"Cafu", p:PRICE, r:98, tag:"legend"},{n:"Lahm", p:PRICE, r:97, tag:"legend"},{n:"Zanetti", p:PRICE, r:96, tag:"legend"},{n:"Dani Alves", p:PRICE, r:95, tag:"legend"},{n:"Thuram", p:PRICE, r:95, tag:"legend"},
-{n:"Maicon", p:PRICE, r:94, tag:"legend"},{n:"Gary Neville", p:PRICE, r:93, tag:"legend"},{n:"Carvajal", p:PRICE, r:92, tag:"legend"},{n:"Sagna", p:PRICE, r:91, tag:"legend"},{n:"Djalminha", p:PRICE, r:91, tag:"legend"},
-{n:"Hakimi", p:PRICE, r:87, tag:"current"},{n:"TAA", p:PRICE, r:88, tag:"current"},{n:"Walker", p:PRICE, r:86, tag:"current"},{n:"Reece", p:PRICE, r:85, tag:"current"},{n:"Frimpong", p:PRICE, r:84, tag:"current"},
-{n:"Pavard", p:PRICE, r:83, tag:"current"},{n:"Trippier", p:PRICE, r:85, tag:"current"},{n:"Dumfries", p:PRICE, r:83, tag:"current"},{n:"Dalot", p:PRICE, r:82, tag:"current"},{n:"Porro", p:PRICE, r:83, tag:"current"}
-],
-CM1: [
-{n:"Zidane", p:PRICE, r:99, tag:"legend"},{n:"Pirlo", p:PRICE, r:98, tag:"legend"},{n:"Xavi", p:PRICE, r:97, tag:"legend"},{n:"Iniesta", p:PRICE, r:97, tag:"legend"},{n:"Gerrard", p:PRICE, r:96, tag:"legend"},
-{n:"Lampard", p:PRICE, r:96, tag:"legend"},{n:"Scholes", p:PRICE, r:95, tag:"legend"},{n:"Vieira", p:PRICE, r:95, tag:"legend"},{n:"Makelele", p:PRICE, r:94, tag:"legend"},{n:"Redondo", p:PRICE, r:94, tag:"legend"},
-{n:"Rodri", p:PRICE, r:91, tag:"current"},{n:"Valverde", p:PRICE, r:88, tag:"current"},{n:"Kroos", p:PRICE, r:89, tag:"current"},{n:"Rice", p:PRICE, r:87, tag:"current"},{n:"Kimmich", p:PRICE, r:88, tag:"current"},
-{n:"Odegaard", p:PRICE, r:88, tag:"current"},{n:"Casemiro", p:PRICE, r:86, tag:"current"},{n:"Camavinga", p:PRICE, r:85, tag:"current"},{n:"Tchouameni", p:PRICE, r:86, tag:"current"},{n:"Barella", p:PRICE, r:87, tag:"current"}
-],
-CM2: [
-{n:"Maradona", p:PRICE, r:99, tag:"legend"},{n:"Platini", p:PRICE, r:98, tag:"legend"},{n:"Matthaus", p:PRICE, r:97, tag:"legend"},{n:"Rijkaard", p:PRICE, r:97, tag:"legend"},{n:"Davids", p:PRICE, r:96, tag:"legend"},
-{n:"Seedorf", p:PRICE, r:95, tag:"legend"},{n:"Keane", p:PRICE, r:95, tag:"legend"},{n:"Deschamps", p:PRICE, r:94, tag:"legend"},{n:"Gullit", p:PRICE, r:94, tag:"legend"},{n:"Stoichkov", p:PRICE, r:93, tag:"legend"},
-{n:"Modric", p:PRICE, r:88, tag:"current"},{n:"Gundogan", p:PRICE, r:87, tag:"current"},{n:"Bruno G", p:PRICE, r:89, tag:"current"},{n:"Caicedo", p:PRICE, r:85, tag:"current"},{n:"Enzo", p:PRICE, r:86, tag:"current"},
-{n:"Zubimendi", p:PRICE, r:84, tag:"current"},{n:"Tonali", p:PRICE, r:85, tag:"current"},{n:"Locatelli", p:PRICE, r:83, tag:"current"},{n:"Gravenberch", p:PRICE, r:83, tag:"current"},{n:"Mount", p:PRICE, r:84, tag:"current"}
-],
-CAM: [
-{n:"Messi", p:PRICE, r:99, tag:"legend"},{n:"Ronaldinho", p:PRICE, r:98, tag:"legend"},{n:"Zico", p:PRICE, r:97, tag:"legend"},{n:"Figo", p:PRICE, r:97, tag:"legend"},{n:"Rivaldo", p:PRICE, r:96, tag:"legend"},
-{n:"Kaka", p:PRICE, r:96, tag:"legend"},{n:"Riquelme", p:PRICE, r:95, tag:"legend"},{n:"Totti", p:PRICE, r:95, tag:"legend"},{n:"Del Piero", p:PRICE, r:94, tag:"legend"},{n:"Bergkamp", p:PRICE, r:94, tag:"legend"},
-{n:"De Bruyne", p:PRICE, r:92, tag:"current"},{n:"Bellingham", p:PRICE, r:90, tag:"current"},{n:"B.Silva", p:PRICE, r:89, tag:"current"},{n:"B.Fernandes", p:PRICE, r:88, tag:"current"},{n:"Wirtz", p:PRICE, r:87, tag:"current"},
-{n:"Musiala", p:PRICE, r:88, tag:"current"},{n:"Griezmann", p:PRICE, r:87, tag:"current"},{n:"Maddison", p:PRICE, r:85, tag:"current"},{n:"Havertz", p:PRICE, r:85, tag:"current"},{n:"Palmer", p:PRICE, r:86, tag:"current"}
-],
-LW: [
-{n:"Cristiano", p:PRICE, r:99, tag:"legend"},{n:"Henry", p:PRICE, r:98, tag:"legend"},{n:"Figo LW", p:PRICE, r:97, tag:"legend"},{n:"Overmars", p:PRICE, r:96, tag:"legend"},{n:"Giggs", p:PRICE, r:96, tag:"legend"},
-{n:"Rivaldo LW", p:PRICE, r:95, tag:"legend"},{n:"Nedved", p:PRICE, r:95, tag:"legend"},{n:"Pires", p:PRICE, r:94, tag:"legend"},{n:"Ljungberg", p:PRICE, r:93, tag:"legend"},{n:"Joaquin", p:PRICE, r:93, tag:"legend"},
-{n:"Neymar", p:PRICE, r:90, tag:"current"},{n:"Leao", p:PRICE, r:87, tag:"current"},{n:"Vinicius", p:PRICE, r:90, tag:"current"},{n:"Sane", p:PRICE, r:86, tag:"current"},{n:"Rashford", p:PRICE, r:86, tag:"current"},
-{n:"Coman", p:PRICE, r:85, tag:"current"},{n:"Sterling", p:PRICE, r:85, tag:"current"},{n:"L.Diaz", p:PRICE, r:86, tag:"current"},{n:"Martinelli", p:PRICE, r:85, tag:"current"},{n:"Barcola", p:PRICE, r:83, tag:"current"}
-],
-ST: [
-{n:"Ronaldo Nazario", p:PRICE, r:99, tag:"legend"},{n:"Van Basten", p:PRICE, r:98, tag:"legend"},{n:"R9", p:PRICE, r:97, tag:"legend"},{n:"Shevchenko", p:PRICE, r:97, tag:"legend"},{n:"Batistuta", p:PRICE, r:96, tag:"legend"},
-{n:"Inzaghi", p:PRICE, r:96, tag:"legend"},{n:"Klose", p:PRICE, r:95, tag:"legend"},{n:"Drogba", p:PRICE, r:95, tag:"legend"},{n:"Ibrahimovic", p:PRICE, r:94, tag:"legend"},{n:"Rooney", p:PRICE, r:94, tag:"legend"},
-{n:"Haaland", p:PRICE, r:92, tag:"current"},{n:"Mbappe", p:PRICE, r:92, tag:"current"},{n:"Lewandowski", p:PRICE, r:90, tag:"current"},{n:"Kane", p:PRICE, r:90, tag:"current"},{n:"Lautaro", p:PRICE, r:88, tag:"current"},
-{n:"Osimhen", p:PRICE, r:88, tag:"current"},{n:"Nunez", p:PRICE, r:85, tag:"current"},{n:"G.Jesus", p:PRICE, r:85, tag:"current"},{n:"Vlahovic", p:PRICE, r:86, tag:"current"},{n:"Isak", p:PRICE, r:86, tag:"current"}
-],
-RW: [
-{n:"Messi RW", p:PRICE, r:99, tag:"legend"},{n:"Beckham", p:PRICE, r:98, tag:"legend"},{n:"Figo RW", p:PRICE, r:97, tag:"legend"},{n:"Garrincha", p:PRICE, r:97, tag:"legend"},{n:"Best", p:PRICE, r:96, tag:"legend"},
-{n:"Kaka RW", p:PRICE, r:95, tag:"legend"},{n:"C.Ronaldo RW", p:PRICE, r:95, tag:"legend"},{n:"Salah Legend", p:PRICE, r:94, tag:"legend"},{n:"Robben", p:PRICE, r:94, tag:"legend"},{n:"Nani", p:PRICE, r:93, tag:"legend"},
-{n:"Salah", p:PRICE, r:91, tag:"current"},{n:"Saka", p:PRICE, r:88, tag:"current"},{n:"Mahrez", p:PRICE, r:86, tag:"current"},{n:"Rodrygo", p:PRICE, r:87, tag:"current"},{n:"Foden", p:PRICE, r:89, tag:"current"},
-{n:"Dembele", p:PRICE, r:87, tag:"current"},{n:"Bowen", p:PRICE, r:84, tag:"current"},{n:"P.Neto", p:PRICE, r:83, tag:"current"},{n:"Grealish", p:PRICE, r:85, tag:"current"},{n:"Antony", p:PRICE, r:82, tag:"current"}
-]
+const firebaseConfig = {
+
+    apiKey:
+    "AIzaSyC_55Rv6wCni9EwQurtUILswB1WjkXp6hM",
+
+    authDomain:
+    "mazad-noogom.firebaseapp.com",
+
+    databaseURL:
+    "https://mazad-noogom-default-rtdb.firebaseio.com",
+
+    projectId:
+    "mazad-noogom",
+
+    storageBucket:
+    "mazad-noogom.firebasestorage.app",
+
+    messagingSenderId:
+    "183884985831",
+
+    appId:
+    "1:183884985831:web:db231949dace2b0798b942"
+
 };
 
-let currentPosIndex=0, currentPlayer, currentBid=0, highestBidder=0;
-let turn=1, m1=200000000, m2=200000000, starter=1;
-let t1={}, t2={};
-let filled1={}, filled2={};
-let usedPlayers={}, availablePlayers={};
-let timerInterval = null;
+
+firebase.initializeApp(firebaseConfig);
+
+
+const db =
+firebase.database();
+
+
+
+/* =====================================
+   URL
+===================================== */
+
+const urlParams =
+new URLSearchParams(
+    window.location.search
+);
+
+
+const room =
+urlParams.get('room');
+
+
+const type =
+urlParams.get('type') ||
+'pro';
+
+
+const amIHost =
+urlParams.get('player') == '1';
+
+
+const myPlayer =
+amIHost
+?
+1
+:
+2;
+
+
+
+/* =====================================
+   GAME DATA
+===================================== */
+
+const positions = [
+
+    "GK",
+    "LB",
+    "CB1",
+    "CB2",
+    "RB",
+    "CM1",
+    "CM2",
+    "CAM",
+    "LW",
+    "ST",
+    "RW"
+
+];
+
+
+const PRICE =
+1000000;
+
+
+
+/* =====================================
+   PLAYERS
+===================================== */
+
+const playersDB = {
+
+
+GK:[
+
+{n:"Yashin",p:PRICE,r:99,tag:"legend"},
+
+{n:"Buffon",p:PRICE,r:98,tag:"legend"},
+
+{n:"Casillas",p:PRICE,r:97,tag:"legend"},
+
+{n:"Kahn",p:PRICE,r:97,tag:"legend"},
+
+{n:"Courtois",p:PRICE,r:92,tag:"current"},
+
+{n:"Alisson",p:PRICE,r:91,tag:"current"},
+
+{n:"Donnarumma",p:PRICE,r:90,tag:"current"}
+
+],
+
+
+LB:[
+
+{n:"Maldini",p:PRICE,r:99,tag:"legend"},
+
+{n:"Roberto Carlos",p:PRICE,r:98,tag:"legend"},
+
+{n:"Ashley Cole",p:PRICE,r:94,tag:"legend"},
+
+{n:"Davies",p:PRICE,r:87,tag:"current"},
+
+{n:"Robertson",p:PRICE,r:88,tag:"current"},
+
+{n:"T.Hernandez",p:PRICE,r:89,tag:"current"}
+
+],
+
+
+CB1:[
+
+{n:"Beckenbauer",p:PRICE,r:99,tag:"legend"},
+
+{n:"Nesta",p:PRICE,r:97,tag:"legend"},
+
+{n:"Cannavaro",p:PRICE,r:97,tag:"legend"},
+
+{n:"Van Dijk",p:PRICE,r:91,tag:"current"},
+
+{n:"R.Dias",p:PRICE,r:90,tag:"current"},
+
+{n:"Saliba",p:PRICE,r:89,tag:"current"}
+
+],
+
+
+CB2:[
+
+{n:"Baresi",p:PRICE,r:98,tag:"legend"},
+
+{n:"Sergio Ramos",p:PRICE,r:96,tag:"legend"},
+
+{n:"Puyol",p:PRICE,r:95,tag:"legend"},
+
+{n:"Rudiger",p:PRICE,r:89,tag:"current"},
+
+{n:"Araujo",p:PRICE,r:88,tag:"current"},
+
+{n:"Marquinhos",p:PRICE,r:89,tag:"current"}
+
+],
+
+
+RB:[
+
+{n:"Cafu",p:PRICE,r:98,tag:"legend"},
+
+{n:"Lahm",p:PRICE,r:97,tag:"legend"},
+
+{n:"Dani Alves",p:PRICE,r:96,tag:"legend"},
+
+{n:"Hakimi",p:PRICE,r:90,tag:"current"},
+
+{n:"TAA",p:PRICE,r:89,tag:"current"},
+
+{n:"Frimpong",p:PRICE,r:88,tag:"current"}
+
+],
+
+
+CM1:[
+
+{n:"Zidane",p:PRICE,r:99,tag:"legend"},
+
+{n:"Pirlo",p:PRICE,r:98,tag:"legend"},
+
+{n:"Xavi",p:PRICE,r:97,tag:"legend"},
+
+{n:"Rodri",p:PRICE,r:92,tag:"current"},
+
+{n:"Valverde",p:PRICE,r:90,tag:"current"},
+
+{n:"Kimmich",p:PRICE,r:89,tag:"current"}
+
+],
+
+
+CM2:[
+
+{n:"Maradona",p:PRICE,r:99,tag:"legend"},
+
+{n:"Gullit",p:PRICE,r:97,tag:"legend"},
+
+{n:"Matthaus",p:PRICE,r:97,tag:"legend"},
+
+{n:"Modric",p:PRICE,r:91,tag:"current"},
+
+{n:"Barella",p:PRICE,r:89,tag:"current"},
+
+{n:"Camavinga",p:PRICE,r:88,tag:"current"}
+
+],
+
+
+CAM:[
+
+{n:"Messi",p:PRICE,r:99,tag:"goat"},
+
+{n:"Ronaldinho",p:PRICE,r:98,tag:"legend"},
+
+{n:"Kaka",p:PRICE,r:97,tag:"legend"},
+
+{n:"De Bruyne",p:PRICE,r:92,tag:"current"},
+
+{n:"Bellingham",p:PRICE,r:91,tag:"current"},
+
+{n:"Musiala",p:PRICE,r:90,tag:"current"}
+
+],
+
+
+LW:[
+
+{n:"Cristiano",p:PRICE,r:99,tag:"goat"},
+
+{n:"Henry",p:PRICE,r:98,tag:"legend"},
+
+{n:"Neymar",p:PRICE,r:91,tag:"current"},
+
+{n:"Vinicius",p:PRICE,r:92,tag:"current"},
+
+{n:"Leao",p:PRICE,r:89,tag:"current"}
+
+],
+
+
+ST:[
+
+{n:"Ronaldo Nazario",p:PRICE,r:99,tag:"legend"},
+
+{n:"Van Basten",p:PRICE,r:98,tag:"legend"},
+
+{n:"Drogba",p:PRICE,r:96,tag:"legend"},
+
+{n:"Haaland",p:PRICE,r:93,tag:"current"},
+
+{n:"Mbappe",p:PRICE,r:94,tag:"current"},
+
+{n:"Kane",p:PRICE,r:91,tag:"current"}
+
+],
+
+
+RW:[
+
+{n:"Messi RW",p:PRICE,r:99,tag:"goat"},
+
+{n:"Cristiano Ronaldo",p:PRICE,r:99,tag:"goat"},
+
+{n:"Beckham",p:PRICE,r:98,tag:"legend"},
+
+{n:"Garrincha",p:PRICE,r:97,tag:"legend"},
+
+{n:"Salah",p:PRICE,r:92,tag:"current"},
+
+{n:"Saka",p:PRICE,r:90,tag:"current"}
+
+]
+
+};
+
+
+
+/* =====================================
+   VARIABLES
+===================================== */
+
+let currentPosIndex =
+0;
+
+
+let currentPlayer =
+null;
+
+
+let currentBid =
+0;
+
+
+let highestBidder =
+0;
+
+
+let turn =
+1;
+
+
+let m1 =
+200000000;
+
+
+let m2 =
+200000000;
+
+
+let t1 =
+{};
+
+
+let t2 =
+{};
+
+
+let filled1 =
+{};
+
+
+let filled2 =
+{};
+
+
+let usedPlayers =
+{};
+
+
+let availablePlayers =
+{};
+
+
+let timerInterval =
+null;
+
+
+
+/* =====================================
+   AUDIO
+   صوت دفع فلوس بدون ملف خارجي
+===================================== */
+
+let audioContext =
+null;
+
+
+function playMoneySound(){
+
+    try{
+
+        if(!audioContext){
+
+            audioContext =
+            new(
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+        }
+
+
+        const now =
+        audioContext.currentTime;
+
+
+        const oscillator =
+        audioContext.createOscillator();
+
+
+        const gain =
+        audioContext.createGain();
+
+
+        oscillator.type =
+        "sine";
+
+
+        oscillator.frequency.setValueAtTime(
+            520,
+            now
+        );
+
+
+        oscillator.frequency.exponentialRampToValueAtTime(
+            180,
+            now + .25
+        );
+
+
+        gain.gain.setValueAtTime(
+            .001,
+            now
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            .35,
+            now + .03
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            now + .3
+        );
+
+
+        oscillator.connect(gain);
+
+
+        gain.connect(
+            audioContext.destination
+        );
+
+
+        oscillator.start(now);
+
+
+        oscillator.stop(
+            now + .32
+        );
+
+    }
+
+    catch(e){}
+
+}
+
+
+
+/* =====================================
+   GET IMAGE
+===================================== */
+
+function getPlayerImg(name){
+
+    return
+
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=111&color=ffd700&size=400&rounded=true&bold=true`;
+
+}
+
+
+
+/* =====================================
+   CARD TYPE
+===================================== */
+
+function getCardInfo(player){
+
+    const name =
+    player.n
+    .toLowerCase();
+
+
+    if(
+
+        player.tag === "goat" ||
+
+        name.includes("messi") ||
+
+        name.includes("cristiano")
+
+    ){
+
+        return{
+
+            className:
+            "card-goat",
+
+            title:
+            "👑 ULTIMATE GOAT 👑"
+
+        };
+
+    }
+
+
+    if(
+        player.tag === "legend"
+    ){
+
+        return{
+
+            className:
+            "card-icon",
+
+            title:
+            "⭐ ICON LEGEND ⭐"
+
+        };
+
+    }
+
+
+    return{
+
+        className:
+        "card-gold",
+
+        title:
+        "🌟 GOLD ELITE 🌟"
+
+    };
+
+}
+
+
+
+/* =====================================
+   DRAW PITCH
+===================================== */
 
 function drawPitch(){
-  positions.forEach(pos=>{
-    document.getElementById('pitch1').innerHTML += `<div class="player-spot pos-${pos} empty" id="p1-${pos}"><div class="pos-label">${pos}</div><img src="https://ui-avatars.com/api/?name=?&background=222&color=888&size=55&rounded=true"><div class="name">-</div></div>`;
-    document.getElementById('pitch2').innerHTML += `<div class="player-spot pos-${pos} empty" id="p2-${pos}"><div class="pos-label">${pos}</div><img src="https://ui-avatars.com/api/?name=?&background=222&color=888&size=55&rounded=true"><div class="name">-</div></div>`;
-  })
+
+    positions.forEach(pos=>{
+
+
+        document
+        .getElementById('pitch1')
+        .innerHTML +=
+
+        `
+
+        <div
+        class="player-spot pos-${pos}"
+        id="p1-${pos}">
+
+            <div
+            class="pos-label">
+
+                ${pos}
+
+            </div>
+
+
+            <div
+            class="mini-card empty">
+
+                <div
+                class="mini-rating">
+
+                    -
+
+                </div>
+
+
+                <div
+                class="mini-pos">
+
+                    ${pos}
+
+                </div>
+
+
+                <div
+                class="mini-name">
+
+                    -
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+
+        document
+        .getElementById('pitch2')
+        .innerHTML +=
+
+        `
+
+        <div
+        class="player-spot pos-${pos}"
+        id="p2-${pos}">
+
+            <div
+            class="pos-label">
+
+                ${pos}
+
+            </div>
+
+
+            <div
+            class="mini-card empty">
+
+                <div
+                class="mini-rating">
+
+                    -
+
+                </div>
+
+
+                <div
+                class="mini-pos">
+
+                    ${pos}
+
+                </div>
+
+
+                <div
+                class="mini-name">
+
+                    -
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
 }
+
+
 drawPitch();
 
-const roomRef = db.ref('rooms/' + type + '/' + room);
-roomRef.on('value', async (snapshot) => {
-  let data = snapshot.val()
-  if(!data) return;
-  document.getElementById('name1').innerText = data.player1?.name || 'الازرق';
-  document.getElementById('name2').innerText = data.player2?.name || 'الاحمر';
-  document.getElementById('team1Title').innerText = data.player1?.name || 'الفريق الازرق';
-  document.getElementById('team2Title').innerText = data.player2?.name || 'الفريق الاحمر';
-  await loadData(data);
-})
+
+
+/* =====================================
+   FIREBASE ROOM
+===================================== */
+
+const roomRef =
+db.ref(
+    'rooms/' +
+    type +
+    '/' +
+    room
+);
+
+
+roomRef.on(
+'value',
+
+async snapshot=>{
+
+
+    const data =
+    snapshot.val();
+
+
+    if(!data)
+        return;
+
+
+    document
+    .getElementById('name1')
+    .innerText =
+
+    data.player1?.name ||
+    'الأزرق';
+
+
+    document
+    .getElementById('name2')
+    .innerText =
+
+    data.player2?.name ||
+    'الأحمر';
+
+
+    document
+    .getElementById('team1Title')
+    .innerText =
+
+    data.player1?.name ||
+    'الفريق الأزرق';
+
+
+    document
+    .getElementById('team2Title')
+    .innerText =
+
+    data.player2?.name ||
+    'الفريق الأحمر';
+
+
+    await loadData(data);
+
+});
+
+
+
+/* =====================================
+   LOAD DATA
+===================================== */
 
 async function loadData(data){
-  currentPosIndex=data.currentPos||0;currentBid=data.currentBid||0;highestBidder=data.highestBidder||0;turn=data.turn||1;starter=data.starter||1;
-  m1=data.m1 || 200000000;m2=data.m2 || 200000000;
-  t1=data.t1 || {};t2=data.t2 || {};currentPlayer=data.currentPlayer || null;filled1=data.filled1 || {};filled2=data.filled2 || {};
-  usedPlayers = data.usedPlayers || {};
-  availablePlayers = data.availablePlayers || JSON.parse(JSON.stringify(playersDB));
 
-  let currentPos = positions[currentPosIndex];
 
-  if(currentPosIndex >= 11 && amIHost){
-    showWinner();
-    return;
-  }
+    currentPosIndex =
+    data.currentPos || 0;
 
-  if(filled1[currentPos] && filled2[currentPos] &&!timerInterval && amIHost){
-    startTimer();
-    return;
-  }
 
-  if(!currentPlayer &&!filled1[currentPos] &&!filled2[currentPos] && amIHost) newPlayer();
-  await updatePitch();show();
+    currentBid =
+    data.currentBid || 0;
+
+
+    highestBidder =
+    data.highestBidder || 0;
+
+
+    turn =
+    data.turn || 1;
+
+
+    m1 =
+    data.m1 ?? 200000000;
+
+
+    m2 =
+    data.m2 ?? 200000000;
+
+
+    t1 =
+    data.t1 || {};
+
+
+    t2 =
+    data.t2 || {};
+
+
+    currentPlayer =
+    data.currentPlayer || null;
+
+
+    filled1 =
+    data.filled1 || {};
+
+
+    filled2 =
+    data.filled2 || {};
+
+
+    usedPlayers =
+    data.usedPlayers || {};
+
+
+    availablePlayers =
+    data.availablePlayers ||
+
+    JSON.parse(
+        JSON.stringify(playersDB)
+    );
+
+
+    if(
+        currentPosIndex >=
+        positions.length
+    ){
+
+        showWinner();
+
+        return;
+
+    }
+
+
+    const currentPos =
+    positions[
+        currentPosIndex
+    ];
+
+
+    if(
+
+        filled1[currentPos] &&
+
+        filled2[currentPos] &&
+
+        !timerInterval &&
+
+        amIHost
+
+    ){
+
+        startTimer();
+
+        return;
+
+    }
+
+
+    if(
+
+        !currentPlayer &&
+
+        !filled1[currentPos] &&
+
+        !filled2[currentPos] &&
+
+        amIHost
+
+    ){
+
+        newPlayer();
+
+    }
+
+
+    updatePitch();
+
+
+    show();
+
 }
+
+
+
+/* =====================================
+   TIMER
+===================================== */
 
 function startTimer(){
-  document.getElementById('auctionCard').style.display='none';
-  document.getElementById('timer').style.display='block';
-  let count=3;
-  timerInterval = setInterval(()=>{
-    document.getElementById('timer').innerText=`المركز القادم: ${positions[currentPosIndex+1]} بعد ${count} ثواني`;
-    count--;
-    if(count<0){
-      clearInterval(timerInterval);
-      timerInterval=null;
-      document.getElementById('timer').style.display='none';
-      document.getElementById('auctionCard').style.display='block';
-      roomRef.update({currentPos: currentPosIndex + 1})
-    }
-  },1000)
+
+    document
+    .querySelector('.controls')
+    .style.display =
+    'none';
+
+
+    document
+    .getElementById('auctionCard')
+    .style.display =
+    'none';
+
+
+    const timer =
+    document
+    .getElementById('timer');
+
+
+    timer.style.display =
+    'block';
+
+
+    let count =
+    3;
+
+
+    timerInterval =
+    setInterval(()=>{
+
+
+        const next =
+        positions[
+            currentPosIndex + 1
+        ] ||
+        'النهاية';
+
+
+        timer.innerText =
+        `المركز القادم: ${next} بعد ${count}`;
+
+
+        count--;
+
+
+        if(count < 0){
+
+
+            clearInterval(
+                timerInterval
+            );
+
+
+            timerInterval =
+            null;
+
+
+            timer.style.display =
+            'none';
+
+
+            document
+            .querySelector('.controls')
+            .style.display =
+            'block';
+
+
+            document
+            .getElementById('auctionCard')
+            .style.display =
+            'flex';
+
+
+            roomRef.update({
+
+                currentPos:
+                currentPosIndex + 1
+
+            });
+
+        }
+
+
+    },1000);
+
 }
+
+
+
+/* =====================================
+   RANDOM PLAYER
+===================================== */
 
 function getRandomPlayer(pos){
-  if(!availablePlayers[pos] || availablePlayers[pos].length === 0) {
-    availablePlayers[pos] = JSON.parse(JSON.stringify(playersDB[pos]));
-  }
-  let data = availablePlayers[pos];
-  let player = data[Math.floor(Math.random()*data.length)];
-  return player;
+
+
+    if(
+
+        !availablePlayers[pos] ||
+
+        availablePlayers[pos]
+        .length === 0
+
+    ){
+
+        availablePlayers[pos] =
+
+        JSON.parse(
+            JSON.stringify(
+                playersDB[pos]
+            )
+        );
+
+    }
+
+
+    const data =
+    availablePlayers[pos];
+
+
+    return data[
+        Math.floor(
+            Math.random() *
+            data.length
+        )
+    ];
+
 }
 
-function removePlayerFromPool(pos, playerName){
-  if(!availablePlayers[pos]) return;
-  availablePlayers[pos] = availablePlayers[pos].filter(p => p.n!== playerName);
-  usedPlayers[playerName] = true;
+
+
+/* =====================================
+   REMOVE PLAYER
+===================================== */
+
+function removePlayerFromPool(
+    pos,
+    playerName
+){
+
+
+    if(
+        !availablePlayers[pos]
+    )
+        return;
+
+
+    availablePlayers[pos] =
+
+    availablePlayers[pos]
+    .filter(
+
+        p =>
+        p.n !== playerName
+
+    );
+
+
+    usedPlayers[
+        playerName
+    ] = true;
+
 }
+
+
+
+/* =====================================
+   NEW PLAYER
+===================================== */
 
 function newPlayer(){
-  let posName=positions[currentPosIndex];
-  let p = getRandomPlayer(posName);
-  removePlayerFromPool(posName, p.n);
-  roomRef.update({ currentBid: p.p, currentPlayer: p, usedPlayers, availablePlayers })
+
+
+    const posName =
+    positions[
+        currentPosIndex
+    ];
+
+
+    const player =
+    getRandomPlayer(
+        posName
+    );
+
+
+    removePlayerFromPool(
+        posName,
+        player.n
+    );
+
+
+    roomRef.update({
+
+        currentBid:
+        player.p,
+
+
+        currentPlayer:
+        player,
+
+
+        highestBidder:
+        0,
+
+
+        turn:
+        1,
+
+
+        usedPlayers,
+
+
+        availablePlayers
+
+    });
+
 }
 
-async function show(){
-  if(!currentPlayer) return;
-  let tag = currentPlayer.tag === 'legend'? '<span class="tag legend">اسطوري</span>' : '<span class="tag current">حالي</span>';
-  document.getElementById('pos').innerHTML="المركز: " + positions[currentPosIndex];
-  document.getElementById('name').innerHTML=currentPlayer.n + tag;
-  document.getElementById('playerImg').src = getPlayerImg(currentPlayer.n);
-  document.getElementById('price').innerText="السعر: "+currentBid.toLocaleString()+"$";
-  document.getElementById('bidInput').value=currentBid+1000000;
-  let myTurn = turn==myPlayer;
-  document.getElementById('bidBtn').disabled =!myTurn;
-  document.getElementById('takeBtn').disabled =!myTurn;
-  document.getElementById('turn').innerText="دور المزايدة: " + (turn==1?document.getElementById('name1').innerText:document.getElementById('name2').innerText) + (myTurn?" - دورك":"");
+
+
+/* =====================================
+   SHOW CARD
+===================================== */
+
+function show(){
+
+
+    if(
+        !currentPlayer
+    )
+        return;
+
+
+    const info =
+    getCardInfo(
+        currentPlayer
+    );
+
+
+    const card =
+    document
+    .getElementById(
+        'auctionCard'
+    );
+
+
+    card.className =
+
+    'player-card ' +
+    info.className;
+
+
+    document
+    .getElementById(
+        'rating'
+    )
+    .innerText =
+    currentPlayer.r ||
+    85;
+
+
+    document
+    .getElementById(
+        'pos'
+    )
+    .innerText =
+
+    positions[
+        currentPosIndex
+    ];
+
+
+    document
+    .getElementById(
+        'cardType'
+    )
+    .innerText =
+    info.title;
+
+
+    document
+    .getElementById(
+        'name'
+    )
+    .innerText =
+    currentPlayer.n;
+
+
+    document
+    .getElementById(
+        'playerImg'
+    )
+    .src =
+    getPlayerImg(
+        currentPlayer.n
+    );
+
+
+    document
+    .getElementById(
+        'price'
+    )
+    .innerText =
+
+    currentBid
+    .toLocaleString() +
+
+    ' $';
+
+
+    document
+    .getElementById(
+        'bidInput'
+    )
+    .value =
+
+    currentBid +
+    1000000;
+
+
+    const myTurn =
+    turn == myPlayer;
+
+
+    document
+    .getElementById(
+        'bidBtn'
+    )
+    .disabled =
+    !myTurn;
+
+
+    document
+    .getElementById(
+        'takeBtn'
+    )
+    .disabled =
+    !myTurn;
+
+
+    document
+    .getElementById(
+        'skipBtn'
+    )
+    .disabled =
+    !myTurn;
+
+
+    const currentName =
+
+    turn == 1
+
+    ?
+
+    document
+    .getElementById('name1')
+    .innerText
+
+    :
+
+    document
+    .getElementById('name2')
+    .innerText;
+
+
+    document
+    .getElementById(
+        'turn'
+    )
+    .innerText =
+
+    "دور المزايدة: " +
+
+    currentName +
+
+    (
+
+        myTurn
+
+        ?
+
+        " - 🔥 دورك الآن"
+
+        :
+
+        ""
+
+    );
+
 }
 
-function bid(){if(turn!=myPlayer) return;let val=parseInt(document.getElementById('bidInput').value);let money=myPlayer==1?m1:m2;
-  if(isNaN(val)){alert("اكتب رقم");return}if(val<=currentBid){alert("لازم تعلي");return}if(val>money){alert("مفيش فلوس");return}
-  roomRef.update({currentBid:val, highestBidder:myPlayer, turn:myPlayer==1?2:1});
+
+
+/* =====================================
+   BID
+===================================== */
+
+function bid(){
+
+
+    if(
+        turn != myPlayer
+    )
+        return;
+
+
+    const val =
+    parseInt(
+
+        document
+        .getElementById(
+            'bidInput'
+        )
+        .value
+
+    );
+
+
+    const money =
+
+    myPlayer == 1
+
+    ?
+
+    m1
+
+    :
+
+    m2;
+
+
+    if(
+        isNaN(val)
+    ){
+
+        alert(
+            "اكتب رقم صحيح"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        val <= currentBid
+    ){
+
+        alert(
+            "لازم تزود عن السعر الحالي"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        val > money
+    ){
+
+        alert(
+            "مفيش فلوس كفاية"
+        );
+
+        return;
+
+    }
+
+
+    roomRef.update({
+
+        currentBid:
+        val,
+
+
+        highestBidder:
+        myPlayer,
+
+
+        turn:
+
+        myPlayer == 1
+
+        ?
+
+        2
+
+        :
+
+        1
+
+    });
+
 }
+
+
+
+/* =====================================
+   TAKE PLAYER
+===================================== */
 
 function take(){
-  if(turn!=myPlayer) return;
-  let pos = positions[currentPosIndex];
-  let taker = highestBidder || myPlayer; // المهم مين اعلى مزايدة
-  let other = taker==1? 2 : 1;
 
-  let updates={};
-  // اللي دفع الفلوس ياخد اللاعب
-  if(taker==1){
-    updates["m1"]=m1-currentBid;
-    updates["t1/"+pos]=currentPlayer;
-    updates["filled1/"+pos]=true;
-  } else {
-    updates["m2"]=m2-currentBid;
-    updates["t2/"+pos]=currentPlayer;
-    updates["filled2/"+pos]=true;
-  }
 
-  // التاني ياخد لاعب عشوائي
-  let randomPlayer = getRandomPlayer(pos);
-  removePlayerFromPool(pos, randomPlayer.n);
-  if(other==1){
-    updates["t1/"+pos]=randomPlayer;
-    updates["filled1/"+pos]=true;
-  } else {
-    updates["t2/"+pos]=randomPlayer;
-    updates["filled2/"+pos]=true;
-  }
+    if(
+        turn != myPlayer
+    )
+        return;
 
-  updates["currentPlayer"]=null;updates["currentBid"]=0;updates["highestBidder"]=0;
-  updates["usedPlayers"]=usedPlayers; updates["availablePlayers"]=availablePlayers;
-  roomRef.update(updates);
+
+    if(
+        !currentPlayer
+    )
+        return;
+
+
+    const pos =
+    positions[
+        currentPosIndex
+    ];
+
+
+    const taker =
+
+    highestBidder ||
+
+    myPlayer;
+
+
+    const other =
+
+    taker == 1
+
+    ?
+
+    2
+
+    :
+
+    1;
+
+
+    const updates =
+    {};
+
+
+    /* =====================
+       خصم فلوس اللاعب
+    ===================== */
+
+    if(
+        taker == 1
+    ){
+
+
+        if(
+            currentBid > m1
+        ){
+
+            alert(
+                "اللاعب الأول معندوش فلوس كفاية"
+            );
+
+            return;
+
+        }
+
+
+        updates["m1"] =
+        m1 -
+        currentBid;
+
+
+        updates[
+            "t1/" + pos
+        ] =
+        currentPlayer;
+
+
+        updates[
+            "filled1/" + pos
+        ] =
+        true;
+
+
+    }
+
+    else{
+
+
+        if(
+            currentBid > m2
+        ){
+
+            alert(
+                "اللاعب الثاني معندوش فلوس كفاية"
+            );
+
+            return;
+
+        }
+
+
+        updates["m2"] =
+        m2 -
+        currentBid;
+
+
+        updates[
+            "t2/" + pos
+        ] =
+        currentPlayer;
+
+
+        updates[
+            "filled2/" + pos
+        ] =
+        true;
+
+    }
+
+
+    /* =====================
+       اللاعب الثاني يحصل
+       على لاعب عشوائي
+    ===================== */
+
+    const randomPlayer =
+    getRandomPlayer(pos);
+
+
+    removePlayerFromPool(
+        pos,
+        randomPlayer.n
+    );
+
+
+    if(
+        other == 1
+    ){
+
+
+        updates[
+            "t1/" + pos
+        ] =
+        randomPlayer;
+
+
+        updates[
+            "filled1/" + pos
+        ] =
+        true;
+
+
+    }
+
+    else{
+
+
+        updates[
+            "t2/" + pos
+        ] =
+        randomPlayer;
+
+
+        updates[
+            "filled2/" + pos
+        ] =
+        true;
+
+    }
+
+
+    /* =====================
+       RESET AUCTION
+    ===================== */
+
+    updates[
+        "currentPlayer"
+    ] =
+    null;
+
+
+    updates[
+        "currentBid"
+    ] =
+    0;
+
+
+    updates[
+        "highestBidder"
+    ] =
+    0;
+
+
+    updates[
+        "turn"
+    ] =
+    1;
+
+
+    updates[
+        "usedPlayers"
+    ] =
+    usedPlayers;
+
+
+    updates[
+        "availablePlayers"
+    ] =
+    availablePlayers;
+
+
+    /* صوت الدفع */
+
+    playMoneySound();
+
+
+    roomRef.update(
+        updates
+    );
+
 }
+
+
+
+/* =====================================
+   SKIP
+===================================== */
 
 function skip(){
-  if(turn!=myPlayer) return;
-  let pos = positions[currentPosIndex];
-  let p1 = getRandomPlayer(pos); removePlayerFromPool(pos, p1.n);
-  let p2 = getRandomPlayer(pos); removePlayerFromPool(pos, p2.n);
 
-  let updates={};
-  updates["t1/"+pos]=p1;
-  updates["t2/"+pos]=p2;
-  updates["filled1/"+pos]=true;
-  updates["filled2/"+pos]=true;
-  updates["currentPlayer"]=null;
-  updates["usedPlayers"]=usedPlayers; updates["availablePlayers"]=availablePlayers;
-  roomRef.update(updates);
+
+    if(
+        turn != myPlayer
+    )
+        return;
+
+
+    const pos =
+    positions[
+        currentPosIndex
+    ];
+
+
+    const p1 =
+    getRandomPlayer(pos);
+
+
+    removePlayerFromPool(
+        pos,
+        p1.n
+    );
+
+
+    const p2 =
+    getRandomPlayer(pos);
+
+
+    removePlayerFromPool(
+        pos,
+        p2.n
+    );
+
+
+    const updates =
+    {};
+
+
+    updates[
+        "t1/" + pos
+    ] =
+    p1;
+
+
+    updates[
+        "t2/" + pos
+    ] =
+    p2;
+
+
+    updates[
+        "filled1/" + pos
+    ] =
+    true;
+
+
+    updates[
+        "filled2/" + pos
+    ] =
+    true;
+
+
+    updates[
+        "currentPlayer"
+    ] =
+    null;
+
+
+    updates[
+        "currentBid"
+    ] =
+    0;
+
+
+    updates[
+        "highestBidder"
+    ] =
+    0;
+
+
+    updates[
+        "turn"
+    ] =
+    1;
+
+
+    updates[
+        "usedPlayers"
+    ] =
+    usedPlayers;
+
+
+    updates[
+        "availablePlayers"
+    ] =
+    availablePlayers;
+
+
+    roomRef.update(
+        updates
+    );
+
 }
+
+
+
+/* =====================================
+   UPDATE PITCH
+===================================== */
+
+function updatePitch(){
+
+
+    document
+    .getElementById('m1')
+    .innerText =
+    m1.toLocaleString();
+
+
+    document
+    .getElementById('m2')
+    .innerText =
+    m2.toLocaleString();
+
+
+    document
+    .getElementById('count')
+    .innerText =
+
+    (currentPosIndex + 1) +
+
+    " / " +
+
+    positions.length;
+
+
+    for(
+        const pos of positions
+    ){
+
+
+        if(
+            t1[pos]
+        ){
+
+            const player =
+            t1[pos];
+
+
+            const info =
+            getCardInfo(player);
+
+
+            document
+            .getElementById(
+                'p1-' + pos
+            )
+            .innerHTML =
+
+            `
+
+            <div
+            class="pos-label">
+
+                ${pos}
+
+            </div>
+
+
+            <div
+            class="mini-card ${info.className}">
+
+                <div
+                class="mini-rating">
+
+                    ${player.r}
+
+                </div>
+
+
+                <div
+                class="mini-pos">
+
+                    ${pos}
+
+                </div>
+
+
+                <div
+                class="mini-name">
+
+                    ${player.n}
+
+                </div>
+
+            </div>
+
+            `;
+
+        }
+
+
+        if(
+            t2[pos]
+        ){
+
+            const player =
+            t2[pos];
+
+
+            const info =
+            getCardInfo(player);
+
+
+            document
+            .getElementById(
+                'p2-' + pos
+            )
+            .innerHTML =
+
+            `
+
+            <div
+            class="pos-label">
+
+                ${pos}
+
+            </div>
+
+
+            <div
+            class="mini-card ${info.className}">
+
+                <div
+                class="mini-rating">
+
+                    ${player.r}
+
+                </div>
+
+
+                <div
+                class="mini-pos">
+
+                    ${pos}
+
+                </div>
+
+
+                <div
+                class="mini-name">
+
+                    ${player.n}
+
+                </div>
+
+            </div>
+
+            `;
+
+        }
+
+    }
+
+}
+
+
+
+/* =====================================
+   WINNER
+===================================== */
 
 function showWinner(){
-  document.getElementById('auctionCard').style.display='none';
-  document.getElementById('timer').style.display='none';
-  let score1=0, score2=0;
-  positions.forEach(pos=>{
-    if(t1[pos]) score1 += t1[pos].r || 80;
-    if(t2[pos]) score2 += t2[pos].r || 80;
-  })
-  let result = "";
-  if(score1 > score2) result = `🏆 ${document.getElementById('name1').innerText} كسب! ${score1} - ${score2}`;
-  else if(score2 > score1) result = `🏆 ${document.getElementById('name2').innerText} كسب! ${score2} - ${score1}`;
-  else result = `تعادل! ${score1} - ${score2}`;
-  document.getElementById('result').innerHTML = `<div class="result">${result}<br><small>التقييم حسب قوة اللعيبة</small></div>`;
+
+
+    document
+    .querySelector('.controls')
+    .style.display =
+    'none';
+
+
+    document
+    .getElementById(
+        'auctionCard'
+    )
+    .style.display =
+    'none';
+
+
+    document
+    .getElementById(
+        'timer'
+    )
+    .style.display =
+    'none';
+
+
+    let score1 =
+    0;
+
+
+    let score2 =
+    0;
+
+
+    positions.forEach(pos=>{
+
+
+        if(
+            t1[pos]
+        ){
+
+            score1 +=
+            t1[pos].r ||
+            80;
+
+        }
+
+
+        if(
+            t2[pos]
+        ){
+
+            score2 +=
+            t2[pos].r ||
+            80;
+
+        }
+
+    });
+
+
+    let result =
+    "";
+
+
+    if(
+        score1 > score2
+    ){
+
+        result =
+
+        `🏆 ${document.getElementById('name1').innerText} كسب!
+
+        <br>
+
+        ${score1} - ${score2}`;
+
+    }
+
+    else if(
+        score2 > score1
+    ){
+
+        result =
+
+        `🏆 ${document.getElementById('name2').innerText} كسب!
+
+        <br>
+
+        ${score2} - ${score1}`;
+
+    }
+
+    else{
+
+
+        result =
+
+        `🤝 تعادل!
+
+        <br>
+
+        ${score1} - ${score2}`;
+
+    }
+
+
+    document
+    .getElementById(
+        'result'
+    )
+    .innerHTML =
+
+    `
+
+    <div
+    class="result">
+
+        ${result}
+
+        <br>
+
+        <small>
+
+            النتيجة حسب قوة
+            وتقييم اللاعبين
+
+        </small>
+
+    </div>
+
+    `;
+
 }
 
-async function updatePitch(){
-  document.getElementById('m1').innerText=m1.toLocaleString();document.getElementById('m2').innerText=m2.toLocaleString();
-  document.getElementById('count').innerText=(currentPosIndex+1)+" / 11";
-  for(let pos of positions){
-    if(t1[pos]){
-      document.getElementById('p1-'+pos).innerHTML=`<div class="pos-label">${pos}</div><img src="${getPlayerImg(t1[pos].n)}"><div class="name">${t1[pos].n}</div>`;
-      document.getElementById('p1-'+pos).classList.remove('empty');
-    }
-    if(t2[pos]){
-      document.getElementById('p2-'+pos).innerHTML=`<div class="pos-label">${pos}</div><img src="${getPlayerImg(t2[pos].n)}"><div class="name">${t2[pos].n}</div>`;
-      document.getElementById('p2-'+pos).classList.remove('empty');
-    }
-  }
-}
 </script>
+
 </body>
 </html>
