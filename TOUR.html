@@ -1,0 +1,555 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🏆 بطولة مزاد - L&S GAMES</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at center, #172554 0%, #07111f 42%, #02050b 100%);
+    color:#fff;
+    font-family:"Cairo",sans-serif;
+    overflow-x:auto;
+}
+
+/* خلفية */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:45px 45px;
+}
+
+/* العنوان */
+.header{
+    text-align:center;
+    padding:25px 15px 10px;
+    position:relative;
+    z-index:2;
+}
+
+.logo{
+    font-family:Orbitron,sans-serif;
+    font-size:32px;
+    font-weight:900;
+    color:#ffd700;
+    text-shadow:
+        0 0 10px #ffd700,
+        0 0 25px rgba(255,215,0,.7);
+}
+
+.subtitle{
+    margin-top:5px;
+    color:#9fb2cc;
+    font-size:14px;
+}
+
+/* البطولة */
+.tournament{
+    width:1700px;
+    min-height:900px;
+    margin:10px auto 40px;
+    position:relative;
+}
+
+/* الخطوط */
+.line{
+    position:absolute;
+    background:rgba(255,215,0,.55);
+    box-shadow:0 0 7px rgba(255,215,0,.3);
+}
+
+/* كل جولة */
+.round{
+    position:absolute;
+    top:0;
+    height:100%;
+}
+
+.round-title{
+    position:absolute;
+    top:10px;
+    width:100%;
+    text-align:center;
+    color:#ffd700;
+    font-size:16px;
+    font-weight:900;
+}
+
+/* أماكن الجولات */
+.r32{
+    right:20px;
+    width:260px;
+}
+
+.r16{
+    right:310px;
+    width:230px;
+}
+
+.qf{
+    right:570px;
+    width:220px;
+}
+
+.sf{
+    right:820px;
+    width:210px;
+}
+
+.final{
+    right:1060px;
+    width:210px;
+}
+
+/* مباريات */
+.match{
+    width:210px;
+    height:62px;
+    position:absolute;
+    background:linear-gradient(145deg,#111d31,#08101d);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:12px;
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.45),
+        inset 0 0 15px rgba(255,255,255,.02);
+    overflow:hidden;
+    transition:.25s;
+}
+
+.match:hover{
+    transform:scale(1.04);
+    border-color:#ffd700;
+    box-shadow:
+        0 0 18px rgba(255,215,0,.35),
+        0 5px 20px rgba(0,0,0,.6);
+}
+
+.player{
+    height:31px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 10px;
+    font-size:12px;
+    font-weight:700;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.player:last-child{
+    border-bottom:0;
+}
+
+.player span:last-child{
+    color:#ffd700;
+    font-size:11px;
+}
+
+/* أرقام المراكز */
+.match-number{
+    position:absolute;
+    top:-8px;
+    right:-8px;
+    width:22px;
+    height:22px;
+    background:#ffd700;
+    color:#111;
+    border-radius:50%;
+    font-size:10px;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:5;
+}
+
+/* الكأس */
+.cup-area{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:240px;
+    height:280px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    z-index:10;
+}
+
+.cup-glow{
+    position:absolute;
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    background:radial-gradient(circle,
+        rgba(255,215,0,.35),
+        rgba(255,215,0,.12) 35%,
+        transparent 70%);
+    animation:pulse 2s infinite alternate;
+}
+
+.cup{
+    font-size:120px;
+    filter:
+        drop-shadow(0 0 8px #fff)
+        drop-shadow(0 0 20px #ffd700)
+        drop-shadow(0 0 40px rgba(255,215,0,.8));
+    animation:float 2.5s ease-in-out infinite;
+    z-index:2;
+}
+
+.cup-title{
+    margin-top:-5px;
+    font-size:21px;
+    font-weight:900;
+    color:#ffd700;
+    text-shadow:0 0 15px #ffd700;
+    z-index:3;
+}
+
+.cup-sub{
+    font-size:11px;
+    color:#b9c7d9;
+    z-index:3;
+}
+
+/* أماكن دور 32 */
+.r32 .m1{top:70px}
+.r32 .m2{top:125px}
+.r32 .m3{top:180px}
+.r32 .m4{top:235px}
+.r32 .m5{top:290px}
+.r32 .m6{top:345px}
+.r32 .m7{top:400px}
+.r32 .m8{top:455px}
+.r32 .m9{top:510px}
+.r32 .m10{top:565px}
+.r32 .m11{top:620px}
+.r32 .m12{top:675px}
+.r32 .m13{top:730px}
+.r32 .m14{top:785px}
+.r32 .m15{top:840px}
+.r32 .m16{top:895px}
+
+/* دور 16 */
+.r16 .m1{top:100px}
+.r16 .m2{top:210px}
+.r16 .m3{top:320px}
+.r16 .m4{top:430px}
+.r16 .m5{top:540px}
+.r16 .m6{top:650px}
+.r16 .m7{top:760px}
+.r16 .m8{top:870px}
+
+/* ربع النهائي */
+.qf .m1{top:155px}
+.qf .m2{top:375px}
+.qf .m3{top:595px}
+.qf .m4{top:815px}
+
+/* نصف النهائي */
+.sf .m1{top:265px}
+.sf .m2{top:705px}
+
+/* النهائي */
+.final .m1{
+    top:485px;
+    border:2px solid #ffd700;
+    box-shadow:
+        0 0 20px rgba(255,215,0,.4),
+        inset 0 0 20px rgba(255,215,0,.08);
+}
+
+/* خطوط بسيطة بين الجولات */
+.r32::after{
+    content:"";
+    position:absolute;
+    left:-25px;
+    top:100px;
+    width:25px;
+    height:795px;
+    border-left:2px solid rgba(255,215,0,.2);
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0) scale(1);
+    }
+    50%{
+        transform:translateY(-10px) scale(1.04);
+    }
+}
+
+@keyframes pulse{
+    from{
+        transform:scale(.85);
+        opacity:.5;
+    }
+    to{
+        transform:scale(1.15);
+        opacity:1;
+    }
+}
+
+/* موبايل */
+@media(max-width:900px){
+    .tournament{
+        transform-origin:top right;
+        margin-right:10px;
+    }
+
+    .header{
+        text-align:right;
+        padding-right:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">L&amp;S GAMES</div>
+    <div class="subtitle">🏆 بطولة مزاد النجوم — 32 لاعب</div>
+</header>
+
+<div class="tournament">
+
+    <!-- الكأس -->
+    <div class="cup-area">
+        <div class="cup-glow"></div>
+        <div class="cup">🏆</div>
+        <div class="cup-title">بطل البطولة</div>
+        <div class="cup-sub">THE ULTIMATE CHAMPION</div>
+    </div>
+
+    <!-- دور الـ32 -->
+    <div class="round r32">
+        <div class="round-title">دور الـ32</div>
+
+        <div class="match m1">
+            <div class="match-number">1</div>
+            <div class="player"><span>محمد صلاح</span><span>⭐ 91</span></div>
+            <div class="player"><span>فينيسيوس</span><span>⭐ 90</span></div>
+        </div>
+
+        <div class="match m2">
+            <div class="match-number">2</div>
+            <div class="player"><span>هالاند</span><span>⭐ 92</span></div>
+            <div class="player"><span>مبابي</span><span>⭐ 93</span></div>
+        </div>
+
+        <div class="match m3">
+            <div class="match-number">3</div>
+            <div class="player"><span>بيلينجهام</span><span>⭐ 91</span></div>
+            <div class="player"><span>فودين</span><span>⭐ 89</span></div>
+        </div>
+
+        <div class="match m4">
+            <div class="match-number">4</div>
+            <div class="player"><span>دي بروين</span><span>⭐ 90</span></div>
+            <div class="player"><span>رودري</span><span>⭐ 91</span></div>
+        </div>
+
+        <div class="match m5">
+            <div class="match-number">5</div>
+            <div class="player"><span>كفاراتسخيليا</span><span>⭐ 88</span></div>
+            <div class="player"><span>لامين يامال</span><span>⭐ 89</span></div>
+        </div>
+
+        <div class="match m6">
+            <div class="match-number">6</div>
+            <div class="player"><span>نيمار</span><span>⭐ 90</span></div>
+            <div class="player"><span>رافينيا</span><span>⭐ 88</span></div>
+        </div>
+
+        <div class="match m7">
+            <div class="match-number">7</div>
+            <div class="player"><span>هاري كين</span><span>⭐ 91</span></div>
+            <div class="player"><span>سون</span><span>⭐ 89</span></div>
+        </div>
+
+        <div class="match m8">
+            <div class="match-number">8</div>
+            <div class="player"><span>غريزمان</span><span>⭐ 89</span></div>
+            <div class="player"><span>ديمبيلي</span><span>⭐ 88</span></div>
+        </div>
+
+        <div class="match m9">
+            <div class="match-number">9</div>
+            <div class="player"><span>كاسيميرو</span><span>⭐ 86</span></div>
+            <div class="player"><span>مودريتش</span><span>⭐ 87</span></div>
+        </div>
+
+        <div class="match m10">
+            <div class="match-number">10</div>
+            <div class="player"><span>بيدري</span><span>⭐ 88</span></div>
+            <div class="player"><span>جافي</span><span>⭐ 86</span></div>
+        </div>
+
+        <div class="match m11">
+            <div class="match-number">11</div>
+            <div class="player"><span>ساكا</span><span>⭐ 88</span></div>
+            <div class="player"><span>بالمر</span><span>⭐ 89</span></div>
+        </div>
+
+        <div class="match m12">
+            <div class="match-number">12</div>
+            <div class="player"><span>أوسيمين</span><span>⭐ 87</span></div>
+            <div class="player"><span>لاوتارو</span><span>⭐ 90</span></div>
+        </div>
+
+        <div class="match m13">
+            <div class="match-number">13</div>
+            <div class="player"><span>كورتوا</span><span>🧤 90</span></div>
+            <div class="player"><span>أليسون</span><span>🧤 89</span></div>
+        </div>
+
+        <div class="match m14">
+            <div class="match-number">14</div>
+            <div class="player"><span>نوير</span><span>🧤 88</span></div>
+            <div class="player"><span>إيدرسون</span><span>🧤 88</span></div>
+        </div>
+
+        <div class="match m15">
+            <div class="match-number">15</div>
+            <div class="player"><span>فالفيردي</span><span>⭐ 89</span></div>
+            <div class="player"><span>تشواميني</span><span>⭐ 86</span></div>
+        </div>
+
+        <div class="match m16">
+            <div class="match-number">16</div>
+            <div class="player"><span>رونالدو</span><span>👑 91</span></div>
+            <div class="player"><span>ميسي</span><span>👑 93</span></div>
+        </div>
+    </div>
+
+
+    <!-- دور الـ16 -->
+    <div class="round r16">
+        <div class="round-title">دور الـ16</div>
+
+        <div class="match m1">
+            <div class="player"><span>الفائز 1</span><span>⚡</span></div>
+            <div class="player"><span>الفائز 2</span><span>⚡</span></div>
+        </div>
+
+        <div class="match m2">
+            <div class="player"><span>الفائز 3</span><span>⚡</span></div>
+            <div class="player"><span>الفائز 4</span><span>⚡</span></div>
+        </div>
+
+        <div class="match m3">
+            <div class="player"><span>الفائز 5</span><span>⚡</span></div>
+            <div class="player"><span>الفائز 6</span><span>⚡</span></div>
+        </div>
+
+        <div class="match m4">
+            <div class="player"><span>الفائز 7</span><span>⚡</span></div>
+            <div class="player"><span>الفائز 8</span><span>⚡</span></div>
+        </div>
+
+        <div class="match m5">
+            <div class="player"><span>الفائز 9</span><span>⚡</span></div>
+            <div class="player"><span>الفائز 10</span><span>⚡</span></div>
+        </div>
+
+        <div class="match m6">
+            <div class="player"><span>الفائز 11</span><span>⚡</span></div>
+            <div class="player"><span>الفائز 12</span><span>⚡</span></div>
+        </div>
+
+        <div class="match m7">
+            <div class="player"><span>الفائز 13</span><span>⚡</span></div>
+            <div class="player"><span>الفائز 14</span><span>⚡</span></div>
+        </div>
+
+        <div class="match m8">
+            <div class="player"><span>الفائز 15</span><span>⚡</span></div>
+            <div class="player"><span>الفائز 16</span><span>⚡</span></div>
+        </div>
+    </div>
+
+
+    <!-- ربع النهائي -->
+    <div class="round qf">
+        <div class="round-title">ربع النهائي</div>
+
+        <div class="match m1">
+            <div class="player"><span>المتأهل 1</span><span>🔥</span></div>
+            <div class="player"><span>المتأهل 2</span><span>🔥</span></div>
+        </div>
+
+        <div class="match m2">
+            <div class="player"><span>المتأهل 3</span><span>🔥</span></div>
+            <div class="player"><span>المتأهل 4</span><span>🔥</span></div>
+        </div>
+
+        <div class="match m3">
+            <div class="player"><span>المتأهل 5</span><span>🔥</span></div>
+            <div class="player"><span>المتأهل 6</span><span>🔥</span></div>
+        </div>
+
+        <div class="match m4">
+            <div class="player"><span>المتأهل 7</span><span>🔥</span></div>
+            <div class="player"><span>المتأهل 8</span><span>🔥</span></div>
+        </div>
+    </div>
+
+
+    <!-- نصف النهائي -->
+    <div class="round sf">
+        <div class="round-title">نصف النهائي</div>
+
+        <div class="match m1">
+            <div class="player"><span>نصف النهائي 1</span><span>🏅</span></div>
+            <div class="player"><span>نصف النهائي 2</span><span>🏅</span></div>
+        </div>
+
+        <div class="match m2">
+            <div class="player"><span>نصف النهائي 3</span><span>🏅</span></div>
+            <div class="player"><span>نصف النهائي 4</span><span>🏅</span></div>
+        </div>
+    </div>
+
+
+    <!-- النهائي -->
+    <div class="round final">
+        <div class="round-title">النهائي</div>
+
+        <div class="match m1">
+            <div class="player">
+                <span>🏆 المتأهل الأول</span>
+                <span>⭐</span>
+            </div>
+            <div class="player">
+                <span>🏆 المتأهل الثاني</span>
+                <span>⭐</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+```
