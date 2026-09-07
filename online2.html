@@ -1,1211 +1,2724 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>⚽ مزاد خماسي ⚽</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<title>⚽ مزاد خماسي - L&S GAMES ⚽</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #080808;
-      color: #fff;
-      font-family: "Cairo", sans-serif;
-    }
+<style>
 
-    .game {
-      width: min(100%, 520px);
-      margin: auto;
-      padding: 12px;
-    }
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
-    h1 {
-      text-align: center;
-      color: #ffd700;
-      font-size: 25px;
-      margin: 5px 0 15px;
-    }
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top,#17221a 0%,#080808 45%,#000 100%);
+  color:#fff;
+  font-family:"Cairo",sans-serif;
+}
 
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr 65px 1fr;
-      gap: 6px;
-      background: #111;
-      padding: 10px;
-      border-radius: 14px;
-      border: 1px solid #333;
-    }
+.game{
+  width:min(100%,600px);
+  margin:auto;
+  padding:12px;
+}
 
-    .player-stat {
-      background: #090909;
-      padding: 7px;
-      border-radius: 10px;
-      text-align: center;
-    }
+h1{
+  text-align:center;
+  margin:5px 0 15px;
+  color:#ffd700;
+  font-size:25px;
+  text-shadow:0 0 15px rgba(255,215,0,.35);
+}
 
-    .blue {
-      border: 1px solid #008cff;
-    }
+.stats{
+  display:grid;
+  grid-template-columns:1fr 70px 1fr;
+  gap:7px;
+  background:#111;
+  padding:9px;
+  border-radius:15px;
+  border:1px solid #333;
+}
 
-    .red {
-      border: 1px solid #ff4444;
-    }
+.player-stat{
+  background:#080808;
+  border-radius:11px;
+  padding:8px;
+  text-align:center;
+}
 
-    .blue-text {
-      color: #00aaff;
-    }
+.blue{
+  border:1px solid #008cff;
+  box-shadow:0 0 10px rgba(0,140,255,.15);
+}
 
-    .red-text {
-      color: #ff4444;
-    }
+.red{
+  border:1px solid #ff4040;
+  box-shadow:0 0 10px rgba(255,64,64,.15);
+}
 
-    .player-small-name {
-      font-weight: 900;
-      font-size: 13px;
-    }
+.blue-text{
+  color:#00aaff;
+}
 
-    .money {
-      color: #00ff88;
-      font-size: 12px;
-      font-weight: 900;
-    }
+.red-text{
+  color:#ff5050;
+}
 
-    .round {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffd700;
-      font-weight: 900;
-    }
+.player-small-name{
+  font-weight:900;
+  font-size:13px;
+}
 
-    .turn-box {
-      background: #111;
-      border: 1px solid #333;
-      border-radius: 12px;
-      margin: 10px 0;
-      padding: 10px;
-      text-align: center;
-    }
+.money{
+  color:#00ff88;
+  font-size:11px;
+  font-weight:900;
+  direction:ltr;
+}
 
-    .turn {
-      font-weight: 900;
-    }
+.round{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#ffd700;
+  font-weight:900;
+  font-size:14px;
+}
 
-    .field {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
+.turn-box{
+  margin:10px 0;
+  padding:10px;
+  text-align:center;
+  background:#111;
+  border:1px solid #333;
+  border-radius:12px;
+}
 
-    .team {
-      background: #111;
-      border: 1px solid #333;
-      border-radius: 13px;
-      padding: 7px;
-    }
+.turn{
+  font-weight:900;
+}
 
-    .team h3 {
-      margin: 4px;
-      text-align: center;
-      font-size: 14px;
-    }
+.field{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
 
-    .slot {
-      min-height: 48px;
-      background: #050505;
-      border: 1px solid #333;
-      border-radius: 8px;
-      margin: 5px 0;
-      padding: 5px;
-      font-size: 10px;
-    }
+.team{
+  background:#111;
+  border:1px solid #333;
+  border-radius:14px;
+  padding:7px;
+}
 
-    .slot.filled {
-      border-color: #ffd700;
-    }
+.team h3{
+  margin:4px;
+  text-align:center;
+  font-size:14px;
+}
 
-    .slot.legend-slot {
-      border-color: #ffd700;
-      background: #1a1400;
-    }
+.slot{
+  min-height:55px;
+  background:#060606;
+  border:1px solid #333;
+  border-radius:9px;
+  margin:5px 0;
+  padding:5px;
+}
 
-    .slot-pos {
-      color: #888;
-      font-size: 9px;
-    }
+.slot.filled{
+  border-color:#ffd700;
+}
 
-    .slot-name {
-      font-weight: 900;
-    }
+.slot.legend-slot{
+  background:linear-gradient(135deg,#251d00,#090909);
+  border-color:#ffd700;
+}
 
-    .player-card {
-      background: #111;
-      border: 2px solid #00aaff;
-      border-radius: 20px;
-      padding: 15px;
-      margin: 12px 0;
-      text-align: center;
-    }
+.slot.gold-slot{
+  background:linear-gradient(135deg,#2a2100,#090909);
+  border-color:#d6ad00;
+}
 
-    .player-card.legend-card {
-      border-color: #ffd700;
-      box-shadow: 0 0 20px rgba(255, 215, 0, .2);
-    }
+.slot.silver-slot{
+  background:linear-gradient(135deg,#242424,#090909);
+  border-color:#aaa;
+}
 
-    .player-type {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 900;
-    }
+.slot-pos{
+  color:#888;
+  font-size:9px;
+}
 
-    .current-type {
-      background: #008cff;
-    }
+.slot-name{
+  font-weight:900;
+  font-size:11px;
+}
 
-    .legend-type {
-      background: #ffd700;
-      color: #000;
-    }
+.slot-card-type{
+  font-size:8px;
+  margin-top:2px;
+}
 
-    .player-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      margin: 12px 0;
-    }
+.player-card{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(145deg,#131313,#070707);
+  border:2px solid #aaa;
+  border-radius:22px;
+  padding:15px;
+  margin:12px 0;
+  text-align:center;
+}
 
-    .ovr {
-      width: 75px;
-      height: 75px;
-      border-radius: 50%;
-      border: 3px solid #ffd700;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+.player-card.legend-card{
+  border-color:#ffd700;
+  background:
+    radial-gradient(circle at top,#5a4700,#111 60%);
+  box-shadow:
+    0 0 25px rgba(255,215,0,.25),
+    inset 0 0 30px rgba(255,215,0,.08);
+}
 
-    .ovr span {
-      font-size: 27px;
-      font-weight: 900;
-    }
+.player-card.gold-card{
+  border-color:#e6bc00;
+  background:
+    radial-gradient(circle at top,#403300,#111 65%);
+  box-shadow:0 0 18px rgba(230,188,0,.15);
+}
 
-    .ovr small {
-      font-size: 9px;
-      color: #aaa;
-    }
+.player-card.silver-card{
+  border-color:#aaa;
+  background:
+    radial-gradient(circle at top,#333,#111 65%);
+}
 
-    .player-main {
-      text-align: right;
-    }
+.player-type{
+  display:inline-block;
+  padding:5px 14px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:900;
+}
 
-    .position {
-      color: #aaa;
-      font-size: 13px;
-    }
+.legend-type{
+  background:linear-gradient(90deg,#a87800,#ffd700,#a87800);
+  color:#000;
+}
 
-    .player-name-big {
-      font-size: 22px;
-      font-weight: 900;
-    }
+.gold-type{
+  background:linear-gradient(90deg,#9c7800,#e9c84a,#9c7800);
+  color:#000;
+}
 
-    .price {
-      color: #00ff88;
-      font-size: 17px;
-      font-weight: 900;
-      direction: ltr;
-    }
+.silver-type{
+  background:linear-gradient(90deg,#777,#ddd,#777);
+  color:#000;
+}
 
-    .controls {
-      display: grid;
-      gap: 7px;
-    }
+.player-content{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:15px;
+  margin:13px 0;
+}
 
-    .bid-input {
-      width: 100%;
-      padding: 11px;
-      border-radius: 10px;
-      border: 1px solid #555;
-      background: #080808;
-      color: #fff;
-      text-align: center;
-      font-family: "Cairo";
-    }
+.ovr{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  border:3px solid #ffd700;
+  background:#070707;
+}
 
-    .buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 6px;
-    }
+.ovr span{
+  font-size:28px;
+  font-weight:900;
+}
 
-    button {
-      border: 0;
-      border-radius: 9px;
-      padding: 10px 4px;
-      font-family: "Cairo";
-      font-weight: 900;
-      cursor: pointer;
-    }
+.ovr small{
+  font-size:9px;
+  color:#aaa;
+}
 
-    button:disabled {
-      opacity: .4;
-      cursor: not-allowed;
-    }
+.player-main{
+  text-align:right;
+}
 
-    .bid-btn {
-      background: #00ff88;
-      color: #000;
-    }
+.position{
+  color:#aaa;
+  font-size:13px;
+}
 
-    .take-btn {
-      background: #ff3333;
-      color: #fff;
-    }
+.player-name-big{
+  font-size:23px;
+  font-weight:900;
+}
 
-    .skip-btn {
-      background: #555;
-      color: #fff;
-    }
+.price{
+  color:#00ff88;
+  font-size:16px;
+  font-weight:900;
+  direction:ltr;
+}
 
-    .result {
-      display: none;
-      background: #111;
-      border: 2px solid #ffd700;
-      border-radius: 20px;
-      padding: 20px;
-      text-align: center;
-    }
-  </style>
+.controls{
+  display:grid;
+  gap:7px;
+}
+
+.bid-input{
+  width:100%;
+  padding:12px;
+  background:#070707;
+  color:#fff;
+  border:1px solid #555;
+  border-radius:10px;
+  text-align:center;
+  font-family:"Cairo";
+  font-weight:700;
+}
+
+.buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:6px;
+}
+
+button{
+  border:0;
+  border-radius:10px;
+  padding:11px 5px;
+  font-family:"Cairo";
+  font-weight:900;
+  cursor:pointer;
+  transition:.2s;
+}
+
+button:active{
+  transform:scale(.96);
+}
+
+button:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
+
+.bid-btn{
+  background:#00d978;
+  color:#000;
+}
+
+.take-btn{
+  background:#e53935;
+  color:#fff;
+}
+
+.skip-btn{
+  background:#555;
+  color:#fff;
+}
+
+.message{
+  min-height:25px;
+  margin-top:8px;
+  text-align:center;
+  font-size:11px;
+  color:#ffd700;
+}
+
+.match{
+  display:none;
+}
+
+.scoreboard{
+  background:#111;
+  border:2px solid #ffd700;
+  border-radius:20px;
+  padding:15px;
+  text-align:center;
+}
+
+.match-teams{
+  display:grid;
+  grid-template-columns:1fr 80px 1fr;
+  align-items:center;
+}
+
+.match-name{
+  font-size:14px;
+  font-weight:900;
+}
+
+.score{
+  font-size:30px;
+  font-weight:900;
+  color:#ffd700;
+}
+
+.minute{
+  color:#00ff88;
+  font-weight:900;
+  margin:10px;
+}
+
+.match-event{
+  background:#090909;
+  border:1px solid #333;
+  border-radius:12px;
+  padding:10px;
+  margin-top:10px;
+  min-height:50px;
+  font-size:12px;
+}
+
+.match-log{
+  margin-top:10px;
+  max-height:260px;
+  overflow:auto;
+}
+
+.event{
+  background:#101010;
+  border-right:3px solid #ffd700;
+  padding:7px;
+  margin:5px 0;
+  border-radius:6px;
+  font-size:11px;
+}
+
+.final-stats{
+  display:none;
+  margin-top:12px;
+  background:#111;
+  border:1px solid #333;
+  border-radius:18px;
+  padding:12px;
+}
+
+.stat-row{
+  display:grid;
+  grid-template-columns:1fr 50px 1fr;
+  align-items:center;
+  margin:10px 0;
+  font-size:11px;
+}
+
+.stat-label{
+  text-align:center;
+  color:#aaa;
+}
+
+.motm{
+  margin-top:15px;
+  padding:13px;
+  background:linear-gradient(135deg,#2d2300,#111);
+  border:1px solid #ffd700;
+  border-radius:15px;
+  text-align:center;
+}
+
+.result{
+  display:none;
+  margin-top:12px;
+  padding:20px;
+  text-align:center;
+  border:2px solid #ffd700;
+  border-radius:20px;
+  background:#111;
+}
+
+.winner{
+  color:#ffd700;
+  font-size:22px;
+  font-weight:900;
+}
+
+@media(max-width:400px){
+
+  .player-name-big{
+    font-size:18px;
+  }
+
+  .buttons{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
 </head>
 
 <body>
 
-  <div class="game">
-
-    <h1>⚽ مزاد خماسي ⚽</h1>
-
-    <div class="stats">
-      <div class="player-stat blue">
-        <div class="player-small-name blue-text" id="myName">
-          اللاعب 1
-        </div>
-
-        <div class="money">
-          $<span id="myMoney">100,000,000</span>
-        </div>
-      </div>
-
-      <div class="round" id="count">
-        1 / 5
-      </div>
-
-      <div class="player-stat red">
-        <div class="player-small-name red-text" id="enemyName">
-          اللاعب 2
-        </div>
-
-        <div class="money">
-          $<span id="enemyMoney">100,000,000</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="turn-box">
-      <div class="turn" id="turn">
-        🔥 دور اللاعب 1
-      </div>
-    </div>
-
-    <div class="field">
-
-      <div class="team">
-        <h3 class="blue-text">🔵 فريقك</h3>
-        <div id="t1"></div>
-      </div>
+<div class="game">
 
-      <div class="team">
-        <h3 class="red-text">🔴 فريق الخصم</h3>
-        <div id="t2"></div>
-      </div>
+<h1>⚽ مزاد خماسي ⚽</h1>
 
-    </div>
+<div class="stats">
 
-    <div class="player-card" id="auctionCard">
+<div class="player-stat blue">
 
-      <div class="player-type current-type" id="playerType">
-        🔥 لاعب حالي
-      </div>
+<div class="player-small-name blue-text" id="myName">
+اللاعب 1
+</div>
 
-      <div class="player-content">
+<div class="money">
+$<span id="myMoney">100,000,000</span>
+</div>
 
-        <div class="ovr">
-          <span id="ovr">91</span>
-          <small>OVR</small>
-        </div>
+</div>
 
-        <div class="player-main">
-          <div class="position" id="position">GK</div>
+<div class="round" id="count">
+1 / 5
+</div>
 
-          <div class="player-name-big" id="playerName">
-            جاري التحميل...
-          </div>
+<div class="player-stat red">
 
-          <div class="price" id="price">
-            $0
-          </div>
-        </div>
+<div class="player-small-name red-text" id="enemyName">
+اللاعب 2
+</div>
 
-      </div>
+<div class="money">
+$<span id="enemyMoney">100,000,000</span>
+</div>
 
-      <div class="controls">
+</div>
 
-        <input
-          type="number"
-          id="bidInput"
-          class="bid-input"
-          placeholder="اكتب مبلغ المزايدة"
-        >
+</div>
 
-        <div class="buttons">
+<div class="turn-box">
+<div class="turn" id="turn">
+🔥 جاري بدء المزاد
+</div>
+</div>
 
-          <button
-            class="bid-btn"
-            id="bidBtn"
-            onclick="bid()"
-          >
-            💰 زايد
-          </button>
+<div class="field">
 
-          <button
-            class="take-btn"
-            id="takeBtn"
-            onclick="takePlayer()"
-          >
-            🔥 خده
-          </button>
+<div class="team">
+<h3 class="blue-text">🔵 فريقك</h3>
+<div id="t1"></div>
+</div>
 
-          <button
-            class="skip-btn"
-            id="skipBtn"
-            onclick="skipPlayer()"
-          >
-            ⏭ تخطي
-          </button>
+<div class="team">
+<h3 class="red-text">🔴 فريق الخصم</h3>
+<div id="t2"></div>
+</div>
 
-        </div>
-      </div>
-    </div>
+</div>
 
-    <div class="result" id="result">
-      <h2>🏆 انتهى المزاد</h2>
-      <div id="finalScore"></div>
-    </div>
+<div class="player-card silver-card" id="auctionCard">
 
-  </div>
+<div class="player-type silver-type" id="playerType">
+⚪ لاعب
+</div>
 
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-
-  <script>
-    /* ========================= FIREBASE ========================= */
-
-    const firebaseConfig = {
-      databaseURL: "https://mazad-noogom-default-rtdb.firebaseio.com"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-
-    const db = firebase.database();
-
-
-    /* ========================= URL ========================= */
-
-    const params = new URLSearchParams(window.location.search);
-
-    const playerNum =
-      Number(params.get("p")) === 2 ? 2 : 1;
-
-    const rawName =
-      params.get("name") || `لاعب ${playerNum}`;
-
-    function cleanName(name) {
-      if (!name) return "لاعب";
-
-      return name
-        .split("@")[0]
-        .split(".")[0]
-        .slice(0, 15);
-    }
-
-    const myRealName = cleanName(rawName);
-
-
-    /* ========================= ROOM ========================= */
-
-    let ROOM_ID = params.get("room");
-
-    if (!ROOM_ID) {
-      ROOM_ID =
-        "room-" +
-        Math.random()
-          .toString(36)
-          .substring(2, 10);
-
-      const newUrl =
-        window.location.pathname +
-        "?room=" +
-        ROOM_ID +
-        "&p=" +
-        playerNum +
-        "&name=" +
-        encodeURIComponent(myRealName);
-
-      window.history.replaceState({}, "", newUrl);
-    }
-
-    const roomRef = db.ref("mazad5/" + ROOM_ID);
-
-
-    /* ========================= SETTINGS ========================= */
-
-    const START_MONEY = 100000000;
-    const MIN_BID_STEP = 1000000;
-
-    const positions = [
-      "GK",
-      "CB",
-      "CM1",
-      "CM2",
-      "ST"
-    ];
-
-
-    /* ========================= PLAYERS ========================= */
-
-    const playersDB = {
-      GK: [
-        {
-          n: "تيبو كورتوا",
-          p: 15000000,
-          ovr: 91,
-          type: "current"
-        },
-        {
-          n: "أليسون",
-          p: 14000000,
-          ovr: 90,
-          type: "current"
-        },
-        {
-          n: "دوناروما",
-          p: 14500000,
-          ovr: 89,
-          type: "current"
-        },
-        {
-          n: "تير شتيجن",
-          p: 13000000,
-          ovr: 89,
-          type: "current"
-        },
-        {
-          n: "يان أوبلاك",
-          p: 13500000,
-          ovr: 88,
-          type: "current"
-        },
-        {
-          n: "ليف ياشين 👑",
-          p: 45000000,
-          ovr: 96,
-          type: "legend"
-        },
-        {
-          n: "بوفون 👑",
-          p: 42000000,
-          ovr: 95,
-          type: "legend"
-        },
-        {
-          n: "كاسياس 👑",
-          p: 40000000,
-          ovr: 94,
-          type: "legend"
-        }
-      ],
-
-      CB: [
-        {
-          n: "فان دايك",
-          p: 40000000,
-          ovr: 90,
-          type: "current"
-        },
-        {
-          n: "روبن دياز",
-          p: 38000000,
-          ovr: 89,
-          type: "current"
-        },
-        {
-          n: "روديجر",
-          p: 35000000,
-          ovr: 89,
-          type: "current"
-        },
-        {
-          n: "ساليبا",
-          p: 33000000,
-          ovr: 88,
-          type: "current"
-        },
-        {
-          n: "ماركينيوس",
-          p: 34000000,
-          ovr: 87,
-          type: "current"
-        },
-        {
-          n: "مالديني 👑",
-          p: 65000000,
-          ovr: 97,
-          type: "legend"
-        },
-        {
-          n: "بيكنباور 👑",
-          p: 68000000,
-          ovr: 97,
-          type: "legend"
-        },
-        {
-          n: "نيستا 👑",
-          p: 57000000,
-          ovr: 95,
-          type: "legend"
-        }
-      ],
-
-      CM: [
-        {
-          n: "بيلينجهام",
-          p: 50000000,
-          ovr: 91,
-          type: "current"
-        },
-        {
-          n: "رودري",
-          p: 45000000,
-          ovr: 91,
-          type: "current"
-        },
-        {
-          n: "دي بروين",
-          p: 55000000,
-          ovr: 91,
-          type: "current"
-        },
-        {
-          n: "فالفيردي",
-          p: 40000000,
-          ovr: 89,
-          type: "current"
-        },
-        {
-          n: "بيدري",
-          p: 42000000,
-          ovr: 89,
-          type: "current"
-        },
-        {
-          n: "زيدان 👑",
-          p: 75000000,
-          ovr: 98,
-          type: "legend"
-        },
-        {
-          n: "إنييستا 👑",
-          p: 68000000,
-          ovr: 96,
-          type: "legend"
-        },
-        {
-          n: "تشافي 👑",
-          p: 65000000,
-          ovr: 96,
-          type: "legend"
-        }
-      ],
-
-      ST: [
-        {
-          n: "مبابي",
-          p: 65000000,
-          ovr: 92,
-          type: "current"
-        },
-        {
-          n: "هالاند",
-          p: 60000000,
-          ovr: 91,
-          type: "current"
-        },
-        {
-          n: "محمد صلاح",
-          p: 58000000,
-          ovr: 91,
-          type: "current"
-        },
-        {
-          n: "فينيسيوس",
-          p: 62000000,
-          ovr: 90,
-          type: "current"
-        },
-        {
-          n: "هاري كين",
-          p: 55000000,
-          ovr: 90,
-          type: "current"
-        },
-        {
-          n: "ميسي PRIME 👑",
-          p: 90000000,
-          ovr: 99,
-          type: "legend"
-        },
-        {
-          n: "رونالدو PRIME 👑",
-          p: 88000000,
-          ovr: 99,
-          type: "legend"
-        },
-        {
-          n: "بيليه 👑",
-          p: 95000000,
-          ovr: 99,
-          type: "legend"
-        }
-      ]
-    };
-
-
-    /* ========================= FUNCTIONS ========================= */
-
-    function positionKey(position) {
-      return position.startsWith("CM")
-        ? "CM"
-        : position;
-    }
-
-    function getRandomPlayer(position, used = []) {
-      const key = positionKey(position);
-
-      let available = playersDB[key].filter(
-        player => !used.includes(player.n)
-      );
-
-      if (available.length === 0) {
-        available = playersDB[key];
-      }
-
-      return available[
-        Math.floor(Math.random() * available.length)
-      ];
-    }
-
-    function createInitialState() {
-      /*
-        يبدأ بحارس عشوائي بدل كورتوا دائمًا
-      */
-      const firstPlayer = getRandomPlayer("GK", []);
-
-      return {
-        pos: 0,
-        player: firstPlayer,
-        bid: firstPlayer.p,
-        turn: 1,
-
-        m1: START_MONEY,
-        m2: START_MONEY,
-
-        t1: Array(5).fill(null),
-        t2: Array(5).fill(null),
-
-        used: [firstPlayer.n],
-        gameOver: false
-      };
-    }
-
-
-    /* ========================= BUILD SLOTS ========================= */
-
-    positions.forEach((position, index) => {
-      document.getElementById("t1").innerHTML += `
-        <div class="slot" id="t1-${index}">
-          <div class="slot-pos">${position}</div>
-          <div class="slot-name">-</div>
-        </div>
-      `;
-
-      document.getElementById("t2").innerHTML += `
-        <div class="slot" id="t2-${index}">
-          <div class="slot-pos">${position}</div>
-          <div class="slot-name">-</div>
-        </div>
-      `;
-    });
-
-
-    let state = createInitialState();
-
-
-    /* ========================= CREATE ROOM ========================= */
-
-    roomRef.transaction(data => {
-      if (!data) {
-        data = {};
-      }
-
-      if (playerNum === 1) {
-        data.name1 = myRealName;
-      } else {
-        data.name2 = myRealName;
-      }
-
-      if (!data.name1) {
-        data.name1 = "اللاعب 1";
-      }
-
-      if (!data.name2) {
-        data.name2 = "اللاعب 2";
-      }
-
-      data.started = true;
-
-      /*
-        يتم إنشاء الحالة مرة واحدة فقط داخل Firebase
-      */
-      if (!data.state) {
-        data.state = createInitialState();
-      }
-
-      return data;
-
-    }, error => {
-      console.error("Room error:", error);
-      alert("حدث خطأ أثناء إنشاء الغرفة");
-    });
-
-
-    /* ========================= FIREBASE LISTENER ========================= */
-
-    roomRef.on("value", snapshot => {
-      const data = snapshot.val();
-
-      if (!data) return;
-
-      document.getElementById("myName").innerText =
-        playerNum === 1
-          ? data.name1 || "اللاعب 1"
-          : data.name2 || "اللاعب 2";
-
-      document.getElementById("enemyName").innerText =
-        playerNum === 1
-          ? data.name2 || "اللاعب 2"
-          : data.name1 || "اللاعب 1";
-
-      if (data.state) {
-        state = data.state;
-        renderGame();
-      }
-
-    }, error => {
-      console.error("Firebase listener error:", error);
-    });
-
-
-    /* ========================= RENDER ========================= */
-
-    function renderGame() {
-      if (!state) return;
-
-      const myMoney =
-        playerNum === 1 ? state.m1 : state.m2;
-
-      const enemyMoney =
-        playerNum === 1 ? state.m2 : state.m1;
-
-      document.getElementById("myMoney").innerText =
-        Number(myMoney).toLocaleString();
-
-      document.getElementById("enemyMoney").innerText =
-        Number(enemyMoney).toLocaleString();
-
-      document.getElementById("count").innerText =
-        `${state.pos + 1} / 5`;
-
-      if (state.gameOver) {
-        showResult();
-        return;
-      }
-
-      const player = state.player;
-
-      document.getElementById("position").innerText =
-        positions[state.pos];
-
-      document.getElementById("playerName").innerText =
-        player.n;
-
-      document.getElementById("ovr").innerText =
-        player.ovr;
-
-      document.getElementById("price").innerText =
-        "$" + Number(state.bid).toLocaleString();
-
-      document.getElementById("bidInput").value =
-        Number(state.bid) + MIN_BID_STEP;
-
-      const myTurn = state.turn === playerNum;
-
-      document.getElementById("turn").innerText =
-        myTurn
-          ? "🔥 دورك الآن"
-          : "⏳ دور الخصم";
-
-      document.getElementById("bidBtn").disabled =
-        !myTurn;
-
-      document.getElementById("takeBtn").disabled =
-        !myTurn;
-
-      document.getElementById("skipBtn").disabled =
-        !myTurn;
-
-      const typeElement =
-        document.getElementById("playerType");
-
-      const card =
-        document.getElementById("auctionCard");
-
-      if (player.type === "legend") {
-        typeElement.innerText = "👑 أسطورة";
-        typeElement.className =
-          "player-type legend-type";
-
-        card.className =
-          "player-card legend-card";
-      } else {
-        typeElement.innerText = "🔥 لاعب حالي";
-        typeElement.className =
-          "player-type current-type";
-
-        card.className =
-          "player-card";
-      }
-
-      renderTeams();
-    }
-
-
-    /* ========================= TEAMS ========================= */
-
-    function renderTeams() {
-      state.t1.forEach((player, index) => {
-        const slot =
-          document.getElementById(`t1-${index}`);
-
-        if (!player) return;
-
-        slot.querySelector(".slot-name").innerText =
-          player.n;
-
-        slot.classList.add("filled");
-
-        if (player.type === "legend") {
-          slot.classList.add("legend-slot");
-        }
-      });
-
-      state.t2.forEach((player, index) => {
-        const slot =
-          document.getElementById(`t2-${index}`);
-
-        if (!player) return;
-
-        slot.querySelector(".slot-name").innerText =
-          player.n;
-
-        slot.classList.add("filled");
-
-        if (player.type === "legend") {
-          slot.classList.add("legend-slot");
-        }
-      });
-    }
-
-
-    /* ========================= BID ========================= */
-
-    function bid() {
-      const input =
-        document.getElementById("bidInput");
-
-      const value = Number(input.value);
-
-      if (!Number.isFinite(value)) {
-        alert("اكتب مبلغًا صحيحًا");
-        return;
-      }
-
-      roomRef.transaction(data => {
-        if (!data || !data.state) {
-          return;
-        }
-
-        const s = data.state;
-
-        if (s.gameOver) {
-          return;
-        }
-
-        if (s.turn !== playerNum) {
-          alert("ليس دورك الآن");
-          return;
-        }
-
-        const money =
-          playerNum === 1 ? s.m1 : s.m2;
-
-        if (value < s.bid + MIN_BID_STEP) {
-          alert(
-            "يجب أن تزيد عن السعر الحالي بمليون على الأقل"
-          );
-          return;
-        }
-
-        if (value > money) {
-          alert("فلوسك لا تكفي");
-          return;
-        }
-
-        s.bid = value;
-
-        s.turn =
-          playerNum === 1 ? 2 : 1;
-
-        return data;
-
-      }, error => {
-        console.error("Bid error:", error);
-        alert("حدث خطأ أثناء المزايدة");
-      });
-    }
-
-
-    /* ========================= TAKE PLAYER ========================= */
-
-    function takePlayer() {
-      roomRef.transaction(data => {
-        if (!data || !data.state) {
-          return;
-        }
-
-        const s = data.state;
-
-        if (s.gameOver || s.turn !== playerNum) {
-          return;
-        }
-
-        if (playerNum === 1) {
-          if (s.bid > s.m1) {
-            alert("فلوسك لا تكفي");
-            return;
-          }
-
-          s.m1 -= s.bid;
-          s.t1[s.pos] = s.player;
-        } else {
-          if (s.bid > s.m2) {
-            alert("فلوسك لا تكفي");
-            return;
-          }
-
-          s.m2 -= s.bid;
-          s.t2[s.pos] = s.player;
-        }
-
-        nextPosition(s);
-
-        return data;
-
-      }, error => {
-        console.error("Take error:", error);
-        alert("حدث خطأ أثناء أخذ اللاعب");
-      });
-    }
-
-
-    /* ========================= SKIP ========================= */
-
-    function skipPlayer() {
-      roomRef.transaction(data => {
-        if (!data || !data.state) {
-          return;
-        }
-
-        const s = data.state;
-
-        if (s.gameOver || s.turn !== playerNum) {
-          return;
-        }
-
-        const key =
-          positionKey(positions[s.pos]);
-
-        let available1 =
-          playersDB[key].filter(
-            player => player.p <= s.m1
-          );
-
-        if (available1.length === 0) {
-          available1 = playersDB[key];
-        }
-
-        const player1 =
-          available1[
-            Math.floor(
-              Math.random() * available1.length
-            )
-          ];
-
-        let available2 =
-          playersDB[key].filter(
-            player =>
-              player.p <= s.m2 &&
-              player.n !== player1.n
-          );
-
-        if (available2.length === 0) {
-          available2 =
-            playersDB[key].filter(
-              player => player.n !== player1.n
-            );
-        }
-
-        const player2 =
-          available2[
-            Math.floor(
-              Math.random() * available2.length
-            )
-          ];
-
-        s.t1[s.pos] = player1;
-        s.t2[s.pos] = player2;
-
-        s.m1 -= player1.p;
-        s.m2 -= player2.p;
-
-        s.used = [
-          ...(s.used || []),
-          player1.n,
-          player2.n
-        ];
-
-        nextPosition(s);
-
-        return data;
-
-      }, error => {
-        console.error("Skip error:", error);
-        alert("حدث خطأ أثناء التخطي");
-      });
-    }
-
-
-    /* ========================= NEXT PLAYER ========================= */
-
-    function nextPosition(s) {
-      s.pos++;
-
-      if (s.pos >= positions.length) {
-        s.gameOver = true;
-        return;
-      }
-
-      const nextPlayer =
-        getRandomPlayer(
-          positions[s.pos],
-          s.used || []
-        );
-
-      s.player = nextPlayer;
-      s.bid = nextPlayer.p;
-      s.turn = 1;
-
-      s.used = [
-        ...(s.used || []),
-        nextPlayer.n
-      ];
-    }
-
-
-    /* ========================= RESULT ========================= */
-
-    function showResult() {
-      document.getElementById("auctionCard")
-        .style.display = "none";
-
-      document.getElementById("result")
-        .style.display = "block";
-
-      const score1 =
-        state.t1.reduce(
-          (total, player) =>
-            total + (player ? player.ovr : 0),
-          0
-        );
-
-      const score2 =
-        state.t2.reduce(
-          (total, player) =>
-            total + (player ? player.ovr : 0),
-          0
-        );
-
-      let winner;
-
-      if (score1 > score2) {
-        winner = "🏆 اللاعب 1 فاز";
-      } else if (score2 > score1) {
-        winner = "🏆 اللاعب 2 فاز";
-      } else {
-        winner = "🤝 تعادل";
-      }
-
-      document.getElementById("finalScore").innerHTML = `
-        <h3>${score1} - ${score2}</h3>
-        <h2>${winner}</h2>
-      `;
-    }
-
-
-    window.addEventListener("DOMContentLoaded", () => {
-      renderGame();
-    });
-  </script>
+<div class="player-content">
+
+<div class="ovr">
+<span id="ovr">90</span>
+<small>OVR</small>
+</div>
+
+<div class="player-main">
+
+<div class="position" id="position">
+GK
+</div>
+
+<div class="player-name-big" id="playerName">
+جاري التحميل...
+</div>
+
+<div class="price" id="price">
+$0
+</div>
+
+</div>
+
+</div>
+
+<div class="controls">
+
+<input
+type="number"
+id="bidInput"
+class="bid-input"
+placeholder="اكتب مبلغ المزايدة"
+/>
+
+<div class="buttons">
+
+<button class="bid-btn" id="bidBtn" onclick="bid()">
+💰 زايد
+</button>
+
+<button class="take-btn" id="takeBtn" onclick="takePlayer()">
+🔥 خده
+</button>
+
+<button class="skip-btn" id="skipBtn" onclick="skipPlayer()">
+⏭ تخطي
+</button>
+
+</div>
+
+</div>
+
+<div class="message" id="message"></div>
+
+</div>
+
+
+<div class="match" id="match">
+
+<div class="scoreboard">
+
+<div class="match-teams">
+
+<div class="match-name blue-text" id="matchTeam1">
+فريق اللاعب 1
+</div>
+
+<div class="score" id="matchScore">
+0 - 0
+</div>
+
+<div class="match-name red-text" id="matchTeam2">
+فريق اللاعب 2
+</div>
+
+</div>
+
+<div class="minute" id="matchMinute">
+⏱️ الدقيقة 0
+</div>
+
+<div class="match-event" id="currentEvent">
+🏟️ المباراة على وشك البدء
+</div>
+
+</div>
+
+<div class="match-log" id="matchLog"></div>
+
+<div class="final-stats" id="finalStats"></div>
+
+</div>
+
+
+<div class="result" id="result">
+<h2>🏆 انتهت المباراة</h2>
+<div id="finalWinner"></div>
+</div>
+
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+
+<script>
+
+/* =========================================================
+FIREBASE
+========================================================= */
+
+const firebaseConfig={
+databaseURL:"https://mazad-noogom-default-rtdb.firebaseio.com"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db=firebase.database();
+
+
+/* =========================================================
+URL
+========================================================= */
+
+const params=new URLSearchParams(window.location.search);
+
+const playerNum=
+Number(params.get("p"))===2?2:1;
+
+const rawName=
+params.get("name")||`لاعب ${playerNum}`;
+
+function cleanName(name){
+
+if(!name)return"لاعب";
+
+return name
+.split("@")[0]
+.split(".")[0]
+.slice(0,15);
+
+}
+
+const myRealName=cleanName(rawName);
+
+
+/* =========================================================
+ROOM
+========================================================= */
+
+let ROOM_ID=params.get("room");
+
+if(!ROOM_ID){
+
+ROOM_ID=
+"room-"+
+Math.random()
+.toString(36)
+.substring(2,10);
+
+const newUrl=
+window.location.pathname+
+"?room="+ROOM_ID+
+"&p="+playerNum+
+"&name="+
+encodeURIComponent(myRealName);
+
+window.history.replaceState(
+{},
+"",
+newUrl
+);
+
+}
+
+const roomRef=
+db.ref("mazad5/"+ROOM_ID);
+
+
+/* =========================================================
+SETTINGS
+========================================================= */
+
+const START_MONEY=100000000;
+
+const MIN_BID_STEP=1000000;
+
+const positions=[
+"GK",
+"CB",
+"CM1",
+"CM2",
+"ST"
+];
+
+
+/* =========================================================
+200 PLAYERS DATABASE
+========================================================= */
+
+function makePlayers(names,position){
+
+return names.map((item,index)=>{
+
+const parts=item.split("|");
+
+const name=parts[0];
+
+const level=parts[1]||"silver";
+
+let ovr;
+let price;
+
+if(level==="legend"){
+
+ovr=94+(index%6);
+
+price=
+55000000+
+(index%6)*7000000;
+
+}
+
+else if(level==="gold"){
+
+ovr=87+(index%6);
+
+price=
+25000000+
+(index%10)*4000000;
+
+}
+
+else{
+
+ovr=76+(index%10);
+
+price=
+8000000+
+(index%10)*1500000;
+
+}
+
+return{
+
+n:name,
+p:price,
+ovr:ovr,
+type:level,
+position:position
+
+};
+
+});
+
+}
+
+
+/* ================= GK - 40 ================= */
+
+const gkNames=[
+
+"تيبو كورتوا|gold",
+"أليسون|gold",
+"دوناروما|gold",
+"يان أوبلاك|gold",
+"تير شتيجن|gold",
+"إيدرسون|gold",
+"مايك مانيان|gold",
+"إيميليانو مارتينيز|gold",
+"أندريه أونانا|silver",
+"ديفيد رايا|silver",
+
+"جيورجي مامارداشفيلي|silver",
+"ياسين بونو|gold",
+"كيلور نافاس|gold",
+"كاسبر شمايكل|silver",
+"بيكفورد|silver",
+"أوناي سيمون|silver",
+"ترابين|silver",
+"سومر|gold",
+"ميريت|silver",
+"لوبو|silver",
+
+"ليف ياشين 👑|legend",
+"جيانلويجي بوفون 👑|legend",
+"إيكر كاسياس 👑|legend",
+"مانويل نوير 👑|legend",
+"بيتر تشيك 👑|legend",
+"إدوين فان دير سار 👑|legend",
+"أوليفر كان 👑|legend",
+"شمايكل الأب 👑|legend",
+"سيب ماير 👑|legend",
+"زوف 👑|legend",
+
+"فيكتور فالديز|silver",
+"ديدا|gold",
+"ريينا|silver",
+"هوغو لوريس|silver",
+"أندريه لونين|silver",
+"أليكس ريميرو|silver",
+"كيلهير|silver",
+"أوسبينا|silver",
+"نافاس|silver",
+"فابيانسكي|silver",
+
+"دي خيا|gold",
+"بينتو|silver",
+"سافيتش|silver",
+"كوستا|silver",
+"روميرو|silver",
+"كامبوس|silver",
+"أريولا|silver",
+"مولر|silver",
+"هيراديكي|silver",
+"سيرني|silver"
+
+];
+
+
+/* ================= CB - 40 ================= */
+
+const cbNames=[
+
+"فان دايك|gold",
+"روبن دياز|gold",
+"روديجر|gold",
+"ساليبا|gold",
+"ماركينيوس|gold",
+"باستوني|gold",
+"أراوخو|gold",
+"كوناتي|gold",
+"دي ليخت|gold",
+"أكانجي|silver",
+
+"غفارديول|gold",
+"ميليتاو|gold",
+"ستونز|gold",
+"باو توريس|silver",
+"كيم مين جاي|silver",
+"بريمير|gold",
+"ألابا|gold",
+"لابورت|gold",
+"أندرسن|silver",
+"أكي|silver",
+
+"باولو مالديني 👑|legend",
+"فرانز بيكنباور 👑|legend",
+"أليساندرو نيستا 👑|legend",
+"فابيو كانافارو 👑|legend",
+"سيرجيو راموس 👑|legend",
+"فيرديناند 👑|legend",
+"فيديتش 👑|legend",
+"كارليس بويول 👑|legend",
+"باريسي 👑|legend",
+"مور|legend",
+
+"تيري|gold",
+"كومباني|gold",
+"بيبي|gold",
+"فاران|gold",
+"غودين|gold",
+"كوليبالي|silver",
+"أوباميكانو|silver",
+"غابرييل|gold",
+"توموري|silver",
+"ماغواير|silver",
+
+"كريستنسن|silver",
+"سوتو|silver",
+"كولر|silver",
+"هويسن|silver",
+"لوكا هيرنانديز|silver",
+"تاه|silver",
+"كريستيان روميرو|gold",
+"إيناسيو|silver",
+"باو كوبارسي|silver",
+"موسكيرا|silver"
+
+];
+
+
+/* ================= CM - 40 ================= */
+
+const cmNames=[
+
+"جود بيلينجهام|gold",
+"رودري|gold",
+"كيفن دي بروين|gold",
+"فالفيردي|gold",
+"بيدري|gold",
+"فيتينيا|gold",
+"جمال موسيالا|gold",
+"برونو فيرنانديز|gold",
+"بيرناردو سيلفا|gold",
+"دي يونغ|gold",
+
+"رايس|gold",
+"مودريتش|gold",
+"تشواميني|gold",
+"غافي|gold",
+"ماك أليستر|gold",
+"تونالي|silver",
+"باريلا|gold",
+"كيميتش|gold",
+"سابيتزر|silver",
+"إريكسن|silver",
+
+"زين الدين زيدان 👑|legend",
+"أندريس إنييستا 👑|legend",
+"تشافي 👑|legend",
+"رونالدينيو 👑|legend",
+"كاكا 👑|legend",
+"بيرلو 👑|legend",
+"لامبارد 👑|legend",
+"سكولز 👑|legend",
+"جيرارد 👑|legend",
+"غوليت 👑|legend",
+
+"كروس|gold",
+"أوزيل|gold",
+"ديكو|gold",
+"سيدورف|gold",
+"ريكيلمي|gold",
+"فييرا|gold",
+"ماكيليلي|gold",
+"بوسكيتس|gold",
+"دافيد سيلفا|gold",
+"إيسكو|silver",
+
+"باكيتا|silver",
+"فودين|gold",
+"كوفاسيتش|silver",
+"سافيو|silver",
+"كول بالمر|gold",
+"أولمو|silver",
+"تشافي سيمونز|gold",
+"غريليش|silver",
+"مرينو|silver",
+"فابيان رويز|silver"
+
+];
+
+
+/* ================= ST - 40 ================= */
+
+const stNames=[
+
+"كيليان مبابي|gold",
+"إيرلينغ هالاند|gold",
+"محمد صلاح|gold",
+"فينيسيوس جونيور|gold",
+"هاري كين|gold",
+"روبرت ليفاندوفسكي|gold",
+"لاوتارو مارتينيز|gold",
+"جوليان ألفاريز|gold",
+"فيكتور أوسيمين|gold",
+"غريزمان|gold",
+
+"ساكا|gold",
+"سون هيونغ مين|gold",
+"نيمار|gold",
+"رافينيا|gold",
+"ديمبيلي|gold",
+"كفاراتسخيليا|gold",
+"رودريغو|gold",
+"كول بالمر|gold",
+"فلوريان فيرتز|gold",
+"إيساك|gold",
+
+"ليونيل ميسي PRIME 👑|legend",
+"كريستيانو رونالدو PRIME 👑|legend",
+"بيليه 👑|legend",
+"دييغو مارادونا 👑|legend",
+"رونالدو نازاريو 👑|legend",
+"تييري هنري 👑|legend",
+"زين الدين زيدان PRIME 👑|legend",
+"يوهان كرويف 👑|legend",
+"أوزيبيو 👑|legend",
+"جورج بست 👑|legend",
+
+"روماريو 👑|legend",
+"بيكنباور ATT 👑|legend",
+"دروغبا 👑|legend",
+"فان باستن 👑|legend",
+"راؤول 👑|legend",
+"ديل بييرو 👑|legend",
+"شيفتشينكو 👑|legend",
+"باتيستوتا 👑|legend",
+"بيركامب 👑|legend",
+"روبينيو|silver",
+
+"أنتوني|silver",
+"داروين نونيز|silver",
+"جابرييل جيسوس|silver",
+"ستيرلينغ|silver",
+"سانشو|silver",
+"ديباي|silver",
+"لوكاكو|gold",
+"موراتا|silver",
+"فيرمين لوبيز|silver",
+"جواو فيليكس|silver"
+
+];
+
+
+/* =========================================================
+PLAYERS DB
+========================================================= */
+
+const playersDB={
+
+GK:makePlayers(gkNames,"GK"),
+
+CB:makePlayers(cbNames,"CB"),
+
+CM:makePlayers(cmNames,"CM"),
+
+ST:makePlayers(stNames,"ST")
+
+};
+
+
+/* =========================================================
+POSITION
+========================================================= */
+
+function positionKey(position){
+
+return position.startsWith("CM")
+?"CM"
+:position;
+
+}
+
+
+/* =========================================================
+RANDOM
+========================================================= */
+
+function random(arr){
+
+return arr[
+Math.floor(
+Math.random()*arr.length
+)
+];
+
+}
+
+
+function getRandomPlayer(position,used=[]){
+
+const key=positionKey(position);
+
+let available=
+playersDB[key]
+.filter(player=>
+!used.includes(player.n)
+);
+
+if(!available.length){
+
+available=playersDB[key];
+
+}
+
+return random(available);
+
+}
+
+
+/* =========================================================
+INITIAL STATE
+========================================================= */
+
+function createInitialState(){
+
+const firstPlayer=
+getRandomPlayer("GK",[]);
+
+return{
+
+pos:0,
+
+player:firstPlayer,
+
+bid:firstPlayer.p,
+
+turn:1,
+
+m1:START_MONEY,
+
+m2:START_MONEY,
+
+t1:Array(5).fill(null),
+
+t2:Array(5).fill(null),
+
+used:[firstPlayer.n],
+
+gameOver:false,
+
+matchStarted:false,
+
+matchFinished:false,
+
+match:null
+
+};
+
+}
+
+
+/* =========================================================
+BUILD TEAMS
+========================================================= */
+
+positions.forEach((position,index)=>{
+
+document.getElementById("t1")
+.innerHTML+=`
+
+<div class="slot" id="t1-${index}">
+
+<div class="slot-pos">
+${position}
+</div>
+
+<div class="slot-name">
+-
+</div>
+
+<div class="slot-card-type">
+</div>
+
+</div>
+`;
+
+document.getElementById("t2")
+.innerHTML+=`
+
+<div class="slot" id="t2-${index}">
+
+<div class="slot-pos">
+${position}
+</div>
+
+<div class="slot-name">
+-
+</div>
+
+<div class="slot-card-type">
+</div>
+
+</div>
+`;
+
+});
+
+
+let state=null;
+
+let matchInterval=null;
+
+
+/* =========================================================
+CREATE ROOM
+========================================================= */
+
+roomRef.transaction(data=>{
+
+if(!data){
+
+data={};
+
+}
+
+if(playerNum===1){
+
+data.name1=myRealName;
+
+}
+
+else{
+
+data.name2=myRealName;
+
+}
+
+if(!data.name1){
+
+data.name1="اللاعب 1";
+
+}
+
+if(!data.name2){
+
+data.name2="اللاعب 2";
+
+}
+
+data.started=true;
+
+if(!data.state){
+
+data.state=createInitialState();
+
+}
+
+return data;
+
+});
+
+
+/* =========================================================
+LISTENER
+========================================================= */
+
+roomRef.on(
+"value",
+snapshot=>{
+
+const data=snapshot.val();
+
+if(!data)return;
+
+document.getElementById("myName")
+.innerText=
+playerNum===1
+?(data.name1||"اللاعب 1")
+:(data.name2||"اللاعب 2");
+
+
+document.getElementById("enemyName")
+.innerText=
+playerNum===1
+?(data.name2||"اللاعب 2")
+:(data.name1||"اللاعب 1");
+
+
+document.getElementById("matchTeam1")
+.innerText=
+data.name1||"اللاعب 1";
+
+
+document.getElementById("matchTeam2")
+.innerText=
+data.name2||"اللاعب 2";
+
+
+if(data.state){
+
+state=data.state;
+
+renderGame();
+
+}
+
+}
+);
+
+
+/* =========================================================
+MESSAGE
+========================================================= */
+
+function showMessage(text){
+
+document.getElementById("message")
+.innerText=text;
+
+setTimeout(()=>{
+
+if(
+document.getElementById("message")
+.innerText===text
+){
+
+document.getElementById("message")
+.innerText="";
+
+}
+
+},2500);
+
+}
+
+
+/* =========================================================
+RENDER
+========================================================= */
+
+function renderGame(){
+
+if(!state)return;
+
+const myMoney=
+playerNum===1
+?state.m1
+:state.m2;
+
+const enemyMoney=
+playerNum===1
+?state.m2
+:state.m1;
+
+
+document.getElementById("myMoney")
+.innerText=
+Number(myMoney)
+.toLocaleString();
+
+
+document.getElementById("enemyMoney")
+.innerText=
+Number(enemyMoney)
+.toLocaleString();
+
+
+document.getElementById("count")
+.innerText=
+`${Math.min(state.pos+1,5)} / 5`;
+
+
+renderTeams();
+
+
+if(state.gameOver){
+
+document.getElementById("auctionCard")
+.style.display="none";
+
+startMatchUI();
+
+return;
+
+}
+
+
+document.getElementById("auctionCard")
+.style.display="block";
+
+
+const player=state.player;
+
+
+document.getElementById("position")
+.innerText=
+positions[state.pos];
+
+
+document.getElementById("playerName")
+.innerText=
+player.n;
+
+
+document.getElementById("ovr")
+.innerText=
+player.ovr;
+
+
+document.getElementById("price")
+.innerText=
+"$"+
+Number(state.bid)
+.toLocaleString();
+
+
+const currentInput=
+Number(
+document.getElementById("bidInput").value
+);
+
+if(
+!currentInput||
+currentInput<=state.bid
+){
+
+document.getElementById("bidInput")
+.value=
+state.bid+MIN_BID_STEP;
+
+}
+
+
+const myTurn=
+state.turn===playerNum;
+
+
+document.getElementById("turn")
+.innerText=
+myTurn
+?"🔥 دورك الآن"
+:"⏳ دور الخصم";
+
+
+document.getElementById("bidBtn")
+.disabled=!myTurn;
+
+document.getElementById("takeBtn")
+.disabled=!myTurn;
+
+document.getElementById("skipBtn")
+.disabled=!myTurn;
+
+
+const card=
+document.getElementById("auctionCard");
+
+const type=
+document.getElementById("playerType");
+
+
+card.className="player-card";
+
+
+if(player.type==="legend"){
+
+card.classList.add("legend-card");
+
+type.className=
+"player-type legend-type";
+
+type.innerText=
+"👑 ICON LEGEND";
+
+}
+
+else if(player.type==="gold"){
+
+card.classList.add("gold-card");
+
+type.className=
+"player-type gold-type";
+
+type.innerText=
+"⭐ GOLD ELITE";
+
+}
+
+else{
+
+card.classList.add("silver-card");
+
+type.className=
+"player-type silver-type";
+
+type.innerText=
+"⚪ SILVER PLAYER";
+
+}
+
+}
+
+
+/* =========================================================
+RENDER TEAMS
+========================================================= */
+
+function renderTeams(){
+
+["t1","t2"].forEach(team=>{
+
+state[team]
+.forEach((player,index)=>{
+
+const slot=
+document.getElementById(
+`${team}-${index}`
+);
+
+slot.className="slot";
+
+const name=
+slot.querySelector(".slot-name");
+
+const type=
+slot.querySelector(".slot-card-type");
+
+
+if(!player){
+
+name.innerText="-";
+
+type.innerText="";
+
+return;
+
+}
+
+
+slot.classList.add("filled");
+
+name.innerText=player.n;
+
+
+if(player.type==="legend"){
+
+slot.classList.add(
+"legend-slot"
+);
+
+type.innerText="👑 ICON";
+
+}
+
+else if(player.type==="gold"){
+
+slot.classList.add(
+"gold-slot"
+);
+
+type.innerText="⭐ GOLD";
+
+}
+
+else{
+
+slot.classList.add(
+"silver-slot"
+);
+
+type.innerText="⚪ SILVER";
+
+}
+
+});
+
+});
+
+}
+
+
+/* =========================================================
+BID
+========================================================= */
+
+function bid(){
+
+const value=
+Number(
+document.getElementById("bidInput").value
+);
+
+
+if(
+!Number.isFinite(value)||
+value<=0
+){
+
+showMessage(
+"❌ اكتب مبلغ صحيح"
+);
+
+return;
+
+}
+
+
+roomRef.transaction(data=>{
+
+if(!data||!data.state){
+
+return;
+
+}
+
+
+const s=data.state;
+
+
+if(s.gameOver){
+
+return;
+
+}
+
+
+if(s.turn!==playerNum){
+
+return;
+
+}
+
+
+const money=
+playerNum===1
+?s.m1
+:s.m2;
+
+
+if(
+value<
+s.bid+MIN_BID_STEP
+){
+
+return;
+
+}
+
+
+if(value>money){
+
+return;
+
+}
+
+
+s.bid=value;
+
+
+s.turn=
+playerNum===1
+?2
+:1;
+
+
+return data;
+
+},
+(error,committed)=>{
+
+if(error){
+
+showMessage(
+"❌ حدث خطأ في المزايدة"
+);
+
+}
+
+else if(!committed){
+
+showMessage(
+"❌ لا يمكن تنفيذ المزايدة"
+);
+
+}
+
+else{
+
+showMessage(
+"💰 تمت المزايدة!"
+);
+
+}
+
+});
+
+}
+
+
+/* =========================================================
+TAKE PLAYER
+========================================================= */
+
+function takePlayer(){
+
+roomRef.transaction(data=>{
+
+if(!data||!data.state){
+
+return;
+
+}
+
+
+const s=data.state;
+
+
+if(
+s.gameOver||
+s.turn!==playerNum
+){
+
+return;
+
+}
+
+
+if(playerNum===1){
+
+if(s.bid>s.m1){
+
+return;
+
+}
+
+
+s.m1-=s.bid;
+
+s.t1[s.pos]=s.player;
+
+}
+
+else{
+
+if(s.bid>s.m2){
+
+return;
+
+}
+
+
+s.m2-=s.bid;
+
+s.t2[s.pos]=s.player;
+
+}
+
+
+nextPosition(s);
+
+return data;
+
+},
+(error,committed)=>{
+
+if(error){
+
+showMessage(
+"❌ حدث خطأ"
+);
+
+}
+
+else if(committed){
+
+showMessage(
+"🔥 تم شراء اللاعب!"
+);
+
+}
+
+});
+
+}
+
+
+/* =========================================================
+SKIP
+========================================================= */
+
+function skipPlayer(){
+
+roomRef.transaction(data=>{
+
+if(!data||!data.state){
+
+return;
+
+}
+
+
+const s=data.state;
+
+
+if(
+s.gameOver||
+s.turn!==playerNum
+){
+
+return;
+
+}
+
+
+const key=
+positionKey(
+positions[s.pos]
+);
+
+
+let available1=
+playersDB[key]
+.filter(player=>
+player.p<=s.m1
+);
+
+
+if(!available1.length){
+
+available1=
+playersDB[key];
+
+}
+
+
+const player1=
+random(available1);
+
+
+let available2=
+playersDB[key]
+.filter(player=>
+player.p<=s.m2&&
+player.n!==player1.n
+);
+
+
+if(!available2.length){
+
+available2=
+playersDB[key]
+.filter(player=>
+player.n!==player1.n
+);
+
+}
+
+
+const player2=
+random(available2);
+
+
+s.t1[s.pos]=player1;
+
+s.t2[s.pos]=player2;
+
+
+s.m1=
+Math.max(
+0,
+s.m1-player1.p
+);
+
+
+s.m2=
+Math.max(
+0,
+s.m2-player2.p
+);
+
+
+s.used=[
+...(s.used||[]),
+player1.n,
+player2.n
+];
+
+
+nextPosition(s);
+
+
+return data;
+
+},
+(error,committed)=>{
+
+if(error){
+
+showMessage(
+"❌ حدث خطأ"
+);
+
+}
+
+else if(committed){
+
+showMessage(
+"⏭ تم توزيع لاعبين عشوائيًا"
+);
+
+}
+
+});
+
+}
+
+
+/* =========================================================
+NEXT POSITION
+========================================================= */
+
+function nextPosition(s){
+
+s.pos++;
+
+
+if(
+s.pos>=positions.length
+){
+
+s.gameOver=true;
+
+s.matchStarted=false;
+
+return;
+
+}
+
+
+const nextPlayer=
+getRandomPlayer(
+positions[s.pos],
+s.used||[]
+);
+
+
+s.player=nextPlayer;
+
+s.bid=nextPlayer.p;
+
+s.turn=1;
+
+
+s.used=[
+
+...(s.used||[]),
+
+nextPlayer.n
+
+];
+
+}
+
+
+/* =========================================================
+MATCH UI
+========================================================= */
+
+function startMatchUI(){
+
+document.getElementById("match")
+.style.display="block";
+
+
+if(
+state.matchFinished
+){
+
+renderFinishedMatch();
+
+return;
+
+}
+
+
+if(
+playerNum===1&&
+!state.matchStarted
+){
+
+startMatch();
+
+}
+
+else if(state.match){
+
+renderLiveMatch();
+
+}
+
+}
+
+
+/* =========================================================
+START MATCH
+========================================================= */
+
+function startMatch(){
+
+roomRef.transaction(data=>{
+
+if(!data||!data.state){
+
+return;
+
+}
+
+
+const s=data.state;
+
+
+if(s.matchStarted){
+
+return;
+
+}
+
+
+s.matchStarted=true;
+
+
+const team1Strength=
+getTeamStrength(s.t1);
+
+const team2Strength=
+getTeamStrength(s.t2);
+
+
+const possession1=
+Math.floor(
+48+
+(team1Strength-team2Strength)/4+
+Math.random()*8
+);
+
+
+const safePossession1=
+Math.max(
+35,
+Math.min(
+65,
+possession1
+)
+);
+
+
+s.match={
+
+minute:0,
+
+score1:0,
+
+score2:0,
+
+possession1:safePossession1,
+
+possession2:
+100-safePossession1,
+
+shots1:0,
+
+shots2:0,
+
+shotsTarget1:0,
+
+shotsTarget2:0,
+
+corners1:0,
+
+corners2:0,
+
+yellow1:0,
+
+yellow2:0,
+
+red1:0,
+
+red2:0,
+
+events:[],
+
+motm:null,
+
+winner:null
+
+};
+
+
+return data;
+
+});
+
+}
+
+
+/* =========================================================
+TEAM STRENGTH
+========================================================= */
+
+function getTeamStrength(team){
+
+return team.reduce(
+(total,p)=>
+total+(p?p.ovr:70),
+0
+);
+
+}
+
+
+/* =========================================================
+LIVE MATCH
+========================================================= */
+
+function renderLiveMatch(){
+
+if(!state.match)return;
+
+const m=state.match;
+
+
+document.getElementById("matchMinute")
+.innerText=
+`⏱️ الدقيقة ${m.minute}`;
+
+
+document.getElementById("matchScore")
+.innerText=
+`${m.score1} - ${m.score2}`;
+
+
+const log=
+document.getElementById("matchLog");
+
+log.innerHTML="";
+
+
+(m.events||[])
+.slice()
+.reverse()
+.forEach(event=>{
+
+const div=
+document.createElement("div");
+
+div.className="event";
+
+div.innerText=event.text;
+
+log.appendChild(div);
+
+});
+
+
+if(
+!state.matchFinished&&
+playerNum===1&&
+!matchInterval
+){
+
+matchInterval=setInterval(
+simulateMinute,
+700
+);
+
+}
+
+}
+
+
+/* =========================================================
+SIMULATE MINUTE
+========================================================= */
+
+function simulateMinute(){
+
+roomRef.transaction(data=>{
+
+if(!data||!data.state){
+
+return;
+
+}
+
+
+const s=data.state;
+
+
+if(
+!s.matchStarted||
+s.matchFinished||
+!s.match
+){
+
+return;
+
+}
+
+
+const m=s.match;
+
+
+m.minute++;
+
+
+simulateEvent(s);
+
+
+if(m.minute>=90){
+
+finishMatch(s);
+
+}
+
+
+return data;
+
+});
+
+
+}
+
+
+/* =========================================================
+MATCH EVENTS
+========================================================= */
+
+function simulateEvent(s){
+
+const m=s.match;
+
+
+const roll=
+Math.random();
+
+
+const team1Chance=
+m.possession1/100;
+
+
+function addEvent(text,type){
+
+m.events.push({
+
+minute:m.minute,
+
+text:`${m.minute}' ${text}`,
+
+type:type
+
+});
+
+
+if(m.events.length>35){
+
+m.events.shift();
+
+}
+
+}
+
+
+/* GOAL */
+
+if(roll<0.075){
+
+const team1=
+Math.random()<team1Chance;
+
+const team=
+team1?s.t1:s.t2;
+
+const scorer=
+random(team.filter(Boolean));
+
+
+if(team1){
+
+m.score1++;
+
+m.shots1++;
+
+m.shotsTarget1++;
+
+}
+
+else{
+
+m.score2++;
+
+m.shots2++;
+
+m.shotsTarget2++;
+
+}
+
+
+addEvent(
+`⚽ هدف! ${scorer.n}`,
+"goal"
+);
+
+return;
+
+}
+
+
+/* SHOT */
+
+if(roll<0.20){
+
+const team1=
+Math.random()<team1Chance;
+
+if(team1){
+
+m.shots1++;
+
+if(Math.random()<.45){
+
+m.shotsTarget1++;
+
+}
+
+}
+
+else{
+
+m.shots2++;
+
+if(Math.random()<.45){
+
+m.shotsTarget2++;
+
+}
+
+}
+
+
+addEvent(
+"🎯 تسديدة خطيرة",
+"shot"
+);
+
+return;
+
+}
+
+
+/* CORNER */
+
+if(roll<0.30){
+
+const team1=
+Math.random()<team1Chance;
+
+if(team1){
+
+m.corners1++;
+
+}
+
+else{
+
+m.corners2++;
+
+}
+
+
+addEvent(
+"🚩 ركلة ركنية",
+"corner"
+);
+
+return;
+
+}
+
+
+/* YELLOW */
+
+if(roll<0.35){
+
+const team1=
+Math.random()<.5;
+
+if(team1){
+
+m.yellow1++;
+
+}
+
+else{
+
+m.yellow2++;
+
+}
+
+
+addEvent(
+"🟨 بطاقة صفراء",
+"yellow"
+);
+
+return;
+
+}
+
+
+/* RED */
+
+if(roll<0.365){
+
+const team1=
+Math.random()<.5;
+
+if(team1){
+
+m.red1++;
+
+}
+
+else{
+
+m.red2++;
+
+}
+
+
+addEvent(
+"🟥 بطاقة حمراء!",
+"red"
+);
+
+return;
+
+}
+
+
+/* ATTACK */
+
+if(roll<0.52){
+
+const team1=
+Math.random()<team1Chance;
+
+const team=
+team1?s.t1:s.t2;
+
+const attacker=
+random(team.filter(Boolean));
+
+
+addEvent(
+`🔥 هجمة خطيرة بواسطة ${attacker.n}`,
+"attack"
+);
+
+}
+
+}
+
+
+/* =========================================================
+FINISH MATCH
+========================================================= */
+
+function finishMatch(s){
+
+const m=s.match;
+
+
+const allPlayers=[
+
+...s.t1.map(p=>({
+...p,
+team:1
+})),
+
+...s.t2.map(p=>({
+...p,
+team:2
+}))
+
+];
+
+
+const motm=
+random(
+allPlayers.filter(Boolean)
+);
+
+
+m.motm=motm;
+
+
+if(m.score1>m.score2){
+
+m.winner=1;
+
+}
+
+else if(m.score2>m.score1){
+
+m.winner=2;
+
+}
+
+else{
+
+m.winner=0;
+
+}
+
+
+s.matchFinished=true;
+
+
+m.events.push({
+
+minute:90,
+
+text:"🏁 انتهت المباراة!",
+
+type:"end"
+
+});
+
+}
+
+
+/* =========================================================
+MATCH FINISHED
+========================================================= */
+
+function renderFinishedMatch(){
+
+if(matchInterval){
+
+clearInterval(matchInterval);
+
+matchInterval=null;
+
+}
+
+
+renderLiveMatch();
+
+
+const m=state.match;
+
+
+const stats=
+document.getElementById("finalStats");
+
+stats.style.display="block";
+
+
+stats.innerHTML=`
+
+<h3 style="text-align:center;color:#ffd700">
+📊 إحصائيات المباراة
+</h3>
+
+<div class="stat-row">
+
+<div>${m.possession1}%</div>
+
+<div class="stat-label">
+الاستحواذ
+</div>
+
+<div>${m.possession2}%</div>
+
+</div>
+
+
+<div class="stat-row">
+
+<div>${m.shots1}</div>
+
+<div class="stat-label">
+التسديدات
+</div>
+
+<div>${m.shots2}</div>
+
+</div>
+
+
+<div class="stat-row">
+
+<div>${m.shotsTarget1}</div>
+
+<div class="stat-label">
+على المرمى
+</div>
+
+<div>${m.shotsTarget2}</div>
+
+</div>
+
+
+<div class="stat-row">
+
+<div>${m.corners1}</div>
+
+<div class="stat-label">
+الركنيات
+</div>
+
+<div>${m.corners2}</div>
+
+</div>
+
+
+<div class="stat-row">
+
+<div>🟨 ${m.yellow1}</div>
+
+<div class="stat-label">
+البطاقات
+</div>
+
+<div>🟨 ${m.yellow2}</div>
+
+</div>
+
+
+<div class="stat-row">
+
+<div>🟥 ${m.red1}</div>
+
+<div class="stat-label">
+الطرد
+</div>
+
+<div>🟥 ${m.red2}</div>
+
+</div>
+
+
+<div class="motm">
+
+<div>
+⭐ رجل المباراة
+</div>
+
+<h2>
+${m.motm?m.motm.n:"لا يوجد"}
+</h2>
+
+<div>
+OVR ${m.motm?m.motm.ovr:""}
+</div>
+
+</div>
+
+`;
+
+
+document.getElementById("result")
+.style.display="block";
+
+
+let winnerText;
+
+
+if(m.winner===1){
+
+winnerText=
+"🏆 اللاعب 1 فاز بالمباراة";
+
+}
+
+else if(m.winner===2){
+
+winnerText=
+"🏆 اللاعب 2 فاز بالمباراة";
+
+}
+
+else{
+
+winnerText=
+"🤝 انتهت المباراة بالتعادل";
+
+}
+
+
+document.getElementById("finalWinner")
+.innerHTML=`
+
+<div class="winner">
+${winnerText}
+</div>
+
+<h1>
+${m.score1} - ${m.score2}
+</h1>
+
+`;
+
+}
+
+
+/* =========================================================
+DOM
+========================================================= */
+
+window.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+setTimeout(()=>{
+
+if(state){
+
+renderGame();
+
+}
+
+},500);
+
+}
+);
+
+</script>
 
 </body>
 </html>
