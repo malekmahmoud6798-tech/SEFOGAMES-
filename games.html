@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -12,7 +13,7 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color:transparent;
 }
 
 body{
@@ -26,7 +27,7 @@ body{
 }
 
 /* الهيدر */
-.header {
+.header{
   position:fixed;
   top:0;
   left:0;
@@ -42,26 +43,26 @@ body{
   box-shadow:0 0 20px rgba(0,204,255,0.5);
 }
 
-.back-btn {
+.back-btn{
   font-size:22px;
   cursor:pointer;
   color:#00ccff;
   padding:5px;
 }
 
-.header-title {
+.header-title{
   font-size:18px;
   font-weight:900;
   color:#ffd700;
 }
 
 /* العنوان */
-.page-title {
+.page-title{
   text-align:center;
   padding:20px 15px;
 }
 
-.page-title h1 {
+.page-title h1{
   font-family:'Orbitron';
   font-size:32px;
   font-weight:900;
@@ -71,13 +72,13 @@ body{
   margin-bottom:5px;
 }
 
-.page-title p {
+.page-title p{
   color:#aaa;
   font-size:14px;
 }
 
 /* شبكة الالعاب */
-.games-container {
+.games-container{
   padding:15px;
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -86,7 +87,7 @@ body{
   margin:0 auto;
 }
 
-.game-box {
+.game-box{
   background:rgba(255,255,255,0.05);
   backdrop-filter:blur(15px);
   border:2px solid rgba(0,204,255,0.3);
@@ -99,16 +100,16 @@ body{
   overflow:hidden;
 }
 
-.game-box:active {
+.game-box:active{
   transform:scale(0.95);
 }
 
-.game-box.locked {
+.game-box.locked{
   opacity:0.5;
   cursor:not-allowed;
 }
 
-.game-box::before {
+.game-box::before{
   content:'';
   position:absolute;
   top:-2px;
@@ -122,29 +123,29 @@ body{
   transition:0.3s;
 }
 
-.game-box:hover::before {
+.game-box:hover::before{
   opacity:1;
 }
 
-.game-icon {
+.game-icon{
   font-size:45px;
   margin-bottom:10px;
   display:block;
 }
 
-.game-name {
+.game-name{
   font-size:16px;
   font-weight:900;
   color:#ffd700;
   margin-bottom:5px;
 }
 
-.game-desc {
+.game-desc{
   font-size:11px;
   color:#aaa;
 }
 
-.coming-soon {
+.coming-soon{
   position:absolute;
   top:8px;
   right:8px;
@@ -157,7 +158,7 @@ body{
 }
 
 /* شريط سفلي */
-.bottom-bar {
+.bottom-bar{
   position:fixed;
   z-index:10;
   bottom:10px;
@@ -174,7 +175,7 @@ body{
   align-items:center;
 }
 
-.nav-btn {
+.nav-btn{
   color:#888;
   text-align:center;
   cursor:pointer;
@@ -182,14 +183,19 @@ body{
   text-decoration:none;
 }
 
-.nav-btn.active {
+.nav-btn.active{
   color:#00ccff;
 }
 
-.nav-btn i {
+.nav-btn i{
   font-size:24px;
   display:block;
   margin-bottom:3px;
+}
+
+/* تأثير انتقال */
+body{
+  transition:opacity .3s ease;
 }
 </style>
 </head>
@@ -218,7 +224,7 @@ body{
     <div class="game-desc">سجل 5 ضربات واكسب</div>
   </div>
 
-  <!-- لعبة 2 - الديربي -->
+  <!-- لعبة 2 -->
   <div class="game-box" onclick="goToGame('lobyderby.html')">
     <div class="game-icon">⚔️</div>
     <div class="game-name">الديربي</div>
@@ -239,25 +245,25 @@ body{
     <div class="game-desc">اختبر معلوماتك</div>
   </div>
 
-  <!-- لعبة 5 - الدوري المصري -->
+  <!-- لعبة 5 -->
   <div class="game-box" onclick="goToGame('egypt.html')">
     <div class="game-icon">🇪🇬</div>
     <div class="game-name">الدوري المصري</div>
     <div class="game-desc">عيش أجواء الدوري المصري</div>
   </div>
 
-  <!-- لعبة 6 مقفلة -->
-  <div class="game-box locked">
-    <div class="coming-soon">قريبا</div>
+  <!-- لعبة 6 - بطولة سريعة -->
+  <div class="game-box" onclick="goToGame('TOUR.html')">
     <div class="game-icon">🏆</div>
     <div class="game-name">بطولة سريعة</div>
-    <div class="game-desc">العب ضد صحابك</div>
+    <div class="game-desc">العب بطولة ضد صحابك</div>
   </div>
 
 </div>
 
 <!-- شريط التنقل -->
 <div class="bottom-bar">
+
   <a href="home.html" class="nav-btn">
     <i>🏠</i>
     الرئيسية
@@ -277,40 +283,41 @@ body{
     <i>👤</i>
     الحساب
   </a>
+
 </div>
 
 <script>
 
 function goToGame(url){
 
-  // تأثير انتقال سريع
-  document.body.style.opacity = '0.5';
+  // تأثير انتقال
+  document.body.style.opacity='0.5';
 
-  setTimeout(() => {
-    window.location.href = url;
-  }, 300);
+  setTimeout(function(){
+    window.location.href=url;
+  },300);
 
 }
 
 
 // تأثير الجزيئات
-for(let i = 0; i < 20; i++){
+for(let i=0;i<20;i++){
 
-  let p = document.createElement('div');
+  let p=document.createElement('div');
 
-  p.style.position = 'fixed';
-  p.style.width = '2px';
-  p.style.height = '2px';
-  p.style.background = '#00aaff';
-  p.style.borderRadius = '50%';
+  p.style.position='fixed';
+  p.style.width='2px';
+  p.style.height='2px';
+  p.style.background='#00aaff';
+  p.style.borderRadius='50%';
 
-  p.style.left = Math.random() * 100 + '%';
-  p.style.top = Math.random() * 100 + '%';
+  p.style.left=Math.random()*100+'%';
+  p.style.top=Math.random()*100+'%';
 
-  p.style.animation = `float ${5 + Math.random() * 10}s infinite linear`;
+  p.style.animation=`float ${5+Math.random()*10}s infinite linear`;
 
-  p.style.boxShadow = '0 0 8px #00aaff';
-  p.style.zIndex = '-1';
+  p.style.boxShadow='0 0 8px #00aaff';
+  p.style.zIndex='-1';
 
   document.body.appendChild(p);
 }
@@ -338,3 +345,4 @@ document.head.insertAdjacentHTML(
 
 </body>
 </html>
+```
