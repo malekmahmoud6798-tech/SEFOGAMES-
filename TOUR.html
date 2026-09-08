@@ -1,23 +1,15 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width,
-      initial-scale=1.0,
-      maximum-scale=1.0,
-      user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>🏆 بطولة سريعة - L&S GAMES</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 
 <style>
-
-/* =========================
-   RESET
-========================= */
 
 *{
     margin:0;
@@ -26,213 +18,130 @@
     -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
-    width:100%;
-    min-height:100%;
-}
-
 body{
     font-family:'Cairo',sans-serif;
     color:#fff;
+    min-height:100vh;
     background:
-        radial-gradient(
-            circle at 50% 20%,
-            #24105c 0%,
-            #0b0920 35%,
-            #020208 75%
-        );
-    overflow-x:hidden;
+        radial-gradient(circle at center,#24105c 0%,#0b0920 45%,#020208 100%);
+    overflow-x:auto;
 }
 
+/* الخلفية */
 
-/* =========================
-   BACKGROUND
-========================= */
-
-.bg-glow{
+body::before{
+    content:"";
     position:fixed;
-    width:500px;
-    height:500px;
-    border-radius:50%;
-    background:rgba(0,204,255,.08);
-    filter:blur(100px);
-    top:-200px;
-    left:50%;
-    transform:translateX(-50%);
+    inset:0;
     pointer-events:none;
-}
-
-.bg-glow2{
-    position:fixed;
-    width:400px;
-    height:400px;
-    border-radius:50%;
-    background:rgba(255,0,255,.06);
-    filter:blur(100px);
-    bottom:-200px;
-    right:-100px;
-    pointer-events:none;
+    opacity:.25;
+    background:
+        linear-gradient(rgba(0,204,255,.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,204,255,.04) 1px,transparent 1px);
+    background-size:45px 45px;
 }
 
 
-/* =========================
-   PARTICLES
-========================= */
-
-.particle{
-    position:fixed;
-    width:3px;
-    height:3px;
-    background:#00ccff;
-    border-radius:50%;
-    box-shadow:0 0 10px #00ccff;
-    pointer-events:none;
-    animation:particleMove linear infinite;
-    opacity:.5;
-}
-
-@keyframes particleMove{
-
-    0%{
-        transform:translateY(110vh);
-        opacity:0;
-    }
-
-    20%{
-        opacity:.7;
-    }
-
-    80%{
-        opacity:.7;
-    }
-
-    100%{
-        transform:translateY(-20vh);
-        opacity:0;
-    }
-
-}
-
-
-/* =========================
-   HEADER
-========================= */
+/* ================= HEADER ================= */
 
 .header{
-    height:65px;
     position:fixed;
     top:0;
     left:0;
     width:100%;
-    z-index:1000;
+    height:65px;
 
     display:flex;
     align-items:center;
     gap:12px;
 
-    padding:0 16px;
+    padding:0 18px;
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(15,12,41,.96),
-            rgba(48,43,99,.96)
-        );
+        linear-gradient(135deg,#0f0c29,#302b63);
 
     border-bottom:2px solid #ffd700;
+
+    z-index:1000;
 
     box-shadow:
         0 0 25px rgba(0,204,255,.3);
 }
 
 .back{
-    font-size:25px;
+    font-size:26px;
     color:#00ccff;
     cursor:pointer;
-    user-select:none;
 }
 
 .header-title{
-    font-size:19px;
-    font-weight:900;
     color:#ffd700;
+    font-size:18px;
+    font-weight:900;
 }
 
 
-/* =========================
-   SCREENS
-========================= */
+/* ================= SCREENS ================= */
 
 .screen{
     min-height:100vh;
-    padding:90px 18px 40px;
+
+    padding:100px 20px 40px;
+
     display:flex;
     flex-direction:column;
-    align-items:center;
+
     justify-content:center;
+    align-items:center;
 }
 
 
-/* =========================
-   LOGO
-========================= */
+/* ================= HOME ================= */
 
 .logo{
     font-family:'Orbitron',sans-serif;
-    font-size:42px;
+    font-size:38px;
     font-weight:900;
 
     background:
-        linear-gradient(
-            90deg,
-            #00ccff,
-            #ffd700,
-            #ff00ff
-        );
+        linear-gradient(90deg,#00ccff,#ffd700,#ff00ff);
 
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-
-    text-shadow:
-        0 0 30px rgba(255,215,0,.25);
 
     text-align:center;
 }
 
 .subtitle{
-    color:#aaa;
     margin-top:8px;
-    font-size:14px;
+    color:#aaa;
     text-align:center;
 }
 
 
-/* =========================
-   HOME OPTIONS
-========================= */
+/* ================= OPTIONS ================= */
 
 .options{
     width:100%;
     max-width:700px;
 
+    margin-top:35px;
+
     display:grid;
     grid-template-columns:repeat(2,1fr);
 
     gap:18px;
-
-    margin-top:35px;
 }
 
 .option-card{
-    min-height:210px;
 
-    padding:25px 15px;
+    min-height:210px;
 
     display:flex;
     flex-direction:column;
-    align-items:center;
+
     justify-content:center;
+    align-items:center;
 
     text-align:center;
 
@@ -244,48 +153,18 @@ body{
         linear-gradient(
             145deg,
             rgba(255,255,255,.09),
-            rgba(255,255,255,.025)
+            rgba(255,255,255,.02)
         );
 
     border:2px solid rgba(0,204,255,.3);
 
-    backdrop-filter:blur(20px);
+    backdrop-filter:blur(15px);
 
     transition:.3s;
-
-    position:relative;
-    overflow:hidden;
-}
-
-.option-card::before{
-    content:"";
-    position:absolute;
-
-    inset:-100%;
-
-    background:
-        conic-gradient(
-            transparent,
-            rgba(0,204,255,.4),
-            transparent,
-            rgba(255,215,0,.4),
-            transparent
-        );
-
-    animation:cardRotate 5s linear infinite;
-
-    opacity:.15;
-}
-
-@keyframes cardRotate{
-    to{
-        transform:rotate(360deg);
-    }
 }
 
 .option-card:hover{
-    transform:translateY(-7px) scale(1.02);
-
+    transform:translateY(-6px);
     border-color:#ffd700;
 
     box-shadow:
@@ -298,31 +177,23 @@ body{
 
 .option-icon{
     font-size:60px;
-    margin-bottom:12px;
-    position:relative;
-    z-index:2;
 }
 
 .option-title{
+    color:#ffd700;
     font-size:20px;
     font-weight:900;
-    color:#ffd700;
-    position:relative;
-    z-index:2;
+    margin-top:10px;
 }
 
 .option-desc{
-    font-size:12px;
     color:#aaa;
+    font-size:12px;
     margin-top:5px;
-    position:relative;
-    z-index:2;
 }
 
 
-/* =========================
-   MODAL
-========================= */
+/* ================= MODAL ================= */
 
 .modal{
     position:fixed;
@@ -335,89 +206,44 @@ body{
 
     padding:20px;
 
-    background:rgba(0,0,0,.78);
+    background:rgba(0,0,0,.8);
 
-    backdrop-filter:blur(15px);
+    backdrop-filter:blur(12px);
 
     z-index:3000;
 }
 
 .modal.show{
     display:flex;
-    animation:fadeIn .25s ease;
-}
-
-@keyframes fadeIn{
-    from{
-        opacity:0;
-    }
-
-    to{
-        opacity:1;
-    }
 }
 
 .modal-box{
     width:100%;
-    max-width:470px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #12152d,
-            #070913
-        );
-
-    border:2px solid rgba(0,204,255,.4);
-
-    border-radius:25px;
+    max-width:450px;
 
     padding:28px 22px;
 
+    border-radius:25px;
+
+    background:
+        linear-gradient(145deg,#151932,#080a14);
+
+    border:2px solid rgba(0,204,255,.4);
+
     box-shadow:
-        0 0 50px rgba(0,204,255,.18);
-
-    animation:modalUp .35s ease;
-}
-
-@keyframes modalUp{
-
-    from{
-        transform:translateY(40px) scale(.9);
-        opacity:0;
-    }
-
-    to{
-        transform:translateY(0) scale(1);
-        opacity:1;
-    }
-
+        0 0 50px rgba(0,204,255,.2);
 }
 
 .modal-title{
-    text-align:center;
     color:#ffd700;
-    font-size:25px;
+    font-size:24px;
     font-weight:900;
+    text-align:center;
     margin-bottom:22px;
 }
 
-.close{
-    position:absolute;
-    margin-top:-15px;
-    margin-right:-5px;
 
-    font-size:24px;
-
-    color:#aaa;
-
-    cursor:pointer;
-}
-
-
-/* =========================
-   INPUTS
-========================= */
+/* ================= INPUT ================= */
 
 .input-group{
     margin-bottom:18px;
@@ -425,74 +251,55 @@ body{
 
 .input-group label{
     display:block;
-    color:#bbb;
+    color:#aaa;
     font-size:13px;
     margin-bottom:7px;
 }
 
 .input{
     width:100%;
-
     height:52px;
 
     padding:0 15px;
 
-    border-radius:14px;
-
-    border:1px solid rgba(255,255,255,.12);
-
+    border:none;
     outline:none;
 
-    background:rgba(255,255,255,.06);
+    border-radius:14px;
+
+    background:rgba(255,255,255,.08);
 
     color:#fff;
 
     font-family:'Cairo';
-
-    font-size:15px;
 }
 
 .input:focus{
-    border-color:#00ccff;
-
     box-shadow:
-        0 0 15px rgba(0,204,255,.15);
-}
-
-select.input{
-    cursor:pointer;
+        0 0 0 2px #00ccff;
 }
 
 
-/* =========================
-   BUTTON
-========================= */
+/* ================= BUTTON ================= */
 
 .main-btn{
     width:100%;
-
     height:54px;
 
     border:none;
-
     border-radius:15px;
 
-    background:
-        linear-gradient(
-            90deg,
-            #00ccff,
-            #0077ff
-        );
+    cursor:pointer;
 
     color:#fff;
 
     font-family:'Cairo';
 
     font-size:16px;
-
     font-weight:900;
 
-    cursor:pointer;
+    background:
+        linear-gradient(90deg,#00ccff,#0066ff);
 
     box-shadow:
         0 0 20px rgba(0,204,255,.25);
@@ -500,21 +307,12 @@ select.input{
     transition:.25s;
 }
 
-.main-btn:hover{
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 0 30px rgba(0,204,255,.4);
-}
-
 .main-btn:active{
     transform:scale(.97);
 }
 
 
-/* =========================
-   CODE SCREEN
-========================= */
+/* ================= CODE SCREEN ================= */
 
 .code-screen{
     display:none;
@@ -547,26 +345,26 @@ select.input{
         0 0 50px rgba(255,215,0,.15);
 }
 
-.code-label{
-    color:#aaa;
-    font-size:14px;
-}
-
 .tournament-name-display{
-    color:#fff;
     font-size:25px;
     font-weight:900;
-    margin:10px 0 20px;
+
+    margin:12px 0;
+
+    color:#fff;
 }
 
 .room-code{
-    font-family:'Orbitron',sans-serif;
 
-    font-size:42px;
+    font-family:'Orbitron';
 
-    letter-spacing:8px;
+    font-size:38px;
+
+    letter-spacing:7px;
 
     color:#ffd700;
+
+    margin:18px 0;
 
     padding:20px;
 
@@ -578,141 +376,117 @@ select.input{
 
     text-shadow:
         0 0 15px #ffd700;
-
-    margin-bottom:15px;
-}
-
-.code-info{
-    color:#aaa;
-    font-size:12px;
-    margin-bottom:22px;
 }
 
 
-/* =========================
-   LOADING ANIMATION
-========================= */
+/* ================= LOADING ================= */
 
 .loading-screen{
-    display:none;
 
     position:fixed;
+
     inset:0;
 
-    z-index:5000;
-
-    background:
-        radial-gradient(
-            circle,
-            #211052,
-            #03030a 70%
-        );
+    display:none;
 
     align-items:center;
     justify-content:center;
 
     flex-direction:column;
+
+    z-index:5000;
+
+    background:
+        radial-gradient(circle,#211052,#03030a 75%);
 }
 
 .loading-screen.show{
     display:flex;
 }
 
-.trophy-animation{
-    font-size:100px;
+.loading-trophy{
+
+    font-size:110px;
 
     animation:
-        trophyPulse 1s infinite alternate,
-        trophyFloat 2s infinite ease-in-out;
+        trophyZoom 2s infinite alternate;
 
     filter:
         drop-shadow(0 0 15px #ffd700)
-        drop-shadow(0 0 45px rgba(255,215,0,.7));
+        drop-shadow(0 0 40px #ffd700);
 }
 
-@keyframes trophyPulse{
+@keyframes trophyZoom{
+
     from{
-        transform:scale(.85);
+        transform:scale(.8) rotate(-5deg);
     }
 
     to{
-        transform:scale(1.1);
-    }
-}
-
-@keyframes trophyFloat{
-    0%,100%{
-        margin-top:0;
+        transform:scale(1.1) rotate(5deg);
     }
 
-    50%{
-        margin-top:-20px;
-    }
 }
 
 .loading-title{
+
     margin-top:20px;
 
-    font-size:27px;
+    color:#ffd700;
+
+    font-size:25px;
 
     font-weight:900;
-
-    color:#ffd700;
-}
-
-.loading-text{
-    color:#aaa;
-    margin-top:5px;
 }
 
 .loading-bar{
+
     width:280px;
-    height:6px;
+    height:7px;
+
+    border-radius:10px;
 
     background:rgba(255,255,255,.1);
 
-    border-radius:20px;
-
-    margin-top:25px;
+    margin-top:20px;
 
     overflow:hidden;
 }
 
 .loading-progress{
+
     height:100%;
     width:0;
 
     background:
-        linear-gradient(
-            90deg,
-            #00ccff,
-            #ffd700,
-            #ff00ff
-        );
+        linear-gradient(90deg,#00ccff,#ffd700,#ff00ff);
 
-    animation:loadingProgress 2.2s forwards;
+    animation:progress 2.2s forwards;
 }
 
-@keyframes loadingProgress{
+@keyframes progress{
+
     to{
         width:100%;
     }
+
 }
 
 
-/* =========================
+/* =====================================================
    TOURNAMENT
-========================= */
+===================================================== */
 
 #tournamentScreen{
-    display:none;
 
-    min-height:100vh;
+    display:none;
 
     padding:
         90px
-        20px
+        10px
         50px;
+
+    min-height:100vh;
 }
 
 #tournamentScreen.show{
@@ -721,148 +495,283 @@ select.input{
 
 .tournament-header{
     text-align:center;
-
-    margin-bottom:30px;
+    margin-bottom:15px;
 }
 
 .tournament-header h1{
-    font-size:30px;
-
     color:#ffd700;
-
+    font-size:28px;
     font-weight:900;
-
-    text-shadow:
-        0 0 15px rgba(255,215,0,.5);
 }
 
 .tournament-header p{
     color:#aaa;
     font-size:12px;
-    margin-top:5px;
 }
 
 
-/* =========================
-   CUP
-========================= */
+/* ================= MAIN TOURNAMENT ================= */
 
-.cup-center{
-    display:flex;
+.tournament-board{
 
-    align-items:center;
-    justify-content:center;
+    min-width:1500px;
 
-    flex-direction:column;
-
-    margin:10px auto 35px;
+    min-height:850px;
 
     position:relative;
 
-    width:220px;
-    height:190px;
+    margin:0 auto;
+}
+
+
+/* ================= RIGHT SIDE ================= */
+
+.side-right{
+
+    position:absolute;
+
+    right:20px;
+
+    top:70px;
+
+    width:260px;
+}
+
+
+/* ================= LEFT SIDE ================= */
+
+.side-left{
+
+    position:absolute;
+
+    left:20px;
+
+    top:70px;
+
+    width:260px;
+}
+
+
+/* ================= SIDE TITLE ================= */
+
+.side-title{
+
+    text-align:center;
+
+    color:#00ccff;
+
+    font-weight:900;
+
+    margin-bottom:12px;
+}
+
+
+/* ================= INVITE PLAYER ================= */
+
+.invite-player{
+
+    height:42px;
+
+    margin-bottom:9px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    color:#00ccff;
+
+    font-weight:900;
+
+    font-size:13px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,204,255,.09),
+            rgba(255,255,255,.03)
+        );
+
+    border:
+        1px solid
+        rgba(0,204,255,.25);
+
+    transition:.25s;
+}
+
+.invite-player:hover{
+
+    color:#fff;
+
+    border-color:#ffd700;
+
+    background:
+        rgba(0,204,255,.16);
+
+    box-shadow:
+        0 0 15px rgba(0,204,255,.15);
+}
+
+.invite-player:active{
+    transform:scale(.96);
+}
+
+.invite-player span{
+
+    margin-left:6px;
+
+    font-size:16px;
+}
+
+
+/* ================= CENTER CUP ================= */
+
+.center-area{
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    width:330px;
+
+    text-align:center;
 }
 
 .cup-glow{
+
     position:absolute;
 
-    width:190px;
-    height:190px;
+    width:300px;
+    height:300px;
 
     border-radius:50%;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
 
     background:
         radial-gradient(
             circle,
-            rgba(255,215,0,.28),
-            transparent 68%
+            rgba(255,215,0,.3),
+            transparent 65%
         );
 
-    animation:cupGlow 2s infinite alternate;
+    animation:
+        glow 2s infinite alternate;
 }
 
-@keyframes cupGlow{
+@keyframes glow{
+
     from{
-        transform:scale(.85);
+        opacity:.5;
+        transform:
+            translate(-50%,-50%)
+            scale(.8);
     }
 
     to{
-        transform:scale(1.15);
+        opacity:1;
+        transform:
+            translate(-50%,-50%)
+            scale(1.2);
     }
+
 }
 
 .cup{
+
     position:relative;
+
     z-index:2;
 
-    font-size:90px;
-
-    animation:
-        cupFloat 2.5s ease-in-out infinite;
+    font-size:130px;
 
     filter:
-        drop-shadow(0 0 8px #fff)
-        drop-shadow(0 0 20px #ffd700)
-        drop-shadow(0 0 45px rgba(255,215,0,.8));
+        drop-shadow(0 0 10px #fff)
+        drop-shadow(0 0 25px #ffd700)
+        drop-shadow(0 0 50px #ffd700);
+
+    animation:
+        cupFloat 2.5s infinite ease-in-out;
 }
 
 @keyframes cupFloat{
+
     0%,100%{
         transform:translateY(0);
     }
 
     50%{
-        transform:translateY(-10px);
+        transform:translateY(-15px);
     }
+
 }
 
 .cup-title{
+
     position:relative;
+
     z-index:2;
 
     color:#ffd700;
 
-    font-size:18px;
+    font-size:23px;
 
     font-weight:900;
 
-    margin-top:-5px;
+    margin-top:5px;
 }
 
 
-/* =========================
-   BRACKET
-========================= */
+/* ================= EMPTY BRACKET ================= */
 
-.bracket-wrapper{
-    width:100%;
+.bracket-side{
 
-    overflow-x:auto;
+    position:absolute;
 
-    padding:10px 5px 30px;
+    top:90px;
 
-    scrollbar-width:thin;
-}
-
-.bracket{
-    min-width:1200px;
+    width:450px;
 
     display:flex;
 
-    align-items:center;
+    gap:35px;
 
     justify-content:center;
 
-    gap:25px;
+    align-items:center;
+}
+
+.bracket-right{
+
+    right:300px;
+}
+
+.bracket-left{
+
+    left:300px;
+
+    direction:ltr;
 }
 
 
-/* =========================
-   ROUND
-========================= */
+/* ================= ROUND ================= */
 
 .round{
-    width:210px;
+
+    width:110px;
 
     display:flex;
 
@@ -870,191 +779,78 @@ select.input{
 
     justify-content:center;
 
-    gap:15px;
-
-    flex-shrink:0;
+    gap:45px;
 }
 
 .round-title{
+
     text-align:center;
 
-    color:#00ccff;
+    color:#ffd700;
 
-    font-size:15px;
+    font-size:13px;
 
     font-weight:900;
 
-    margin-bottom:5px;
-
-    text-shadow:
-        0 0 10px rgba(0,204,255,.5);
+    margin-bottom:10px;
 }
 
 
-/* =========================
-   MATCH
-========================= */
+/* ================= EMPTY BOX ================= */
 
-.match{
-    width:210px;
+.empty-box{
 
-    min-height:68px;
+    width:110px;
+
+    height:45px;
+
+    border-radius:10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.15);
 
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.09),
-            rgba(255,255,255,.025)
-        );
+        rgba(255,255,255,.035);
 
-    border:1px solid rgba(255,255,255,.13);
+    box-shadow:
+        inset 0 0 15px rgba(255,255,255,.02);
+}
+
+
+/* FINAL */
+
+.final-box{
+
+    width:150px;
+
+    height:60px;
 
     border-radius:14px;
 
-    overflow:hidden;
-
-    box-shadow:
-        0 5px 20px rgba(0,0,0,.4);
-
-    transition:.25s;
-
-    position:relative;
-}
-
-.match:hover{
-    border-color:#ffd700;
-
-    box-shadow:
-        0 0 20px rgba(255,215,0,.18);
-}
-
-
-/* =========================
-   SPLIT INVITE
-========================= */
-
-.match-player{
-    height:34px;
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    border-bottom:1px solid rgba(255,255,255,.1);
-}
-
-.match-player:last-child{
-    border-bottom:none;
-}
-
-.invite-side{
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:11px;
-
-    font-weight:900;
-
-    color:#00ccff;
-
-    cursor:pointer;
-
-    transition:.2s;
+    border:
+        2px solid
+        rgba(255,215,0,.6);
 
     background:
-        rgba(0,204,255,.025);
-}
-
-.invite-side:first-child{
-    border-left:1px solid rgba(255,255,255,.1);
-}
-
-.invite-side:hover{
-    background:rgba(0,204,255,.12);
-
-    color:#fff;
-}
-
-.invite-side:active{
-    transform:scale(.94);
-}
-
-.invite-side::before{
-    content:"＋";
-    margin-left:3px;
-    font-size:13px;
-}
-
-
-/* =========================
-   ROUNDS SPACING
-========================= */
-
-.round.r16{
-    gap:55px;
-}
-
-.round.qf{
-    gap:135px;
-}
-
-.round.sf{
-    gap:295px;
-}
-
-.round.final{
-    gap:0;
-}
-
-
-/* =========================
-   FINAL MATCH
-========================= */
-
-.final-match{
-    border:2px solid #ffd700;
+        rgba(255,215,0,.04);
 
     box-shadow:
-        0 0 30px rgba(255,215,0,.2);
-}
-
-.final-match .invite-side{
-    color:#ffd700;
-}
-
-.final-match .invite-side:hover{
-    background:rgba(255,215,0,.1);
+        0 0 20px rgba(255,215,0,.12);
 }
 
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* ================= RESPONSIVE ================= */
 
-@media(max-width:600px){
-
-    .logo{
-        font-size:32px;
-    }
+@media(max-width:700px){
 
     .options{
         grid-template-columns:1fr;
-        max-width:360px;
+        max-width:350px;
     }
 
-    .option-card{
-        min-height:170px;
-    }
-
-    .option-icon{
-        font-size:50px;
-    }
-
-    .room-code{
-        font-size:34px;
+    .logo{
+        font-size:30px;
     }
 
 }
@@ -1062,81 +858,57 @@ select.input{
 </style>
 </head>
 
-
 <body>
-
-
-<!-- BACKGROUND -->
-
-<div class="bg-glow"></div>
-<div class="bg-glow2"></div>
-
-
-<!-- PARTICLES -->
-
-<script>
-
-for(let i=0;i<35;i++){
-
-    const p=document.createElement("div");
-
-    p.className="particle";
-
-    p.style.left=Math.random()*100+"%";
-
-    p.style.animationDuration=
-        (5+Math.random()*10)+"s";
-
-    p.style.animationDelay=
-        (-Math.random()*10)+"s";
-
-    document.body.appendChild(p);
-
-}
-
-</script>
 
 
 <!-- HEADER -->
 
 <div class="header">
 
-    <div class="back"
-         onclick="goHome()">
+    <div
+        class="back"
+        onclick="window.location.href='games.html'">
+
         ←
+
     </div>
 
     <div class="header-title">
+
         🏆 بطولة سريعة
+
     </div>
 
 </div>
 
 
-<!-- =========================
-     HOME SCREEN
-========================= -->
+<!-- HOME -->
 
 <section
-    id="homeScreen"
-    class="screen">
+id="homeScreen"
+class="screen">
 
     <div class="logo">
+
         L&amp;S GAMES
+
     </div>
 
     <div class="subtitle">
-        🏆 بطولة مزاد النجوم
+
+        أنشئ بطولة وادعُ أصحابك
+
     </div>
 
 
     <div class="options">
 
+
         <!-- CREATE -->
 
         <div
-            class="option-card"
-            onclick="openCreate()">
+        class="option-card"
+        onclick="openCreate()">
 
             <div class="option-icon">
                 🏆
@@ -1147,7 +919,7 @@ for(let i=0;i<35;i++){
             </div>
 
             <div class="option-desc">
-                اعمل بطولة جديدة والعب مع صحابك
+                أنشئ بطولة جديدة
             </div>
 
         </div>
@@ -1156,8 +928,8 @@ for(let i=0;i<35;i++){
         <!-- JOIN -->
 
         <div
-            class="option-card"
-            onclick="openJoin()">
+        class="option-card"
+        onclick="openJoin()">
 
             <div class="option-icon">
                 🔑
@@ -1168,29 +940,29 @@ for(let i=0;i<35;i++){
             </div>
 
             <div class="option-desc">
-                ادخل بطولة موجودة باستخدام الرمز
+                ادخل باستخدام رمز البطولة
             </div>
 
         </div>
+
 
     </div>
 
 </section>
 
 
-<!-- =========================
-     CREATE MODAL
-========================= -->
+<!-- CREATE MODAL -->
 
 <div
-    id="createModal"
-    class="modal">
+id="createModal"
+class="modal">
 
     <div class="modal-box">
 
-        <div
-            class="modal-title">
+        <div class="modal-title">
+
             🏆 إنشاء بطولة
+
         </div>
 
 
@@ -1201,11 +973,9 @@ for(let i=0;i<35;i++){
             </label>
 
             <input
-                id="tourName"
-                class="input"
-                type="text"
-                placeholder="مثال: بطولة الأصدقاء"
-                maxlength="30">
+            id="tourName"
+            class="input"
+            placeholder="اكتب اسم البطولة">
 
         </div>
 
@@ -1217,22 +987,10 @@ for(let i=0;i<35;i++){
             </label>
 
             <select
-                id="playerCount"
-                class="input">
+            id="playerCount"
+            class="input">
 
-                <option value="4">
-                    4 لاعبين
-                </option>
-
-                <option value="8">
-                    8 لاعبين
-                </option>
-
-                <option value="16">
-                    16 لاعب
-                </option>
-
-                <option value="32" selected>
+                <option value="32">
                     32 لاعب
                 </option>
 
@@ -1242,10 +1000,10 @@ for(let i=0;i<35;i++){
 
 
         <button
-            class="main-btn"
-            onclick="createTournament()">
+        class="main-btn"
+        onclick="createTournament()">
 
-            🏆 إنشاء البطولة
+            إنشاء البطولة 🏆
 
         </button>
 
@@ -1254,18 +1012,15 @@ for(let i=0;i<35;i++){
 </div>
 
 
-<!-- =========================
-     JOIN MODAL
-========================= -->
+<!-- JOIN MODAL -->
 
 <div
-    id="joinModal"
-    class="modal">
+id="joinModal"
+class="modal">
 
     <div class="modal-box">
 
-        <div
-            class="modal-title">
+        <div class="modal-title">
 
             🔑 دخول بطولة
 
@@ -1279,21 +1034,18 @@ for(let i=0;i<35;i++){
             </label>
 
             <input
-                id="joinCode"
-                class="input"
-                type="text"
-                placeholder="اكتب رمز البطولة"
-                maxlength="8"
-                style="text-transform:uppercase;text-align:center;letter-spacing:4px;">
+            id="joinCode"
+            class="input"
+            placeholder="اكتب الرمز">
 
         </div>
 
 
         <button
-            class="main-btn"
-            onclick="joinTournament()">
+        class="main-btn"
+        onclick="joinTournament()">
 
-            🚀 دخول البطولة
+            دخول البطولة 🚀
 
         </button>
 
@@ -1302,43 +1054,58 @@ for(let i=0;i<35;i++){
 </div>
 
 
-<!-- =========================
-     CODE SCREEN
-========================= -->
+<!-- CODE SCREEN -->
 
 <section
-    id="codeScreen"
-    class="screen code-screen">
+id="codeScreen"
+class="screen code-screen">
 
     <div class="code-box">
 
-        <div class="code-label">
+        <div style="color:#aaa">
+
             تم إنشاء البطولة بنجاح 🎉
+
         </div>
+
 
         <div
-            id="displayTourName"
-            class="tournament-name-display">
+        id="displayTourName"
+        class="tournament-name-display">
+
         </div>
 
-        <div class="code-label">
+
+        <div style="color:#aaa">
+
             رمز البطولة
+
         </div>
+
 
         <div
-            id="generatedCode"
-            class="room-code">
+        id="generatedCode"
+        class="room-code">
+
         </div>
 
-        <div class="code-info">
-            ابعت الرمز لأصحابك عشان يدخلوا البطولة
+
+        <div
+        style="
+        color:#aaa;
+        font-size:12px;
+        margin-bottom:20px;">
+
+            شارك الرمز مع أصحابك للدخول
+
         </div>
+
 
         <button
-            class="main-btn"
-            onclick="startTournament()">
+        class="main-btn"
+        onclick="startTournament()">
 
-            🏆 دخول البطولة
+            دخول البطولة 🏆
 
         </button>
 
@@ -1347,30 +1114,30 @@ for(let i=0;i<35;i++){
 </section>
 
 
-<!-- =========================
-     LOADING
-========================= -->
+<!-- LOADING -->
 
 <div
-    id="loadingScreen"
-    class="loading-screen">
+id="loadingScreen"
+class="loading-screen">
 
-    <div class="trophy-animation">
+    <div class="loading-trophy">
+
         🏆
+
     </div>
 
     <div class="loading-title">
-        تجهيز البطولة
+
+        جاري تجهيز البطولة
+
     </div>
 
-    <div class="loading-text">
-        جاري تجهيز الملعب...
-    </div>
 
     <div class="loading-bar">
 
         <div
-            class="loading-progress">
+        class="loading-progress">
+
         </div>
 
     </div>
@@ -1378,55 +1145,197 @@ for(let i=0;i<35;i++){
 </div>
 
 
-<!-- =========================
-     TOURNAMENT
-========================= -->
+<!-- TOURNAMENT -->
 
 <section
-    id="tournamentScreen">
+id="tournamentScreen">
 
 
     <div class="tournament-header">
 
-        <h1 id="tournamentTitle">
+        <h1
+        id="tournamentTitle">
+
             بطولة سريعة
+
         </h1>
 
         <p>
-            🟢 البطولة مفتوحة — ادعُ اللاعبين
+
+            ادعُ 32 لاعب للمشاركة في البطولة
+
         </p>
 
     </div>
 
 
-    <!-- CUP -->
-
-    <div class="cup-center">
-
-        <div class="cup-glow"></div>
-
-        <div class="cup">
-            🏆
-        </div>
-
-        <div class="cup-title">
-            بطل البطولة
-        </div>
-
-    </div>
+    <div class="tournament-board">
 
 
-    <!-- BRACKET -->
-
-    <div
-        id="bracketWrapper"
-        class="bracket-wrapper">
+        <!-- ================= RIGHT ================= -->
 
         <div
-            id="bracket"
-            class="bracket">
+        class="side-right">
+
+            <div class="side-title">
+
+                16 لاعب
+
+            </div>
+
+            <div id="rightInvites">
+
+            </div>
 
         </div>
+
+
+        <!-- ================= LEFT ================= -->
+
+        <div
+        class="side-left">
+
+            <div class="side-title">
+
+                16 لاعب
+
+            </div>
+
+            <div id="leftInvites">
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= RIGHT BRACKET ================= -->
+
+        <div
+        class="
+        bracket-side
+        bracket-right">
+
+            <div class="round">
+
+                <div class="round-title">
+                    دور الـ16
+                </div>
+
+                <div class="empty-box"></div>
+                <div class="empty-box"></div>
+                <div class="empty-box"></div>
+                <div class="empty-box"></div>
+
+            </div>
+
+
+            <div class="round">
+
+                <div class="round-title">
+                    ربع النهائي
+                </div>
+
+                <div class="empty-box"></div>
+                <div class="empty-box"></div>
+
+            </div>
+
+
+            <div class="round">
+
+                <div class="round-title">
+                    نصف النهائي
+                </div>
+
+                <div class="empty-box"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= LEFT BRACKET ================= -->
+
+        <div
+        class="
+        bracket-side
+        bracket-left">
+
+            <div class="round">
+
+                <div class="round-title">
+                    نصف النهائي
+                </div>
+
+                <div class="empty-box"></div>
+
+            </div>
+
+
+            <div class="round">
+
+                <div class="round-title">
+                    ربع النهائي
+                </div>
+
+                <div class="empty-box"></div>
+                <div class="empty-box"></div>
+
+            </div>
+
+
+            <div class="round">
+
+                <div class="round-title">
+                    دور الـ16
+                </div>
+
+                <div class="empty-box"></div>
+                <div class="empty-box"></div>
+                <div class="empty-box"></div>
+                <div class="empty-box"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= CUP ================= -->
+
+        <div class="center-area">
+
+            <div class="cup-glow"></div>
+
+            <div class="cup">
+
+                🏆
+
+            </div>
+
+            <div class="cup-title">
+
+                بطل البطولة
+
+            </div>
+
+            <div
+            class="final-box"
+            style="margin:20px auto;">
+
+            </div>
+
+            <div
+            style="
+            color:#ffd700;
+            font-weight:900;
+            margin-top:8px;">
+
+                النهائي
+
+            </div>
+
+        </div>
+
 
     </div>
 
@@ -1435,35 +1344,24 @@ for(let i=0;i<35;i++){
 
 <script>
 
-/* =========================
+/* =================================
    VARIABLES
-========================= */
+================================= */
 
-let tournamentName = "";
-let playersCount = 32;
-let tournamentCode = "";
-
-
-/* =========================
-   HOME
-========================= */
-
-function goHome(){
-
-    window.location.href="games.html";
-
-}
+let tournamentName="";
+let tournamentCode="";
 
 
-/* =========================
-   MODALS
-========================= */
+/* =================================
+   OPEN MODALS
+================================= */
 
 function openCreate(){
 
     document
-        .getElementById("createModal")
-        .classList.add("show");
+    .getElementById("createModal")
+    .classList
+    .add("show");
 
 }
 
@@ -1471,46 +1369,50 @@ function openCreate(){
 function openJoin(){
 
     document
-        .getElementById("joinModal")
-        .classList.add("show");
+    .getElementById("joinModal")
+    .classList
+    .add("show");
 
 }
 
 
+/* CLOSE MODAL */
+
 document
-    .querySelectorAll(".modal")
-    .forEach(modal=>{
+.querySelectorAll(".modal")
+.forEach(function(modal){
 
-        modal.addEventListener(
-            "click",
-            function(e){
+    modal.addEventListener(
+        "click",
+        function(e){
 
-                if(e.target===modal){
+            if(e.target===modal){
 
-                    modal.classList.remove("show");
-
-                }
+                modal.classList.remove("show");
 
             }
-        );
 
-    });
+        }
+    );
+
+});
 
 
-/* =========================
+/* =================================
    GENERATE CODE
-========================= */
+================================= */
 
 function generateCode(){
 
     const chars=
-        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
     let code="";
 
     for(let i=0;i<6;i++){
 
-        code+=chars[
+        code+=
+        chars[
             Math.floor(
                 Math.random()*chars.length
             )
@@ -1523,30 +1425,24 @@ function generateCode(){
 }
 
 
-/* =========================
-   CREATE TOURNAMENT
-========================= */
+/* =================================
+   CREATE
+================================= */
 
 function createTournament(){
 
-    const nameInput=
-        document.getElementById("tourName");
-
     tournamentName=
-        nameInput.value.trim();
+    document
+    .getElementById("tourName")
+    .value
+    .trim();
 
-    playersCount=
-        parseInt(
-            document.getElementById(
-                "playerCount"
-            ).value
-        );
 
     if(!tournamentName){
 
-        alert("اكتب اسم البطولة الأول");
-
-        nameInput.focus();
+        alert(
+            "اكتب اسم البطولة أولاً"
+        );
 
         return;
 
@@ -1554,60 +1450,59 @@ function createTournament(){
 
 
     tournamentCode=
-        generateCode();
-
-
-    /* close modal */
-
-    document
-        .getElementById("createModal")
-        .classList.remove("show");
-
-
-    /* display code */
-
-    document
-        .getElementById("displayTourName")
-        .textContent=
-        tournamentName;
+    generateCode();
 
 
     document
-        .getElementById("generatedCode")
-        .textContent=
-        tournamentCode;
+    .getElementById("createModal")
+    .classList
+    .remove("show");
 
-
-    /* show code screen */
 
     document
-        .getElementById("homeScreen")
-        .style.display="none";
+    .getElementById("homeScreen")
+    .style.display="none";
+
 
     document
-        .getElementById("codeScreen")
-        .classList.add("show");
+    .getElementById("displayTourName")
+    .textContent=
+    tournamentName;
+
+
+    document
+    .getElementById("generatedCode")
+    .textContent=
+    tournamentCode;
+
+
+    document
+    .getElementById("codeScreen")
+    .classList
+    .add("show");
 
 }
 
 
-/* =========================
+/* =================================
    JOIN
-========================= */
+================================= */
 
 function joinTournament(){
 
     const code=
-        document
-        .getElementById("joinCode")
-        .value
-        .trim()
-        .toUpperCase();
+    document
+    .getElementById("joinCode")
+    .value
+    .trim()
+    .toUpperCase();
 
 
     if(code.length<4){
 
-        alert("اكتب رمز البطولة بشكل صحيح");
+        alert(
+            "اكتب رمز صحيح"
+        );
 
         return;
 
@@ -1617,14 +1512,18 @@ function joinTournament(){
     tournamentCode=code;
 
     tournamentName=
-        "البطولة "+code;
-
-    playersCount=32;
+    "بطولة "+code;
 
 
     document
-        .getElementById("joinModal")
-        .classList.remove("show");
+    .getElementById("joinModal")
+    .classList
+    .remove("show");
+
+
+    document
+    .getElementById("homeScreen")
+    .style.display="none";
 
 
     startTournament();
@@ -1632,415 +1531,184 @@ function joinTournament(){
 }
 
 
-/* =========================
-   START TOURNAMENT
-========================= */
+/* =================================
+   START
+================================= */
 
 function startTournament(){
 
     document
-        .getElementById("codeScreen")
-        .style.display="none";
-
-
-    document
-        .getElementById("homeScreen")
-        .style.display="none";
+    .getElementById("codeScreen")
+    .style.display="none";
 
 
     const loading=
+    document
+    .getElementById("loadingScreen");
+
+
+    loading
+    .classList
+    .add("show");
+
+
+    setTimeout(function(){
+
+        loading
+        .classList
+        .remove("show");
+
+
         document
-        .getElementById("loadingScreen");
+        .getElementById("tournamentScreen")
+        .classList
+        .add("show");
 
 
-    loading.classList.add("show");
+        document
+        .getElementById("tournamentTitle")
+        .textContent=
+        tournamentName;
 
 
-    setTimeout(()=>{
-
-        loading.classList.remove("show");
-
-        showTournament();
+        createInviteBoxes();
 
     },2300);
 
 }
 
 
-/* =========================
-   SHOW TOURNAMENT
-========================= */
+/* =================================
+   CREATE 16 RIGHT + 16 LEFT
+================================= */
 
-function showTournament(){
+function createInviteBoxes(){
 
+    const right=
     document
-        .getElementById("tournamentScreen")
-        .classList.add("show");
+    .getElementById("rightInvites");
 
 
+    const left=
     document
-        .getElementById("tournamentTitle")
-        .textContent=
-        tournamentName;
+    .getElementById("leftInvites");
 
 
-    buildBracket();
+    right.innerHTML="";
+    left.innerHTML="";
+
+
+    /* 16 RIGHT */
+
+    for(let i=1;i<=16;i++){
+
+        const box=
+        document.createElement("div");
+
+
+        box.className=
+        "invite-player";
+
+
+        box.innerHTML=
+        "<span>＋</span> دعوة";
+
+
+        box.onclick=
+        function(){
+
+            invitePlayer(
+                "يمين - لاعب "+i
+            );
+
+        };
+
+
+        right.appendChild(box);
+
+    }
+
+
+    /* 16 LEFT */
+
+    for(let i=1;i<=16;i++){
+
+        const box=
+        document.createElement("div");
+
+
+        box.className=
+        "invite-player";
+
+
+        box.innerHTML=
+        "<span>＋</span> دعوة";
+
+
+        box.onclick=
+        function(){
+
+            invitePlayer(
+                "شمال - لاعب "+i
+            );
+
+        };
+
+
+        left.appendChild(box);
+
+    }
 
 }
 
 
-/* =========================
-   BUILD BRACKET
-========================= */
-
-function buildBracket(){
-
-    const bracket=
-        document.getElementById("bracket");
-
-
-    bracket.innerHTML="";
-
-
-    /*
-       لو 32 لاعب:
-
-       دور 32 = 16 مباراة
-       دور 16 = 8
-       ربع = 4
-       نصف = 2
-       نهائي = 1
-
-       لو 16:
-       دور 16 = 8
-       ربع = 4
-       نصف = 2
-       نهائي = 1
-
-       وهكذا
-    */
-
-
-    let rounds=[];
-
-    let firstRoundMatches=
-        playersCount/2;
-
-
-    if(playersCount>=32){
-
-        rounds=[
-            {
-                name:"دور الـ32",
-                matches:16,
-                class:"r32"
-            },
-            {
-                name:"دور الـ16",
-                matches:8,
-                class:"r16"
-            },
-            {
-                name:"ربع النهائي",
-                matches:4,
-                class:"qf"
-            },
-            {
-                name:"نصف النهائي",
-                matches:2,
-                class:"sf"
-            },
-            {
-                name:"النهائي",
-                matches:1,
-                class:"final"
-            }
-        ];
-
-    }
-    else if(playersCount>=16){
-
-        rounds=[
-            {
-                name:"دور الـ16",
-                matches:8,
-                class:"r16"
-            },
-            {
-                name:"ربع النهائي",
-                matches:4,
-                class:"qf"
-            },
-            {
-                name:"نصف النهائي",
-                matches:2,
-                class:"sf"
-            },
-            {
-                name:"النهائي",
-                matches:1,
-                class:"final"
-            }
-        ];
-
-    }
-    else if(playersCount>=8){
-
-        rounds=[
-            {
-                name:"دور الـ8",
-                matches:4,
-                class:"qf"
-            },
-            {
-                name:"نصف النهائي",
-                matches:2,
-                class:"sf"
-            },
-            {
-                name:"النهائي",
-                matches:1,
-                class:"final"
-            }
-        ];
-
-    }
-    else{
-
-        rounds=[
-            {
-                name:"نصف النهائي",
-                matches:2,
-                class:"sf"
-            },
-            {
-                name:"النهائي",
-                matches:1,
-                class:"final"
-            }
-        ];
-
-    }
-
-
-    rounds.forEach(round=>{
-
-        const roundDiv=
-            document.createElement("div");
-
-        roundDiv.className=
-            "round "+round.class;
-
-
-        const title=
-            document.createElement("div");
-
-        title.className="round-title";
-
-        title.textContent=
-            round.name;
-
-
-        roundDiv.appendChild(title);
-
-
-        for(
-            let i=0;
-            i<round.matches;
-            i++
-        ){
-
-            const match=
-                document.createElement("div");
-
-            match.className="match";
-
-
-            if(round.class==="final"){
-
-                match.classList.add(
-                    "final-match"
-                );
-
-            }
-
-
-            /*
-               الجزء الأول
-            */
-
-            const player1=
-                document.createElement("div");
-
-            player1.className=
-                "match-player";
-
-
-            const invite1=
-                document.createElement("div");
-
-            invite1.className=
-                "invite-side";
-
-            invite1.textContent=
-                "دعوة";
-
-
-            invite1.onclick=
-                function(){
-
-                    invitePlayer();
-
-                };
-
-
-            const invite2=
-                document.createElement("div");
-
-            invite2.className=
-                "invite-side";
-
-            invite2.textContent=
-                "دعوة";
-
-
-            invite2.onclick=
-                function(){
-
-                    invitePlayer();
-
-                };
-
-
-            player1.appendChild(invite1);
-
-            player1.appendChild(invite2);
-
-
-            /*
-               الجزء الثاني
-            */
-
-            const player2=
-                document.createElement("div");
-
-            player2.className=
-                "match-player";
-
-
-            const invite3=
-                document.createElement("div");
-
-            invite3.className=
-                "invite-side";
-
-            invite3.textContent=
-                "دعوة";
-
-
-            invite3.onclick=
-                function(){
-
-                    invitePlayer();
-
-                };
-
-
-            const invite4=
-                document.createElement("div");
-
-            invite4.className=
-                "invite-side";
-
-            invite4.textContent=
-                "دعوة";
-
-
-            invite4.onclick=
-                function(){
-
-                    invitePlayer();
-
-                };
-
-
-            player2.appendChild(invite3);
-
-            player2.appendChild(invite4);
-
-
-            match.appendChild(player1);
-
-            match.appendChild(player2);
-
-
-            roundDiv.appendChild(match);
-
-        }
-
-
-        bracket.appendChild(roundDiv);
-
-    });
-
-}
-
-
-/* =========================
-   INVITE
-========================= */
-
-function invitePlayer(){
-
-    if(!tournamentCode){
-
-        alert("لا يوجد رمز للبطولة");
-
-        return;
-
-    }
-
+/* =================================
+   INVITE PLAYER
+================================= */
+
+function invitePlayer(position){
 
     const message=
-        "🏆 دعوة للانضمام إلى بطولة "+
 
-        tournamentName+
+    "🏆 دعوة للانضمام إلى بطولة "+
+    tournamentName+
 
-        "\n\n"+
+    "\n\n🔑 رمز البطولة: "+
+    tournamentCode+
 
-        "🔑 رمز البطولة: "+
+    "\n\n📍 مكانك: "+
+    position;
 
-        tournamentCode;
 
+    if(navigator.share){
 
-    if(
-        navigator.share
-    ){
-
-        navigator.share({
+        navigator
+        .share({
 
             title:
-                "دعوة بطولة L&S GAMES",
+            "دعوة بطولة L&S GAMES",
 
             text:
-                message
+            message
 
-        }).catch(()=>{});
+        })
+        .catch(function(){});
 
     }
+
     else{
 
-        navigator.clipboard
+        navigator
+        .clipboard
         .writeText(message)
-        .then(()=>{
+        .then(function(){
 
             alert(
-                "تم نسخ دعوة البطولة 📋\n\n"+
-                message
+                "تم نسخ الدعوة 📋"
             );
 
         })
-        .catch(()=>{
+        .catch(function(){
 
             alert(message);
 
@@ -2050,43 +1718,8 @@ function invitePlayer(){
 
 }
 
-
-/* =========================
-   ENTER KEY
-========================= */
-
-document
-    .getElementById("joinCode")
-    .addEventListener(
-        "keydown",
-        function(e){
-
-            if(e.key==="Enter"){
-
-                joinTournament();
-
-            }
-
-        }
-    );
-
-
-document
-    .getElementById("tourName")
-    .addEventListener(
-        "keydown",
-        function(e){
-
-            if(e.key==="Enter"){
-
-                createTournament();
-
-            }
-
-        }
-    );
-
 </script>
 
 </body>
 </html>
+```
