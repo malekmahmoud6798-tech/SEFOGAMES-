@@ -1,5756 +1,1571 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-
-<title>مزاد النجوم - ULTIMATE 200</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L&S Football Auction</title>
 
 <style>
-
-/* =====================================================
-GENERAL
-===================================================== */
-
 *{
     box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
-
-html{
-    scroll-behavior:smooth;
+    margin:0;
+    padding:0;
 }
 
 body{
-
-    margin:0;
-
+    font-family:Arial, Tahoma, sans-serif;
+    background:
+        radial-gradient(circle at top,#16243d 0%,#070b13 42%,#020305 100%);
+    color:#fff;
     min-height:100vh;
-
-    font-family:'Cairo',sans-serif;
-
-    color:#fff;
-
-    text-align:center;
-
-    overflow-x:hidden;
-
-    background:
-
-    radial-gradient(
-        circle at 50% -15%,
-        #174d3a 0%,
-        #0b2118 25%,
-        #030807 65%,
-        #010202 100%
-    );
-}
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    pointer-events:none;
-
-    opacity:.12;
-
-    background-image:
-
-    linear-gradient(
-        rgba(255,255,255,.05) 1px,
-        transparent 1px
-    ),
-
-    linear-gradient(
-        90deg,
-        rgba(255,255,255,.05) 1px,
-        transparent 1px
-    );
-
-    background-size:35px 35px;
-
-    z-index:-1;
-}
-
-body::after{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    pointer-events:none;
-
-    background:
-
-    radial-gradient(
-        circle at 20% 30%,
-        rgba(0,195,255,.06),
-        transparent 25%
-    ),
-
-    radial-gradient(
-        circle at 80% 70%,
-        rgba(255,0,170,.05),
-        transparent 25%
-    );
-
-    z-index:-1;
-}
-
-h1{
-
-    margin:0;
-
-    padding:22px 10px 8px;
-
-    font-size:clamp(22px,5vw,42px);
-
-    font-family:'Orbitron','Cairo',sans-serif;
-
-    background:
-
-    linear-gradient(
-        90deg,
-        #fff,
-        #ffd700,
-        #fff,
-        #6ee7ff,
-        #ffd700,
-        #fff
-    );
-
-    background-size:500%;
-
-    -webkit-background-clip:text;
-
-    background-clip:text;
-
-    color:transparent;
-
-    animation:titleMove 6s linear infinite;
-
-    text-shadow:
-        0 0 30px rgba(255,215,0,.15);
-}
-
-@keyframes titleMove{
-
-    0%{
-        background-position:0%;
-    }
-
-    100%{
-        background-position:500%;
-    }
-}
-
-.app{
-
-    width:min(1450px,96%);
-
-    margin:auto;
-}
-
-/* =====================================================
-STATS
-===================================================== */
-
-.stats{
-
-    display:grid;
-
-    grid-template-columns:
-    1fr
-    auto
-    1fr;
-
-    gap:10px;
-
-    align-items:center;
-
-    margin:15px auto;
-
-    padding:12px;
-
-    border-radius:22px;
-
-    border:1px solid rgba(255,215,0,.35);
-
-    background:
-
-    linear-gradient(
-        135deg,
-        rgba(20,28,25,.97),
-        rgba(3,7,5,.98)
-    );
-
-    box-shadow:
-
-    0 15px 50px rgba(0,0,0,.5),
-
-    inset 0 1px rgba(255,255,255,.08);
-}
-
-.money-box{
-
-    padding:12px;
-
-    border-radius:15px;
-
-    font-size:15px;
-
-    font-weight:900;
-
-    background:rgba(255,255,255,.04);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    transition:.3s;
-}
-
-.money-box:hover{
-
-    background:rgba(255,255,255,.08);
-
-    transform:translateY(-2px);
-}
-
-.money-box.blue{
-    color:#56c7ff;
-}
-
-.money-box.red{
-    color:#ff7474;
-}
-
-.money-value{
-
-    display:block;
-
-    margin-top:4px;
-
-    color:#fff;
-
-    font-family:'Orbitron';
-
-    font-size:18px;
-}
-
-#count{
-
-    padding:10px 17px;
-
-    border-radius:50px;
-
-    color:#111;
-
-    font-family:'Orbitron';
-
-    font-weight:900;
-
-    background:
-
-    linear-gradient(
-        135deg,
-        #fff7b0,
-        #ffd700,
-        #c98700
-    );
-
-    box-shadow:
-
-    0 0 20px rgba(255,215,0,.35),
-
-    inset 0 1px rgba(255,255,255,.8);
-}
-
-/* =====================================================
-TURN
-===================================================== */
-
-.turn{
-
-    margin:10px auto 18px;
-
-    width:min(650px,95%);
-
-    padding:13px 18px;
-
-    border-radius:15px;
-
-    font-weight:900;
-
-    background:
-
-    linear-gradient(
-        135deg,
-        #17231f,
-        #070b09
-    );
-
-    border:1px solid rgba(255,215,0,.4);
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.25);
-}
-
-/* =====================================================
-FIELDS
-===================================================== */
-
-.field-container{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(2,minmax(300px,1fr));
-
-    gap:25px;
-
-    margin:25px auto;
-
-    align-items:start;
-}
-
-.team-wrap{
-
-    border-radius:24px;
-
-    overflow:hidden;
-
-    background:#07100c;
-
-    border:1px solid rgba(255,255,255,.08);
-
-    box-shadow:
-
-    0 20px 50px rgba(0,0,0,.45);
-}
-
-.team-title{
-
-    padding:13px;
-
-    font-size:18px;
-
-    font-weight:900;
-}
-
-.team-title.blue{
-
-    background:
-
-    linear-gradient(
-        90deg,
-        #005f8a,
-        #00bfff,
-        #006699
-    );
-}
-
-.team-title.red{
-
-    background:
-
-    linear-gradient(
-        90deg,
-        #870000,
-        #ff3030,
-        #990000
-    );
-}
-
-.pitch{
-
-    width:100%;
-
-    aspect-ratio:7/9;
-
-    position:relative;
-
-    overflow:hidden;
-
-    background:
-
-    repeating-linear-gradient(
-        90deg,
-        rgba(255,255,255,.025) 0,
-        rgba(255,255,255,.025) 10%,
-        transparent 10%,
-        transparent 20%
-    ),
-
-    linear-gradient(
-        180deg,
-        #168b49,
-        #0b542d
-    );
-}
-
-.pitch::before{
-
-    content:"";
-
-    position:absolute;
-
-    top:45%;
-
-    left:0;
-
-    width:100%;
-
-    height:2px;
-
-    background:rgba(255,255,255,.7);
-}
-
-.pitch::after{
-
-    content:"";
-
-    position:absolute;
-
-    top:45%;
-
-    left:50%;
-
-    width:100px;
-
-    height:100px;
-
-    border:2px solid rgba(255,255,255,.7);
-
-    border-radius:50%;
-
-    transform:translate(-50%,-50%);
-}
-
-.penalty{
-
-    position:absolute;
-
-    bottom:0;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    width:60%;
-
-    height:22%;
-
-    border:
-    2px solid rgba(255,255,255,.8);
-
-    border-bottom:none;
-}
-
-.goal{
-
-    position:absolute;
-
-    bottom:0;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    width:28%;
-
-    height:7%;
-
-    border:
-    2px solid rgba(255,255,255,.9);
-
-    border-bottom:none;
-}
-
-/* =====================================================
-PLAYER ON FIELD
-===================================================== */
-
-.player-spot{
-
-    position:absolute;
-
-    width:86px;
-
-    transform:translate(-50%,-50%);
-
-    text-align:center;
-
-    z-index:5;
-}
-
-.pos-label{
-
-    position:absolute;
-
-    top:-12px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    padding:2px 6px;
-
-    border-radius:8px;
-
-    background:rgba(0,0,0,.78);
-
-    font-size:8px;
-
-    font-family:'Orbitron';
-
-    z-index:10;
-}
-
-/* =====================================================
-MINI CARD
-===================================================== */
-
-.mini-card{
-
-    width:70px;
-
-    height:88px;
-
-    margin:auto;
-
-    position:relative;
-
-    overflow:hidden;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:flex-end;
-
-    padding:4px;
-
-    border-radius:12px;
-
-    transition:.3s;
-
-    box-shadow:
-        0 8px 18px rgba(0,0,0,.65);
-}
-
-.mini-card:hover{
-
-    transform:
-        translateY(-7px)
-        scale(1.12);
-
-    z-index:30;
-}
-
-.mini-card::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-
-    linear-gradient(
-        135deg,
-        rgba(255,255,255,.55),
-        transparent 25%,
-        transparent 70%,
-        rgba(255,255,255,.2)
-    );
-
-    z-index:4;
-
-    pointer-events:none;
-}
-
-.mini-card::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:3px;
-
-    border-radius:9px;
-
-    border:1px solid rgba(255,255,255,.5);
-
-    pointer-events:none;
-
-    z-index:5;
-}
-
-.mini-photo{
-
-    position:absolute;
-
-    left:5px;
-
-    right:5px;
-
-    top:12px;
-
-    height:59px;
-
-    z-index:1;
-
-    display:flex;
-
-    align-items:flex-start;
-
-    justify-content:center;
-}
-
-.mini-photo img{
-
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
-
-    object-position:center top;
-
-    border-radius:7px;
-
-    filter:
-        saturate(1.12)
-        contrast(1.05);
-
-    mask-image:
-
-    linear-gradient(
-        to bottom,
-        #000 65%,
-        transparent 100%
-    );
-}
-
-.mini-rating{
-
-    position:absolute;
-
-    top:4px;
-
-    left:6px;
-
-    font-family:'Orbitron';
-
-    font-size:11px;
-
-    font-weight:900;
-
-    z-index:8;
-}
-
-.mini-pos{
-
-    position:absolute;
-
-    top:19px;
-
-    left:6px;
-
-    font-size:7px;
-
-    font-weight:900;
-
-    z-index:8;
-}
-
-.mini-name{
-
-    position:relative;
-
-    z-index:8;
-
-    font-size:7px;
-
-    font-weight:900;
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-
-    text-shadow:0 1px 2px #000;
-}
-
-.mini-card.empty{
-
-    opacity:.35;
-
-    filter:grayscale(1);
-
-    background:#222;
-
-    border:2px dashed #777;
-}
-
-/* =====================================================
-CURRENT MINI
-===================================================== */
-
-.mini-card.card-current{
-
-    background:
-
-    radial-gradient(
-        circle at 50% 15%,
-        #dfffff,
-        #19d7ff 28%,
-        #0064a8 65%,
-        #031323 100%
-    );
-
-    border:2px solid #69edff;
-
-    color:#fff;
-
-    box-shadow:
-
-    0 0 10px rgba(0,220,255,.7),
-
-    0 0 22px rgba(0,130,255,.35);
-}
-
-/* =====================================================
-RETIRED MINI
-===================================================== */
-
-.mini-card.card-retired{
-
-    background:
-
-    radial-gradient(
-        circle at 50% 10%,
-        #fff5d0,
-        #c98b24 30%,
-        #713900 65%,
-        #241000 100%
-    );
-
-    border:2px solid #e9b94d;
-
-    color:#fff;
-
-    box-shadow:
-
-    0 0 12px rgba(230,160,30,.6);
-}
-
-/* =====================================================
-ICON MINI
-===================================================== */
-
-.mini-card.card-icon{
-
-    background:
-
-    radial-gradient(
-        circle at 50% 10%,
-        #ffffff,
-        #d7bd52 18%,
-        #16345d 48%,
-        #030816 100%
-    );
-
-    border:2px solid #fff1a8;
-
-    color:#fff;
-
-    box-shadow:
-
-    0 0 12px rgba(255,215,0,.8),
-
-    0 0 22px rgba(0,162,255,.5);
-}
-
-/* =====================================================
-GOAT MINI
-===================================================== */
-
-.mini-card.card-goat{
-
-    background:
-
-    radial-gradient(
-        circle at 50% 5%,
-        #fff,
-        #ffd700 20%,
-        #ff4fd8 42%,
-        #7100c7 68%,
-        #0b0018 100%
-    );
-
-    border:2px solid #fff;
-
-    color:#fff;
-
-    box-shadow:
-
-    0 0 15px #ffd700,
-
-    0 0 28px #a000ff;
-}
-
-/* =====================================================
-MAIN CARD AREA
-===================================================== */
-
-.card-area{
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    margin:30px auto 40px;
-
-    perspective:1500px;
-}
-
-.player-card{
-
-    width:min(420px,94vw);
-
-    min-height:620px;
-
-    position:relative;
-
-    overflow:hidden;
-
-    padding:21px 24px 18px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:space-between;
-
-    isolation:isolate;
-
-    border-radius:38px;
-
-    animation:
-        cardEnter .75s cubic-bezier(.2,.8,.2,1);
-
-    clip-path:
-
-    polygon(
-        7% 0,
-        93% 0,
-        100% 6%,
-        97% 94%,
-        90% 100%,
-        10% 100%,
-        3% 94%,
-        0 6%
-    );
-
-    box-shadow:
-
-    0 30px 70px rgba(0,0,0,.85);
-}
-
-@keyframes cardEnter{
-
-    0%{
-
-        opacity:0;
-
-        transform:
-            scale(.68)
-            rotateY(35deg)
-            translateY(35px);
-
-    }
-
-    100%{
-
-        opacity:1;
-
-        transform:
-            scale(1)
-            rotateY(0)
-            translateY(0);
-
-    }
-}
-
-/* =====================================================
-CARD BORDER
-===================================================== */
-
-.player-card::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-
-    linear-gradient(
-        135deg,
-        #fff,
-        #ffd700 18%,
-        #fff 30%,
-        #d7a51e 48%,
-        #fff 65%,
-        #ffd700 82%,
-        #fff
-    );
-
-    z-index:-2;
-}
-
-.player-card::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:6px;
-
-    clip-path:
-
-    polygon(
-        7% 0,
-        93% 0,
-        100% 6%,
-        97% 94%,
-        90% 100%,
-        10% 100%,
-        3% 94%,
-        0 6%
-    );
-
-    z-index:-1;
-
-    pointer-events:none;
-}
-
-/* =====================================================
-CURRENT CARD
-===================================================== */
-
-.card-current{
-
-    background:
-
-    radial-gradient(
-        ellipse at 50% 15%,
-        #eaffff 0%,
-        #20d9ff 20%,
-        #0076c9 45%,
-        #003b70 72%,
-        #020b18 100%
-    );
-
-    color:#fff;
-
-    box-shadow:
-
-    0 0 25px rgba(0,220,255,.7),
-
-    0 0 65px rgba(0,130,255,.4),
-
-    0 30px 80px rgba(0,0,0,.8);
-}
-
-.card-current::after{
-
-    background:
-
-    linear-gradient(
-        135deg,
-        rgba(0,255,255,.25),
-        rgba(0,0,0,.2)
-    );
-
-    border:
-        2px solid rgba(110,240,255,.75);
-}
-
-/* =====================================================
-RETIRED CARD
-===================================================== */
-
-.card-retired{
-
-    background:
-
-    radial-gradient(
-        ellipse at 50% 10%,
-        #fff5d4 0%,
-        #e4b044 22%,
-        #a9630b 48%,
-        #552700 73%,
-        #1c0900 100%
-    );
-
-    color:#fff;
-
-    box-shadow:
-
-    0 0 30px rgba(255,190,50,.55),
-
-    0 0 70px rgba(150,70,0,.35),
-
-    0 30px 80px rgba(0,0,0,.8);
-}
-
-.card-retired::after{
-
-    background:
-
-    linear-gradient(
-        135deg,
-        rgba(255,255,255,.18),
-        rgba(80,25,0,.25)
-    );
-
-    border:
-        2px solid rgba(255,220,130,.8);
-}
-
-/* =====================================================
-ICON CARD
-===================================================== */
-
-.card-icon{
-
-    background:
-
-    radial-gradient(
-        ellipse at 50% 10%,
-        #ffffff 0%,
-        #f2df87 12%,
-        #c59d35 26%,
-        #173962 48%,
-        #071324 72%,
-        #01050c 100%
-    );
-
-    color:#fff;
-
-    box-shadow:
-
-    0 0 25px rgba(255,215,0,.8),
-
-    0 0 55px rgba(0,180,255,.5),
-
-    0 0 90px rgba(255,180,0,.25),
-
-    0 30px 80px rgba(0,0,0,.85);
-}
-
-.card-icon::after{
-
-    background:
-
-    radial-gradient(
-        circle at 0% 50%,
-        rgba(0,180,255,.45),
-        transparent 35%
-    ),
-
-    radial-gradient(
-        circle at 100% 50%,
-        rgba(0,180,255,.45),
-        transparent 35%
-    ),
-
-    linear-gradient(
-        135deg,
-        rgba(255,215,0,.18),
-        transparent
-    );
-
-    border:
-        2px solid rgba(255,230,150,.8);
-}
-
-/* =====================================================
-GOAT CARD
-===================================================== */
-
-.card-goat{
-
-    background:
-
-    radial-gradient(
-        ellipse at 50% 8%,
-        #fff 0%,
-        #fff3a0 12%,
-        #ffd700 25%,
-        #ff4bd8 43%,
-        #8d00d9 64%,
-        #27004e 82%,
-        #05000c 100%
-    );
-
-    color:#fff;
-
-    animation:
-
-        cardEnter .75s cubic-bezier(.2,.8,.2,1),
-
-        goatGlow 2s infinite alternate;
-}
-
-@keyframes goatGlow{
-
-    from{
-
-        box-shadow:
-
-        0 0 20px #fff,
-
-        0 0 45px #ffd700,
-
-        0 0 75px #9b00ff,
-
-        0 30px 80px rgba(0,0,0,.8);
-    }
-
-    to{
-
-        box-shadow:
-
-        0 0 35px #fff,
-
-        0 0 75px #ffd700,
-
-        0 0 115px #9b00ff,
-
-        0 30px 80px rgba(0,0,0,.8);
-    }
-}
-
-.card-goat::after{
-
-    background:
-
-    radial-gradient(
-        circle at 50% 0%,
-        rgba(255,255,255,.45),
-        transparent 45%
-    ),
-
-    linear-gradient(
-        135deg,
-        rgba(255,215,0,.15),
-        rgba(150,0,255,.25)
-    );
-
-    border:
-        2px solid rgba(255,255,255,.85);
-}
-
-/* =====================================================
-CARD PATTERN
-===================================================== */
-
-.card-pattern{
-
-    position:absolute;
-
-    inset:0;
-
-    pointer-events:none;
-
-    z-index:0;
-
-    opacity:.35;
-
-    background:
-
-    linear-gradient(
-        135deg,
-        transparent 30%,
-        rgba(255,255,255,.25) 30.5%,
-        transparent 31%
-    ),
-
-    linear-gradient(
-        45deg,
-        transparent 55%,
-        rgba(255,255,255,.16) 55.5%,
-        transparent 56%
-    ),
-
-    linear-gradient(
-        120deg,
-        transparent 70%,
-        rgba(255,215,0,.2) 70.5%,
-        transparent 71%
-    );
-}
-
-/* =====================================================
-CRYSTAL EFFECT
-===================================================== */
-
-.player-card .crystal{
-
-    position:absolute;
-
-    width:80px;
-
-    height:80px;
-
-    transform:rotate(45deg);
-
-    border:
-
-    2px solid rgba(255,255,255,.65);
-
-    background:
-
-    linear-gradient(
-        135deg,
-        rgba(255,255,255,.5),
-        rgba(0,190,255,.2),
-        rgba(255,215,0,.35)
-    );
-
-    box-shadow:
-
-    0 0 25px rgba(255,255,255,.3);
-
-    pointer-events:none;
-
-    z-index:1;
-}
-
-.crystal.c1{
-    top:170px;
-    left:-42px;
-}
-
-.crystal.c2{
-    top:270px;
-    right:-42px;
-}
-
-.crystal.c3{
-    bottom:115px;
-    left:-35px;
-}
-
-.crystal.c4{
-    bottom:160px;
-    right:-35px;
-}
-
-/* =====================================================
-SHINE
-===================================================== */
-
-.card-shine{
-
-    position:absolute;
-
-    width:180px;
-
-    height:750px;
-
-    top:-100px;
-
-    right:-280px;
-
-    transform:rotate(25deg);
-
-    background:
-
-    linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.5),
-        transparent
-    );
-
-    animation:shine 4s infinite;
-
-    pointer-events:none;
-
-    z-index:4;
-}
-
-@keyframes shine{
-
-    0%{
-        right:-280px;
-    }
-
-    55%,100%{
-        right:600px;
-    }
-}
-
-/* =====================================================
-CARD TOP
-===================================================== */
-
-.card-top{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:flex-start;
-
-    position:relative;
-
-    z-index:8;
-}
-
-.rating-box{
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-}
-
-.rating{
-
-    font-family:'Orbitron';
-
-    font-size:62px;
-
-    font-weight:900;
-
-    line-height:.8;
-
-    background:
-
-    linear-gradient(
-        180deg,
-        #ffffff 0%,
-        #fff5a0 30%,
-        #ffd700 70%,
-        #9b6500 100%
-    );
-
-    -webkit-background-clip:text;
-
-    background-clip:text;
-
-    color:transparent;
-
-    text-shadow:
-        0 4px 10px rgba(0,0,0,.6);
-}
-
-.position{
-
-    font-family:'Orbitron';
-
-    font-size:14px;
-
-    font-weight:900;
-
-    color:#fff;
-
-    letter-spacing:2px;
-
-    margin-top:5px;
-
-    text-shadow:
-        0 2px 5px #000;
-}
-
-.card-type{
-
-    max-width:190px;
-
-    padding:9px 13px;
-
-    border-radius:20px;
-
-    font-size:10px;
-
-    font-weight:900;
-
-    background:rgba(0,0,0,.45);
-
-    border:1px solid rgba(255,215,0,.8);
-
-    backdrop-filter:blur(6px);
-
-    box-shadow:
-        0 5px 15px rgba(0,0,0,.4);
-}
-
-/* =====================================================
-PLAYER PHOTO
-===================================================== */
-
-.player-photo{
-
-    width:285px;
-
-    height:310px;
-
-    margin:-7px auto -5px;
-
-    position:relative;
-
-    z-index:3;
-
-    display:flex;
-
-    align-items:flex-end;
-
-    justify-content:center;
-
-    overflow:hidden;
-}
-
-.player-photo::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:290px;
-
-    height:290px;
-
-    bottom:-60px;
-
-    border-radius:50%;
-
-    background:
-
-    radial-gradient(
-        circle,
-        rgba(255,255,255,.3),
-        transparent 65%
-    );
-
-    filter:blur(5px);
-}
-
-.player-photo::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-
-    linear-gradient(
-        to bottom,
-        transparent 62%,
-        rgba(0,0,0,.15) 100%
-    );
-
-    pointer-events:none;
-}
-
-.player-photo img{
-
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
-
-    object-position:center top;
-
-    border-radius:18px;
-
-    filter:
-
-        saturate(1.1)
-
-        contrast(1.06)
-
-        drop-shadow(
-            0 18px 12px rgba(0,0,0,.5)
-        );
-
-    mask-image:
-
-    linear-gradient(
-        to bottom,
-        #000 75%,
-        transparent 100%
-    );
-}
-
-/* =====================================================
-PLAYER NAME
-===================================================== */
-
-.player-name{
-
-    position:relative;
-
-    z-index:9;
-
-    font-family:'Orbitron','Cairo';
-
-    font-size:22px;
-
-    font-weight:900;
-
-    text-align:center;
-
-    margin:5px auto 0;
-
-    padding:9px 20px;
-
-    width:92%;
-
-    color:#fff;
-
-    text-transform:uppercase;
-
-    background:
-
-    linear-gradient(
-        180deg,
-        #17283e,
-        #050b15
-    );
-
-    border:
-
-    2px solid #ffd700;
-
-    border-radius:10px;
-
-    box-shadow:
-
-    0 5px 15px rgba(0,0,0,.8),
-
-    0 0 15px rgba(255,215,0,.45);
-
-    text-shadow:
-        0 2px 4px #000;
-}
-
-/* =====================================================
-PRICE
-===================================================== */
-
-.card-price{
-
-    position:relative;
-
-    z-index:9;
-
-    text-align:center;
-
-    margin-top:8px;
-
-    padding:9px;
-
-    border-radius:12px;
-
-    font-family:'Orbitron';
-
-    font-size:19px;
-
-    font-weight:900;
-
-    background:rgba(0,0,0,.42);
-
-    border:1px solid rgba(255,215,0,.65);
-
-    box-shadow:
-        inset 0 0 15px rgba(0,0,0,.3);
-}
-
-/* =====================================================
-CARD STATS
-===================================================== */
-
-.card-stats{
-
-    position:relative;
-
-    z-index:9;
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(3,1fr);
-
-    gap:6px;
-
-    margin-top:9px;
-}
-
-.card-stat{
-
-    padding:6px 2px;
-
-    border-radius:8px;
-
-    background:rgba(0,0,0,.45);
-
-    border:1px solid rgba(255,215,0,.35);
-
-    font-family:'Orbitron';
-
-    font-size:11px;
-
-    font-weight:900;
-
-    color:#fff;
-
-    box-shadow:
-        inset 0 0 10px rgba(0,0,0,.2);
-}
-
-.card-stat span{
-
-    display:block;
-
-    font-size:7px;
-
-    margin-bottom:2px;
-
-    opacity:.9;
-
-    color:#ffd700;
-}
-
-/* =====================================================
-CONTROLS
-===================================================== */
-
-.controls{
-
-    position:relative;
-
-    z-index:5;
-
-    width:min(500px,95%);
-
-    margin:18px auto;
-
-    padding:18px;
-
-    border-radius:22px;
-
-    background:
-
-    linear-gradient(
-        145deg,
-        rgba(20,25,24,.96),
-        rgba(4,6,5,.98)
-    );
-
-    border:1px solid rgba(255,215,0,.35);
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.5);
-}
-
-#bidInput{
-
-    width:100%;
-
-    padding:14px;
-
-    margin-bottom:10px;
-
-    border-radius:12px;
-
-    border:2px solid #d5aa19;
-
-    outline:none;
-
-    background:#080b0a;
-
-    color:#fff;
-
-    text-align:center;
-
-    font-family:'Orbitron';
-
-    font-size:16px;
-}
-
-#bidInput:focus{
-
-    box-shadow:
-        0 0 20px rgba(255,215,0,.3);
-}
-
-.buttons{
-
-    display:grid;
-
-    grid-template-columns:
-    1fr 1fr 1fr;
-
-    gap:8px;
 }
 
 button{
+    font-family:inherit;
+}
 
-    padding:13px 8px;
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(5,8,14,.94);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid rgba(255,215,100,.2);
+    padding:14px 20px;
+}
 
-    border:none;
+.header-inner{
+    max-width:1250px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
 
-    border-radius:12px;
-
-    cursor:pointer;
-
-    font-family:'Cairo';
-
+.logo{
     font-weight:900;
-
-    font-size:14px;
-
-    transition:.2s;
+    font-size:23px;
+    letter-spacing:1px;
 }
 
-button:hover:not(:disabled){
-
-    transform:translateY(-3px);
-
-    filter:brightness(1.12);
+.logo span{
+    color:#ffd45a;
 }
 
-button:active:not(:disabled){
-
-    transform:scale(.96);
-}
-
-button:disabled{
-
-    opacity:.4;
-
-    cursor:not-allowed;
-}
-
-.bid{
-
-    background:
-
-    linear-gradient(
-        135deg,
-        #50ff85,
-        #00a43a
-    );
-
-    color:#001b09;
-}
-
-.take{
-
-    background:
-
-    linear-gradient(
-        135deg,
-        #ff5252,
-        #a80000
-    );
-
-    color:#fff;
-}
-
-.skip{
-
-    background:
-
-    linear-gradient(
-        135deg,
-        #555,
-        #222
-    );
-
-    color:#fff;
-}
-
-/* =====================================================
-TIMER
-===================================================== */
-
-.timer{
-
-    display:none;
-
-    width:min(500px,92%);
-
-    margin:20px auto;
-
-    padding:20px;
-
-    border-radius:20px;
-
-    font-family:'Orbitron';
-
-    font-size:22px;
-
-    color:#ffd700;
-
-    background:#090b0a;
-
-    border:1px solid #d5aa19;
-
-    box-shadow:
-        0 0 30px rgba(255,215,0,.2);
-}
-
-/* =====================================================
-MATCH RESULT
-===================================================== */
-
-.result{
-
-    width:100%;
-}
-
-.match-result{
-
-    width:min(1100px,96%);
-
-    margin:35px auto 70px;
-
-    padding:25px;
-
+.coins{
+    background:linear-gradient(135deg,#211700,#a87400,#ffe58b,#9c6500);
+    color:#140d00;
+    padding:9px 17px;
     border-radius:30px;
-
-    background:
-
-    radial-gradient(
-        circle at 50% 0%,
-        rgba(255,215,0,.15),
-        transparent 40%
-    ),
-
-    linear-gradient(
-        145deg,
-        #101715,
-        #030605
-    );
-
-    border:2px solid rgba(255,215,0,.45);
-
-    box-shadow:
-
-    0 30px 90px rgba(0,0,0,.65),
-
-    0 0 50px rgba(255,215,0,.12);
-
-    animation:matchEnter .8s ease;
+    font-weight:900;
+    box-shadow:0 0 20px rgba(255,195,50,.25);
 }
 
-@keyframes matchEnter{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            scale(.88)
-            translateY(30px);
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-            scale(1)
-            translateY(0);
-    }
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
 }
 
-.match-header{
+.auction-box{
+    background:linear-gradient(145deg,rgba(24,31,48,.95),rgba(6,9,16,.95));
+    border:1px solid rgba(255,210,90,.22);
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:25px;
+    box-shadow:0 15px 50px rgba(0,0,0,.35);
+}
 
-    font-family:'Orbitron';
+.auction-title{
+    text-align:center;
+    font-size:28px;
+    font-weight:900;
+    margin-bottom:6px;
+}
 
-    font-size:14px;
-
-    color:#ffd700;
-
-    letter-spacing:2px;
-
+.auction-sub{
+    text-align:center;
+    color:#aeb8c9;
     margin-bottom:18px;
 }
 
-.match-teams{
+.auction-status{
+    text-align:center;
+    min-height:25px;
+    margin-bottom:15px;
+    color:#ffd45a;
+    font-weight:bold;
+}
 
-    display:grid;
-
-    grid-template-columns:
-    1fr
-    auto
-    1fr;
-
-    gap:15px;
-
+.auction-content{
+    display:none;
+    grid-template-columns:360px 1fr;
+    gap:25px;
     align-items:center;
 }
 
-.match-team{
+.auction-content.show{
+    display:grid;
+}
 
-    padding:18px;
-
-    border-radius:22px;
-
-    min-height:120px;
-
+.auction-card-wrap{
     display:flex;
-
-    flex-direction:column;
-
     justify-content:center;
+}
 
-    align-items:center;
+.auction-info{
+    text-align:center;
+}
 
+.current-bid{
+    font-size:38px;
     font-weight:900;
+    color:#ffe082;
+    margin:15px 0;
+    text-shadow:0 0 20px rgba(255,205,70,.35);
 }
 
-.match-team.blue{
-
-    background:
-
-    linear-gradient(
-        145deg,
-        rgba(0,170,255,.22),
-        rgba(0,75,120,.12)
-    );
-
-    border:1px solid rgba(0,170,255,.45);
-}
-
-.match-team.red{
-
-    background:
-
-    linear-gradient(
-        145deg,
-        rgba(255,50,50,.22),
-        rgba(120,0,0,.12)
-    );
-
-    border:1px solid rgba(255,60,60,.45);
-}
-
-.team-name-result{
-
-    font-size:20px;
-
-    margin-bottom:8px;
-}
-
-.team-score{
-
-    font-family:'Orbitron';
-
-    font-size:55px;
-
-    line-height:1;
-}
-
-.vs{
-
-    font-family:'Orbitron';
-
-    font-size:20px;
-
-    color:#ffd700;
-}
-
-.winner-badge{
-
-    display:inline-block;
-
-    margin-top:8px;
-
-    padding:4px 12px;
-
-    border-radius:20px;
-
-    background:#ffd700;
-
-    color:#111;
-
-    font-size:11px;
-}
-
-.match-score-title{
-
-    margin:25px 0 15px;
-
-    font-size:18px;
-
-    font-weight:900;
-}
-
-.stats-grid{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(2,1fr);
-
+.bid-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
     gap:10px;
 }
 
-.match-stat{
-
-    padding:14px;
-
-    border-radius:15px;
-
-    background:rgba(255,255,255,.045);
-
-    border:1px solid rgba(255,255,255,.07);
+.bid-btn,
+.start-btn,
+.next-btn{
+    border:0;
+    cursor:pointer;
+    color:#160e00;
+    font-weight:900;
+    padding:12px 20px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#fff0a5,#ffc52e,#9d6500);
+    box-shadow:0 7px 20px rgba(255,188,20,.2);
+    transition:.2s;
 }
 
-.stat-label{
+.bid-btn:hover,
+.start-btn:hover,
+.next-btn:hover{
+    transform:translateY(-2px);
+    filter:brightness(1.08);
+}
 
+.next-btn{
+    margin-top:15px;
+    background:linear-gradient(135deg,#b9eaff,#318fd0,#11518b);
+    color:#fff;
+}
+
+.start-btn{
     display:block;
-
-    font-size:12px;
-
-    color:#bbb;
-
-    margin-bottom:8px;
+    margin:10px auto 0;
+    font-size:17px;
 }
 
-.stat-values{
+/* ================= CARD ================= */
 
-    display:grid;
-
-    grid-template-columns:
-    1fr
-    auto
-    1fr;
-
-    align-items:center;
-
-    gap:8px;
-
-    font-family:'Orbitron';
-
-    font-size:18px;
-}
-
-.stat-values .blue-value{
-
-    color:#56c7ff;
-
-    text-align:right;
-}
-
-.stat-values .red-value{
-
-    color:#ff7474;
-
-    text-align:left;
-}
-
-.stat-values .icon{
-
-    font-family:'Cairo';
-
-    font-size:13px;
-}
-
-.possession{
-
-    grid-column:1/-1;
-}
-
-.possession-bar{
-
-    height:16px;
-
-    width:100%;
-
-    display:flex;
-
+.player-card{
+    width:320px;
+    height:465px;
+    position:relative;
     overflow:hidden;
-
-    border-radius:20px;
-
-    background:#222;
-
-    margin-top:10px;
-}
-
-.pos-blue{
-
-    height:100%;
-
+    border-radius:22px;
+    padding:7px;
     background:
-
-    linear-gradient(
-        90deg,
-        #0077aa,
-        #00c8ff
-    );
+        linear-gradient(145deg,#fff4b0,#9b6200 12%,#ffe98a 25%,#7c4800 42%,#fff0a1 60%,#8c5700 78%,#ffe789);
+    box-shadow:
+        0 0 0 2px #4d2d00,
+        0 0 0 5px #d7a934,
+        0 15px 50px rgba(0,0,0,.65),
+        0 0 35px rgba(255,198,48,.22);
+    transform:translateZ(0);
 }
 
-.pos-red{
+.player-card::before{
+    content:"";
+    position:absolute;
+    inset:7px;
+    border-radius:17px;
+    pointer-events:none;
+    border:2px solid rgba(255,245,190,.75);
+    z-index:10;
+}
 
+.card-inner{
     height:100%;
-
+    position:relative;
+    overflow:hidden;
+    border-radius:17px;
     background:
-
-    linear-gradient(
-        90deg,
-        #ff3333,
-        #a00000
-    );
+        radial-gradient(circle at 70% 28%,rgba(255,230,100,.5),transparent 16%),
+        linear-gradient(145deg,#0c1625,#111c31 35%,#04070e 70%,#182945);
 }
 
-.possession-numbers{
+/* crystals */
+.crystal{
+    position:absolute;
+    width:45px;
+    height:105px;
+    background:linear-gradient(135deg,#fff,#63d7ff 25%,#155d9c 55%,#bceeff);
+    clip-path:polygon(50% 0,100% 25%,80% 100%,35% 75%,0 30%);
+    opacity:.75;
+    filter:drop-shadow(0 0 10px #5bcfff);
+}
 
+.crystal.c1{left:-8px;top:95px;transform:rotate(-15deg);}
+.crystal.c2{right:-7px;top:100px;transform:rotate(18deg);}
+.crystal.c3{left:5px;bottom:20px;transform:rotate(25deg);height:85px;}
+.crystal.c4{right:0;bottom:30px;transform:rotate(-25deg);height:90px;}
+
+.gold-line{
+    position:absolute;
+    left:17px;
+    right:17px;
+    height:2px;
+    background:linear-gradient(90deg,transparent,#fff3a0,#a96d00,#fff2a0,transparent);
+    opacity:.8;
+}
+
+.gold-line.top{top:90px;}
+.gold-line.bottom{bottom:74px;}
+
+.card-top{
+    position:absolute;
+    left:15px;
+    right:15px;
+    top:12px;
+    z-index:4;
     display:flex;
-
-    justify-content:space-between;
-
-    margin-top:7px;
-
-    font-family:'Orbitron';
-
-    font-size:13px;
+    justify-content:center;
 }
 
-.match-man{
-
-    margin-top:20px;
-
-    padding:18px;
-
-    border-radius:20px;
-
-    background:
-
-    linear-gradient(
-        135deg,
-        rgba(255,215,0,.13),
-        rgba(255,255,255,.03)
-    );
-
-    border:1px solid rgba(255,215,0,.3);
+.ball-emblem{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+    background:radial-gradient(circle,#fff5bd,#d89913,#674000);
+    border:3px solid #ffe899;
+    box-shadow:0 0 0 3px #704500,0 0 20px rgba(255,207,69,.5);
 }
 
-.man-title{
-
-    color:#ffd700;
-
-    font-size:12px;
-
-    font-weight:900;
+.rating{
+    position:absolute;
+    top:30px;
+    left:24px;
+    z-index:5;
+    text-align:center;
 }
 
-.man-name{
+.rating-number{
+    font-size:56px;
+    line-height:.9;
+    font-weight:1000;
+    color:#fff9e4;
+    text-shadow:
+        2px 2px 0 #704100,
+        -1px -1px 0 #fff,
+        0 0 15px rgba(255,255,255,.25);
+}
 
-    font-family:'Orbitron';
-
-    font-size:22px;
-
+.position{
     margin-top:5px;
+    font-size:18px;
+    font-weight:1000;
+    color:#ffd65d;
+    text-shadow:1px 1px #3d2200;
 }
 
-.formations{
-
-    margin-top:25px;
-
-    display:grid;
-
-    grid-template-columns:
-    1fr 1fr;
-
-    gap:20px;
+.card-photo{
+    position:absolute;
+    top:70px;
+    left:45px;
+    right:45px;
+    height:235px;
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    z-index:2;
 }
 
-.formation-box{
-
-    padding:15px;
-
-    border-radius:20px;
-
-    background:rgba(255,255,255,.035);
-
-    border:1px solid rgba(255,255,255,.07);
+.player-avatar{
+    width:205px;
+    height:235px;
+    object-fit:cover;
+    object-position:center;
+    border-radius:55% 55% 20% 20%;
+    border:3px solid rgba(255,221,111,.75);
+    background:linear-gradient(180deg,#4d6d8c,#101927);
+    box-shadow:0 8px 30px rgba(0,0,0,.5);
 }
 
-.formation-title{
+.photo-glow{
+    position:absolute;
+    width:210px;
+    height:210px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(255,207,68,.32),transparent 70%);
+    z-index:-1;
+}
 
+.card-name{
+    position:absolute;
+    left:18px;
+    right:18px;
+    bottom:94px;
+    z-index:5;
+    text-align:center;
+    padding:13px 7px 11px;
+    border-radius:9px;
+    background:
+        linear-gradient(180deg,#fff8d0,#e7c777 18%,#8b570b 90%,#f5d986);
+    border:2px solid #ffeeb0;
+    box-shadow:0 0 0 2px #674000,0 5px 15px rgba(0,0,0,.4);
+}
+
+.card-name span{
+    display:block;
+    font-size:27px;
+    line-height:1;
+    font-weight:1000;
+    letter-spacing:1px;
+    color:#4b2800;
+    text-shadow:1px 1px #fff1aa;
+}
+
+.card-type{
+    position:absolute;
+    left:22px;
+    bottom:56px;
+    z-index:5;
+    color:#ffe08a;
+    font-size:13px;
+    font-weight:1000;
+    letter-spacing:2px;
+}
+
+.flag{
+    position:absolute;
+    right:22px;
+    bottom:46px;
+    z-index:5;
+    width:62px;
+    height:37px;
+    object-fit:cover;
+    border-radius:5px;
+    border:2px solid #f7d66e;
+    box-shadow:0 3px 10px rgba(0,0,0,.4);
+}
+
+.card-footer{
+    position:absolute;
+    left:18px;
+    right:18px;
+    bottom:10px;
+    z-index:5;
+    display:flex;
+    justify-content:center;
+    gap:8px;
+}
+
+.stat{
+    width:55px;
+    text-align:center;
+}
+
+.stat b{
+    display:block;
+    color:#ffe27d;
+    font-size:16px;
+}
+
+.stat small{
+    color:#bfc9d9;
+    font-size:9px;
+}
+
+/* categories */
+
+.card-icon{
+    background:linear-gradient(145deg,#fff8c9,#dca62c,#fff2a1,#8c5600);
+}
+
+.card-toty{
+    background:linear-gradient(145deg,#fff,#65dfff,#1377ae,#fff,#4c8eff);
+}
+
+.card-tots{
+    background:linear-gradient(145deg,#e6c1ff,#9136e4,#f8d5ff,#5a0eaa);
+}
+
+.card-hero{
+    background:linear-gradient(145deg,#ffd6a0,#e36c18,#ffbf55,#792800);
+}
+
+.card-legend{
+    background:linear-gradient(145deg,#c9f8ff,#36a9c7,#0d4660,#bdf7ff);
+}
+
+.card-rare{
+    background:linear-gradient(145deg,#d9e6ff,#5776a8,#dbe7ff,#263c69);
+}
+
+/* ================= PLAYERS ================= */
+
+.section-title{
+    font-size:26px;
     font-weight:900;
+    margin:25px 0 15px;
+}
 
+.filters{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding-bottom:10px;
+    margin-bottom:20px;
+}
+
+.filter{
+    flex:none;
+    cursor:pointer;
+    border:1px solid #344158;
+    background:#111827;
+    color:#cbd5e1;
+    border-radius:20px;
+    padding:9px 15px;
+}
+
+.filter.active{
+    background:linear-gradient(135deg,#ffe58a,#a96c00);
+    color:#160d00;
+    border-color:#ffe58a;
+    font-weight:bold;
+}
+
+.players-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+    gap:18px;
+}
+
+.mini-card{
+    background:linear-gradient(145deg,#161f30,#080b12);
+    border:1px solid #29354c;
+    border-radius:16px;
+    padding:12px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.mini-card:hover{
+    transform:translateY(-4px);
+    border-color:#dcae3c;
+    box-shadow:0 10px 25px rgba(0,0,0,.35);
+}
+
+.mini-top{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.mini-avatar{
+    width:62px;
+    height:62px;
+    border-radius:12px;
+    object-fit:cover;
+    background:#172235;
+    border:1px solid #806226;
+}
+
+.mini-rating{
+    font-size:27px;
+    font-weight:1000;
+    color:#ffe18a;
+}
+
+.mini-name{
+    font-weight:900;
+    margin-top:9px;
+}
+
+.mini-meta{
+    display:flex;
+    justify-content:space-between;
+    margin-top:7px;
+    color:#8e9bb0;
+    font-size:12px;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:8px;
+    padding:4px 8px;
+    border-radius:8px;
+    font-size:10px;
+    font-weight:bold;
+    background:#2a3140;
+    color:#ffe08a;
+}
+
+/* loading safety */
+.loading{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:150px;
+}
+
+.spinner{
+    width:42px;
+    height:42px;
+    border:4px solid rgba(255,255,255,.15);
+    border-top-color:#ffd34e;
+    border-radius:50%;
+    animation:spin .7s linear infinite;
     margin-bottom:12px;
 }
 
-.formation-list{
+@keyframes spin{
+    to{transform:rotate(360deg);}
+}
 
+.empty{
+    grid-column:1/-1;
+    text-align:center;
+    color:#9ba8bb;
+    padding:35px;
+}
+
+/* modal */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.8);
+    backdrop-filter:blur(8px);
+    z-index:500;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    background:#0e1522;
+    border:1px solid #8e6920;
+    border-radius:20px;
+    width:min(900px,100%);
+    max-height:90vh;
+    overflow:auto;
+    padding:20px;
+}
+
+.close{
+    float:left;
+    border:0;
+    background:#2a3344;
+    color:#fff;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.modal-content{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:25px;
+}
+
+.details{
+    flex:1;
+    min-width:250px;
+    text-align:center;
+    padding:20px;
+}
+
+.details h2{
+    color:#ffe18a;
+    font-size:32px;
+    margin-bottom:15px;
+}
+
+.details-grid{
     display:grid;
-
-    grid-template-columns:
-    repeat(2,1fr);
-
-    gap:7px;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
 }
 
-.formation-player{
-
-    padding:7px;
-
-    border-radius:9px;
-
-    background:rgba(0,0,0,.25);
-
-    font-size:10px;
-
-    overflow:hidden;
-
-    white-space:nowrap;
-
-    text-overflow:ellipsis;
+.detail{
+    padding:14px;
+    background:#151e2d;
+    border-radius:10px;
 }
 
-/* =====================================================
-POSITIONS
-===================================================== */
-
-.pos-GK{
-    bottom:7%;
-    left:50%;
+.detail b{
+    display:block;
+    color:#ffe08a;
+    font-size:20px;
 }
 
-.pos-CB1{
-    bottom:20%;
-    left:33%;
-}
+/* responsive */
 
-.pos-CB2{
-    bottom:20%;
-    left:67%;
-}
-
-.pos-LB{
-    bottom:31%;
-    left:14%;
-}
-
-.pos-RB{
-    bottom:31%;
-    left:86%;
-}
-
-.pos-CM1{
-    bottom:45%;
-    left:32%;
-}
-
-.pos-CM2{
-    bottom:45%;
-    left:68%;
-}
-
-.pos-CAM{
-    bottom:58%;
-    left:50%;
-}
-
-.pos-LW{
-    bottom:76%;
-    left:14%;
-}
-
-.pos-ST{
-    bottom:80%;
-    left:50%;
-}
-
-.pos-RW{
-    bottom:76%;
-    left:86%;
-}
-
-/* =====================================================
-MOBILE
-===================================================== */
-
-@media(max-width:900px){
-
-    .field-container{
-
-        grid-template-columns:1fr;
-
-        width:min(500px,96%);
-    }
-
-    .stats{
-
+@media(max-width:800px){
+    .auction-content.show{
         grid-template-columns:1fr;
     }
 
-    #count{
+    .auction-card-wrap{
+        order:1;
+    }
 
-        order:-1;
-
-        justify-self:center;
+    .auction-info{
+        order:2;
     }
 }
 
-@media(max-width:600px){
-
-    .player-card{
-
-        width:min(355px,94vw);
-
-        min-height:575px;
-
-        padding:18px 20px 15px;
-    }
-
-    .player-photo{
-
-        width:245px;
-
-        height:260px;
-    }
-
-    .rating{
-
-        font-size:48px;
-    }
-
-    .player-name{
-
-        font-size:17px;
-    }
-
-    .card-price{
-
-        font-size:16px;
-    }
-
-    .mini-card{
-
-        width:62px;
-
-        height:78px;
-    }
-
-    .player-spot{
-
-        width:75px;
-    }
-
-    .match-result{
-
+@media(max-width:500px){
+    .container{
         padding:12px;
     }
 
-    .match-teams{
-
-        gap:7px;
+    .player-card{
+        width:290px;
+        height:425px;
     }
 
-    .match-team{
-
-        padding:12px 5px;
-
-        min-height:100px;
+    .card-photo{
+        height:215px;
     }
 
-    .team-name-result{
-
-        font-size:14px;
+    .player-avatar{
+        width:180px;
+        height:215px;
     }
 
-    .team-score{
-
-        font-size:42px;
+    .rating-number{
+        font-size:50px;
     }
 
-    .stats-grid{
-
-        grid-template-columns:1fr;
+    .card-name span{
+        font-size:23px;
     }
 
-    .possession{
-
-        grid-column:auto;
+    .players-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
     }
 
-    .formations{
-
-        grid-template-columns:1fr;
-    }
-
-    .formation-list{
-
-        grid-template-columns:1fr 1fr;
+    .mini-card{
+        padding:9px;
     }
 }
-
 </style>
-
 </head>
 
 <body>
 
-<div class="app">
+<header class="header">
+    <div class="header-inner">
+        <div class="logo">L&S <span>FOOTBALL</span></div>
+        <div class="coins">🪙 <span id="coins">1,000,000</span></div>
+    </div>
+</header>
 
-<h1>⚽ مزاد النجوم ULTIMATE 200 ⚽</h1>
+<main class="container">
 
-<div class="stats">
+<section class="auction-box">
 
-<div class="money-box blue">
+    <div class="auction-title">🏆 مزاد اللاعبين</div>
+    <div class="auction-sub">اختار لاعبك وابدأ المزايدة</div>
 
-<span id="name1">
-اللاعب الأول
-</span>
+    <div id="auctionStatus" class="auction-status">
+        اضغط على "بدء المزاد" لبدء المزاد
+    </div>
 
-<span class="money-value">
+    <button id="startAuction" class="start-btn">
+        ⚡ بدء المزاد
+    </button>
 
-<span id="m1">
-200,000,000
-</span>
+    <div id="auctionContent" class="auction-content">
 
-$
+        <div class="auction-card-wrap">
+            <div id="auctionCard"></div>
+        </div>
 
-</span>
+        <div class="auction-info">
 
+            <div>اللاعب الحالي في المزاد</div>
+
+            <div id="bidValue" class="current-bid">
+                0
+            </div>
+
+            <div>🪙 عملة</div>
+
+            <div class="bid-buttons">
+                <button class="bid-btn" data-add="1000">+ 1,000</button>
+                <button class="bid-btn" data-add="5000">+ 5,000</button>
+                <button class="bid-btn" data-add="10000">+ 10,000</button>
+                <button class="bid-btn" data-add="50000">+ 50,000</button>
+            </div>
+
+            <button id="nextPlayer" class="next-btn">
+                اللاعب التالي ⏭️
+            </button>
+
+        </div>
+    </div>
+</section>
+
+
+<h2 class="section-title">⭐ جميع اللاعبين — 200 لاعب</h2>
+
+<div class="filters">
+    <button class="filter active" data-filter="all">الكل</button>
+    <button class="filter" data-filter="ICON">ICON</button>
+    <button class="filter" data-filter="TOTY">TOTY</button>
+    <button class="filter" data-filter="TOTS">TOTS</button>
+    <button class="filter" data-filter="HERO">HERO</button>
+    <button class="filter" data-filter="LEGEND">LEGEND</button>
+    <button class="filter" data-filter="RARE">RARE</button>
 </div>
 
-<div id="count">
-1 / 11
+<div id="playersGrid" class="players-grid">
+    <div class="loading">
+        <div class="spinner"></div>
+        <div>جاري تجهيز اللاعبين...</div>
+    </div>
 </div>
 
-<div class="money-box red">
+</main>
 
-<span id="name2">
-اللاعب الثاني
-</span>
 
-<span class="money-value">
-
-<span id="m2">
-200,000,000
-</span>
-
-$
-
-</span>
-
-</div>
-
-</div>
-
-<div class="turn" id="turn">
-جاري تحميل المزاد...
-</div>
-
-<div class="timer" id="timer"></div>
-
-<div id="result"></div>
-
-<div class="field-container">
-
-<div class="team-wrap">
-
-<div
-class="team-title blue"
-id="team1Title">
-
-الفريق الأزرق
-
-</div>
-
-<div
-class="pitch"
-id="pitch1">
-
-<div class="penalty"></div>
-
-<div class="goal"></div>
-
-</div>
-
-</div>
-
-<div class="team-wrap">
-
-<div
-class="team-title red"
-id="team2Title">
-
-الفريق الأحمر
-
-</div>
-
-<div
-class="pitch"
-id="pitch2">
-
-<div class="penalty"></div>
-
-<div class="goal"></div>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card-area">
-
-<div
-id="auctionCard"
-class="player-card card-icon">
-
-<div class="card-pattern"></div>
-
-<div class="card-shine"></div>
-
-<div class="crystal c1"></div>
-<div class="crystal c2"></div>
-<div class="crystal c3"></div>
-<div class="crystal c4"></div>
-
-<div class="card-top">
-
-<div class="rating-box">
-
-<div
-class="rating"
-id="rating">
-90
-</div>
-
-<div
-class="position"
-id="pos">
-ST
-</div>
-
-</div>
-
-<div
-class="card-type"
-id="cardType">
-⭐ ICON PRIME ⭐
-</div>
-
-</div>
-
-<div class="player-photo">
-
-<img
-id="playerImg"
-alt="Player"
-src="https://ui-avatars.com/api/?name=PLAYER&background=111&color=fff&size=500">
-
-</div>
-
-<div
-class="player-name"
-id="name">
-PLAYER
-</div>
-
-<div
-class="card-stats"
-id="cardStats">
-
-<div class="card-stat">
-<span>PAC</span>
-90
-</div>
-
-<div class="card-stat">
-<span>SHO</span>
-90
-</div>
-
-<div class="card-stat">
-<span>PAS</span>
-90
-</div>
-
-<div class="card-stat">
-<span>DRI</span>
-90
-</div>
-
-<div class="card-stat">
-<span>DEF</span>
-90
-</div>
-
-<div class="card-stat">
-<span>PHY</span>
-90
-</div>
-
-</div>
-
-<div
-class="card-price"
-id="price">
-1,000,000 $
-</div>
-
-</div>
-
-</div>
-
-<div class="controls">
-
-<input
-id="bidInput"
-type="number"
-placeholder="اكتب قيمة المزايدة">
-
-<div class="buttons">
-
-<button
-class="bid"
-id="bidBtn"
-onclick="bid()">
-
-💰 مزايدة
-
-</button>
-
-<button
-class="take"
-id="takeBtn"
-onclick="take()">
-
-🔥 خده
-
-</button>
-
-<button
-class="skip"
-id="skipBtn"
-onclick="skip()">
-
-⏭ تخطي
-
-</button>
-
-</div>
-
-</div>
-
+<div id="modal" class="modal">
+    <div class="modal-box">
+        <button class="close" id="closeModal">×</button>
+        <div id="modalContent" class="modal-content"></div>
+    </div>
 </div>
 
 
 <script>
 
-/* =====================================================
-FIREBASE
-===================================================== */
+/* =========================================================
+   PLAYER DATABASE
+   200 لاعب
+========================================================= */
 
-const firebaseConfig={
+const names = [
 
-apiKey:"AIzaSyC_55Rv6wCni9EwQurtUILswB1WjkXp6hM",
-
-authDomain:"mazad-noogom.firebaseapp.com",
-
-databaseURL:"https://mazad-noogom-default-rtdb.firebaseio.com",
-
-projectId:"mazad-noogom",
-
-storageBucket:"mazad-noogom.firebasestorage.app",
-
-messagingSenderId:"183884985831",
-
-appId:"1:183884985831:web:db231949dace2b0798b942"
-
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const db=firebase.database();
-
-
-/* =====================================================
-URL
-===================================================== */
-
-const urlParams=
-new URLSearchParams(
-window.location.search
-);
-
-const room=
-urlParams.get('room');
-
-const type=
-urlParams.get('type')||'pro';
-
-const amIHost=
-urlParams.get('player')=='1';
-
-const myPlayer=
-amIHost?1:2;
-
-
-/* =====================================================
-FORMATION
-===================================================== */
-
-const positions=[
-
-"GK",
-"LB",
-"CB1",
-"CB2",
-"RB",
-"CM1",
-"CM2",
-"CAM",
-"LW",
-"ST",
-"RW"
-
-];
-
-const PRICE=1000000;
-
-
-/* =====================================================
-200 PLAYER DATABASE
-=====================================================
-
-200 لاعب بالضبط
-
-GK = 18
-LB = 18
-CB = 18
-RB = 18
-CM = 18
-CAM = 18
-LW = 18
-RW = 18
-ST = 18
-CF = 18
-
-+ 20 إضافيين
-===================================================== */
-
-const rawPlayers={
-
-GK:[
-
-"Lev Yashin",
-"Gianluigi Buffon",
-"Iker Casillas",
-"Oliver Kahn",
-"Peter Schmeichel",
-"Edwin van der Sar",
-"Petr Cech",
-"Manuel Neuer",
-"Thibaut Courtois",
-"Alisson Becker",
-"Jan Oblak",
-"Gianluigi Donnarumma",
-"Emiliano Martinez",
-"Marc-Andre ter Stegen",
-"Keylor Navas",
-"David de Gea",
-"Mike Maignan",
-"Wojciech Szczesny"
-
-],
-
-LB:[
-
-"Paolo Maldini",
-"Roberto Carlos",
-"Ashley Cole",
-"Marcelo",
-"Jordi Alba",
-"Patrice Evra",
-"Philipp Lahm",
-"Alphonso Davies",
-"Andrew Robertson",
-"Theo Hernandez",
-"Joao Cancelo",
-"David Alaba",
-"Ferland Mendy",
-"Andy Robertson",
-"Raphael Guerreiro",
-"Nuno Mendes",
-"Jose Gaya",
-"Alejandro Grimaldo"
-
-],
-
-CB:[
-
-"Franz Beckenbauer",
-"Franco Baresi",
-"Alessandro Nesta",
-"Fabio Cannavaro",
-"Carles Puyol",
-"Sergio Ramos",
-"Rio Ferdinand",
-"Nemanja Vidic",
-"John Terry",
-"Virgil van Dijk",
-"Thiago Silva",
-"Ruben Dias",
-"Antonio Rudiger",
-"Marquinhos",
-"William Saliba",
-"Ronald Araujo",
-"Matthijs de Ligt",
-"William Gallas"
-
-],
-
-RB:[
-
-"Cafu",
-"Javier Zanetti",
-"Dani Alves",
-"Lilian Thuram",
-"Carlos Alberto",
-"Lahm",
-"Gary Neville",
-"Trent Alexander-Arnold",
-"Achraf Hakimi",
-"Kyle Walker",
-"Reece James",
-"Dani Carvajal",
-"Jeremie Frimpong",
-"Kieran Trippier",
-"Cesar Azpilicueta",
-"Benjamin Pavard",
-"Pedro Porro",
-"Diogo Dalot"
-
-],
-
-CM:[
-
+"Maradona",
+"Pelé",
+"Ronaldo Nazário",
 "Zinedine Zidane",
-"Andrea Pirlo",
-"Xavi",
-"Andres Iniesta",
-"Lothar Matthaus",
-"Ruud Gullit",
-"Clarence Seedorf",
-"Steven Gerrard",
-"Frank Lampard",
-"Kevin De Bruyne",
-"Luka Modric",
-"Toni Kroos",
-"Rodri",
-"Federico Valverde",
-"Joshua Kimmich",
-"Nicolo Barella",
-"Bernardo Silva",
-"Eduardo Camavinga"
-
-],
-
-CAM:[
-
-"Diego Maradona",
 "Ronaldinho",
-"Juan Sebastian Veron",
-"Michel Platini",
 "Johan Cruyff",
-"Dennis Bergkamp",
-"Mesut Ozil",
-"Juan Roman Riquelme",
-"Francesco Totti",
-"Lionel Messi",
-"Jude Bellingham",
-"Jamal Musiala",
-"Florian Wirtz",
-"Martin Odegaard",
-"Bruno Fernandes",
-"Cole Palmer",
-"James Maddison",
-"David Silva"
-
-],
-
-LW:[
-
-"Cristiano Ronaldo",
+"Franz Beckenbauer",
+"Paolo Maldini",
+"Xavi",
+"Iniesta",
 "Thierry Henry",
-"Neymar",
-"Ryan Giggs",
-"Franck Ribery",
-"David Ginola",
-"Eden Hazard",
-"Vinicius Junior",
-"Rafael Leao",
-"Khvicha Kvaratskhelia",
-"Son Heung-min",
-"Luis Diaz",
-"Jack Grealish",
-"Kingsley Coman",
-"Sadio Mane",
-"Luis Figo",
-"Kaka",
-"Ousmane Dembele"
-
-],
-
-RW:[
-
-"Garrincha",
+"Kaká",
 "George Best",
-"David Beckham",
-"Mohamed Salah",
-"Bukayo Saka",
-"Riyad Mahrez",
-"Arjen Robben",
-"Gareth Bale",
-"Angel Di Maria",
-"Rodrygo",
-"Lamine Yamal",
-"Adama Traore",
-"Raphinha",
-"Federico Chiesa",
-"Pedro Neto",
-"Antony",
-"Jadon Sancho",
-"Michael Laudrup"
-
-],
-
-ST:[
-
-"Ronaldo Nazario",
+"Eusébio",
 "Marco van Basten",
+"Ruud Gullit",
+"Roberto Baggio",
+"Lothar Matthäus",
+"Franco Baresi",
+"Alessandro Del Piero",
+"David Beckham",
+"Steven Gerrard",
+"Frank Lampard",
+"Wayne Rooney",
 "Didier Drogba",
-"Gerd Muller",
-"Romario",
-"Gabriel Batistuta",
-"Alan Shearer",
 "Samuel Eto'o",
-"Robert Lewandowski",
-"Erling Haaland",
-"Kylian Mbappe",
-"Harry Kane",
-"Karim Benzema",
-"Luis Suarez",
-"Victor Osimhen",
-"Lautaro Martinez",
-"Victor Boniface",
-"Julian Alvarez"
-
-],
-
-CF:[
-
-"Pele",
-"Eusebio",
-"Ferenc Puskas",
-"Alfredo Di Stefano",
-"Kenny Dalglish",
-"Raul",
-"David Villa",
-"Antoine Griezmann",
-"Paulo Dybala",
-"Joao Felix",
-"Christopher Nkunku",
-"Dominic Solanke",
-"Marcus Thuram",
-"Rasmus Hojlund",
-"Ollie Watkins",
-"Alexander Isak",
-"Darwin Nunez",
-"Romelu Lukaku"
-
-]
-
-};
-
-
-/* =====================================================
-EXTRA 20 PLAYERS
-===================================================== */
-
-const extraPlayers=[
-
-{name:"Hristo Stoichkov",pos:"LW"},
-
-{name:"Andriy Shevchenko",pos:"ST"},
-
-{name:"Ruud van Nistelrooy",pos:"ST"},
-
-{name:"Michael Owen",pos:"ST"},
-
-{name:"Filippo Inzaghi",pos:"ST"},
-
-{name:"Hernan Crespo",pos:"ST"},
-
-{name:"Zlatan Ibrahimovic",pos:"ST"},
-
-{name:"Wayne Rooney",pos:"ST"},
-
-{name:"Sergio Aguero",pos:"ST"},
-
-{name:"Carlos Tevez",pos:"ST"},
-
-{name:"Fernando Torres",pos:"ST"},
-
-{name:"Rivaldo",pos:"CAM"},
-
-{name:"Karl-Heinz Rummenigge",pos:"ST"},
-
-{name:"Gheorghe Hagi",pos:"CAM"},
-
-{name:"Robert Pires",pos:"LW"},
-
-{name:"Wesley Sneijder",pos:"CAM"},
-
-{name:"Cesc Fabregas",pos:"CM"},
-
-{name:"Yaya Toure",pos:"CM"},
-
-{name:"Michael Essien",pos:"CM"},
-
-{name:"Claude Makelele",pos:"CM"}
-
-];
-
-
-/* =====================================================
-CATEGORY LISTS
-===================================================== */
-
-const GOAT_NAMES=new Set([
-
-"Pele",
-"Diego Maradona",
-"Lionel Messi",
-"Cristiano Ronaldo",
-"Ronaldo Nazario",
-"Johan Cruyff"
-
-]);
-
-
-const ICON_NAMES=new Set([
-
-"Lev Yashin",
-"Gianluigi Buffon",
+"Andrea Pirlo",
+"Clarence Seedorf",
+"Patrick Vieira",
+"Eric Cantona",
+"Arjen Robben",
+"Franck Ribéry",
+"Luis Figo",
+"Michael Ballack",
+"Javier Zanetti",
+"Cafu",
+"Roberto Carlos",
+"Fabio Cannavaro",
 "Iker Casillas",
 "Oliver Kahn",
 "Peter Schmeichel",
-"Edwin van der Sar",
-"Petr Cech",
-
-"Paolo Maldini",
-"Roberto Carlos",
-"Ashley Cole",
-"Marcelo",
-"Jordi Alba",
-"Patrice Evra",
-"Philipp Lahm",
-
-"Franz Beckenbauer",
-"Franco Baresi",
-"Alessandro Nesta",
-"Fabio Cannavaro",
-"Carles Puyol",
-"Sergio Ramos",
-"Rio Ferdinand",
-"Nemanja Vidic",
-"John Terry",
-
-"Cafu",
-"Javier Zanetti",
-"Dani Alves",
-"Lilian Thuram",
-"Carlos Alberto",
-"Gary Neville",
-
-"Zinedine Zidane",
-"Andrea Pirlo",
-"Xavi",
-"Andres Iniesta",
-"Lothar Matthaus",
-"Ruud Gullit",
-"Clarence Seedorf",
-"Steven Gerrard",
-"Frank Lampard",
-
-"Ronaldinho",
-"Juan Sebastian Veron",
-"Michel Platini",
-"Dennis Bergkamp",
-"Mesut Ozil",
-"Juan Roman Riquelme",
-"Francesco Totti",
-"David Silva",
-
-"Thierry Henry",
-"Ryan Giggs",
-"Franck Ribery",
-"David Ginola",
-"Eden Hazard",
-"Luis Figo",
-"Kaka",
-
-"Garrincha",
-"George Best",
-"David Beckham",
-"Arjen Robben",
-"Gareth Bale",
-"Angel Di Maria",
-"Michael Laudrup",
-
-"Marco van Basten",
-"Didier Drogba",
-"Gerd Muller",
-"Romario",
-"Gabriel Batistuta",
-"Alan Shearer",
-"Samuel Eto'o",
-
-"Eusebio",
-"Ferenc Puskas",
-"Alfredo Di Stefano",
-"Kenny Dalglish",
-"Raul",
-"David Villa",
-
-"Hristo Stoichkov",
-"Andriy Shevchenko",
-"Ruud van Nistelrooy",
-"Michael Owen",
-"Filippo Inzaghi",
-"Hernan Crespo",
-"Zlatan Ibrahimovic",
-"Wayne Rooney",
-"Sergio Aguero",
-"Carlos Tevez",
-"Fernando Torres",
 "Rivaldo",
-"Karl-Heinz Rummenigge",
-"Gheorghe Hagi",
-"Robert Pires",
-"Wesley Sneijder",
-"Cesc Fabregas",
-"Yaya Toure",
-"Michael Essien",
-"Claude Makelele"
+"Romário",
+"Gabriel Batistuta",
+"Hernán Crespo",
+"Diego Forlán",
+"Juan Román Riquelme",
+"Alessandro Nesta",
+"Nemanja Vidić",
+"Rio Ferdinand",
 
-]);
-
-
-/* =====================================================
-CURRENT PLAYERS
-===================================================== */
-
-const CURRENT_NAMES=new Set([
-
+"Lionel Messi",
+"Cristiano Ronaldo",
+"Neymar",
+"Luka Modrić",
+"Karim Benzema",
+"Robert Lewandowski",
+"Kevin De Bruyne",
+"Erling Haaland",
+"Kylian Mbappé",
+"Vinícius Júnior",
+"Mohamed Salah",
+"Sadio Mané",
+"Harry Kane",
+"Son Heung-min",
+"Antoine Griezmann",
+"Paul Pogba",
+"N'Golo Kanté",
+"Toni Kroos",
+"Casemiro",
+"Sergio Ramos",
+"Marcelo",
+"Gerard Piqué",
 "Manuel Neuer",
 "Thibaut Courtois",
-"Alisson Becker",
-"Jan Oblak",
-"Gianluigi Donnarumma",
-"Emiliano Martinez",
-"Marc-Andre ter Stegen",
-"Mike Maignan",
-
-"Alphonso Davies",
-"Andrew Robertson",
-"Theo Hernandez",
-"Joao Cancelo",
-"David Alaba",
-"Ferland Mendy",
-"Nuno Mendes",
-"Alejandro Grimaldo",
-
+"Alisson",
 "Virgil van Dijk",
-"Thiago Silva",
-"Ruben Dias",
-"Antonio Rudiger",
-"Marquinhos",
-"William Saliba",
-"Ronald Araujo",
-"Matthijs de Ligt",
-
 "Trent Alexander-Arnold",
-"Achraf Hakimi",
-"Kyle Walker",
-"Reece James",
-"Dani Carvajal",
-"Jeremie Frimpong",
-"Kieran Trippier",
-"Cesar Azpilicueta",
-"Benjamin Pavard",
-"Pedro Porro",
-"Diogo Dalot",
-
-"Kevin De Bruyne",
-"Luka Modric",
-"Toni Kroos",
-"Rodri",
-"Federico Valverde",
-"Joshua Kimmich",
-"Nicolo Barella",
+"Andrew Robertson",
 "Bernardo Silva",
-"Eduardo Camavinga",
-
-"Jude Bellingham",
-"Jamal Musiala",
-"Florian Wirtz",
-"Martin Odegaard",
 "Bruno Fernandes",
-"Cole Palmer",
-"James Maddison",
-
-"Neymar",
-"Vinicius Junior",
-"Rafael Leao",
-"Khvicha Kvaratskhelia",
-"Son Heung-min",
-"Luis Diaz",
+"Rodri",
+"Jude Bellingham",
+"Phil Foden",
 "Jack Grealish",
-"Kingsley Coman",
-"Sadio Mane",
-"Ousmane Dembele",
-
-"Mohamed Salah",
-"Bukayo Saka",
-"Riyad Mahrez",
-"Rodrygo",
-"Lamine Yamal",
-"Adama Traore",
-"Raphinha",
-"Federico Chiesa",
-"Pedro Neto",
-"Antony",
-"Jadon Sancho",
-
-"Robert Lewandowski",
-"Erling Haaland",
-"Kylian Mbappe",
-"Harry Kane",
-"Karim Benzema",
-"Luis Suarez",
+"Declan Rice",
+"Martin Ødegaard",
+"Rafael Leão",
 "Victor Osimhen",
-"Lautaro Martinez",
-"Victor Boniface",
-"Julian Alvarez",
+"Lautaro Martínez",
+"Julián Álvarez",
+"Federico Valverde",
+"Frenkie de Jong",
+"Pedri",
+"Gavi",
+"Joshua Kimmich",
+"Thomas Müller",
+"Ilkay Gündogan",
+"Riyad Mahrez",
+"Achraf Hakimi",
+"Marquinhos",
 
-"Antoine Griezmann",
-"Paulo Dybala",
-"Joao Felix",
-"Christopher Nkunku",
-"Dominic Solanke",
-"Marcus Thuram",
-"Rasmus Hojlund",
-"Ollie Watkins",
-"Alexander Isak",
-"Darwin Nunez",
-"Romelu Lukaku"
+"Ronaldo",
+"Romário",
+"Zico",
+"Sócrates",
+"Falcão",
+"Carlos Alberto",
+"Didi",
+"Garrincha",
+"Jairzinho",
+"Tostão",
+"Rivelino",
+"Careca",
+"Adriano",
+"Alexandre Pato",
+"Robinho",
+"Juninho",
+"Kaká Jr",
+"Denílson",
+"Emerson",
+"Gilberto Silva",
 
-]);
+"Francesco Totti",
+"Daniele De Rossi",
+"Gianluigi Buffon",
+"Giorgio Chiellini",
+"Leonardo Bonucci",
+"Claudio Marchisio",
+"Fabio Grosso",
+"Filippo Inzaghi",
+"Christian Vieri",
+"Antonio Di Natale",
+"Andrea Barzagli",
+"Marco Verratti",
+"Jorginho",
+"Ciro Immobile",
+"Federico Chiesa",
+"Nicolo Barella",
+"Alessio Romagnoli",
+"Lorenzo Insigne",
+"Antonio Cassano",
+"Giuseppe Rossi",
+
+"Xabi Alonso",
+"Fernando Torres",
+"David Villa",
+"Carles Puyol",
+"Sergio Busquets",
+"David Silva",
+"Isco",
+"Cesc Fàbregas",
+"Fernando Morientes",
+"Raúl",
+"Iker Muniain",
+"Jesús Navas",
+"Joaquín",
+"Juan Mata",
+"Thiago Alcântara",
+"Pedro",
+"Álvaro Morata",
+"Gerard Moreno",
+"Dani Carvajal",
+"Jordi Alba",
+
+"Didier Zokora",
+"Yaya Touré",
+"Michael Essien",
+"Jay-Jay Okocha",
+"John Obi Mikel",
+"Emmanuel Adebayor",
+"Pierre-Emerick Aubameyang",
+"Victor Moses",
+"Wilfried Zaha",
+"Kalidou Koulibaly",
+"Édouard Mendy",
+"Achraf Hakimi",
+"Amadou Haidara",
+"Thomas Partey",
+"Ismaïla Sarr",
+"Riyad Mahrez",
+"Rachid Ghezzal",
+"Youssef En-Nesyri",
+"Hakim Ziyech",
+"Sofyan Amrabat",
+
+"Ahmed Hassan",
+"Aboutrika",
+"Hossam Hassan",
+"Hossam Mido",
+"Ahmed Elmohamady",
+"Essam El Hadary",
+"Wael Gomaa",
+"Ahmed Fathy",
+"Shikabala",
+"Amr Zaki",
+"Emad Moteab",
+"Ahmed Hegazi",
+"Mohamed Elneny",
+"Trézéguet",
+"Mostafa Mohamed",
+"Omar Marmoush",
+"Ahmed Sayed Zizo",
+"Ramadan Sobhi",
+"Mahmoud Hamdy",
+"Yasser Ibrahim",
+
+"Kevin Keegan",
+"Alan Shearer",
+"Paul Scholes",
+"Roy Keane",
+"Gary Neville",
+"John Terry",
+"Ashley Cole",
+"Peter Crouch",
+"Michael Owen",
+"Sol Campbell",
+"Rio Ferdinand",
+"Steven Gerrard",
+"Frank Lampard",
+"John Barnes",
+"Paul Gascoigne",
+"Robbie Fowler",
+"Ian Rush",
+"Ryan Giggs",
+"David Seaman",
+"Michael Carrick"
+];
+
+/* نضمن 200 بالضبط */
+const playerNames = names.slice(0,200);
+
+const countries = [
+    ["🇦🇷","الأرجنتين"],
+    ["🇧🇷","البرازيل"],
+    ["🇫🇷","فرنسا"],
+    ["🇵🇹","البرتغال"],
+    ["🇪🇸","إسبانيا"],
+    ["🇮🇹","إيطاليا"],
+    ["🇩🇪","ألمانيا"],
+    ["🇳🇱","هولندا"],
+    ["🇬🇧","إنجلترا"],
+    ["🇪🇬","مصر"],
+    ["🇨🇮","ساحل العاج"],
+    ["🇸🇳","السنغال"],
+    ["🇲🇦","المغرب"],
+    ["🇩🇿","الجزائر"],
+    ["🇧🇪","بلجيكا"]
+];
+
+const categories = [
+    "ICON",
+    "ICON",
+    "TOTY",
+    "TOTY",
+    "TOTS",
+    "HERO",
+    "LEGEND",
+    "RARE"
+];
+
+const positions = [
+    "ST","CF","LW","RW","CAM",
+    "CM","CDM","LM","RM",
+    "CB","LB","RB","GK"
+];
 
 
-/* =====================================================
-GET CATEGORY
-===================================================== */
+/* =========================================================
+   CREATE PLAYERS
+========================================================= */
 
-function getPlayerTag(name){
+const players = playerNames.map((name,index)=>{
 
-if(GOAT_NAMES.has(name))
-return "goat";
+    let category;
 
-if(ICON_NAMES.has(name))
-return "icon";
+    if(index < 50){
+        category = "ICON";
+    }else if(index < 100){
+        category = "TOTY";
+    }else if(index < 130){
+        category = "TOTS";
+    }else if(index < 155){
+        category = "HERO";
+    }else if(index < 180){
+        category = "LEGEND";
+    }else{
+        category = "RARE";
+    }
 
-if(CURRENT_NAMES.has(name))
-return "current";
+    let rating;
 
-return "retired";
+    if(category==="ICON"){
+        rating = 93 + (index % 5);
+    }else if(category==="TOTY"){
+        rating = 96 + (index % 4);
+    }else if(category==="TOTS"){
+        rating = 94 + (index % 5);
+    }else if(category==="HERO"){
+        rating = 91 + (index % 5);
+    }else if(category==="LEGEND"){
+        rating = 88 + (index % 6);
+    }else{
+        rating = 84 + (index % 7);
+    }
 
+    const country = countries[index % countries.length];
+
+    const position = positions[index % positions.length];
+
+    const pace = Math.min(99,rating - 2 + (index % 7));
+    const shoot = Math.min(99,rating - 1 + (index % 6));
+    const pass = Math.min(99,rating - 3 + (index % 8));
+    const drib = Math.min(99,rating - 2 + (index % 7));
+    const defend = Math.min(99,rating - 5 + (index % 10));
+    const physical = Math.min(99,rating - 4 + (index % 9));
+
+    return {
+        id:index+1,
+        name,
+        rating,
+        category,
+        position,
+        flag:country[0],
+        country:country[1],
+        pace,
+        shoot,
+        pass,
+        drib,
+        defend,
+        physical
+    };
+});
+
+
+/* =========================================================
+   SAFE AVATAR
+   لا يحتاج تحميل صورة من الإنترنت
+========================================================= */
+
+function avatarSVG(player){
+
+    const initials = player.name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0,2)
+        .map(x=>x[0])
+        .join("")
+        .toUpperCase();
+
+    let bg="#16263b";
+
+    if(player.category==="ICON") bg="#7b5708";
+    if(player.category==="TOTY") bg="#087aa4";
+    if(player.category==="TOTS") bg="#69209d";
+    if(player.category==="HERO") bg="#91410e";
+    if(player.category==="LEGEND") bg="#17647b";
+    if(player.category==="RARE") bg="#435b82";
+
+    const svg=`
+    <svg xmlns="http://www.w3.org/2000/svg" width="500" height="600">
+        <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="${bg}"/>
+                <stop offset="1" stop-color="#05080d"/>
+            </linearGradient>
+        </defs>
+        <rect width="500" height="600" fill="url(#g)"/>
+        <circle cx="250" cy="190" r="105" fill="#d8a47a"/>
+        <path d="M125 180 Q150 65 250 65 Q350 65 375 180 Q330 130 250 135 Q170 130 125 180" fill="#15100d"/>
+        <ellipse cx="210" cy="195" rx="10" ry="8" fill="#111"/>
+        <ellipse cx="290" cy="195" rx="10" ry="8" fill="#111"/>
+        <path d="M215 245 Q250 260 285 245" fill="none" stroke="#542d20" stroke-width="7"/>
+        <path d="M80 600 Q95 350 250 340 Q405 350 420 600" fill="${bg}"/>
+        <text x="250" y="490" text-anchor="middle" font-size="75" font-family="Arial" font-weight="bold" fill="#fff">${initials}</text>
+    </svg>`;
+
+    return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg);
 }
 
 
-/* =====================================================
-STABLE RATING
-===================================================== */
+/* =========================================================
+   CARD HTML
+========================================================= */
 
-function stableHash(text){
+function createCard(player){
 
-let hash=0;
+    return `
+    <div class="player-card card-${player.category.toLowerCase()}">
 
-for(let i=0;i<text.length;i++){
+        <div class="card-inner">
 
-hash=
-((hash<<5)-hash)+
-text.charCodeAt(i);
+            <div class="crystal c1"></div>
+            <div class="crystal c2"></div>
+            <div class="crystal c3"></div>
+            <div class="crystal c4"></div>
 
-hash|=0;
+            <div class="gold-line top"></div>
+            <div class="gold-line bottom"></div>
 
+            <div class="card-top">
+                <div class="ball-emblem">⚽</div>
+            </div>
+
+            <div class="rating">
+                <div class="rating-number">${player.rating}</div>
+                <div class="position">${player.position}</div>
+            </div>
+
+            <div class="card-photo">
+                <div class="photo-glow"></div>
+                <img
+                    class="player-avatar"
+                    src="${avatarSVG(player)}"
+                    alt="${player.name}">
+            </div>
+
+            <div class="card-name">
+                <span>${player.name}</span>
+            </div>
+
+            <div class="card-type">
+                ${player.category}
+            </div>
+
+            <div class="flag" style="
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:#fff;
+                font-size:23px;
+            ">
+                ${player.flag}
+            </div>
+
+            <div class="card-footer">
+
+                <div class="stat">
+                    <b>${player.pace}</b>
+                    <small>PAC</small>
+                </div>
+
+                <div class="stat">
+                    <b>${player.shoot}</b>
+                    <small>SHO</small>
+                </div>
+
+                <div class="stat">
+                    <b>${player.pass}</b>
+                    <small>PAS</small>
+                </div>
+
+                <div class="stat">
+                    <b>${player.drib}</b>
+                    <small>DRI</small>
+                </div>
+
+                <div class="stat">
+                    <b>${player.defend}</b>
+                    <small>DEF</small>
+                </div>
+
+                <div class="stat">
+                    <b>${player.physical}</b>
+                    <small>PHY</small>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    `;
 }
 
-return Math.abs(hash);
+
+/* =========================================================
+   PLAYERS GRID
+========================================================= */
+
+const grid=document.getElementById("playersGrid");
+
+function renderPlayers(filter="all"){
+
+    const list = filter==="all"
+        ? players
+        : players.filter(p=>p.category===filter);
+
+    if(!list.length){
+        grid.innerHTML=`<div class="empty">لا يوجد لاعبين</div>`;
+        return;
+    }
+
+    grid.innerHTML=list.map(player=>`
+
+        <div class="mini-card" data-id="${player.id}">
+
+            <div class="mini-top">
+
+                <img
+                    class="mini-avatar"
+                    src="${avatarSVG(player)}"
+                    alt="${player.name}">
+
+                <div>
+                    <div class="mini-rating">${player.rating}</div>
+                    <div>${player.position}</div>
+                </div>
+
+            </div>
+
+            <div class="mini-name">
+                ${player.name}
+            </div>
+
+            <div class="mini-meta">
+                <span>${player.flag} ${player.country}</span>
+                <span>${player.category}</span>
+            </div>
+
+            <div class="badge">
+                اضغط لعرض الكارت
+            </div>
+
+        </div>
+
+    `).join("");
 }
 
-
-function getRating(name,tag){
-
-const hash=
-stableHash(name);
-
-if(tag==="goat")
-return 99;
-
-if(tag==="icon")
-return 95+(hash%5);
-
-if(tag==="retired")
-return 91+(hash%7);
-
-return 89+(hash%8);
-
-}
+renderPlayers();
 
 
-/* =====================================================
-BUILD PLAYER DATABASE
-===================================================== */
+/* =========================================================
+   FILTERS
+========================================================= */
 
-const playersDB={
+document.querySelectorAll(".filter").forEach(button=>{
 
-GK:[],
-LB:[],
-CB:[],
-RB:[],
-CM:[],
-CAM:[],
-LW:[],
-RW:[],
-ST:[]
-};
+    button.addEventListener("click",()=>{
 
+        document.querySelectorAll(".filter")
+            .forEach(x=>x.classList.remove("active"));
 
-Object.entries(rawPlayers).forEach(
-([position,names])=>{
+        button.classList.add("active");
 
-const finalPosition=
-position==="CF"
-?
-"ST"
-:
-position;
-
-names.forEach(name=>{
-
-const tag=
-getPlayerTag(name);
-
-const rating=
-getRating(name,tag);
-
-playersDB[finalPosition].push({
-
-n:name,
-
-p:PRICE,
-
-r:rating,
-
-tag:tag
-
-});
-
-});
+        renderPlayers(button.dataset.filter);
+    });
 
 });
 
 
-extraPlayers.forEach(player=>{
+/* =========================================================
+   PLAYER MODAL
+========================================================= */
 
-const tag=
-getPlayerTag(player.name);
+const modal=document.getElementById("modal");
+const modalContent=document.getElementById("modalContent");
 
-playersDB[player.pos].push({
+grid.addEventListener("click",e=>{
 
-n:player.name,
+    const card=e.target.closest(".mini-card");
 
-p:PRICE,
+    if(!card)return;
 
-r:getRating(player.name,tag),
+    const id=Number(card.dataset.id);
 
-tag:tag
+    const player=players.find(p=>p.id===id);
 
+    if(!player)return;
+
+    modalContent.innerHTML=`
+
+        ${createCard(player)}
+
+        <div class="details">
+
+            <h2>${player.name}</h2>
+
+            <p style="color:#aab6c8;margin-bottom:20px">
+                ${player.flag} ${player.country}
+            </p>
+
+            <div class="details-grid">
+
+                <div class="detail">
+                    <b>${player.pace}</b>
+                    السرعة
+                </div>
+
+                <div class="detail">
+                    <b>${player.shoot}</b>
+                    التسديد
+                </div>
+
+                <div class="detail">
+                    <b>${player.pass}</b>
+                    التمرير
+                </div>
+
+                <div class="detail">
+                    <b>${player.drib}</b>
+                    المراوغة
+                </div>
+
+                <div class="detail">
+                    <b>${player.defend}</b>
+                    الدفاع
+                </div>
+
+                <div class="detail">
+                    <b>${player.physical}</b>
+                    القوة
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+    modal.classList.add("show");
 });
 
+
+document.getElementById("closeModal")
+.addEventListener("click",()=>{
+    modal.classList.remove("show");
 });
 
 
-/* =====================================================
-VERIFY 200
-===================================================== */
-
-const totalPlayers=
-Object.values(playersDB)
-.reduce(
-(sum,list)=>sum+list.length,
-0
-);
-
-console.log(
-"TOTAL PLAYERS:",
-totalPlayers
-);
+modal.addEventListener("click",e=>{
+    if(e.target===modal){
+        modal.classList.remove("show");
+    }
+});
 
 
-/* =====================================================
-VARIABLES
-===================================================== */
+/* =========================================================
+   AUCTION
+========================================================= */
 
-let currentPosIndex=0;
-
-let currentPlayer=null;
-
+let auctionPlayer=null;
 let currentBid=0;
 
-let highestBidder=0;
+let coins=1000000;
 
-let turn=1;
-
-let m1=200000000;
-
-let m2=200000000;
-
-let t1={};
-
-let t2={};
-
-let filled1={};
-
-let filled2={};
-
-let usedPlayers={};
-
-let availablePlayers={};
-
-let timerInterval=null;
+const coinsElement=document.getElementById("coins");
+const auctionStatus=document.getElementById("auctionStatus");
+const auctionContent=document.getElementById("auctionContent");
+const auctionCard=document.getElementById("auctionCard");
+const bidValue=document.getElementById("bidValue");
 
 
-/* =====================================================
-IMAGE CACHE
-===================================================== */
+function updateCoins(){
 
-const imageCache={};
-
-const imageLoading={};
-
-
-/* =====================================================
-FALLBACK IMAGE
-===================================================== */
-
-function getFallbackImg(name){
-
-return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=101820&color=ffd700&size=500&bold=true`;
+    coinsElement.textContent=
+        coins.toLocaleString("en-US");
 
 }
 
 
-/* =====================================================
-REAL PLAYER IMAGE
-===================================================== */
+/*
+   مهم:
+   المزاد هنا لا ينتظر Firebase
+   ولا ينتظر fetch
+   ولا ينتظر API
+   لذلك لن يعلق على "جاري تحميل المزاد".
+*/
 
-async function getRealPlayerImage(name){
+function startAuction(){
 
-if(imageCache[name])
-return imageCache[name];
+    const randomIndex=
+        Math.floor(Math.random()*players.length);
 
-if(imageLoading[name])
-return imageLoading[name];
+    auctionPlayer=players[randomIndex];
 
-imageLoading[name]=(async()=>{
+    /*
+       سعر البداية حسب قوة اللاعب
+    */
 
-try{
+    currentBid=
+        Math.max(
+            1000,
+            (auctionPlayer.rating-75)*2500
+        );
 
-const url=
-"https://en.wikipedia.org/api/rest_v1/page/summary/"+
-encodeURIComponent(name);
+    auctionCard.innerHTML=
+        createCard(auctionPlayer);
 
-const response=
-await fetch(
-url,
-{
-cache:"force-cache"
-}
-);
+    bidValue.textContent=
+        currentBid.toLocaleString("en-US");
 
-if(response.ok){
+    auctionStatus.innerHTML=
+        `🔥 المزاد مفتوح الآن على <b>${auctionPlayer.name}</b>`;
 
-const data=
-await response.json();
+    auctionContent.classList.add("show");
 
-const image=
-data?.thumbnail?.source||
-data?.originalimage?.source;
-
-if(image){
-
-imageCache[name]=image;
-
-return image;
-
-}
+    document.getElementById("startAuction")
+        .textContent="🔄 لاعب جديد";
 
 }
 
 
-/* Search API */
+document.getElementById("startAuction")
+.addEventListener("click",startAuction);
 
-const searchURL=
-"https://en.wikipedia.org/w/api.php"+
-"?action=query"+
-"&generator=search"+
-"&gsrsearch="+
-encodeURIComponent(
-name+" footballer"
-)+
-"&gsrnamespace=0"+
-"&prop=pageimages"+
-"&piprop=thumbnail"+
-"&pithumbsize=600"+
-"&format=json"+
-"&origin=*";
 
-const searchResponse=
-await fetch(
-searchURL,
-{
-cache:"force-cache"
-}
-);
+/* =========================================================
+   BIDDING
+========================================================= */
 
-if(searchResponse.ok){
+document.querySelectorAll(".bid-btn")
+.forEach(button=>{
 
-const searchData=
-await searchResponse.json();
+    button.addEventListener("click",()=>{
 
-const pages=
-Object.values(
-searchData?.query?.pages||{}
-);
+        if(!auctionPlayer){
+            auctionStatus.textContent=
+                "ابدأ المزاد أولاً";
+            return;
+        }
 
-for(const page of pages){
+        const add=
+            Number(button.dataset.add);
 
-if(page.thumbnail?.source){
+        const newBid=
+            currentBid+add;
 
-imageCache[name]=
-page.thumbnail.source;
+        if(newBid>coins){
 
-return page.thumbnail.source;
+            auctionStatus.innerHTML=
+                "❌ رصيدك لا يكفي لهذه المزايدة";
 
-}
+            return;
+        }
 
-}
+        currentBid=newBid;
 
-}
+        bidValue.textContent=
+            currentBid.toLocaleString("en-US");
 
-}catch(error){
+        auctionStatus.innerHTML=
+            `🔥 أعلى مزايدة حالية: <b>${currentBid.toLocaleString("en-US")}</b> 🪙`;
 
-console.warn(
-"Image loading failed:",
-name,
-error
-);
-
-}
-
-return getFallbackImg(name);
-
-})();
-
-const result=
-await imageLoading[name];
-
-delete imageLoading[name];
-
-return result;
-
-}
-
-
-/* =====================================================
-SET IMAGE
-===================================================== */
-
-async function setPlayerImage(name,img){
-
-if(!img)
-return;
-
-img.src=
-getFallbackImg(name);
-
-const realImage=
-await getRealPlayerImage(name);
-
-if(realImage)
-img.src=realImage;
-
-img.onerror=()=>{
-
-if(
-!img.src.includes(
-"ui-avatars.com"
-)
-){
-
-img.src=
-getFallbackImg(name);
-
-}
-
-};
-
-}
-
-
-/* =====================================================
-AUDIO
-===================================================== */
-
-let audioContext=null;
-
-function playMoneySound(){
-
-try{
-
-if(!audioContext){
-
-audioContext=
-new(
-window.AudioContext||
-window.webkitAudioContext
-)();
-
-}
-
-const now=
-audioContext.currentTime;
-
-const oscillator=
-audioContext.createOscillator();
-
-const gain=
-audioContext.createGain();
-
-oscillator.type="sine";
-
-oscillator.frequency.setValueAtTime(
-520,
-now
-);
-
-oscillator.frequency.exponentialRampToValueAtTime(
-180,
-now+.25
-);
-
-gain.gain.setValueAtTime(
-.001,
-now
-);
-
-gain.gain.exponentialRampToValueAtTime(
-.35,
-now+.03
-);
-
-gain.gain.exponentialRampToValueAtTime(
-.001,
-now+.3
-);
-
-oscillator.connect(gain);
-
-gain.connect(
-audioContext.destination
-);
-
-oscillator.start(now);
-
-oscillator.stop(
-now+.32
-);
-
-}catch(e){}
-
-}
-
-
-/* =====================================================
-POOL KEY
-===================================================== */
-
-function poolKey(pos){
-
-if(
-pos==="CB1"||
-pos==="CB2"
-)
-return "CB";
-
-if(
-pos==="CM1"||
-pos==="CM2"
-)
-return "CM";
-
-return pos;
-
-}
-
-
-/* =====================================================
-CARD INFO
-===================================================== */
-
-function getCardInfo(player){
-
-const tag=
-player?.tag||
-"current";
-
-if(tag==="goat"){
-
-return{
-
-className:"card-goat",
-
-title:"👑 GOAT OMEGA 👑"
-
-};
-
-}
-
-if(tag==="icon"){
-
-return{
-
-className:"card-icon",
-
-title:"⭐ ICON PRIME ⭐"
-
-};
-
-}
-
-if(tag==="retired"){
-
-return{
-
-className:"card-retired",
-
-title:"🏛 RETIRED MASTER 🏛"
-
-};
-
-}
-
-return{
-
-className:"card-current",
-
-title:"⚡ CURRENT SUPREME ⚡"
-
-};
-
-}
-
-
-/* =====================================================
-STATS
-===================================================== */
-
-function clamp(value){
-
-return Math.max(
-50,
-Math.min(
-99,
-Math.round(value)
-)
-);
-
-}
-
-
-function getCardStats(player){
-
-const r=
-Number(player.r)||85;
-
-const pos=
-positions[currentPosIndex];
-
-let stats={
-
-PAC:r,
-SHO:r,
-PAS:r,
-DRI:r,
-DEF:r,
-PHY:r
-
-};
-
-
-if(pos==="GK"){
-
-stats={
-
-PAC:clamp(r-7),
-
-SHO:clamp(r-35),
-
-PAS:clamp(r-2),
-
-DRI:clamp(r-10),
-
-DEF:clamp(r+1),
-
-PHY:clamp(r)
-
-};
-
-}
-
-else if(
-pos==="LB"||
-pos==="RB"
-){
-
-stats={
-
-PAC:clamp(r+3),
-
-SHO:clamp(r-4),
-
-PAS:clamp(r+2),
-
-DRI:clamp(r+3),
-
-DEF:clamp(r+2),
-
-PHY:clamp(r)
-
-};
-
-}
-
-else if(
-pos==="CB1"||
-pos==="CB2"
-){
-
-stats={
-
-PAC:clamp(r-1),
-
-SHO:clamp(r-18),
-
-PAS:clamp(r),
-
-DRI:clamp(r-7),
-
-DEF:clamp(r+4),
-
-PHY:clamp(r+3)
-
-};
-
-}
-
-else if(
-pos==="CM1"||
-pos==="CM2"
-){
-
-stats={
-
-PAC:clamp(r),
-
-SHO:clamp(r),
-
-PAS:clamp(r+4),
-
-DRI:clamp(r+3),
-
-DEF:clamp(r),
-
-PHY:clamp(r+1)
-
-};
-
-}
-
-else if(pos==="CAM"){
-
-stats={
-
-PAC:clamp(r+2),
-
-SHO:clamp(r+3),
-
-PAS:clamp(r+4),
-
-DRI:clamp(r+5),
-
-DEF:clamp(r-14),
-
-PHY:clamp(r-3)
-
-};
-
-}
-
-else{
-
-stats={
-
-PAC:clamp(r+4),
-
-SHO:clamp(r+5),
-
-PAS:clamp(r+1),
-
-DRI:clamp(r+4),
-
-DEF:clamp(r-13),
-
-PHY:clamp(r+1)
-
-};
-
-}
-
-return stats;
-
-}
-
-
-/* =====================================================
-DRAW PITCH
-===================================================== */
-
-function drawPitch(){
-
-document.getElementById('pitch1').innerHTML=
-`
-<div class="penalty"></div>
-<div class="goal"></div>
-`;
-
-document.getElementById('pitch2').innerHTML=
-`
-<div class="penalty"></div>
-<div class="goal"></div>
-`;
-
-
-positions.forEach(pos=>{
-
-document.getElementById('pitch1').innerHTML+=`
-
-<div
-class="player-spot pos-${pos}"
-id="p1-${pos}">
-
-<div class="pos-label">
-${pos}
-</div>
-
-<div class="mini-card empty">
-
-<div class="mini-photo"></div>
-
-<div class="mini-rating">
--
-</div>
-
-<div class="mini-pos">
-${pos}
-</div>
-
-<div class="mini-name">
--
-</div>
-
-</div>
-
-</div>
-
-`;
-
-
-document.getElementById('pitch2').innerHTML+=`
-
-<div
-class="player-spot pos-${pos}"
-id="p2-${pos}">
-
-<div class="pos-label">
-${pos}
-</div>
-
-<div class="mini-card empty">
-
-<div class="mini-photo"></div>
-
-<div class="mini-rating">
--
-</div>
-
-<div class="mini-pos">
-${pos}
-</div>
-
-<div class="mini-name">
--
-</div>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-}
-
-drawPitch();
-
-
-/* =====================================================
-ROOM
-===================================================== */
-
-const roomRef=
-db.ref(
-'rooms/'+
-type+'/'+
-room
-);
-
-
-roomRef.on(
-'value',
-async snapshot=>{
-
-const data=snapshot.val();
-
-if(!data)
-return;
-
-document.getElementById('name1').innerText=
-data.player1?.name||
-'الأزرق';
-
-document.getElementById('name2').innerText=
-data.player2?.name||
-'الأحمر';
-
-document.getElementById('team1Title').innerText=
-data.player1?.name||
-'الفريق الأزرق';
-
-document.getElementById('team2Title').innerText=
-data.player2?.name||
-'الفريق الأحمر';
-
-await loadData(data);
+    });
 
 });
 
 
-/* =====================================================
-LOAD
-===================================================== */
+/* =========================================================
+   NEXT PLAYER
+========================================================= */
 
-async function loadData(data){
+document.getElementById("nextPlayer")
+.addEventListener("click",()=>{
 
-currentPosIndex=
-data.currentPos||0;
-
-currentBid=
-data.currentBid||0;
-
-highestBidder=
-data.highestBidder||0;
-
-turn=
-data.turn||1;
-
-m1=
-data.m1??200000000;
-
-m2=
-data.m2??200000000;
-
-t1=
-data.t1||{};
-
-t2=
-data.t2||{};
-
-currentPlayer=
-data.currentPlayer||null;
-
-filled1=
-data.filled1||{};
-
-filled2=
-data.filled2||{};
-
-usedPlayers=
-data.usedPlayers||{};
-
-availablePlayers=
-data.availablePlayers||
-JSON.parse(
-JSON.stringify(playersDB)
-);
-
-
-/* MATCH */
-
-if(data.matchResult){
-
-showMatchResult(
-data.matchResult
-);
-
-return;
-
-}
-
-
-/* END */
-
-if(
-currentPosIndex>=positions.length
-){
-
-if(amIHost){
-
-createMatchResult();
-
-}
-
-return;
-
-}
-
-
-const currentPos=
-positions[currentPosIndex];
-
-
-if(
-
-filled1[currentPos]&&
-filled2[currentPos]&&
-!timerInterval&&
-amIHost
-
-){
-
-startTimer();
-
-return;
-
-}
-
-
-if(
-
-!currentPlayer&&
-!filled1[currentPos]&&
-!filled2[currentPos]&&
-amIHost
-
-){
-
-newPlayer();
-
-}
-
-
-updatePitch();
-
-show();
-
-}
-
-
-/* =====================================================
-TIMER
-===================================================== */
-
-function startTimer(){
-
-document.querySelector('.controls').style.display='none';
-
-document.getElementById('auctionCard').style.display='none';
-
-const timer=
-document.getElementById('timer');
-
-timer.style.display='block';
-
-let count=3;
-
-timer.innerText=
-`المركز القادم: ${
-positions[currentPosIndex+1]||
-'النهاية'
-} بعد ${count}`;
-
-
-timerInterval=
-setInterval(()=>{
-
-const next=
-positions[currentPosIndex+1]||
-'النهاية';
-
-timer.innerText=
-`المركز القادم: ${next} بعد ${count}`;
-
-count--;
-
-if(count<0){
-
-clearInterval(timerInterval);
-
-timerInterval=null;
-
-timer.style.display='none';
-
-document.querySelector('.controls').style.display='block';
-
-document.getElementById('auctionCard').style.display='flex';
-
-roomRef.update({
-
-currentPos:
-currentPosIndex+1
-
-});
-
-}
-
-},1000);
-
-}
-
-
-/* =====================================================
-RANDOM PLAYER
-===================================================== */
-
-function getRandomPlayer(pos){
-
-const key=
-poolKey(pos);
-
-if(
-!availablePlayers[key]||
-availablePlayers[key].length===0
-){
-
-availablePlayers[key]=
-JSON.parse(
-JSON.stringify(playersDB[key])
-);
-
-}
-
-const data=
-availablePlayers[key];
-
-return data[
-Math.floor(
-Math.random()*data.length
-)
-];
-
-}
-
-
-/* =====================================================
-REMOVE PLAYER
-===================================================== */
-
-function removePlayerFromPool(
-pos,
-playerName
-){
-
-const key=
-poolKey(pos);
-
-if(!availablePlayers[key])
-return;
-
-availablePlayers[key]=
-availablePlayers[key].filter(
-p=>p.n!==playerName
-);
-
-usedPlayers[playerName]=true;
-
-}
-
-
-/* =====================================================
-NEW PLAYER
-===================================================== */
-
-function newPlayer(){
-
-const posName=
-positions[currentPosIndex];
-
-const player=
-getRandomPlayer(posName);
-
-removePlayerFromPool(
-posName,
-player.n
-);
-
-roomRef.update({
-
-currentBid:player.p,
-
-currentPlayer:player,
-
-highestBidder:0,
-
-turn:1,
-
-usedPlayers,
-
-availablePlayers
-
-});
-
-}
-
-
-/* =====================================================
-SHOW CARD
-===================================================== */
-
-async function show(){
-
-if(!currentPlayer)
-return;
-
-const info=
-getCardInfo(currentPlayer);
-
-const card=
-document.getElementById('auctionCard');
-
-
-card.className=
-'player-card '+
-info.className;
-
-
-/* إعادة تشغيل Animation */
-
-card.style.animation='none';
-
-void card.offsetWidth;
-
-card.style.animation='';
-
-
-document.getElementById('rating').innerText=
-currentPlayer.r||85;
-
-document.getElementById('pos').innerText=
-positions[currentPosIndex];
-
-document.getElementById('cardType').innerText=
-info.title;
-
-document.getElementById('name').innerText=
-currentPlayer.n;
-
-
-const imageElement=
-document.getElementById('playerImg');
-
-setPlayerImage(
-currentPlayer.n,
-imageElement
-);
-
-
-document.getElementById('price').innerText=
-currentBid.toLocaleString()+
-' $';
-
-
-/* STATS */
-
-const stats=
-getCardStats(currentPlayer);
-
-
-document.getElementById('cardStats').innerHTML=`
-
-<div class="card-stat">
-<span>PAC</span>
-${stats.PAC}
-</div>
-
-<div class="card-stat">
-<span>SHO</span>
-${stats.SHO}
-</div>
-
-<div class="card-stat">
-<span>PAS</span>
-${stats.PAS}
-</div>
-
-<div class="card-stat">
-<span>DRI</span>
-${stats.DRI}
-</div>
-
-<div class="card-stat">
-<span>DEF</span>
-${stats.DEF}
-</div>
-
-<div class="card-stat">
-<span>PHY</span>
-${stats.PHY}
-</div>
-
-`;
-
-
-document.getElementById('bidInput').value=
-currentBid+1000000;
-
-
-const myTurn=
-turn==myPlayer;
-
-
-document.getElementById('bidBtn').disabled=
-!myTurn;
-
-document.getElementById('takeBtn').disabled=
-!myTurn;
-
-document.getElementById('skipBtn').disabled=
-!myTurn;
-
-
-const currentName=
-turn==1
-?
-document.getElementById('name1').innerText
-:
-document.getElementById('name2').innerText;
-
-
-document.getElementById('turn').innerText=
-"دور المزايدة: "+
-currentName+
-(myTurn?
-" - 🔥 دورك الآن":
-"");
-
-}
-
-
-/* =====================================================
-BID
-===================================================== */
-
-function bid(){
-
-if(turn!=myPlayer)
-return;
-
-
-const val=
-parseInt(
-document.getElementById('bidInput').value
-);
-
-
-const money=
-myPlayer==1?
-m1:
-m2;
-
-
-if(isNaN(val)){
-
-alert(
-"اكتب رقم صحيح"
-);
-
-return;
-
-}
-
-
-if(val<=currentBid){
-
-alert(
-"لازم تزود عن السعر الحالي"
-);
-
-return;
-
-}
-
-
-if(val>money){
-
-alert(
-"مفيش فلوس كفاية"
-);
-
-return;
-
-}
-
-
-playMoneySound();
-
-
-roomRef.update({
-
-currentBid:val,
-
-highestBidder:myPlayer,
-
-turn:
-myPlayer==1?
-2:
-1
-
-});
-
-}
-
-
-/* =====================================================
-TAKE
-===================================================== */
-
-function take(){
-
-if(turn!=myPlayer)
-return;
-
-if(!currentPlayer)
-return;
-
-
-const pos=
-positions[currentPosIndex];
-
-const taker=
-highestBidder||
-myPlayer;
-
-const other=
-taker==1?
-2:
-1;
-
-const updates={};
-
-
-/* PLAYER WHO WON */
-
-if(taker==1){
-
-if(currentBid>m1){
-
-alert(
-"اللاعب الأول معندوش فلوس كفاية"
-);
-
-return;
-
-}
-
-updates["m1"]=
-m1-currentBid;
-
-updates["t1/"+pos]=
-currentPlayer;
-
-updates["filled1/"+pos]=
-true;
-
-}else{
-
-if(currentBid>m2){
-
-alert(
-"اللاعب الثاني معندوش فلوس كفاية"
-);
-
-return;
-
-}
-
-updates["m2"]=
-m2-currentBid;
-
-updates["t2/"+pos]=
-currentPlayer;
-
-updates["filled2/"+pos]=
-true;
-
-}
-
-
-/* PLAYER FOR OTHER TEAM */
-
-const randomPlayer=
-getRandomPlayer(pos);
-
-removePlayerFromPool(
-pos,
-randomPlayer.n
-);
-
-
-if(other==1){
-
-updates["t1/"+pos]=
-randomPlayer;
-
-updates["filled1/"+pos]=
-true;
-
-}else{
-
-updates["t2/"+pos]=
-randomPlayer;
-
-updates["filled2/"+pos]=
-true;
-
-}
-
-
-/* RESET */
-
-updates.currentPlayer=null;
-
-updates.currentBid=0;
-
-updates.highestBidder=0;
-
-updates.turn=1;
-
-updates.usedPlayers=
-usedPlayers;
-
-updates.availablePlayers=
-availablePlayers;
-
-
-playMoneySound();
-
-
-roomRef.update(updates);
-
-}
-
-
-/* =====================================================
-SKIP
-===================================================== */
-
-function skip(){
-
-if(turn!=myPlayer)
-return;
-
-
-const pos=
-positions[currentPosIndex];
-
-
-const p1=
-getRandomPlayer(pos);
-
-removePlayerFromPool(
-pos,
-p1.n
-);
-
-
-const p2=
-getRandomPlayer(pos);
-
-removePlayerFromPool(
-pos,
-p2.n
-);
-
-
-const updates={};
-
-
-updates["t1/"+pos]=
-p1;
-
-updates["t2/"+pos]=
-p2;
-
-updates["filled1/"+pos]=
-true;
-
-updates["filled2/"+pos]=
-true;
-
-
-updates.currentPlayer=null;
-
-updates.currentBid=0;
-
-updates.highestBidder=0;
-
-updates.turn=1;
-
-updates.usedPlayers=
-usedPlayers;
-
-updates.availablePlayers=
-availablePlayers;
-
-
-roomRef.update(updates);
-
-}
-
-
-/* =====================================================
-UPDATE PITCH
-===================================================== */
-
-function updatePitch(){
-
-document.getElementById('m1').innerText=
-m1.toLocaleString();
-
-document.getElementById('m2').innerText=
-m2.toLocaleString();
-
-
-document.getElementById('count').innerText=
-
-Math.min(
-currentPosIndex+1,
-positions.length
-)+
-" / "+
-positions.length;
-
-
-for(const pos of positions){
-
-if(t1[pos]){
-
-renderMiniPlayer(
-1,
-pos,
-t1[pos]
-);
-
-}
-
-if(t2[pos]){
-
-renderMiniPlayer(
-2,
-pos,
-t2[pos]
-);
-
-}
-
-}
-
-}
-
-
-/* =====================================================
-RENDER MINI PLAYER
-===================================================== */
-
-function renderMiniPlayer(
-team,
-pos,
-player
-){
-
-const spot=
-document.getElementById(
-`p${team}-${pos}`
-);
-
-
-if(!spot)
-return;
-
-
-const info=
-getCardInfo(player);
-
-
-spot.innerHTML=`
-
-<div class="pos-label">
-${pos}
-</div>
-
-<div class="mini-card ${info.className}">
-
-<div class="mini-photo">
-
-<img
-alt="${player.n}"
-src="${getFallbackImg(player.n)}">
-
-</div>
-
-<div class="mini-rating">
-${player.r}
-</div>
-
-<div class="mini-pos">
-${pos}
-</div>
-
-<div class="mini-name">
-${player.n}
-</div>
-
-</div>
-
-`;
-
-
-const img=
-spot.querySelector(
-'.mini-photo img'
-);
-
-
-setPlayerImage(
-player.n,
-img
-);
-
-}
-
-
-/* =====================================================
-MATCH RESULT
-===================================================== */
-
-function createMatchResult(){
-
-let power1=0;
-
-let power2=0;
-
-
-positions.forEach(pos=>{
-
-power1+=
-t1[pos]?.r||
-80;
-
-power2+=
-t2[pos]?.r||
-80;
+    startAuction();
 
 });
 
 
-const totalPower=
-power1+power2;
-
-
-let possession1=
-Math.round(
-
-50+
-
-((power1-power2)/
-totalPower)*35+
-
-(Math.random()*6-3)
-
-);
-
-
-possession1=
-Math.max(
-35,
-Math.min(
-65,
-possession1
-)
-);
-
-
-const possession2=
-100-possession1;
-
-
-const strengthDifference=
-power1-power2;
-
-
-let goals1=
-Math.round(
-
-2+
-
-strengthDifference/40+
-
-(Math.random()*3-1.5)
-
-);
-
-
-let goals2=
-Math.round(
-
-2-
-
-strengthDifference/40+
-
-(Math.random()*3-1.5)
-
-);
-
-
-goals1=
-Math.max(
-0,
-Math.min(
-7,
-goals1
-)
-);
-
-
-goals2=
-Math.max(
-0,
-Math.min(
-7,
-goals2
-);
-
-
-const shots1=
-Math.max(
-
-goals1+2,
-
-Math.round(
-
-8+
-power1/14+
-Math.random()*6
-
-)
-
-);
-
-
-const shots2=
-Math.max(
-
-goals2+2,
-
-Math.round(
-
-8+
-power2/14+
-Math.random()*6
-
-)
-
-);
-
-
-const onTarget1=
-Math.min(
-
-shots1,
-
-Math.max(
-
-goals1,
-
-Math.round(
-
-shots1*
-(.35+Math.random()*.25)
-
-)
-
-)
-
-);
-
-
-const onTarget2=
-Math.min(
-
-shots2,
-
-Math.max(
-
-goals2,
-
-Math.round(
-
-shots2*
-(.35+Math.random()*.25)
-
-)
-
-)
-
-);
-
-
-const corners1=
-Math.max(
-
-1,
-
-Math.round(
-
-2+
-possession1/15+
-Math.random()*3
-
-)
-
-);
-
-
-const corners2=
-Math.max(
-
-1,
-
-Math.round(
-
-2+
-possession2/15+
-Math.random()*3
-
-)
-
-);
-
-
-const yellow1=
-Math.floor(
-Math.random()*4
-);
-
-const yellow2=
-Math.floor(
-Math.random()*4
-);
-
-
-const red1=
-Math.random()<.12?
-1:
-0;
-
-const red2=
-Math.random()<.12?
-1:
-0;
-
-
-const fouls1=
-Math.round(
-7+
-Math.random()*9
-);
-
-const fouls2=
-Math.round(
-7+
-Math.random()*9
-);
-
-
-const passes1=
-Math.round(
-
-280+
-power1*1.8+
-Math.random()*100
-
-);
-
-
-const passes2=
-Math.round(
-
-280+
-power2*1.8+
-Math.random()*100
-
-);
-
-
-let manTeam;
-
-
-if(goals1>goals2){
-
-manTeam=1;
-
-}
-
-else if(goals2>goals1){
-
-manTeam=2;
-
-}
-
-else{
-
-manTeam=
-power1>=power2?
-1:
-2;
-
-}
-
-
-const manPlayers=
-manTeam===1?
-t1:
-t2;
-
-
-let manPlayer=null;
-
-
-positions.forEach(pos=>{
-
-const p=
-manPlayers[pos];
-
-if(!p)
-return;
-
-
-if(
-!manPlayer||
-(p.r||0)>
-(manPlayer.r||0)
-){
-
-manPlayer=p;
-
-}
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener("keydown",e=>{
+
+    if(e.key==="Escape"){
+        modal.classList.remove("show");
+    }
 
 });
 
 
-let winner=0;
+/* =========================================================
+   INITIALIZATION
+========================================================= */
 
+document.addEventListener("DOMContentLoaded",()=>{
 
-if(goals1>goals2){
+    /*
+       تشغيل فوري بدون أي تحميل خارجي
+    */
 
-winner=1;
+    renderPlayers();
+    updateCoins();
 
-}
-
-else if(goals2>goals1){
-
-winner=2;
-
-}
-
-
-const matchResult={
-
-goals1,
-
-goals2,
-
-possession1,
-
-possession2,
-
-shots1,
-
-shots2,
-
-onTarget1,
-
-onTarget2,
-
-corners1,
-
-corners2,
-
-yellow1,
-
-yellow2,
-
-red1,
-
-red2,
-
-fouls1,
-
-fouls2,
-
-passes1,
-
-passes2,
-
-power1,
-
-power2,
-
-winner,
-
-manPlayer:
-manPlayer?
-manPlayer.n:
-"أفضل لاعب",
-
-manTeam
-
-};
-
-
-roomRef.update({
-
-matchResult:
-
-matchResult,
-
-currentPos:
-
-positions.length
+    auctionStatus.innerHTML=
+        "✅ المزاد جاهز — اضغط «بدء المزاد»";
 
 });
 
-}
-
-
-/* =====================================================
-SHOW MATCH RESULT
-===================================================== */
-
-function showMatchResult(data){
-
-document.querySelector('.controls').style.display='none';
-
-document.getElementById('auctionCard').style.display='none';
-
-document.getElementById('timer').style.display='none';
-
-
-document.getElementById('turn').innerText=
-"🏁 انتهى المزاد — المباراة النهائية";
-
-
-updatePitch();
-
-
-const name1=
-document.getElementById('name1').innerText;
-
-const name2=
-document.getElementById('name2').innerText;
-
-
-let badge1="";
-
-let badge2="";
-
-
-if(data.winner===1){
-
-badge1=
-`
-<span class="winner-badge">
-🏆 الفائز
-</span>
-`;
-
-}
-
-
-if(data.winner===2){
-
-badge2=
-`
-<span class="winner-badge">
-🏆 الفائز
-</span>
-`;
-
-}
-
-
-const resultHTML=`
-
-<div class="match-result">
-
-<div class="match-header">
-⚽ FULL TIME • MATCH RESULT ⚽
-</div>
-
-
-<div class="match-teams">
-
-<div class="match-team blue">
-
-<div class="team-name-result">
-${name1}
-</div>
-
-<div class="team-score">
-${data.goals1}
-</div>
-
-${badge1}
-
-</div>
-
-
-<div class="vs">
-VS
-</div>
-
-
-<div class="match-team red">
-
-<div class="team-name-result">
-${name2}
-</div>
-
-<div class="team-score">
-${data.goals2}
-</div>
-
-${badge2}
-
-</div>
-
-</div>
-
-
-<div class="match-score-title">
-📊 إحصائيات المباراة
-</div>
-
-
-<div class="stats-grid">
-
-
-<div class="match-stat possession">
-
-<span class="stat-label">
-الاستحواذ
-</span>
-
-<div class="possession-numbers">
-
-<span>
-${data.possession1}%
-</span>
-
-<span>
-${data.possession2}%
-</span>
-
-</div>
-
-
-<div class="possession-bar">
-
-<div
-class="pos-blue"
-style="width:${data.possession1}%">
-</div>
-
-<div
-class="pos-red"
-style="width:${data.possession2}%">
-</div>
-
-</div>
-
-</div>
-
-
-<div class="match-stat">
-
-<span class="stat-label">
-🎯 التسديدات
-</span>
-
-<div class="stat-values">
-
-<span class="blue-value">
-${data.shots1}
-</span>
-
-<span class="icon">
-🎯
-</span>
-
-<span class="red-value">
-${data.shots2}
-</span>
-
-</div>
-
-</div>
-
-
-<div class="match-stat">
-
-<span class="stat-label">
-⚽ التسديدات على المرمى
-</span>
-
-<div class="stat-values">
-
-<span class="blue-value">
-${data.onTarget1}
-</span>
-
-<span class="icon">
-⚽
-</span>
-
-<span class="red-value">
-${data.onTarget2}
-</span>
-
-</div>
-
-</div>
-
-
-<div class="match-stat">
-
-<span class="stat-label">
-🔄 التمريرات
-</span>
-
-<div class="stat-values">
-
-<span class="blue-value">
-${data.passes1}
-</span>
-
-<span class="icon">
-🔄
-</span>
-
-<span class="red-value">
-${data.passes2}
-</span>
-
-</div>
-
-</div>
-
-
-<div class="match-stat">
-
-<span class="stat-label">
-🚩 الركنيات
-</span>
-
-<div class="stat-values">
-
-<span class="blue-value">
-${data.corners1}
-</span>
-
-<span class="icon">
-🚩
-</span>
-
-<span class="red-value">
-${data.corners2}
-</span>
-
-</div>
-
-</div>
-
-
-<div class="match-stat">
-
-<span class="stat-label">
-⚠️ الأخطاء
-</span>
-
-<div class="stat-values">
-
-<span class="blue-value">
-${data.fouls1}
-</span>
-
-<span class="icon">
-⚠️
-</span>
-
-<span class="red-value">
-${data.fouls2}
-</span>
-
-</div>
-
-</div>
-
-
-<div class="match-stat">
-
-<span class="stat-label">
-🟨 الكروت الصفراء
-</span>
-
-<div class="stat-values">
-
-<span class="blue-value">
-${data.yellow1}
-</span>
-
-<span class="icon">
-🟨
-</span>
-
-<span class="red-value">
-${data.yellow2}
-</span>
-
-</div>
-
-</div>
-
-
-<div class="match-stat">
-
-<span class="stat-label">
-🟥 الكروت الحمراء
-</span>
-
-<div class="stat-values">
-
-<span class="blue-value">
-${data.red1}
-</span>
-
-<span class="icon">
-🟥
-</span>
-
-<span class="red-value">
-${data.red2}
-</span>
-
-</div>
-
-</div>
-
-
-<div class="match-stat">
-
-<span class="stat-label">
-⚡ قوة الفريق
-</span>
-
-<div class="stat-values">
-
-<span class="blue-value">
-${data.power1}
-</span>
-
-<span class="icon">
-⚡
-</span>
-
-<span class="red-value">
-${data.power2}
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="match-man">
-
-<div class="man-title">
-⭐ رجل المباراة ⭐
-</div>
-
-<div class="man-name">
-${data.manPlayer}
-</div>
-
-</div>
-
-
-<div class="formations">
-
-
-<div class="formation-box">
-
-<div class="formation-title">
-تشكيلة ${name1}
-</div>
-
-<div class="formation-list">
-
-${positions.map(pos=>`
-
-<div class="formation-player">
-
-<b>${pos}:</b>
-${t1[pos]?
-t1[pos].n:
-'-'}
-
-</div>
-
-`).join('')}
-
-</div>
-
-</div>
-
-
-<div class="formation-box">
-
-<div class="formation-title">
-تشكيلة ${name2}
-</div>
-
-<div class="formation-list">
-
-${positions.map(pos=>`
-
-<div class="formation-player">
-
-<b>${pos}:</b>
-${t2[pos]?
-t2[pos].n:
-'-'}
-
-</div>
-
-`).join('')}
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-`;
-
-
-document.getElementById('result').innerHTML=
-resultHTML;
-
-}
 
 </script>
 
 </body>
-
 </html>
