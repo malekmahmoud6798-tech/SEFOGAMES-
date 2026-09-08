@@ -631,14 +631,16 @@ MINI FIFA CARD
 .mini-card.card-icon{
 
     background:
-    linear-gradient(
-        145deg,
-        #fffbe4,
-        #d7b65c 50%,
-        #624616
-    );
+    radial-gradient(circle at 50% 30%, #fff7d6 0%, #d4af37 50%, #102138 100%);
 
-    border-color:#fff1a1;
+    border-color:#ffd700;
+
+    box-shadow:0 0 10px rgba(0, 162, 255, 0.5);
+}
+
+.mini-card.card-icon .mini-name{
+    color:#fff;
+    text-shadow:0 1px 2px #000;
 }
 
 /* GOAT MINI */
@@ -668,7 +670,7 @@ MINI FIFA CARD
 }
 
 /* =====================================================
-MAIN FIFA STYLE CARD
+MAIN FIFA STYLE CARD (UPDATED TO MATCH IMAGE)
 ===================================================== */
 
 .card-area{
@@ -688,7 +690,7 @@ MAIN FIFA STYLE CARD
 
     width:min(390px,94vw);
 
-    min-height:600px;
+    min-height:580px;
 
     position:relative;
 
@@ -704,12 +706,11 @@ MAIN FIFA STYLE CARD
 
     isolation:isolate;
 
-    border-radius:25px;
+    border-radius:35px;
 
     animation:cardEnter .7s cubic-bezier(.2,.8,.2,1);
 
-    box-shadow:
-    0 30px 70px rgba(0,0,0,.6);
+    box-shadow:0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.3);
 
     clip-path:
     polygon(
@@ -750,7 +751,7 @@ MAIN FIFA STYLE CARD
 
 }
 
-/* CARD BORDER */
+/* CARD BORDER & CRYSTALS */
 
 .player-card::before{
 
@@ -804,7 +805,7 @@ MAIN FIFA STYLE CARD
     pointer-events:none;
 }
 
-/* GOLD */
+/* GOLD CARD DESIGN */
 
 .card-gold{
 
@@ -824,27 +825,48 @@ MAIN FIFA STYLE CARD
     0 30px 70px rgba(0,0,0,.6);
 }
 
-/* ICON */
+/* ICON / LEGEND CARD DESIGN (مستوحى تماماً من الصورة) */
 
 .card-icon{
 
-    background:
-    radial-gradient(
-        ellipse at 50% 15%,
-        #fffef3 0%,
-        #ebd68a 38%,
-        #a47b2d 70%,
-        #392400 100%
-    );
+    background: 
+        radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.4) 0%, transparent 60%),
+        linear-gradient(135deg, #102138 0%, #060b12 100%),
+        radial-gradient(ellipse at 50% 10%, #fff7d6 0%, #d4af37 40%, #5a400c 80%);
 
-    color:#171000;
+    color:#fff;
 
-    box-shadow:
-    0 0 50px rgba(255,215,0,.55),
-    0 30px 70px rgba(0,0,0,.6);
+    border: 3px solid #f3e5ab;
+
+    box-shadow: 0 0 30px rgba(0, 162, 255, 0.4), 0 0 60px rgba(212, 175, 55, 0.5);
 }
 
-/* GOAT */
+.card-icon::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 2px solid rgba(255, 215, 0, 0.8);
+    border-radius: 28px;
+    pointer-events: none;
+    z-index: 2;
+    box-shadow: 
+        inset 0 0 15px rgba(0, 195, 255, 0.6),
+        inset 0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+.card-icon::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(circle at 0% 50%, rgba(0, 140, 255, 0.5), transparent 40%),
+        radial-gradient(circle at 100% 50%, rgba(0, 140, 255, 0.5), transparent 40%),
+        radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.6), transparent 50%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* GOAT CARD DESIGN */
 
 .card-goat{
 
@@ -999,25 +1021,36 @@ CARD TOP
 
     font-family:'Orbitron';
 
-    font-size:54px;
+    font-size:58px;
 
     font-weight:900;
 
-    line-height:.9;
+    line-height:.8;
 
-    text-shadow:
-    0 2px 2px rgba(0,0,0,.18);
+    background: linear-gradient(180deg, #ffffff 0%, #ffd700 70%, #996515 100%);
+
+    -webkit-background-clip: text;
+
+    background-clip: text;
+
+    color: transparent;
+
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
 .position{
 
     font-family:'Orbitron';
 
-    font-size:16px;
+    font-size:14px;
 
     font-weight:900;
 
-    margin-top:7px;
+    color: #ffd700;
+
+    letter-spacing: 2px;
+
+    margin-top: 4px;
 }
 
 .card-type{
@@ -1032,9 +1065,9 @@ CARD TOP
 
     font-weight:900;
 
-    background:rgba(0,0,0,.17);
+    background:rgba(0,0,0,.35);
 
-    border:1px solid rgba(255,255,255,.5);
+    border:1px solid rgba(255,215,0,.6);
 
     backdrop-filter:blur(4px);
 }
@@ -1132,7 +1165,7 @@ PLAYER PHOTO
 }
 
 /* =====================================================
-PLAYER NAME
+PLAYER NAME & SHAPE (مستوحى من شريط الاسم في الصورة)
 ===================================================== */
 
 .player-name{
@@ -1143,18 +1176,31 @@ PLAYER NAME
 
     font-family:'Orbitron','Cairo';
 
-    font-size:27px;
+    font-size:22px;
 
     font-weight:900;
 
     text-align:center;
 
-    margin-top:0;
+    margin:5px auto 0;
+
+    padding:8px 20px;
+
+    width:90%;
+
+    color:#fff;
 
     text-transform:uppercase;
 
-    text-shadow:
-    0 2px 3px rgba(0,0,0,.2);
+    background:linear-gradient(180deg, #1b263b 0%, #0b111e 100%);
+
+    border:2px solid #ffd700;
+
+    border-radius:8px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,0.8), 0 0 10px rgba(255,215,0,0.5);
+
+    text-shadow:0 2px 4px rgba(0,0,0,0.8);
 }
 
 .card-price{
@@ -1177,9 +1223,9 @@ PLAYER NAME
 
     font-weight:900;
 
-    background:rgba(0,0,0,.15);
+    background:rgba(0,0,0,.35);
 
-    border:1px solid rgba(255,255,255,.3);
+    border:1px solid rgba(255,215,0,.5);
 }
 
 /* =====================================================
@@ -1208,15 +1254,17 @@ FIFA STATS
 
     border-radius:8px;
 
-    background:rgba(0,0,0,.16);
+    background:rgba(0,0,0,.4);
 
-    border:1px solid rgba(255,255,255,.22);
+    border:1px solid rgba(255,215,0,.3);
 
     font-family:'Orbitron';
 
     font-size:10px;
 
     font-weight:900;
+
+    color:#fff;
 }
 
 .card-stat span{
@@ -1227,7 +1275,9 @@ FIFA STATS
 
     margin-bottom:2px;
 
-    opacity:.75;
+    opacity:.85;
+
+    color:#ffd700;
 }
 
 /* =====================================================
@@ -1929,7 +1979,7 @@ MOBILE
 
     .player-name{
 
-        font-size:23px;
+        font-size:18px;
     }
 
     .card-price{
@@ -2112,7 +2162,7 @@ id="pitch2">
 
 <div
 id="auctionCard"
-class="player-card card-gold">
+class="player-card card-icon">
 
 <div class="card-pattern"></div>
 
@@ -2139,7 +2189,7 @@ ST
 <div
 class="card-type"
 id="cardType">
-🌟 GOLD ELITE 🌟
+⭐ ICON LEGEND ⭐
 </div>
 
 </div>
@@ -4296,7 +4346,7 @@ ${data.shots2}
 <div class="match-stat">
 
 <span class="stat-label">
-🥅 على المرمى
+⚽ التسديدات على المرمى
 </span>
 
 <div class="stat-values">
@@ -4306,11 +4356,35 @@ ${data.onTarget1}
 </span>
 
 <span class="icon">
-🥅
+⚽
 </span>
 
 <span class="red-value">
 ${data.onTarget2}
+</span>
+
+</div>
+
+</div>
+
+<div class="match-stat">
+
+<span class="stat-label">
+🔄 التمريرات
+</span>
+
+<div class="stat-values">
+
+<span class="blue-value">
+${data.passes1}
+</span>
+
+<span class="icon">
+🔄
+</span>
+
+<span class="red-value">
+${data.passes2}
 </span>
 
 </div>
@@ -4344,7 +4418,31 @@ ${data.corners2}
 <div class="match-stat">
 
 <span class="stat-label">
-🟨 البطاقات الصفراء
+⚠️ الأخطاء
+</span>
+
+<div class="stat-values">
+
+<span class="blue-value">
+${data.fouls1}
+</span>
+
+<span class="icon">
+⚠️
+</span>
+
+<span class="red-value">
+${data.fouls2}
+</span>
+
+</div>
+
+</div>
+
+<div class="match-stat">
+
+<span class="stat-label">
+🟨 الكروت الصفراء
 </span>
 
 <div class="stat-values">
@@ -4368,7 +4466,7 @@ ${data.yellow2}
 <div class="match-stat">
 
 <span class="stat-label">
-🟥 البطاقات الحمراء
+🟥 الكروت الحمراء
 </span>
 
 <div class="stat-values">
@@ -4392,45 +4490,21 @@ ${data.red2}
 <div class="match-stat">
 
 <span class="stat-label">
-🦵 الأخطاء
+⚡ قوة الفريق
 </span>
 
 <div class="stat-values">
 
 <span class="blue-value">
-${data.fouls1}
+${data.power1}
 </span>
 
 <span class="icon">
-🦵
+⚡
 </span>
 
 <span class="red-value">
-${data.fouls2}
-</span>
-
-</div>
-
-</div>
-
-<div class="match-stat">
-
-<span class="stat-label">
-📋 التمريرات
-</span>
-
-<div class="stat-values">
-
-<span class="blue-value">
-${data.passes1}
-</span>
-
-<span class="icon">
-📋
-</span>
-
-<span class="red-value">
-${data.passes2}
+${data.power2}
 </span>
 
 </div>
@@ -4442,87 +4516,35 @@ ${data.passes2}
 <div class="match-man">
 
 <div class="man-title">
-⭐ رجل المباراة
+⭐ رجل المباراة ⭐
 </div>
 
 <div class="man-name">
 ${data.manPlayer}
 </div>
 
-<div style="font-size:11px;margin-top:5px;color:#aaa">
-
-فريق
-${data.manTeam===1?name1:name2}
-
-</div>
-
-</div>
-
-<div class="match-score-title">
-💪 تقييم الفريقين
-</div>
-
-<div class="stats-grid">
-
-<div class="match-stat">
-
-<span class="stat-label">
-قوة ${name1}
-</span>
-
-<div
-style="
-font-family:Orbitron;
-font-size:25px;
-color:#56c7ff;
-">
-
-${data.power1}
-
-</div>
-
-</div>
-
-<div class="match-stat">
-
-<span class="stat-label">
-قوة ${name2}
-</span>
-
-<div
-style="
-font-family:Orbitron;
-font-size:25px;
-color:#ff7474;
-">
-
-${data.power2}
-
-</div>
-
-</div>
-
-</div>
-
-<div class="match-score-title">
-📋 تشكيل الفريقين
 </div>
 
 <div class="formations">
 
 <div class="formation-box">
 
-<div
-class="formation-title"
-style="color:#56c7ff">
-
-${name1}
-
+<div class="formation-title">
+تشكيلة ${name1}
 </div>
 
 <div class="formation-list">
 
-${createFormationHTML(t1)}
+${positions.map(pos=>`
+
+<div class="formation-player">
+
+<b>${pos}:</b>
+${t1[pos]?t1[pos].n:'-'}
+
+</div>
+
+`).join('')}
 
 </div>
 
@@ -4530,32 +4552,26 @@ ${createFormationHTML(t1)}
 
 <div class="formation-box">
 
-<div
-class="formation-title"
-style="color:#ff7474">
-
-${name2}
-
+<div class="formation-title">
+تشكيلة ${name2}
 </div>
 
 <div class="formation-list">
 
-${createFormationHTML(t2)}
+${positions.map(pos=>`
+
+<div class="formation-player">
+
+<b>${pos}:</b>
+${t2[pos]?t2[pos].n:'-'}
+
+</div>
+
+`).join('')}
 
 </div>
 
 </div>
-
-</div>
-
-<div
-style="
-margin-top:25px;
-font-size:12px;
-color:#777;
-">
-
-🏁 FULL TIME — انتهت المباراة
 
 </div>
 
@@ -4566,132 +4582,10 @@ color:#777;
 document.getElementById('result').innerHTML=
 resultHTML;
 
-playFinalSound();
-
-}
-
-
-/* =====================================================
-FORMATION
-===================================================== */
-
-function createFormationHTML(team){
-
-let html="";
-
-positions.forEach(pos=>{
-
-const p=team[pos];
-
-if(!p)
-return;
-
-html+=`
-
-<div class="formation-player">
-
-<strong>
-${pos}
-</strong>
-
-<br>
-
-${p.n}
-
-<br>
-
-<span style="color:#ffd700">
-${p.r}
-</span>
-
-</div>
-
-`;
-
-});
-
-return html;
-
-}
-
-
-/* =====================================================
-FINAL SOUND
-===================================================== */
-
-function playFinalSound(){
-
-try{
-
-if(!audioContext){
-
-audioContext=
-new(
-window.AudioContext||
-window.webkitAudioContext
-)();
-
-}
-
-const now=
-audioContext.currentTime;
-
-const notes=[
-523.25,
-659.25,
-783.99,
-1046.50
-];
-
-notes.forEach(
-(freq,i)=>{
-
-const osc=
-audioContext.createOscillator();
-
-const gain=
-audioContext.createGain();
-
-osc.type="triangle";
-
-osc.frequency.value=freq;
-
-gain.gain.setValueAtTime(
-.001,
-now+i*.13
-);
-
-gain.gain.exponentialRampToValueAtTime(
-.25,
-now+i*.13+.04
-);
-
-gain.gain.exponentialRampToValueAtTime(
-.001,
-now+i*.13+.3
-);
-
-osc.connect(gain);
-
-gain.connect(
-audioContext.destination
-);
-
-osc.start(
-now+i*.13
-);
-
-osc.stop(
-now+i*.13+.32
-);
-
-});
-
-}catch(e){}
-
 }
 
 </script>
 
 </body>
+
 </html>
