@@ -14,6 +14,7 @@ content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.3/papaparse.min.js"></script>
 
 <style>
 
@@ -1928,6 +1929,47 @@ EXCHANGE ROUND
     .exchange-player{min-height:142px}
 }
 
+
+/* =====================================================
+TRANSPARENT PLAYER CUTOUTS
+===================================================== */
+.player-photo{
+    background:transparent!important;
+    overflow:hidden;
+}
+.player-photo img#playerImg,
+.player-photo .js-player-img,
+.exchange-player img.js-player-img{
+    background:transparent!important;
+    border:0!important;
+    border-radius:0!important;
+    object-fit:contain!important;
+    object-position:center bottom!important;
+    mix-blend-mode:normal!important;
+    filter:drop-shadow(0 10px 12px rgba(0,0,0,.72)) drop-shadow(0 0 10px rgba(255,215,0,.22));
+}
+.player-photo img#playerImg{
+    width:100%!important;
+    height:100%!important;
+    padding:0 8px 0;
+}
+.exchange-player img.js-player-img{
+    width:88px!important;
+    height:92px!important;
+    padding:0!important;
+    border-radius:0!important;
+    object-position:center bottom!important;
+}
+.mini-card img.js-player-img{
+    background:transparent!important;
+    border:0!important;
+    border-radius:0!important;
+    object-fit:contain!important;
+    object-position:center bottom!important;
+    mix-blend-mode:normal!important;
+    filter:drop-shadow(0 5px 6px rgba(0,0,0,.65));
+}
+
 </style>
 
 </head>
@@ -2615,8 +2657,50 @@ IMAGE
 
 const playerImageAliases={"Yashin":"Lev Yashin", "T.Hernandez":"Theo Hernandez", "R.Dias":"Ruben Dias", "TAA":"Trent Alexander-Arnold", "Cristiano":"Cristiano Ronaldo", "Ronaldo Nazario":"Ronaldo Nazário", "Messi RW":"Lionel Messi", "Kaka":"Kaka", "Mbappe":"Kylian Mbappé", "Vinicius":"Vinícius Júnior", "Leao":"Rafael Leao", "Davies":"Alphonso Davies", "Courtois":"Thibaut Courtois", "Donnarumma":"Gianluigi Donnarumma", "Matthaus":"Lothar Matthäus", "Van Basten":"Marco van Basten", "Garrincha":"Garrincha", "Trent Alexander-Arnold":"Trent Alexander-Arnold", "Ederson":"Ederson", "Neuer":"Manuel Neuer", "Schmeichel":"Peter Schmeichel", "Čech":"Petr Čech", "Van der Sar":"Edwin van der Sar", "Oblak":"Jan Oblak", "Ter Stegen":"Marc-Andre ter Stegen", "Emiliano Martinez":"Emiliano Martínez", "Marcelo":"Marcelo", "Evra":"Patrice Evra", "Jordi Alba":"Jordi Alba", "Facchetti":"Giacinto Facchetti", "Dimarco":"Federico Dimarco", "Grimaldo":"Alejandro Grimaldo", "Nuno Mendes":"Nuno Mendes", "Shaw":"Luke Shaw", "Cucurella":"Marc Cucurella", "Stam":"Jaap Stam", "Ferdinand":"Rio Ferdinand", "Vidic":"Nemanja Vidić", "Desailly":"Marcel Desailly", "Koeman":"Ronald Koeman", "Thuram":"Lilian Thuram", "Bobby Moore":"Bobby Moore", "Thiago Silva":"Thiago Silva", "Chiellini":"Giorgio Chiellini", "Terry":"John Terry", "Alaba":"David Alaba", "Militao":"Éder Militão", "Cafu":"Cafu", "Lahm":"Philipp Lahm", "Maicon":"Maicon", "Walker":"Kyle Walker", "Carvajal":"Dani Carvajal", "Reece James":"Reece James", "Zidane":"Zinedine Zidane", "Pirlo":"Andrea Pirlo", "Xavi":"Xavi", "Iniesta":"Andrés Iniesta", "Modric":"Luka Modrić", "Rodri":"Rodri", "Scholes":"Paul Scholes", "Gerrard":"Steven Gerrard", "Lampard":"Frank Lampard", "Seedorf":"Clarence Seedorf", "Vieira":"Patrick Vieira", "Busquets":"Sergio Busquets", "Kroos":"Toni Kroos", "Valverde":"Federico Valverde", "Kimmich":"Joshua Kimmich", "De Jong":"Frenkie de Jong", "Pedri":"Pedri", "Bellingham CM":"Jude Bellingham", "Maradona":"Diego Maradona", "Gullit":"Ruud Gullit", "Makelele":"Claude Makélélé", "Davids":"Edgar Davids", "Essien":"Michael Essien", "Roy Keane":"Roy Keane", "Schweinsteiger":"Bastian Schweinsteiger", "Fabinho":"Fabinho", "Barella":"Nicolò Barella", "Camavinga":"Eduardo Camavinga", "Rice":"Declan Rice", "Casemiro":"Casemiro", "Yaya Toure":"Yaya Touré", "Cesc Fabregas":"Cesc Fàbregas", "Thiago Alcantara":"Thiago Alcântara", "Messi":"Lionel Messi", "Ronaldinho":"Ronaldinho", "De Bruyne":"Kevin De Bruyne", "Baggio":"Roberto Baggio", "Bergkamp":"Dennis Bergkamp", "Ozil":"Mesut Özil", "Totti":"Francesco Totti", "Riquelme":"Juan Román Riquelme", "Nedved":"Pavel Nedvěd", "Socrates":"Sócrates", "Zico":"Zico", "Platini":"Michel Platini", "Grealish":"Jack Grealish", "Musiala":"Jamal Musiala", "Wirtz":"Florian Wirtz", "Bruno Fernandes":"Bruno Fernandes", "Henry":"Thierry Henry", "Neymar":"Neymar", "Ribery":"Franck Ribéry", "Robben":"Arjen Robben", "Giggs":"Ryan Giggs", "George Best":"George Best", "Stoichkov":"Hristo Stoichkov", "Rivaldo":"Rivaldo", "Sadio Mane":"Sadio Mané", "Son":"Son Heung-min", "Kvaratskhelia":"Khvicha Kvaratskhelia", "Martinelli":"Gabriel Martinelli", "Luis Diaz":"Luis Díaz", "Rafael Leao":"Rafael Leão", "Drogba":"Didier Drogba", "Haaland":"Erling Haaland", "Kane":"Harry Kane", "Eusebio":"Eusébio", "Pele":"Pelé", "Romario":"Romário", "Shevchenko":"Andriy Shevchenko", "Batistuta":"Gabriel Batistuta", "Suarez":"Luis Suárez", "Lewandowski":"Robert Lewandowski", "Eto'o":"Samuel Eto'o", "Ibrahimovic":"Zlatan Ibrahimović", "Benzema":"Karim Benzema", "Cavani":"Edinson Cavani", "Raul":"Raúl", "Higuain":"Gonzalo Higuaín", "Beckham":"David Beckham", "Salah":"Mohamed Salah", "Saka":"Bukayo Saka", "Figo":"Luís Figo", "Jairzinho":"Jairzinho", "Mahrez":"Riyad Mahrez", "Bernardo Silva":"Bernardo Silva", "Rodrygo":"Rodrygo", "Dembele":"Ousmane Dembélé", "Kulusevski":"Dejan Kulusevski", "Coman":"Kingsley Coman", "Di Maria":"Ángel Di María"};
 
+const SOFIFA_CSV_URL='https://gist.githubusercontent.com/summer5e55/4a73923f90913b505f07bec24e341a79/raw/player_20_update2.csv';
+const sofifaImageMap={};
+let sofifaReady=false;
+
+function normPlayerName(v){
+return String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+}
+
+function sofifaPhotoFromId(id){
+const n=String(id||'').replace(/\D/g,'');
+if(!n) return null;
+const padded=n.padStart(6,'0');
+return `https://cdn.sofifa.com/players/${padded.slice(0,3)}/${padded.slice(3)}/20_120.png`;
+}
+
+function buildSofifaMap(rows){
+rows.forEach(row=>{
+const id=row.sofifa_id||row.ID||row.id;
+const names=[row.short_name,row.long_name,row.name].filter(Boolean);
+const photo=sofifaPhotoFromId(id);
+if(!photo) return;
+names.forEach(name=>sofifaImageMap[normPlayerName(name)]=photo);
+});
+// Extra aliases for our custom names
+Object.keys(playerImageAliases).forEach(k=>{
+const mapped=sofifaImageMap[normPlayerName(playerImageAliases[k])];
+if(mapped) sofifaImageMap[normPlayerName(k)]=mapped;
+});
+sofifaReady=true;
+}
+
+function initTransparentPlayerImages(){
+try{
+if(typeof Papa==='undefined') return;
+Papa.parse(SOFIFA_CSV_URL,{download:true,header:true,skipEmptyLines:true,complete:results=>{
+ buildSofifaMap(results.data||[]);
+ hydratePlayerImages(document);
+ if(currentPlayer) loadRealPlayerImage(currentPlayer.n);
+},error:()=>{sofifaReady=false;}});
+}catch(e){sofifaReady=false;}
+}
+
 function fallbackPlayerImg(name){
-return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=111&color=ffd700&size=500&rounded=true&bold=true`;
+return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=111&color=ffd700&size=500&rounded=false&bold=true`;
 }
 
 async function fetchWikiImage(name){
@@ -2629,26 +2713,33 @@ try{
 }catch(e){return null;}
 }
 
+function getTransparentPlayerImg(name){
+const direct=sofifaImageMap[normPlayerName(name)];
+return direct||fallbackPlayerImg(name);
+}
+
 async function loadRealPlayerImage(name){
 const img=document.getElementById('playerImg');
 if(!img) return;
-const fallback=fallbackPlayerImg(name);
-img.src=fallback;
+const direct=getTransparentPlayerImg(name);
+img.src=direct;
+if(sofifaImageMap[normPlayerName(name)]) return;
 const source=await fetchWikiImage(name);
 if(source && document.getElementById('name')?.innerText===name) img.src=source;
 }
 
 async function hydratePlayerImages(root=document){
 const imgs=[...root.querySelectorAll('.js-player-img')];
-await Promise.all(imgs.map(async img=>{
+imgs.forEach(img=>{
  const name=img.dataset.name||'';
- if(!name) return;
- const source=await fetchWikiImage(name);
- if(source) img.src=source;
-}));
+ if(name) img.src=getTransparentPlayerImg(name);
+ img.onerror=()=>{ img.onerror=null; img.src=fallbackPlayerImg(name); };
+});
+if(!sofifaReady) return;
 }
 
-function getPlayerImg(name){ return fallbackPlayerImg(name); }
+function getPlayerImg(name){ return getTransparentPlayerImg(name); }
+
 
 function getPlayerStats(player,pos){
 const r=Number(player?.r||85);
@@ -2670,6 +2761,8 @@ if(role==='GK'){
 return {PAC:pac,SHO:sho,DRI:drib,PAS:pas,DEF:def,PHY:phy};
 }
 
+
+initTransparentPlayerImages();
 
 /* =====================================================
 CARD TYPE
@@ -3083,7 +3176,7 @@ document.getElementById('playerImg').src=getPlayerImg(currentPlayer.n);
 document.getElementById('price').innerText=currentBid.toLocaleString()+' $';
 document.getElementById('bidInput').value=currentBid+1000000;
 const photo=document.querySelector('.player-photo');
-photo.innerHTML=`<div class="card-ribbon">⭐ ${info.title.replaceAll('👑','').replaceAll('💎','').replaceAll('🔥','').replaceAll('⚡','').trim()} ⭐</div><img id="playerImg" src="${getPlayerImg(currentPlayer.n)}" alt="${currentPlayer.n}" onerror="this.src=getPlayerImg('${currentPlayer.n.replace(/'/g,"\\'")}')">`;
+photo.innerHTML=`<div class="card-ribbon">⭐ ${info.title.replaceAll('👑','').replaceAll('💎','').replaceAll('🔥','').replaceAll('⚡','').trim()} ⭐</div><img id="playerImg" src="${getPlayerImg(currentPlayer.n)}" alt="${currentPlayer.n}" onerror="this.onerror=null;this.src=fallbackPlayerImg('${currentPlayer.n.replace(/'/g,"\\'")}')">`;
 document.getElementById('playerImg').src=getPlayerImg(currentPlayer.n);
 const cardArea=document.querySelector('.card-price');
 let statsBox=document.getElementById('cardStats');
