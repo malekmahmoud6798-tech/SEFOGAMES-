@@ -1970,6 +1970,291 @@ TRANSPARENT PLAYER CUTOUTS
     filter:drop-shadow(0 5px 6px rgba(0,0,0,.65));
 }
 
+
+/* =====================================================
+   NEW CARD ART — EXACT SPRITE FROM THE USER IMAGE
+   The uploaded artwork is a 5 x 3 sheet (15 card designs).
+   Each class below crops one card directly from that sheet.
+   ===================================================== */
+
+:root{
+    --card-art:url("https://i.postimg.cc/8k5hkJc7/Chat-GPT-Image-Sep-9-2026-06-12-59-PM.png");
+}
+
+/* Main auction card */
+.player-card{
+    width:min(390px,94vw)!important;
+    height:560px!important;
+    min-height:560px!important;
+    padding:30px 34px 28px!important;
+    position:relative!important;
+    overflow:hidden!important;
+    border:0!important;
+    border-radius:0!important;
+    clip-path:none!important;
+    background-color:transparent!important;
+    background-image:var(--card-art)!important;
+    background-repeat:no-repeat!important;
+    background-size:500% 300%!important;
+    background-position:0% 0%!important;
+    box-shadow:0 30px 90px rgba(0,0,0,.65)!important;
+    isolation:isolate;
+}
+
+/* 5 main styles taken directly from row #1 of the artwork */
+.player-card.card-gold,
+.mini-card.card-gold{
+    background-position:0% 0%!important;
+}
+.player-card.card-legend,
+.mini-card.card-legend{
+    background-position:25% 0%!important;
+}
+.player-card.card-retired,
+.mini-card.card-retired{
+    background-position:50% 0%!important;
+}
+.player-card.card-goat,
+.mini-card.card-goat{
+    background-position:75% 0%!important;
+}
+.player-card.card-current,
+.mini-card.card-current{
+    background-position:100% 0%!important;
+}
+
+/* Extra exact artwork slots, available if a future player tag uses them */
+.card-art-6{background-position:0% 50%!important}
+.card-art-7{background-position:25% 50%!important}
+.card-art-8{background-position:50% 50%!important}
+.card-art-9{background-position:75% 50%!important}
+.card-art-10{background-position:100% 50%!important}
+.card-art-11{background-position:0% 100%!important}
+.card-art-12{background-position:25% 100%!important}
+.card-art-13{background-position:50% 100%!important}
+.card-art-14{background-position:75% 100%!important}
+.card-art-15{background-position:100% 100%!important}
+
+/* Remove the old generated borders/glows so only the supplied artwork is visible */
+.player-card::before,
+.player-card::after{
+    content:none!important;
+    display:none!important;
+}
+
+/* Keep all player information above the artwork */
+.player-card .card-top,
+.player-card .player-photo,
+.player-card .player-name,
+.player-card .card-price,
+.player-card .card-stats,
+.player-card .card-meta{
+    position:relative!important;
+    z-index:5!important;
+}
+
+/* Rating and position sit in the upper-left area of the card frame */
+.player-card .card-top{
+    width:100%;
+    margin:2px 0 0!important;
+    align-items:flex-start;
+}
+.player-card .rating{
+    font-size:52px!important;
+    line-height:.9!important;
+    color:#fff!important;
+    text-shadow:0 3px 8px #000,0 0 12px rgba(255,255,255,.35)!important;
+}
+.player-card .position{
+    margin-top:7px!important;
+    font-size:17px!important;
+    color:#fff!important;
+    text-shadow:0 2px 6px #000!important;
+}
+.player-card .card-type{
+    margin-top:2px;
+    padding:6px 10px!important;
+    border:0!important;
+    border-radius:0!important;
+    background:rgba(0,0,0,.38)!important;
+    color:#fff!important;
+    box-shadow:none!important;
+    text-shadow:0 2px 5px #000;
+}
+
+/* Player cutout: transparent, like the reference card */
+.player-card .player-photo{
+    width:100%!important;
+    height:315px!important;
+    margin:5px auto 0!important;
+    background:transparent!important;
+    overflow:visible!important;
+    border-radius:0!important;
+    display:flex!important;
+    align-items:flex-end!important;
+    justify-content:center!important;
+}
+.player-card .player-photo::before,
+.player-card .player-photo::after{
+    content:none!important;
+    display:none!important;
+}
+.player-card .player-photo img,
+.player-card .player-photo img#playerImg{
+    width:100%!important;
+    height:100%!important;
+    padding:0!important;
+    object-fit:contain!important;
+    object-position:center bottom!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    filter:drop-shadow(0 15px 13px rgba(0,0,0,.72))!important;
+}
+
+/* Ribbon kept subtle; the frame itself is now the supplied image */
+.player-card .card-ribbon{
+    top:12px!important;
+    padding:4px 10px!important;
+    border:0!important;
+    border-radius:8px!important;
+    background:rgba(0,0,0,.34)!important;
+    backdrop-filter:blur(3px);
+    font-size:9px!important;
+    text-shadow:0 2px 4px #000;
+}
+
+/* Bottom information */
+.player-card .player-name{
+    margin-top:-2px!important;
+    font-size:25px!important;
+    color:#fff!important;
+    text-shadow:0 3px 8px #000!important;
+}
+.player-card .card-stats{
+    margin-top:7px!important;
+    gap:5px!important;
+}
+.player-card .card-stat{
+    padding:5px 3px!important;
+    border-radius:6px!important;
+    background:rgba(0,0,0,.46)!important;
+    border:1px solid rgba(255,255,255,.2)!important;
+}
+.player-card .card-stat b{
+    font-size:14px!important;
+    text-shadow:0 2px 4px #000;
+}
+.player-card .card-stat span{
+    font-size:7px!important;
+}
+.player-card .card-meta{
+    margin-top:5px!important;
+    font-size:9px!important;
+    text-shadow:0 2px 4px #000;
+}
+.player-card .card-price{
+    margin-top:6px!important;
+    padding:5px 9px!important;
+    border:0!important;
+    border-radius:7px!important;
+    background:rgba(0,0,0,.34)!important;
+    color:#fff!important;
+    font-size:17px!important;
+    text-shadow:0 2px 5px #000;
+}
+
+/* Mini cards use the exact same sprite artwork */
+.mini-card{
+    width:64px!important;
+    height:76px!important;
+    border:0!important;
+    border-radius:0!important;
+    padding:4px!important;
+    overflow:hidden!important;
+    background-color:transparent!important;
+    background-image:var(--card-art)!important;
+    background-repeat:no-repeat!important;
+    background-size:500% 300%!important;
+    background-position:0% 0%!important;
+    box-shadow:0 7px 14px rgba(0,0,0,.55)!important;
+    clip-path:none!important;
+}
+.mini-card::before{
+    content:none!important;
+}
+.mini-card img.js-player-img{
+    position:absolute!important;
+    left:7px!important;
+    right:7px!important;
+    bottom:13px!important;
+    width:50px!important;
+    height:52px!important;
+    padding:0!important;
+    object-fit:contain!important;
+    object-position:center bottom!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    filter:drop-shadow(0 4px 5px rgba(0,0,0,.72))!important;
+    z-index:1!important;
+}
+.mini-card .mini-rating,
+.mini-card .mini-pos,
+.mini-card .mini-name{
+    z-index:3!important;
+    text-shadow:0 2px 4px #000!important;
+}
+.mini-card .mini-rating{
+    top:4px!important;
+    right:5px!important;
+    font-size:11px!important;
+}
+.mini-card .mini-pos{
+    top:18px!important;
+    right:5px!important;
+    font-size:7px!important;
+}
+.mini-card .mini-name{
+    position:absolute!important;
+    left:4px!important;
+    right:4px!important;
+    bottom:3px!important;
+    font-size:7px!important;
+}
+
+/* Exchange player tiles get the same visual language */
+.exchange-player{
+    background:rgba(5,8,10,.72)!important;
+}
+.exchange-player img.js-player-img{
+    object-fit:contain!important;
+    object-position:center bottom!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+}
+
+/* Responsive */
+@media(max-width:600px){
+    .player-card{
+        width:min(360px,94vw)!important;
+        height:520px!important;
+        min-height:520px!important;
+        padding:27px 30px 25px!important;
+    }
+    .player-card .player-photo{
+        height:285px!important;
+    }
+    .player-card .rating{
+        font-size:47px!important;
+    }
+    .player-card .player-name{
+        font-size:22px!important;
+    }
+}
+
 </style>
 
 </head>
