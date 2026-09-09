@@ -1558,57 +1558,234 @@ MOBILE
 
 
 /* =====================================================
-   FIFA MOBILE / ULTIMATE TEAM CARD UPGRADE
+   ULTIMATE CARD SYSTEM
 ===================================================== */
+
 .player-card{
     isolation:isolate;
     min-height:560px;
     border-radius:34px 34px 42px 42px;
     clip-path:polygon(7% 0,93% 0,100% 7%,96% 93%,84% 100%,16% 100%,4% 93%,0 7%);
     padding:22px 28px 28px;
+    border:3px solid rgba(255,255,255,.8);
+    position:relative;
 }
+
 .player-card::before{
     content:"";
-    position:absolute; inset:8px;
+    position:absolute;
+    inset:8px;
     z-index:-1;
     border:1px solid rgba(255,255,255,.55);
     clip-path:inherit;
     pointer-events:none;
 }
+
 .player-card::after{
     content:"";
-    position:absolute; inset:0; z-index:0; pointer-events:none;
-    background:linear-gradient(125deg,rgba(255,255,255,.34),transparent 25%,transparent 70%,rgba(0,0,0,.25));
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background:
+        linear-gradient(125deg,rgba(255,255,255,.38),transparent 23%,transparent 68%,rgba(0,0,0,.28)),
+        repeating-linear-gradient(115deg,transparent 0 16px,rgba(255,255,255,.035) 17px 18px);
 }
-.card-top,.player-photo,.player-name,.card-price{z-index:2}
+
+.card-top,.player-photo,.player-name,.card-price{
+    position:relative;
+    z-index:2;
+}
+
 .player-photo{
-    width:100%; height:315px; margin:-4px auto 0;
+    width:100%;
+    height:315px;
+    margin:-4px auto 0;
     align-items:flex-end;
     overflow:hidden;
     border-radius:0 0 42% 42%;
 }
+
 .player-photo::before{
-    content:""; position:absolute; width:260px; height:260px; border-radius:50%;
-    background:radial-gradient(circle,rgba(255,255,255,.85),rgba(255,255,255,.08) 58%,transparent 70%);
-    top:5px; left:50%; transform:translateX(-50%); opacity:.75;
+    content:"";
+    position:absolute;
+    width:270px;
+    height:270px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.9),rgba(255,255,255,.08) 58%,transparent 70%);
+    top:2px;
+    left:50%;
+    transform:translateX(-50%);
+    opacity:.75;
 }
+
+.player-photo::after{
+    content:"";
+    position:absolute;
+    inset:auto 8% 0;
+    height:45%;
+    background:linear-gradient(transparent,rgba(0,0,0,.25));
+    pointer-events:none;
+}
+
 .player-photo img{
-    position:relative; z-index:1;
-    width:100%; height:100%; object-fit:contain; object-position:center bottom;
-    border:0; border-radius:0; box-shadow:none;
-    filter:drop-shadow(0 18px 18px rgba(0,0,0,.4));
+    position:relative;
+    z-index:1;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center bottom;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+    filter:drop-shadow(0 18px 18px rgba(0,0,0,.48));
 }
-.rating{font-size:58px; text-shadow:0 3px 0 rgba(255,255,255,.25)}
-.position{font-size:19px; letter-spacing:2px}
-.card-type{backdrop-filter:blur(8px); background:rgba(0,0,0,.2)}
-.player-name{font-size:30px; text-transform:uppercase; letter-spacing:.5px; margin-top:-3px}
-.card-price{font-size:22px; padding:8px 12px; border-radius:14px; background:rgba(0,0,0,.12)}
-.card-gold{background:linear-gradient(145deg,#fff6b5 0%,#f4ce4f 28%,#a66d0c 70%,#5d3605 100%)}
-.card-icon{background:linear-gradient(145deg,#fffdf5 0%,#e9d79a 30%,#9c6e28 72%,#4b2f08 100%)}
-.card-goat{background:radial-gradient(circle at 50% 15%,#fff 0%,#ffe36c 18%,#b500ff 52%,#100018 100%)}
-.mini-card{background:linear-gradient(145deg,#ffe990,#b77b0b)!important;color:#1a1200}
-.mini-card.card-icon{background:linear-gradient(145deg,#fffef4,#c99b3d)!important}
-.mini-card.card-goat{background:linear-gradient(145deg,#fff,#ffd700 30%,#7000c9 100%)!important;color:#fff}
+
+.rating{
+    font-size:58px;
+    text-shadow:0 3px 0 rgba(255,255,255,.25),0 0 18px rgba(255,255,255,.2);
+}
+
+.position{
+    font-size:19px;
+    letter-spacing:2px;
+}
+
+.card-type{
+    backdrop-filter:blur(8px);
+    background:rgba(0,0,0,.2);
+    border:1px solid rgba(255,255,255,.45);
+    box-shadow:0 5px 14px rgba(0,0,0,.18);
+}
+
+.player-name{
+    font-size:30px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    margin-top:-3px;
+    text-shadow:0 3px 10px rgba(0,0,0,.35);
+}
+
+.card-price{
+    font-size:22px;
+    padding:8px 12px;
+    border-radius:14px;
+    background:rgba(0,0,0,.16);
+    border:1px solid rgba(255,255,255,.2);
+}
+
+/* GOAT */
+.card-goat{
+    background:
+        radial-gradient(circle at 50% 8%,#fff 0%,#ffe66b 17%,#ff4fd8 34%,#7a00ff 58%,#13001f 100%);
+    border-color:#fff;
+    color:#fff;
+    box-shadow:
+        0 0 24px #fff,
+        0 0 52px #ffd700,
+        0 0 95px #b000ff,
+        0 30px 75px rgba(0,0,0,.65);
+    animation:cardEnter .6s ease,goatGlow 2s infinite alternate;
+}
+
+/* LEGEND */
+.card-legend{
+    background:
+        radial-gradient(circle at 50% 12%,#dff8ff 0%,#56d7ff 22%,#3150ff 48%,#1b145c 75%,#07030f 100%);
+    border-color:#d8fbff;
+    color:#fff;
+    box-shadow:
+        0 0 22px rgba(71,210,255,.9),
+        0 0 55px rgba(61,66,255,.55),
+        0 30px 70px rgba(0,0,0,.6);
+}
+
+/* RETIRED */
+.card-retired{
+    background:
+        radial-gradient(circle at 50% 10%,#fff0d2 0%,#d99a42 25%,#8f3f20 55%,#30100b 100%);
+    border-color:#ffe0a2;
+    color:#fff9ef;
+    box-shadow:
+        0 0 25px rgba(255,153,62,.65),
+        0 0 55px rgba(180,60,25,.4),
+        0 30px 70px rgba(0,0,0,.6);
+}
+
+/* CURRENT */
+.card-current{
+    background:
+        radial-gradient(circle at 50% 10%,#fffde8 0%,#e6c94d 25%,#328d4d 56%,#092619 100%);
+    border-color:#fff3a6;
+    color:#fff;
+    box-shadow:
+        0 0 25px rgba(255,215,0,.5),
+        0 0 50px rgba(45,190,95,.35),
+        0 30px 70px rgba(0,0,0,.58);
+}
+
+@keyframes goatGlow{
+    from{
+        box-shadow:
+            0 0 24px #fff,
+            0 0 45px #ffd700,
+            0 0 70px #b000ff,
+            0 30px 70px rgba(0,0,0,.6);
+    }
+    to{
+        box-shadow:
+            0 0 35px #fff,
+            0 0 70px #ffd700,
+            0 0 110px #b000ff,
+            0 30px 75px rgba(0,0,0,.65);
+    }
+}
+
+.mini-card{
+    background:linear-gradient(145deg,#fff2a3,#c58a16 45%,#4e2b05)!important;
+    color:#fff;
+}
+
+.mini-card.card-goat{
+    background:linear-gradient(145deg,#fff,#ffd700 28%,#ff3ec8 52%,#7000c9 100%)!important;
+    color:#fff;
+    border-color:#fff;
+    box-shadow:0 0 14px rgba(255,215,0,.55);
+}
+
+.mini-card.card-legend{
+    background:linear-gradient(145deg,#dffcff,#54d8ff 30%,#304bff 70%,#14104f)!important;
+    color:#fff;
+    border-color:#b9f5ff;
+}
+
+.mini-card.card-retired{
+    background:linear-gradient(145deg,#fff0cf,#d89a43 35%,#85381d 72%,#2e0d09)!important;
+    color:#fff;
+    border-color:#ffd78c;
+}
+
+.mini-card.card-current{
+    background:linear-gradient(145deg,#fff9bb,#dfc642 30%,#32864b 72%,#082317)!important;
+    color:#fff;
+    border-color:#fff0a0;
+}
+
+@media(max-width:600px){
+    .player-card{
+        min-height:530px;
+        padding:20px 22px 24px;
+    }
+    .player-photo{
+        height:285px;
+    }
+    .player-name{
+        font-size:24px;
+    }
+    .rating{
+        font-size:50px;
+    }
+}
 
 </style>
 
@@ -1781,6 +1958,8 @@ id="price">
 <input
 id="bidInput"
 type="number"
+min="0"
+step="1000000"
 placeholder="اكتب قيمة المزايدة">
 
 <div class="buttons">
@@ -1871,6 +2050,23 @@ amIHost?1:2;
 
 
 /* =====================================================
+ROOM VALIDATION
+===================================================== */
+
+if(!room){
+
+document.getElementById('turn').innerText=
+"⚠️ مفيش كود غرفة في الرابط — افتح المزاد من رابط الغرفة الصحيح";
+
+document.querySelector('.controls').style.display='none';
+document.getElementById('auctionCard').style.display='none';
+
+throw new Error("Missing room parameter");
+
+}
+
+
+/* =====================================================
 GAME
 ===================================================== */
 
@@ -1902,12 +2098,20 @@ const playersDB={
 GK:[
 
 {n:"Yashin",p:PRICE,r:99,tag:"legend"},
-{n:"Buffon",p:PRICE,r:98,tag:"legend"},
-{n:"Casillas",p:PRICE,r:97,tag:"legend"},
-{n:"Kahn",p:PRICE,r:97,tag:"legend"},
-{n:"Courtois",p:PRICE,r:92,tag:"current"},
-{n:"Alisson",p:PRICE,r:91,tag:"current"},
-{n:"Donnarumma",p:PRICE,r:90,tag:"current"}
+{n:"Buffon",p:PRICE,r:98,tag:"retired"},
+{n:"Casillas",p:PRICE,r:97,tag:"retired"},
+{n:"Kahn",p:PRICE,r:97,tag:"retired"},
+{n:"Neuer",p:PRICE,r:96,tag:"legend"},
+{n:"Schmeichel",p:PRICE,r:96,tag:"retired"},
+{n:"Čech",p:PRICE,r:95,tag:"retired"},
+{n:"Van der Sar",p:PRICE,r:95,tag:"retired"},
+{n:"Courtois",p:PRICE,r:94,tag:"current"},
+{n:"Alisson",p:PRICE,r:93,tag:"current"},
+{n:"Donnarumma",p:PRICE,r:92,tag:"current"},
+{n:"Ederson",p:PRICE,r:91,tag:"current"},
+{n:"Oblak",p:PRICE,r:93,tag:"current"},
+{n:"Ter Stegen",p:PRICE,r:92,tag:"current"},
+{n:"Emiliano Martinez",p:PRICE,r:91,tag:"current"}
 
 ],
 
@@ -1915,32 +2119,75 @@ LB:[
 
 {n:"Maldini",p:PRICE,r:99,tag:"legend"},
 {n:"Roberto Carlos",p:PRICE,r:98,tag:"legend"},
-{n:"Ashley Cole",p:PRICE,r:94,tag:"legend"},
-{n:"Davies",p:PRICE,r:87,tag:"current"},
-{n:"Robertson",p:PRICE,r:88,tag:"current"},
-{n:"T.Hernandez",p:PRICE,r:89,tag:"current"}
+{n:"Ashley Cole",p:PRICE,r:96,tag:"retired"},
+{n:"Marcelo",p:PRICE,r:96,tag:"retired"},
+{n:"Evra",p:PRICE,r:94,tag:"retired"},
+{n:"Jordi Alba",p:PRICE,r:93,tag:"retired"},
+{n:"Brehme",p:PRICE,r:96,tag:"retired"},
+{n:"Facchetti",p:PRICE,r:97,tag:"legend"},
+{n:"Davies",p:PRICE,r:90,tag:"current"},
+{n:"Robertson",p:PRICE,r:89,tag:"current"},
+{n:"T.Hernandez",p:PRICE,r:91,tag:"current"},
+{n:"Theo Hernandez",p:PRICE,r:91,tag:"current"},
+{n:"Dimarco",p:PRICE,r:88,tag:"current"},
+{n:"Grimaldo",p:PRICE,r:89,tag:"current"},
+{n:"Nuno Mendes",p:PRICE,r:88,tag:"current"},
+{n:"Shaw",p:PRICE,r:86,tag:"current"},
+{n:"Cucurella",p:PRICE,r:84,tag:"current"}
 
 ],
 
 CB1:[
 
 {n:"Beckenbauer",p:PRICE,r:99,tag:"legend"},
-{n:"Nesta",p:PRICE,r:97,tag:"legend"},
+{n:"Nesta",p:PRICE,r:98,tag:"legend"},
 {n:"Cannavaro",p:PRICE,r:97,tag:"legend"},
-{n:"Van Dijk",p:PRICE,r:91,tag:"current"},
-{n:"R.Dias",p:PRICE,r:90,tag:"current"},
-{n:"Saliba",p:PRICE,r:89,tag:"current"}
+{n:"Van Dijk",p:PRICE,r:94,tag:"current"},
+{n:"R.Dias",p:PRICE,r:92,tag:"current"},
+{n:"Saliba",p:PRICE,r:91,tag:"current"},
+{n:"Stam",p:PRICE,r:96,tag:"retired"},
+{n:"Ferdinand",p:PRICE,r:96,tag:"retired"},
+{n:"Vidic",p:PRICE,r:95,tag:"retired"},
+{n:"Desailly",p:PRICE,r:96,tag:"retired"},
+{n:"Koeman",p:PRICE,r:97,tag:"legend"},
+{n:"Thuram",p:PRICE,r:95,tag:"retired"},
+{n:"Bobby Moore",p:PRICE,r:98,tag:"legend"},
+{n:"Skriniar",p:PRICE,r:88,tag:"current"},
+{n:"Akanji",p:PRICE,r:86,tag:"current"},
+{n:"Pau Torres",p:PRICE,r:85,tag:"current"},
+{n:"Konate",p:PRICE,r:87,tag:"current"},
+{n:"Gvardiol",p:PRICE,r:89,tag:"current"},
+{n:"De Ligt",p:PRICE,r:89,tag:"current"},
+{n:"Varane",p:PRICE,r:93,tag:"retired"},
+{n:"Godin",p:PRICE,r:93,tag:"retired"},
+{n:"Pepe",p:PRICE,r:92,tag:"retired"}
 
 ],
 
 CB2:[
 
-{n:"Baresi",p:PRICE,r:98,tag:"legend"},
-{n:"Sergio Ramos",p:PRICE,r:96,tag:"legend"},
-{n:"Puyol",p:PRICE,r:95,tag:"legend"},
+{n:"Baresi",p:PRICE,r:99,tag:"legend"},
+{n:"Sergio Ramos",p:PRICE,r:97,tag:"retired"},
+{n:"Puyol",p:PRICE,r:96,tag:"retired"},
 {n:"Rudiger",p:PRICE,r:89,tag:"current"},
 {n:"Araujo",p:PRICE,r:88,tag:"current"},
-{n:"Marquinhos",p:PRICE,r:89,tag:"current"}
+{n:"Marquinhos",p:PRICE,r:90,tag:"current"},
+{n:"Terry",p:PRICE,r:96,tag:"retired"},
+{n:"John Stones",p:PRICE,r:87,tag:"current"},
+{n:"Thiago Silva",p:PRICE,r:92,tag:"retired"},
+{n:"Chiellini",p:PRICE,r:94,tag:"retired"},
+{n:"Bonucci",p:PRICE,r:92,tag:"retired"},
+{n:"Nesta CB",p:PRICE,r:98,tag:"legend"},
+{n:"Hummels",p:PRICE,r:90,tag:"retired"},
+{n:"Maldini CB",p:PRICE,r:99,tag:"legend"},
+{n:"Lucio",p:PRICE,r:95,tag:"retired"},
+{n:"Carles Puyol",p:PRICE,r:96,tag:"retired"},
+{n:"Varane CB",p:PRICE,r:93,tag:"retired"},
+{n:"Alaba",p:PRICE,r:90,tag:"current"},
+{n:"Militao",p:PRICE,r:89,tag:"current"},
+{n:"William Saliba",p:PRICE,r:91,tag:"current"},
+{n:"Gabriel",p:PRICE,r:86,tag:"current"},
+{n:"Bremer",p:PRICE,r:87,tag:"current"}
 
 ],
 
@@ -1948,32 +2195,67 @@ RB:[
 
 {n:"Cafu",p:PRICE,r:98,tag:"legend"},
 {n:"Lahm",p:PRICE,r:97,tag:"legend"},
-{n:"Dani Alves",p:PRICE,r:96,tag:"legend"},
-{n:"Hakimi",p:PRICE,r:90,tag:"current"},
-{n:"TAA",p:PRICE,r:89,tag:"current"},
-{n:"Frimpong",p:PRICE,r:88,tag:"current"}
+{n:"Dani Alves",p:PRICE,r:97,tag:"retired"},
+{n:"Zambrotta",p:PRICE,r:95,tag:"retired"},
+{n:"Maicon",p:PRICE,r:95,tag:"retired"},
+{n:"Gary Neville",p:PRICE,r:92,tag:"retired"},
+{n:"Thuram RB",p:PRICE,r:95,tag:"retired"},
+{n:"Trent Alexander-Arnold",p:PRICE,r:91,tag:"current"},
+{n:"Hakimi",p:PRICE,r:92,tag:"current"},
+{n:"TAA",p:PRICE,r:91,tag:"current"},
+{n:"Frimpong",p:PRICE,r:89,tag:"current"},
+{n:"Walker",p:PRICE,r:89,tag:"current"},
+{n:"Carvajal",p:PRICE,r:90,tag:"current"},
+{n:"Reece James",p:PRICE,r:86,tag:"current"},
+{n:"Kounde",p:PRICE,r:87,tag:"current"},
+{n:"Pedro Porro",p:PRICE,r:85,tag:"current"},
+{n:"Pavard",p:PRICE,r:87,tag:"current"}
 
 ],
 
 CM1:[
 
 {n:"Zidane",p:PRICE,r:99,tag:"legend"},
-{n:"Pirlo",p:PRICE,r:98,tag:"legend"},
-{n:"Xavi",p:PRICE,r:97,tag:"legend"},
-{n:"Rodri",p:PRICE,r:92,tag:"current"},
-{n:"Valverde",p:PRICE,r:90,tag:"current"},
-{n:"Kimmich",p:PRICE,r:89,tag:"current"}
+{n:"Pirlo",p:PRICE,r:98,tag:"retired"},
+{n:"Xavi",p:PRICE,r:98,tag:"retired"},
+{n:"Iniesta",p:PRICE,r:98,tag:"retired"},
+{n:"Modric",p:PRICE,r:96,tag:"current"},
+{n:"Rodri",p:PRICE,r:95,tag:"current"},
+{n:"Scholes",p:PRICE,r:96,tag:"retired"},
+{n:"Gerrard",p:PRICE,r:96,tag:"retired"},
+{n:"Lampard",p:PRICE,r:95,tag:"retired"},
+{n:"Seedorf",p:PRICE,r:95,tag:"retired"},
+{n:"Vieira",p:PRICE,r:96,tag:"retired"},
+{n:"Busquets",p:PRICE,r:94,tag:"retired"},
+{n:"Kroos",p:PRICE,r:95,tag:"retired"},
+{n:"Valverde",p:PRICE,r:91,tag:"current"},
+{n:"Kimmich",p:PRICE,r:90,tag:"current"},
+{n:"De Jong",p:PRICE,r:89,tag:"current"},
+{n:"Pedri",p:PRICE,r:88,tag:"current"},
+{n:"Bellingham CM",p:PRICE,r:93,tag:"current"}
 
 ],
 
 CM2:[
 
 {n:"Maradona",p:PRICE,r:99,tag:"legend"},
-{n:"Gullit",p:PRICE,r:97,tag:"legend"},
-{n:"Matthaus",p:PRICE,r:97,tag:"legend"},
-{n:"Modric",p:PRICE,r:91,tag:"current"},
+{n:"Gullit",p:PRICE,r:98,tag:"legend"},
+{n:"Matthaus",p:PRICE,r:98,tag:"legend"},
+{n:"Makelele",p:PRICE,r:95,tag:"retired"},
+{n:"Davids",p:PRICE,r:94,tag:"retired"},
+{n:"Essien",p:PRICE,r:94,tag:"retired"},
+{n:"Roy Keane",p:PRICE,r:95,tag:"retired"},
+{n:"Schweinsteiger",p:PRICE,r:93,tag:"retired"},
+{n:"Fabinho",p:PRICE,r:87,tag:"current"},
 {n:"Barella",p:PRICE,r:89,tag:"current"},
-{n:"Camavinga",p:PRICE,r:88,tag:"current"}
+{n:"Camavinga",p:PRICE,r:88,tag:"current"},
+{n:"Rice",p:PRICE,r:89,tag:"current"},
+{n:"Casemiro",p:PRICE,r:91,tag:"retired"},
+{n:"Yaya Toure",p:PRICE,r:96,tag:"retired"},
+{n:"Toni Kroos CM",p:PRICE,r:95,tag:"retired"},
+{n:"Cesc Fabregas",p:PRICE,r:93,tag:"retired"},
+{n:"Thiago Alcantara",p:PRICE,r:92,tag:"retired"},
+{n:"Declan Rice CM",p:PRICE,r:89,tag:"current"}
 
 ],
 
@@ -1981,10 +2263,21 @@ CAM:[
 
 {n:"Messi",p:PRICE,r:99,tag:"goat"},
 {n:"Ronaldinho",p:PRICE,r:98,tag:"legend"},
-{n:"Kaka",p:PRICE,r:97,tag:"legend"},
-{n:"De Bruyne",p:PRICE,r:92,tag:"current"},
-{n:"Bellingham",p:PRICE,r:91,tag:"current"},
-{n:"Musiala",p:PRICE,r:90,tag:"current"}
+{n:"Kaka",p:PRICE,r:97,tag:"retired"},
+{n:"De Bruyne",p:PRICE,r:94,tag:"current"},
+{n:"Baggio",p:PRICE,r:97,tag:"legend"},
+{n:"Bergkamp",p:PRICE,r:96,tag:"retired"},
+{n:"Ozil",p:PRICE,r:92,tag:"retired"},
+{n:"Totti",p:PRICE,r:96,tag:"retired"},
+{n:"Riquelme",p:PRICE,r:95,tag:"retired"},
+{n:"Nedved",p:PRICE,r:95,tag:"retired"},
+{n:"Socrates",p:PRICE,r:96,tag:"legend"},
+{n:"Zico",p:PRICE,r:98,tag:"legend"},
+{n:"Platini",p:PRICE,r:98,tag:"legend"},
+{n:"Grealish",p:PRICE,r:86,tag:"current"},
+{n:"Musiala",p:PRICE,r:91,tag:"current"},
+{n:"Wirtz",p:PRICE,r:90,tag:"current"},
+{n:"Bruno Fernandes",p:PRICE,r:91,tag:"current"}
 
 ],
 
@@ -1992,9 +2285,21 @@ LW:[
 
 {n:"Cristiano",p:PRICE,r:99,tag:"goat"},
 {n:"Henry",p:PRICE,r:98,tag:"legend"},
-{n:"Neymar",p:PRICE,r:91,tag:"current"},
-{n:"Vinicius",p:PRICE,r:92,tag:"current"},
-{n:"Leao",p:PRICE,r:89,tag:"current"}
+{n:"Neymar",p:PRICE,r:94,tag:"current"},
+{n:"Vinicius",p:PRICE,r:93,tag:"current"},
+{n:"Ribery",p:PRICE,r:94,tag:"retired"},
+{n:"Robben",p:PRICE,r:96,tag:"retired"},
+{n:"Giggs",p:PRICE,r:96,tag:"retired"},
+{n:"George Best",p:PRICE,r:98,tag:"legend"},
+{n:"Stoichkov",p:PRICE,r:96,tag:"legend"},
+{n:"Rivaldo",p:PRICE,r:97,tag:"legend"},
+{n:"Sadio Mane",p:PRICE,r:89,tag:"current"},
+{n:"Son",p:PRICE,r:91,tag:"current"},
+{n:"Leao",p:PRICE,r:89,tag:"current"},
+{n:"Kvaratskhelia",p:PRICE,r:88,tag:"current"},
+{n:"Martinelli",p:PRICE,r:85,tag:"current"},
+{n:"Luis Diaz",p:PRICE,r:87,tag:"current"},
+{n:"Rafael Leao",p:PRICE,r:89,tag:"current"}
 
 ],
 
@@ -2002,10 +2307,23 @@ ST:[
 
 {n:"Ronaldo Nazario",p:PRICE,r:99,tag:"legend"},
 {n:"Van Basten",p:PRICE,r:98,tag:"legend"},
-{n:"Drogba",p:PRICE,r:96,tag:"legend"},
-{n:"Haaland",p:PRICE,r:93,tag:"current"},
-{n:"Mbappe",p:PRICE,r:94,tag:"current"},
-{n:"Kane",p:PRICE,r:91,tag:"current"}
+{n:"Drogba",p:PRICE,r:96,tag:"retired"},
+{n:"Haaland",p:PRICE,r:96,tag:"current"},
+{n:"Mbappe",p:PRICE,r:97,tag:"current"},
+{n:"Kane",p:PRICE,r:93,tag:"current"},
+{n:"Eusebio",p:PRICE,r:99,tag:"legend"},
+{n:"Pele",p:PRICE,r:99,tag:"goat"},
+{n:"Romario",p:PRICE,r:98,tag:"legend"},
+{n:"Shevchenko",p:PRICE,r:96,tag:"retired"},
+{n:"Batistuta",p:PRICE,r:96,tag:"retired"},
+{n:"Suarez",p:PRICE,r:94,tag:"retired"},
+{n:"Lewandowski",p:PRICE,r:94,tag:"current"},
+{n:"Eto'o",p:PRICE,r:95,tag:"retired"},
+{n:"Ibrahimovic",p:PRICE,r:95,tag:"retired"},
+{n:"Benzema",p:PRICE,r:93,tag:"retired"},
+{n:"Cavani",p:PRICE,r:91,tag:"retired"},
+{n:"Raul",p:PRICE,r:95,tag:"retired"},
+{n:"Higuain",p:PRICE,r:89,tag:"retired"}
 
 ],
 
@@ -2014,9 +2332,21 @@ RW:[
 {n:"Messi RW",p:PRICE,r:99,tag:"goat"},
 {n:"Cristiano Ronaldo",p:PRICE,r:99,tag:"goat"},
 {n:"Beckham",p:PRICE,r:98,tag:"legend"},
-{n:"Garrincha",p:PRICE,r:97,tag:"legend"},
-{n:"Salah",p:PRICE,r:92,tag:"current"},
-{n:"Saka",p:PRICE,r:90,tag:"current"}
+{n:"Garrincha",p:PRICE,r:98,tag:"legend"},
+{n:"Salah",p:PRICE,r:93,tag:"current"},
+{n:"Saka",p:PRICE,r:90,tag:"current"},
+{n:"Figo",p:PRICE,r:97,tag:"legend"},
+{n:"Luis Figo",p:PRICE,r:97,tag:"legend"},
+{n:"Best RW",p:PRICE,r:98,tag:"legend"},
+{n:"Jairzinho",p:PRICE,r:97,tag:"legend"},
+{n:"Mahrez",p:PRICE,r:88,tag:"current"},
+{n:"Bernardo Silva",p:PRICE,r:90,tag:"current"},
+{n:"Rodrygo",p:PRICE,r:87,tag:"current"},
+{n:"Dembele",p:PRICE,r:87,tag:"current"},
+{n:"Kulusevski",p:PRICE,r:85,tag:"current"},
+{n:"Coman",p:PRICE,r:88,tag:"current"},
+{n:"Di Maria",p:PRICE,r:93,tag:"retired"},
+{n:"Ribery RW",p:PRICE,r:94,tag:"retired"}
 
 ]
 
@@ -2054,6 +2384,8 @@ let usedPlayers={};
 let availablePlayers={};
 
 let timerInterval=null;
+
+let finalShown=false;
 
 
 /* =====================================================
@@ -2133,8 +2465,7 @@ now+.32
 IMAGE
 ===================================================== */
 
-const playerImageAliases={
-"Yashin":"Lev Yashin","T.Hernandez":"Theo Hernandez","R.Dias":"Ruben Dias","TAA":"Trent Alexander-Arnold","Cristiano":"Cristiano Ronaldo","Ronaldo Nazario":"Ronaldo Nazario","Messi RW":"Lionel Messi","Kaka":"Kaka","Mbappe":"Kylian Mbappe","Vinicius":"Vinicius Junior","Leao":"Rafael Leao","Davies":"Alphonso Davies","Courtois":"Thibaut Courtois","Donnarumma":"Gianluigi Donnarumma","Matthaus":"Lothar Matthaus","Van Basten":"Marco van Basten","Garrincha":"Garrincha"};
+const playerImageAliases={"Yashin":"Lev Yashin", "T.Hernandez":"Theo Hernandez", "R.Dias":"Ruben Dias", "TAA":"Trent Alexander-Arnold", "Cristiano":"Cristiano Ronaldo", "Ronaldo Nazario":"Ronaldo Nazário", "Messi RW":"Lionel Messi", "Kaka":"Kaka", "Mbappe":"Kylian Mbappé", "Vinicius":"Vinícius Júnior", "Leao":"Rafael Leao", "Davies":"Alphonso Davies", "Courtois":"Thibaut Courtois", "Donnarumma":"Gianluigi Donnarumma", "Matthaus":"Lothar Matthäus", "Van Basten":"Marco van Basten", "Garrincha":"Garrincha", "Trent Alexander-Arnold":"Trent Alexander-Arnold", "Ederson":"Ederson", "Neuer":"Manuel Neuer", "Schmeichel":"Peter Schmeichel", "Čech":"Petr Čech", "Van der Sar":"Edwin van der Sar", "Oblak":"Jan Oblak", "Ter Stegen":"Marc-Andre ter Stegen", "Emiliano Martinez":"Emiliano Martínez", "Marcelo":"Marcelo", "Evra":"Patrice Evra", "Jordi Alba":"Jordi Alba", "Facchetti":"Giacinto Facchetti", "Dimarco":"Federico Dimarco", "Grimaldo":"Alejandro Grimaldo", "Nuno Mendes":"Nuno Mendes", "Shaw":"Luke Shaw", "Cucurella":"Marc Cucurella", "Stam":"Jaap Stam", "Ferdinand":"Rio Ferdinand", "Vidic":"Nemanja Vidić", "Desailly":"Marcel Desailly", "Koeman":"Ronald Koeman", "Thuram":"Lilian Thuram", "Bobby Moore":"Bobby Moore", "Thiago Silva":"Thiago Silva", "Chiellini":"Giorgio Chiellini", "Terry":"John Terry", "Alaba":"David Alaba", "Militao":"Éder Militão", "Cafu":"Cafu", "Lahm":"Philipp Lahm", "Maicon":"Maicon", "Walker":"Kyle Walker", "Carvajal":"Dani Carvajal", "Reece James":"Reece James", "Zidane":"Zinedine Zidane", "Pirlo":"Andrea Pirlo", "Xavi":"Xavi", "Iniesta":"Andrés Iniesta", "Modric":"Luka Modrić", "Rodri":"Rodri", "Scholes":"Paul Scholes", "Gerrard":"Steven Gerrard", "Lampard":"Frank Lampard", "Seedorf":"Clarence Seedorf", "Vieira":"Patrick Vieira", "Busquets":"Sergio Busquets", "Kroos":"Toni Kroos", "Valverde":"Federico Valverde", "Kimmich":"Joshua Kimmich", "De Jong":"Frenkie de Jong", "Pedri":"Pedri", "Bellingham CM":"Jude Bellingham", "Maradona":"Diego Maradona", "Gullit":"Ruud Gullit", "Makelele":"Claude Makélélé", "Davids":"Edgar Davids", "Essien":"Michael Essien", "Roy Keane":"Roy Keane", "Schweinsteiger":"Bastian Schweinsteiger", "Fabinho":"Fabinho", "Barella":"Nicolò Barella", "Camavinga":"Eduardo Camavinga", "Rice":"Declan Rice", "Casemiro":"Casemiro", "Yaya Toure":"Yaya Touré", "Cesc Fabregas":"Cesc Fàbregas", "Thiago Alcantara":"Thiago Alcântara", "Messi":"Lionel Messi", "Ronaldinho":"Ronaldinho", "De Bruyne":"Kevin De Bruyne", "Baggio":"Roberto Baggio", "Bergkamp":"Dennis Bergkamp", "Ozil":"Mesut Özil", "Totti":"Francesco Totti", "Riquelme":"Juan Román Riquelme", "Nedved":"Pavel Nedvěd", "Socrates":"Sócrates", "Zico":"Zico", "Platini":"Michel Platini", "Grealish":"Jack Grealish", "Musiala":"Jamal Musiala", "Wirtz":"Florian Wirtz", "Bruno Fernandes":"Bruno Fernandes", "Henry":"Thierry Henry", "Neymar":"Neymar", "Ribery":"Franck Ribéry", "Robben":"Arjen Robben", "Giggs":"Ryan Giggs", "George Best":"George Best", "Stoichkov":"Hristo Stoichkov", "Rivaldo":"Rivaldo", "Sadio Mane":"Sadio Mané", "Son":"Son Heung-min", "Kvaratskhelia":"Khvicha Kvaratskhelia", "Martinelli":"Gabriel Martinelli", "Luis Diaz":"Luis Díaz", "Rafael Leao":"Rafael Leão", "Drogba":"Didier Drogba", "Haaland":"Erling Haaland", "Kane":"Harry Kane", "Eusebio":"Eusébio", "Pele":"Pelé", "Romario":"Romário", "Shevchenko":"Andriy Shevchenko", "Batistuta":"Gabriel Batistuta", "Suarez":"Luis Suárez", "Lewandowski":"Robert Lewandowski", "Eto'o":"Samuel Eto'o", "Ibrahimovic":"Zlatan Ibrahimović", "Benzema":"Karim Benzema", "Cavani":"Edinson Cavani", "Raul":"Raúl", "Higuain":"Gonzalo Higuaín", "Beckham":"David Beckham", "Salah":"Mohamed Salah", "Saka":"Bukayo Saka", "Figo":"Luís Figo", "Jairzinho":"Jairzinho", "Mahrez":"Riyad Mahrez", "Bernardo Silva":"Bernardo Silva", "Rodrygo":"Rodrygo", "Dembele":"Ousmane Dembélé", "Kulusevski":"Dejan Kulusevski", "Coman":"Kingsley Coman", "Di Maria":"Ángel Di María"};
 
 function fallbackPlayerImg(name){
 return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=111&color=ffd700&size=400&rounded=true&bold=true`;
@@ -2163,45 +2494,32 @@ CARD TYPE
 
 function getCardInfo(player){
 
-const name=
-player.n.toLowerCase();
+const tag=player?.tag||"current";
 
-if(
-
-player.tag==="goat"||
-name.includes("messi")||
-name.includes("cristiano")
-
-){
-
-return{
-
-className:"card-goat",
-
-title:"👑 ULTIMATE GOAT 👑"
-
-};
-
+if(tag==="goat"){
+    return{
+        className:"card-goat",
+        title:"👑 ULTIMATE GOAT 👑"
+    };
 }
 
-if(player.tag==="legend"){
+if(tag==="legend"){
+    return{
+        className:"card-legend",
+        title:"💎 LEGENDARY ICON 💎"
+    };
+}
 
-return{
-
-className:"card-icon",
-
-title:"⭐ ICON LEGEND ⭐"
-
-};
-
+if(tag==="retired"){
+    return{
+        className:"card-retired",
+        title:"🔥 RETIRED STAR 🔥"
+    };
 }
 
 return{
-
-className:"card-gold",
-
-title:"🌟 GOLD ELITE 🌟"
-
+    className:"card-current",
+    title:"⚡ CURRENT ELITE ⚡"
 };
 
 }
@@ -2293,14 +2611,58 @@ type+'/'+
 room
 );
 
+
+/* =====================================================
+ROOM LISTENER
+===================================================== */
+
 roomRef.on(
 'value',
 async snapshot=>{
 
-const data=snapshot.val();
+let data=snapshot.val();
 
-if(!data)
+/*
+    لو الغرفة لسه مش متعمل لها بيانات
+    المضيف ينشئ الحالة الأولية تلقائياً.
+*/
+if(!data){
+
+if(amIHost){
+
+const initialData={
+    player1:{name:"الفريق الأزرق"},
+    player2:{name:"الفريق الأحمر"},
+    m1:200000000,
+    m2:200000000,
+    currentPos:0,
+    currentBid:0,
+    highestBidder:0,
+    turn:1,
+    currentPlayer:null,
+    filled1:{},
+    filled2:{},
+    usedPlayers:{},
+    availablePlayers:JSON.parse(JSON.stringify(playersDB))
+};
+
+try{
+    await roomRef.set(initialData);
+}catch(e){
+    document.getElementById('turn').innerText=
+    "❌ فشل إنشاء الغرفة: "+(e.message||"تحقق من Firebase");
+}
+
+}else{
+
+document.getElementById('turn').innerText=
+"⏳ مستني المضيف يبدأ الغرفة...";
+
+}
+
 return;
+
+}
 
 document.getElementById('name1').innerText=
 data.player1?.name||'الأزرق';
@@ -2314,9 +2676,31 @@ data.player1?.name||'الفريق الأزرق';
 document.getElementById('team2Title').innerText=
 data.player2?.name||'الفريق الأحمر';
 
+try{
+
 await loadData(data);
 
-});
+}catch(e){
+
+console.error(e);
+
+document.getElementById('turn').innerText=
+"❌ حصل خطأ أثناء تحميل المزاد";
+
+}
+
+},
+error=>{
+
+console.error("Firebase:",error);
+
+document.getElementById('turn').innerText=
+"❌ تعذر الاتصال بالمزاد — تحقق من Firebase Rules والإنترنت";
+
+document.querySelector('.controls').style.display='none';
+
+}
+);
 
 
 /* =====================================================
@@ -2546,6 +2930,12 @@ positions[currentPosIndex];
 const player=
 getRandomPlayer(posName);
 
+if(!player){
+document.getElementById('turn').innerText=
+"❌ مفيش لاعبين متاحين للمركز "+posName;
+return;
+}
+
 removePlayerFromPool(
 posName,
 player.n
@@ -2747,6 +3137,11 @@ true;
 const randomPlayer=
 getRandomPlayer(pos);
 
+if(!randomPlayer){
+alert("مفيش لاعب بديل متاح للمركز ده");
+return;
+}
+
 removePlayerFromPool(
 pos,
 randomPlayer.n
@@ -2807,6 +3202,11 @@ positions[currentPosIndex];
 const p1=
 getRandomPlayer(pos);
 
+if(!p1){
+alert("مفيش لاعبين متاحين للمركز ده");
+return;
+}
+
 removePlayerFromPool(
 pos,
 p1.n
@@ -2814,6 +3214,11 @@ p1.n
 
 const p2=
 getRandomPlayer(pos);
+
+if(!p2){
+alert("مفيش لاعب ثاني متاح للمركز ده");
+return;
+}
 
 removePlayerFromPool(
 pos,
@@ -3272,6 +3677,11 @@ SHOW MATCH RESULT
 ===================================================== */
 
 function showMatchResult(data){
+
+if(finalShown)
+return;
+
+finalShown=true;
 
 /*
     إخفاء المزاد
