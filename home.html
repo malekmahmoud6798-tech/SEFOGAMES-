@@ -1,21 +1,48 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>L&S GAMES - Night of Champions</title>
+<title>⚽ L&S GAMES — CHAMPIONS NIGHT</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-
 /* =========================================================
-   L&S GAMES
-   NIGHT OF CHAMPIONS EDITION
+   L&S GAMES — CHAMPIONS NIGHT
+   ORIGINAL PREMIUM FOOTBALL UI
    ========================================================= */
+
+:root{
+    --bg:#02040c;
+    --bg2:#05091a;
+    --panel:rgba(7,14,34,.78);
+    --panel2:rgba(10,20,48,.9);
+
+    --blue:#1677ff;
+    --blue2:#00b7ff;
+    --cyan:#52e8ff;
+
+    --gold:#f5c451;
+    --gold2:#fff1a3;
+
+    --purple:#7c4dff;
+    --pink:#df4dff;
+
+    --white:#f7fbff;
+    --muted:#8290ad;
+
+    --line:rgba(110,170,255,.16);
+
+    --shadow:
+        0 25px 80px rgba(0,0,0,.65),
+        0 0 45px rgba(0,116,255,.12);
+
+    --radius:24px;
+}
 
 *{
     margin:0;
@@ -29,109 +56,286 @@ html{
 }
 
 body{
-    font-family:'Cairo',sans-serif;
-    color:#fff;
-    background:#020817;
-    overflow-x:hidden;
-    padding-top:78px;
-    padding-bottom:100px;
     min-height:100vh;
+    color:var(--white);
+    font-family:'Cairo',sans-serif;
+    background:
+        radial-gradient(circle at 50% 15%,rgba(20,89,190,.24),transparent 34%),
+        radial-gradient(circle at 85% 45%,rgba(80,25,180,.13),transparent 35%),
+        radial-gradient(circle at 15% 65%,rgba(0,160,255,.09),transparent 35%),
+        #02040c;
+    overflow-x:hidden;
 }
 
 /* =========================================================
-   BACKGROUND
+   CINEMATIC INTRO
    ========================================================= */
 
-#bg{
+.intro{
     position:fixed;
     inset:0;
-    z-index:0;
+    z-index:99999;
+    background:#010208;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     overflow:hidden;
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(25,88,190,.48) 0%,
-            rgba(5,28,70,.55) 25%,
-            rgba(2,8,23,.96) 65%,
-            #01040c 100%
-        );
-}
-
-#bg::before{
-    content:"";
-    position:absolute;
-    width:900px;
-    height:900px;
-    left:50%;
-    top:-500px;
-    transform:translateX(-50%);
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(68,150,255,.20),
-            rgba(30,95,190,.07) 35%,
-            transparent 70%
-        );
-    filter:blur(8px);
-    animation:skyPulse 5s ease-in-out infinite;
-}
-
-#bg::after{
-    content:"";
-    position:absolute;
-    left:-10%;
-    right:-10%;
-    bottom:-20%;
-    height:60%;
-    background:
-        linear-gradient(
-            to top,
-            rgba(0,0,0,.95),
-            transparent
-        );
+    animation:introOut 1s ease 3.4s forwards;
     pointer-events:none;
 }
 
-@keyframes skyPulse{
-    0%,100%{
-        opacity:.65;
-        transform:translateX(-50%) scale(1);
+.intro::before{
+    content:"";
+    position:absolute;
+    inset:-30%;
+    background:
+        conic-gradient(
+            from 0deg,
+            transparent,
+            rgba(0,119,255,.15),
+            transparent,
+            rgba(132,54,255,.12),
+            transparent
+        );
+    animation:spin 9s linear infinite;
+}
+
+.intro-content{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    animation:introZoom 3.1s cubic-bezier(.16,1,.3,1);
+}
+
+.intro-small{
+    font-family:Orbitron,sans-serif;
+    font-size:10px;
+    letter-spacing:7px;
+    color:#8ca6cf;
+    margin-bottom:15px;
+}
+
+.intro-logo{
+    font-family:Orbitron,sans-serif;
+    font-size:clamp(42px,10vw,100px);
+    font-weight:900;
+    letter-spacing:-5px;
+    background:linear-gradient(
+        110deg,
+        #fff,
+        #62d9ff,
+        #fff,
+        #f7c94c
+    );
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    text-shadow:
+        0 0 35px rgba(38,170,255,.55),
+        0 0 80px rgba(50,100,255,.25);
+}
+
+.intro-title{
+    margin-top:4px;
+    font-family:Orbitron,sans-serif;
+    letter-spacing:9px;
+    font-size:clamp(10px,2vw,17px);
+    color:#fff;
+}
+
+.intro-line{
+    width:220px;
+    height:1px;
+    margin:24px auto;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #4ccaff,
+        #f4c64d,
+        transparent
+    );
+    box-shadow:0 0 20px #3fc8ff;
+}
+
+.intro-status{
+    font-size:10px;
+    color:#657896;
+    letter-spacing:3px;
+}
+
+@keyframes introZoom{
+    0%{
+        opacity:0;
+        transform:scale(.65);
+        filter:blur(12px);
     }
-    50%{
+    35%{
         opacity:1;
-        transform:translateX(-50%) scale(1.08);
+        transform:scale(1);
+        filter:blur(0);
+    }
+    100%{
+        transform:scale(1.04);
     }
 }
+
+@keyframes introOut{
+    to{
+        opacity:0;
+        visibility:hidden;
+    }
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+/* =========================================================
+   STADIUM BACKGROUND
+   ========================================================= */
+
+.stadium{
+    position:fixed;
+    inset:0;
+    z-index:-10;
+    pointer-events:none;
+    overflow:hidden;
+    background:
+        linear-gradient(
+            180deg,
+            #020511 0%,
+            #030817 42%,
+            #010207 100%
+        );
+}
+
+.stadium-sky{
+    position:absolute;
+    inset:0;
+    background:
+        radial-gradient(
+            ellipse at 50% 32%,
+            rgba(24,110,255,.2),
+            transparent 40%
+        );
+}
+
+.stadium-arc{
+    position:absolute;
+    left:-20%;
+    right:-20%;
+    top:35%;
+    height:55%;
+    border-radius:50% 50% 0 0;
+    border-top:1px solid rgba(80,150,255,.2);
+    box-shadow:
+        0 -20px 100px rgba(0,115,255,.1),
+        inset 0 20px 80px rgba(0,0,0,.8);
+    transform:perspective(600px) rotateX(35deg);
+}
+
+.stadium-field{
+    position:absolute;
+    left:-10%;
+    right:-10%;
+    bottom:-25%;
+    height:60%;
+    transform:perspective(700px) rotateX(60deg);
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(10,50,75,.15) 0,
+            rgba(10,50,75,.15) 8%,
+            rgba(5,30,48,.15) 8%,
+            rgba(5,30,48,.15) 16%
+        ),
+        radial-gradient(
+            ellipse at 50% 20%,
+            rgba(0,135,255,.1),
+            transparent 60%
+        );
+    border-top:1px solid rgba(58,139,255,.15);
+}
+
+.floodlight{
+    position:absolute;
+    width:2px;
+    height:80vh;
+    top:-20vh;
+    opacity:.22;
+    filter:blur(1px);
+    transform-origin:top;
+    background:linear-gradient(
+        180deg,
+        rgba(255,255,255,.95),
+        rgba(60,180,255,.3),
+        transparent
+    );
+    box-shadow:0 0 30px rgba(70,180,255,.35);
+}
+
+.f1{
+    left:7%;
+    transform:rotate(-17deg);
+}
+.f2{
+    left:25%;
+    transform:rotate(-7deg);
+}
+.f3{
+    left:50%;
+}
+.f4{
+    right:25%;
+    transform:rotate(7deg);
+}
+.f5{
+    right:7%;
+    transform:rotate(17deg);
+}
+
+.floodlight{
+    animation:lightMove 6s ease-in-out infinite alternate;
+}
+
+.f2{animation-delay:-2s}
+.f3{animation-delay:-4s}
+.f4{animation-delay:-1s}
+
+@keyframes lightMove{
+    from{opacity:.10}
+    to{opacity:.3}
+}
+
+/* =========================================================
+   PARTICLES
+   ========================================================= */
 
 #particles{
     position:fixed;
     inset:0;
-    z-index:1;
     pointer-events:none;
+    z-index:-1;
 }
 
-/* نجوم صغيرة */
 .star{
     position:absolute;
     width:2px;
     height:2px;
     border-radius:50%;
     background:#fff;
-    box-shadow:0 0 7px #fff;
-    animation:starFloat linear infinite;
+    box-shadow:0 0 8px #8edcff;
+    animation:twinkle var(--d) ease-in-out infinite;
 }
 
-@keyframes starFloat{
-    0%{
-        transform:translateY(0);
+@keyframes twinkle{
+    0%,100%{
         opacity:.15;
+        transform:scale(.5);
     }
     50%{
-        opacity:1;
-    }
-    100%{
-        transform:translateY(-110vh);
-        opacity:0;
+        opacity:.95;
+        transform:scale(1.6);
     }
 }
 
@@ -139,289 +343,131 @@ body{
    TOP BAR
    ========================================================= */
 
-.top-bar{
+.topbar{
     position:fixed;
     top:0;
     left:0;
-    width:100%;
+    right:0;
     height:78px;
-    z-index:9998;
-
+    z-index:5000;
     display:flex;
     align-items:center;
     justify-content:space-between;
-
-    padding:9px 14px;
-
+    padding:0 22px;
     background:
         linear-gradient(
             180deg,
-            rgba(4,17,43,.97),
-            rgba(2,10,27,.94)
-        );
-
-    border-bottom:1px solid rgba(92,165,255,.55);
-
-    box-shadow:
-        0 2px 25px rgba(0,65,180,.28),
-        inset 0 -1px 0 rgba(255,255,255,.04);
-
-    backdrop-filter:blur(18px);
-}
-
-.top-bar::after{
-    content:"";
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:-1px;
-    height:1px;
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #4da3ff,
-            #dcecff,
-            #4da3ff,
+            rgba(1,5,15,.94),
+            rgba(1,5,15,.58),
             transparent
         );
-    opacity:.8;
-}
-
-.left-top{
-    display:flex;
-    align-items:center;
-    gap:10px;
+    backdrop-filter:blur(12px);
 }
 
 .menu-btn{
-    width:40px;
-    height:40px;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    gap:5px;
-
-    border-radius:12px;
-
+    width:48px;
+    height:48px;
+    border:1px solid rgba(111,185,255,.22);
+    border-radius:15px;
+    background:rgba(7,19,43,.75);
+    color:#fff;
     cursor:pointer;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(40,106,190,.28),
-            rgba(3,15,37,.8)
-        );
-
-    border:1px solid rgba(105,177,255,.35);
-
+    font-size:21px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     box-shadow:
-        inset 0 0 15px rgba(60,130,255,.08),
-        0 0 15px rgba(0,80,200,.12);
-
+        inset 0 0 20px rgba(20,130,255,.08),
+        0 8px 25px rgba(0,0,0,.3);
     transition:.25s;
 }
 
 .menu-btn:hover{
-    transform:translateY(-1px);
-    border-color:#6db6ff;
-}
-
-.menu-btn span{
-    width:21px;
-    height:2px;
-    background:#d9edff;
-    border-radius:10px;
-    box-shadow:0 0 7px rgba(95,175,255,.7);
-}
-
-.profile-info{
-    display:flex;
-    align-items:center;
-    gap:9px;
-    cursor:pointer;
-}
-
-.profile-avatar{
-    width:43px;
-    height:43px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    border-radius:50%;
-
-    font-size:18px;
-    font-weight:900;
-
-    color:#fff;
-
-    background:
-        radial-gradient(
-            circle at 30% 25%,
-            #5eb4ff,
-            #1451a5 45%,
-            #071936 100%
-        );
-
-    border:2px solid #8ac5ff;
-
+    border-color:#4bc9ff;
     box-shadow:
-        0 0 12px rgba(65,150,255,.65),
-        inset 0 0 12px rgba(255,255,255,.15);
+        0 0 25px rgba(0,173,255,.25);
+    transform:translateY(-2px);
 }
 
-.email-info{
+.profile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Orbitron;
+    font-size:15px;
+    font-weight:900;
+    color:#021021;
+    background:
+        linear-gradient(145deg,#fff,#72ddff,#2579ff);
+    box-shadow:
+        0 0 0 2px rgba(255,255,255,.14),
+        0 0 30px rgba(28,150,255,.35);
+}
+
+.user-info{
     display:flex;
     flex-direction:column;
     gap:4px;
 }
 
-.email-short{
-    font-size:12px;
-    font-weight:900;
-    color:#eaf5ff;
-}
-
-.xp-bar-container{
-    width:90px;
-    height:12px;
-
-    position:relative;
-    overflow:hidden;
-
-    border-radius:20px;
-
-    background:rgba(0,0,0,.5);
-
-    border:1px solid rgba(112,181,255,.35);
-}
-
-.xp-bar{
-    height:100%;
-    width:0;
-
-    background:
-        linear-gradient(
-            90deg,
-            #1b62bd,
-            #4ba7ff,
-            #dbeeff
-        );
-
-    box-shadow:0 0 10px rgba(74,164,255,.8);
-
-    transition:width .6s ease;
-}
-
-.xp-text{
-    position:absolute;
-    inset:0;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    font-size:8px;
-    font-weight:900;
-
-    color:#fff;
-    text-shadow:0 1px 3px #000;
-}
-
-.stats-info{
-    display:flex;
-    gap:6px;
-    align-items:center;
-}
-
-.stat-box{
-    min-width:52px;
-
-    padding:4px 7px;
-
-    text-align:center;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(35,86,145,.24),
-            rgba(0,0,0,.3)
-        );
-
-    border:1px solid rgba(125,190,255,.22);
-    border-radius:10px;
-}
-
-.stat-label{
-    font-size:8px;
-    color:#8299b7;
-}
-
-.stat-value{
-    font-size:11px;
-    font-weight:900;
-    color:#eaf5ff;
-}
-
-.ticket-box{
-    min-width:48px;
-
-    padding:6px 9px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:4px;
-
-    border-radius:12px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #174f9c,
-            #2b79ce
-        );
-
-    border:1px solid #82bdff;
-
-    box-shadow:
-        0 0 14px rgba(40,125,230,.4),
-        inset 0 0 10px rgba(255,255,255,.1);
-
-    font-weight:900;
-}
-
-.ticket-box span{
-    color:#fff;
+.username{
     font-size:13px;
+    font-weight:800;
 }
 
-.ticket-box svg{
-    width:17px;
-    height:17px;
+.rank{
+    font-family:Orbitron;
+    font-size:8px;
+    color:#73bfff;
+    letter-spacing:1.5px;
+}
+
+.xp{
+    width:125px;
+    height:5px;
+    background:#172038;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.xp span{
+    display:block;
+    width:72%;
+    height:100%;
+    background:linear-gradient(90deg,#087dff,#4fe2ff);
+    box-shadow:0 0 12px #24baff;
+}
+
+.tickets{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-family:Orbitron;
+    font-size:11px;
+    color:#ffd95b;
 }
 
 /* =========================================================
-   DRAWER
+   SIDE DRAWER
    ========================================================= */
 
 .drawer-overlay{
     position:fixed;
     inset:0;
-
-    background:rgba(0,4,13,.82);
-
-    backdrop-filter:blur(7px);
-
-    z-index:9999;
-
+    z-index:6000;
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(8px);
     opacity:0;
     visibility:hidden;
-
     transition:.3s;
 }
 
@@ -432,531 +478,493 @@ body{
 
 .drawer{
     position:fixed;
-
     top:0;
-    right:-88%;
-
-    width:86%;
-    max-width:390px;
-    height:100%;
-
-    z-index:10000;
-
-    padding:18px;
-
-    overflow-y:auto;
-
+    right:0;
+    bottom:0;
+    width:min(380px,88vw);
+    z-index:6001;
+    padding:30px 22px;
     background:
         radial-gradient(
             circle at 50% 0%,
-            rgba(40,106,190,.3),
-            transparent 35%
+            rgba(35,120,255,.18),
+            transparent 38%
         ),
-        linear-gradient(
-            180deg,
-            #061936,
-            #020817 75%
-        );
-
-    border-left:1px solid #4f9de9;
-
-    box-shadow:
-        -15px 0 45px rgba(0,40,110,.35);
-
-    transition:.4s cubic-bezier(.22,.61,.36,1);
+        rgba(3,8,22,.97);
+    border-left:1px solid rgba(91,169,255,.18);
+    transform:translateX(105%);
+    transition:.5s cubic-bezier(.16,1,.3,1);
+    box-shadow:-30px 0 100px rgba(0,0,0,.6);
 }
 
 .drawer.active{
-    right:0;
+    transform:translateX(0);
 }
 
-.drawer-header{
-    text-align:center;
-
-    margin-bottom:22px;
-    padding-bottom:18px;
-
-    border-bottom:1px solid rgba(104,172,244,.2);
-}
-
-.drawer-header::before{
-    content:"✦  NIGHT OF CHAMPIONS  ✦";
-
-    display:block;
-
-    margin-bottom:15px;
-
-    font-family:'Orbitron';
-    font-size:9px;
-    letter-spacing:1px;
-
-    color:#9ccfff;
-}
-
-.drawer-avatar{
-    width:76px;
-    height:76px;
-
+.drawer-head{
     display:flex;
-    justify-content:center;
     align-items:center;
-
-    margin:0 auto 12px;
-
-    border-radius:50%;
-
-    font-size:30px;
-    font-weight:900;
-
-    background:
-        radial-gradient(
-            circle at 30% 25%,
-            #65b6ff,
-            #185aa7 45%,
-            #06142e 100%
-        );
-
-    border:2px solid #a7d6ff;
-
-    box-shadow:
-        0 0 25px rgba(62,148,255,.55),
-        inset 0 0 20px rgba(255,255,255,.12);
+    justify-content:space-between;
+    padding-bottom:25px;
+    border-bottom:1px solid var(--line);
 }
 
-.drawer-email{
-    font-size:13px;
-    font-weight:700;
-    color:#cce7ff;
-    word-break:break-all;
+.drawer-brand{
+    font-family:Orbitron;
+    font-weight:900;
+    font-size:22px;
+    background:linear-gradient(90deg,#fff,#4ccaff,#f3c64c);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.close-btn{
+    width:40px;
+    height:40px;
+    border:1px solid var(--line);
+    border-radius:13px;
+    background:#071329;
+    color:#fff;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.drawer-section{
+    margin-top:28px;
+}
+
+.drawer-label{
+    color:#566984;
+    font-family:Orbitron;
+    font-size:8px;
+    letter-spacing:3px;
+    margin-bottom:12px;
 }
 
 .drawer-item{
+    width:100%;
+    padding:15px;
+    margin-bottom:9px;
+    border:1px solid rgba(100,160,255,.1);
+    border-radius:16px;
+    background:rgba(8,18,42,.7);
+    color:#dce9ff;
     display:flex;
     align-items:center;
     gap:13px;
-
-    padding:14px;
-
-    margin-bottom:9px;
-
-    border-radius:13px;
-
     cursor:pointer;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(40,98,164,.17),
-            rgba(255,255,255,.025)
-        );
-
-    border:1px solid rgba(105,174,245,.13);
-
     transition:.25s;
+    text-align:right;
 }
 
 .drawer-item:hover{
-    transform:translateX(-3px);
-    border-color:rgba(100,175,255,.45);
-    background:rgba(55,120,200,.14);
+    transform:translateX(-4px);
+    border-color:rgba(70,185,255,.4);
+    background:rgba(12,31,68,.9);
 }
 
-.drawer-item-icon{
-    font-size:21px;
-}
-
-.drawer-item-text{
-    font-size:14px;
-    font-weight:700;
-}
-
-.logout{
-    background:rgba(190,30,45,.12)!important;
-    border-color:rgba(255,80,90,.15)!important;
-}
-
-/* =========================================================
-   LOADING
-   ========================================================= */
-
-.loading-screen{
-    position:fixed;
-    inset:0;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(14,57,120,.45),
-            rgba(0,4,12,.98) 65%
-        );
-
-    backdrop-filter:blur(12px);
-
-    z-index:99999;
-
-    display:none;
-
-    justify-content:center;
+.drawer-icon{
+    width:36px;
+    height:36px;
+    display:flex;
     align-items:center;
-    flex-direction:column;
-
-    gap:18px;
-}
-
-.loading-screen.active{
-    display:flex;
-}
-
-.spinner{
-    width:62px;
-    height:62px;
-
-    border-radius:50%;
-
-    border:2px solid rgba(100,180,255,.15);
-    border-top-color:#6bb8ff;
-    border-right-color:#dceeff;
-
-    animation:spin .8s linear infinite;
-
-    box-shadow:
-        0 0 25px rgba(55,145,255,.45);
-}
-
-.loading-text{
-    font-size:16px;
-    font-weight:900;
-    color:#ddecff;
-    letter-spacing:1px;
-}
-
-.loading-sub{
-    font-size:10px;
-    color:#6784a8;
-    letter-spacing:2px;
-    font-family:'Orbitron';
-}
-
-@keyframes spin{
-    to{
-        transform:rotate(360deg);
-    }
+    justify-content:center;
+    border-radius:11px;
+    background:linear-gradient(145deg,#092b5c,#07162e);
+    font-size:17px;
 }
 
 /* =========================================================
-   HEADER
+   MAIN
    ========================================================= */
 
-.header{
-    position:relative;
-    z-index:2;
-
-    text-align:center;
-
-    padding:27px 15px 18px;
+main{
+    padding-top:80px;
+    padding-bottom:110px;
+    min-height:100vh;
 }
-
-.champions-mini{
-    font-family:'Orbitron';
-    font-size:9px;
-
-    letter-spacing:3px;
-
-    color:#87bfff;
-
-    margin-bottom:8px;
-
-    text-shadow:
-        0 0 10px rgba(85,164,255,.7);
-}
-
-.logo{
-    font-family:'Orbitron',sans-serif;
-
-    font-size:38px;
-    font-weight:900;
-
-    letter-spacing:1px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #ffffff 0%,
-            #dceeff 30%,
-            #65aaff 62%,
-            #1c61b2 100%
-        );
-
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-
-    filter:
-        drop-shadow(0 0 10px rgba(80,160,255,.35));
-
-    animation:logoGlow 3s ease-in-out infinite;
-}
-
-@keyframes logoGlow{
-    0%,100%{
-        filter:drop-shadow(0 0 8px rgba(80,160,255,.25));
-    }
-    50%{
-        filter:drop-shadow(0 0 18px rgba(80,160,255,.6));
-    }
-}
-
-.subtitle{
-    margin-top:8px;
-
-    color:#9eb5d3;
-
-    font-size:12px;
-
-    letter-spacing:3px;
-}
-
-.header-line{
-    width:170px;
-    height:1px;
-
-    margin:15px auto 0;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #5caaff,
-            #e8f5ff,
-            #5caaff,
-            transparent
-        );
-
-    box-shadow:0 0 8px rgba(77,163,255,.5);
-}
-
-/* =========================================================
-   HERO / STADIUM
-   ========================================================= */
-
-.slider{
-    position:relative;
-    z-index:2;
-
-    margin:12px 14px 20px;
-
-    border-radius:22px;
-
-    overflow:hidden;
-
-    border:1px solid rgba(99,174,255,.5);
-
-    aspect-ratio:16/9;
-
-    background:#030b1b;
-
-    box-shadow:
-        0 15px 45px rgba(0,0,0,.5),
-        0 0 30px rgba(24,95,185,.15);
-}
-
-.slider::before{
-    content:"";
-
-    position:absolute;
-    z-index:4;
-
-    top:0;
-    left:0;
-    right:0;
-
-    height:3px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #68b5ff,
-            #fff,
-            #68b5ff,
-            transparent
-        );
-
-    box-shadow:0 0 15px #4d9fff;
-}
-
-.slide{
-    position:absolute;
-
-    width:100%;
-    height:100%;
-
-    opacity:0;
-
-    transition:1s;
-
-    background-size:cover;
-    background-position:center;
-
-    display:flex;
-    align-items:flex-end;
-
-    padding:20px;
-}
-
-.slide.active{
-    opacity:1;
-}
-
-.slide::after{
-    content:"";
-
-    position:absolute;
-    inset:0;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(0,20,55,.08),
-            rgba(0,4,14,.12) 35%,
-            rgba(0,4,13,.93) 100%
-        );
-}
-
-.slide::before{
-    content:"";
-
-    position:absolute;
-    inset:0;
-
-    background:
-        radial-gradient(
-            ellipse at 50% 15%,
-            rgba(94,174,255,.23),
-            transparent 45%
-        );
-}
-
-.slide h3{
-    position:relative;
-    z-index:5;
-
-    font-size:18px;
-    font-weight:900;
-
-    color:#fff;
-
-    text-shadow:
-        0 2px 10px #000,
-        0 0 20px rgba(55,135,255,.4);
-}
-
-.slide-badge{
-    position:absolute;
-    z-index:5;
-
-    top:15px;
-    right:15px;
-
-    padding:6px 10px;
-
-    border-radius:20px;
-
-    background:rgba(2,15,37,.72);
-
-    border:1px solid rgba(121,191,255,.45);
-
-    font-size:9px;
-    font-weight:900;
-
-    color:#cfe9ff;
-
-    backdrop-filter:blur(8px);
-}
-
-.dots{
-    position:absolute;
-
-    z-index:6;
-
-    bottom:11px;
-    left:50%;
-
-    transform:translateX(-50%);
-
-    display:flex;
-    gap:7px;
-}
-
-.dot{
-    width:7px;
-    height:7px;
-
-    border-radius:50%;
-
-    background:rgba(255,255,255,.3);
-
-    transition:.3s;
-}
-
-.dot.active{
-    width:23px;
-    border-radius:5px;
-
-    background:#70b8ff;
-
-    box-shadow:0 0 10px #4c9eff;
-}
-
-/* =========================================================
-   CONTENT
-   ========================================================= */
 
 .container{
-    position:relative;
-    z-index:2;
+    width:min(1280px,94%);
+    margin:auto;
+}
 
-    padding:0 15px;
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero{
+    position:relative;
+    min-height:440px;
+    margin-top:12px;
+    border:1px solid rgba(93,170,255,.15);
+    border-radius:34px;
+    overflow:hidden;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(1,4,13,.96) 0%,
+            rgba(2,8,24,.76) 42%,
+            rgba(2,7,18,.18) 100%
+        ),
+        url('https://i.postimg.cc/TY4M0H3Y/football-stadium.jpg') center/cover;
+    box-shadow:
+        var(--shadow),
+        inset 0 0 100px rgba(0,80,255,.08);
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            115deg,
+            transparent 25%,
+            rgba(82,213,255,.07) 50%,
+            transparent 72%
+        );
+    transform:translateX(-100%);
+    animation:heroSweep 7s ease-in-out infinite;
+}
+
+@keyframes heroSweep{
+    0%,55%{transform:translateX(-100%)}
+    75%,100%{transform:translateX(100%)}
+}
+
+.hero-content{
+    position:relative;
+    z-index:3;
+    width:min(700px,90%);
+    padding:70px 55px;
+}
+
+.eyebrow{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:Orbitron;
+    font-size:9px;
+    color:#71caff;
+    letter-spacing:4px;
+    margin-bottom:20px;
+}
+
+.live-dot{
+    width:7px;
+    height:7px;
+    background:#ff3f55;
+    border-radius:50%;
+    box-shadow:0 0 12px #ff3f55;
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:.3}
+}
+
+.hero h1{
+    font-family:Orbitron;
+    font-size:clamp(35px,6vw,72px);
+    line-height:.98;
+    font-weight:900;
+    letter-spacing:-3px;
+    margin-bottom:18px;
+}
+
+.hero h1 span{
+    background:
+        linear-gradient(
+            100deg,
+            #fff 10%,
+            #6ce5ff 45%,
+            #3b8fff 70%,
+            #f8ce58 95%
+        );
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    max-width:550px;
+    color:#9aabc8;
+    font-size:14px;
+    line-height:2;
+}
+
+.hero-actions{
+    display:flex;
+    gap:12px;
+    margin-top:28px;
+    flex-wrap:wrap;
+}
+
+.hero-btn{
+    border:0;
+    cursor:pointer;
+    padding:14px 24px;
+    border-radius:14px;
+    font-family:Cairo;
+    font-weight:900;
+    transition:.25s;
+}
+
+.hero-btn.primary{
+    color:#02101d;
+    background:linear-gradient(100deg,#fff,#64dbff,#258bff);
+    box-shadow:0 0 30px rgba(42,174,255,.25);
+}
+
+.hero-btn.secondary{
+    color:#d9edff;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(110,180,255,.2);
+}
+
+.hero-btn:hover{
+    transform:translateY(-3px);
+}
+
+.hero-meta{
+    position:absolute;
+    left:35px;
+    bottom:25px;
+    z-index:4;
+    display:flex;
+    gap:25px;
+    color:#526783;
+    font-family:Orbitron;
+    font-size:7px;
+    letter-spacing:2px;
+}
+
+.hero-badge{
+    position:absolute;
+    right:35px;
+    top:30px;
+    z-index:5;
+    padding:10px 15px;
+    border:1px solid rgba(255,211,86,.28);
+    border-radius:12px;
+    background:rgba(11,16,28,.62);
+    backdrop-filter:blur(10px);
+    color:#f4d467;
+    font-family:Orbitron;
+    font-size:8px;
+    letter-spacing:2px;
+}
+
+/* =========================================================
+   ORIGINAL STARBALL
+   ========================================================= */
+
+.starball{
+    position:absolute;
+    right:8%;
+    top:50%;
+    width:270px;
+    height:270px;
+    transform:translateY(-50%);
+    z-index:2;
+    animation:ballFloat 5s ease-in-out infinite;
+}
+
+.ball-core{
+    position:absolute;
+    inset:28px;
+    border-radius:50%;
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            rgba(255,255,255,.95),
+            rgba(114,205,255,.55) 14%,
+            rgba(13,45,97,.9) 48%,
+            #020817 75%
+        );
+    box-shadow:
+        inset -25px -30px 50px rgba(0,0,0,.65),
+        inset 10px 10px 25px rgba(255,255,255,.2),
+        0 0 60px rgba(42,162,255,.25);
+}
+
+.ball-star{
+    position:absolute;
+    width:90px;
+    height:90px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    clip-path:polygon(
+        50% 0%,
+        61% 34%,
+        100% 34%,
+        69% 54%,
+        81% 100%,
+        50% 72%,
+        19% 100%,
+        31% 54%,
+        0% 34%,
+        39% 34%
+    );
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #69dbff 35%,
+            #1765ff 75%,
+            #7e4dff
+        );
+    filter:
+        drop-shadow(0 0 10px #36cfff)
+        drop-shadow(0 0 25px rgba(70,100,255,.6));
+    animation:starSpin 8s linear infinite;
+}
+
+.ball-orbit{
+    position:absolute;
+    inset:0;
+    border:1px solid rgba(95,205,255,.55);
+    border-radius:50%;
+    transform:rotate(25deg) skewX(-12deg);
+    box-shadow:
+        0 0 20px rgba(42,187,255,.2);
+}
+
+.ball-orbit:nth-child(2){
+    transform:rotate(-25deg) skewX(12deg);
+}
+
+.ball-orbit:nth-child(3){
+    transform:rotate(90deg) scale(.86);
+    border-color:rgba(243,201,79,.28);
+}
+
+@keyframes ballFloat{
+    0%,100%{transform:translateY(-50%) rotate(-2deg)}
+    50%{transform:translateY(calc(-50% - 15px)) rotate(2deg)}
+}
+
+@keyframes starSpin{
+    to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+
+/* =========================================================
+   SECTION HEADERS
+   ========================================================= */
+
+.section-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    margin:55px 4px 18px;
+}
+
+.section-kicker{
+    color:#4f8dc8;
+    font-family:Orbitron;
+    font-size:8px;
+    letter-spacing:3px;
+    margin-bottom:6px;
 }
 
 .section-title{
+    font-size:25px;
+    font-weight:900;
+}
+
+.section-title span{
+    color:#55cfff;
+}
+
+.section-more{
+    font-family:Orbitron;
+    font-size:8px;
+    letter-spacing:2px;
+    color:#58708f;
+}
+
+/* =========================================================
+   MATCHDAY STRIP
+   ========================================================= */
+
+.match-strip{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    gap:18px;
+    padding:20px;
+    border-radius:22px;
+    border:1px solid rgba(103,178,255,.13);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(12,27,61,.72),
+            rgba(4,10,27,.85)
+        );
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    position:relative;
+}
+
+.match-strip::after{
+    content:"";
+    position:absolute;
+    width:250px;
+    height:250px;
+    right:35%;
+    top:-170px;
+    background:radial-gradient(circle,rgba(44,158,255,.18),transparent 65%);
+}
+
+.team{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.team:last-child{
+    justify-content:flex-end;
+}
+
+.team-logo{
+    width:46px;
+    height:46px;
+    border-radius:14px;
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:10px;
-
-    font-size:19px;
+    font-family:Orbitron;
     font-weight:900;
-
-    margin:25px 0 14px;
-
-    color:#eaf5ff;
-
-    text-shadow:
-        0 0 15px rgba(67,155,255,.45);
+    background:
+        linear-gradient(145deg,#102b5d,#071225);
+    border:1px solid rgba(99,180,255,.2);
 }
 
-.section-title::before,
-.section-title::after{
-    content:"";
-
-    width:45px;
-    height:1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #5daaff
-        );
+.team-name{
+    font-weight:800;
+    font-size:12px;
 }
 
-.section-title::after{
-    background:
-        linear-gradient(
-            90deg,
-            #5daaff,
-            transparent
-        );
+.team-sub{
+    font-size:8px;
+    color:#63758f;
+}
+
+.vs{
+    text-align:center;
+    font-family:Orbitron;
+    font-weight:900;
+    font-size:18px;
+    color:#f2ce63;
+}
+
+.match-label{
+    font-size:7px;
+    color:#59718f;
+    letter-spacing:2px;
+    margin-top:3px;
 }
 
 /* =========================================================
@@ -965,1251 +973,1745 @@ body{
 
 .games-grid{
     display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:12px;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
 }
 
 .game-card{
     position:relative;
-
+    min-height:310px;
     overflow:hidden;
-
-    min-height:145px;
-
-    padding:18px 10px;
-
-    text-align:center;
-
-    cursor:pointer;
-
-    border-radius:18px;
-
+    border-radius:25px;
+    border:1px solid rgba(108,177,255,.14);
     background:
-        radial-gradient(
-            circle at 50% -20%,
-            rgba(68,139,224,.25),
-            transparent 55%
-        ),
         linear-gradient(
-            145deg,
-            rgba(19,54,100,.48),
-            rgba(3,13,30,.82)
+            160deg,
+            rgba(15,30,66,.92),
+            rgba(3,8,21,.96)
         );
-
-    border:1px solid rgba(99,171,242,.2);
-
+    cursor:pointer;
     box-shadow:
-        0 8px 25px rgba(0,0,0,.25),
-        inset 0 1px 0 rgba(255,255,255,.04);
-
+        0 20px 50px rgba(0,0,0,.35);
     transition:
-        transform .25s,
-        border-color .25s,
-        box-shadow .25s;
+        transform .35s cubic-bezier(.16,1,.3,1),
+        border-color .35s,
+        box-shadow .35s;
+}
+
+.game-card:hover{
+    transform:translateY(-9px);
+    border-color:rgba(77,197,255,.45);
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.55),
+        0 0 35px rgba(22,127,255,.14);
 }
 
 .game-card::before{
     content:"";
-
     position:absolute;
-
+    width:190px;
+    height:190px;
+    right:-60px;
     top:-70px;
-    left:50%;
-
-    width:130px;
-    height:130px;
-
-    transform:translateX(-50%);
-
     border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(77,160,255,.2),
-            transparent 70%
-        );
+    background:radial-gradient(
+        circle,
+        rgba(49,174,255,.18),
+        transparent 68%
+    );
 }
 
-.game-card::after{
-    content:"";
-
+.card-lines{
     position:absolute;
-
-    left:10%;
-    right:10%;
-    bottom:0;
-
-    height:1px;
-
+    inset:0;
     background:
         linear-gradient(
-            90deg,
-            transparent,
-            rgba(90,168,255,.7),
-            transparent
+            115deg,
+            transparent 0 45%,
+            rgba(255,255,255,.035) 46%,
+            transparent 48%
         );
+    opacity:.8;
 }
 
-.game-card:hover{
-    transform:translateY(-5px);
-
-    border-color:rgba(102,183,255,.65);
-
-    box-shadow:
-        0 12px 30px rgba(0,0,0,.4),
-        0 0 25px rgba(43,126,222,.18);
-}
-
-.game-card:active{
-    transform:scale(.96);
+.game-number{
+    position:absolute;
+    left:18px;
+    top:18px;
+    font-family:Orbitron;
+    color:#3b5577;
+    font-size:9px;
 }
 
 .game-icon{
     position:relative;
-    z-index:2;
-
-    width:65px;
-    height:65px;
-
+    margin:35px auto 10px;
+    width:105px;
+    height:105px;
     display:flex;
     align-items:center;
     justify-content:center;
-
-    margin:0 auto 10px;
-
-    border-radius:18px;
-
-    font-size:34px;
-
+    font-size:45px;
+    border-radius:50%;
     background:
         radial-gradient(
-            circle at 35% 25%,
-            rgba(110,184,255,.35),
-            rgba(10,38,76,.75)
+            circle,
+            rgba(62,183,255,.22),
+            rgba(6,19,45,.6) 62%,
+            transparent 64%
         );
-
-    border:1px solid rgba(117,190,255,.25);
-
-    box-shadow:
-        inset 0 0 20px rgba(79,159,255,.1),
-        0 0 15px rgba(30,105,200,.12);
+    filter:drop-shadow(0 0 25px rgba(0,161,255,.2));
 }
 
-.game-name{
-    position:relative;
-    z-index:2;
+.game-card:nth-child(2) .game-icon{
+    filter:drop-shadow(0 0 25px rgba(132,75,255,.35));
+}
 
-    font-size:14px;
+.game-card:nth-child(3) .game-icon{
+    filter:drop-shadow(0 0 25px rgba(255,193,63,.35));
+}
+
+.game-card:nth-child(4) .game-icon{
+    filter:drop-shadow(0 0 25px rgba(67,239,184,.3));
+}
+
+.game-content{
+    position:absolute;
+    left:18px;
+    right:18px;
+    bottom:20px;
+}
+
+.game-tag{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:7px;
+    background:rgba(61,174,255,.09);
+    border:1px solid rgba(61,174,255,.13);
+    color:#65cfff;
+    font-family:Orbitron;
+    font-size:7px;
+    letter-spacing:1px;
+    margin-bottom:8px;
+}
+
+.game-card:nth-child(3) .game-tag{
+    color:#f3cf61;
+}
+
+.game-card h3{
+    font-size:20px;
     font-weight:900;
-
-    color:#f1f7ff;
-
-    margin-bottom:4px;
+    margin-bottom:3px;
 }
 
-.game-desc{
-    position:relative;
-    z-index:2;
+.game-card p{
+    color:#63738e;
+    font-size:9px;
+}
 
-    font-size:10px;
-
-    color:#829ab8;
+.play-arrow{
+    position:absolute;
+    left:18px;
+    bottom:22px;
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(145deg,#fff,#4ccfff);
+    color:#031124;
+    font-weight:900;
 }
 
 /* =========================================================
-   JOIN BOX
+   TROPHY SECTION
    ========================================================= */
 
-.join-box{
+.trophy-section{
     position:relative;
-
+    margin-top:65px;
+    min-height:300px;
+    border-radius:30px;
     overflow:hidden;
-
+    border:1px solid rgba(245,203,84,.16);
     background:
         radial-gradient(
-            circle at 50% 0%,
-            rgba(53,123,207,.23),
-            transparent 55%
+            circle at 50% 100%,
+            rgba(245,195,65,.13),
+            transparent 40%
         ),
         linear-gradient(
-            145deg,
-            rgba(19,59,108,.35),
-            rgba(2,11,28,.85)
+            120deg,
+            rgba(13,22,46,.92),
+            rgba(3,7,17,.98)
         );
-
-    backdrop-filter:blur(15px);
-
-    border:1px solid rgba(91,166,239,.35);
-
-    border-radius:22px;
-
-    padding:25px 17px;
-
-    margin:28px 0;
-
-    text-align:center;
-
-    box-shadow:
-        0 15px 35px rgba(0,0,0,.3);
 }
 
-.join-box::before{
-    content:"";
-
+.trophy-glow{
     position:absolute;
+    left:50%;
+    top:20%;
+    width:220px;
+    height:220px;
+    transform:translateX(-50%);
+    border-radius:50%;
+    background:radial-gradient(
+        circle,
+        rgba(255,209,82,.16),
+        transparent 68%
+    );
+    filter:blur(8px);
+}
 
-    top:0;
-    left:0;
-    right:0;
+.trophy{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-44%);
+    width:100px;
+    height:150px;
+}
 
-    height:2px;
-
+.trophy-cup{
+    position:absolute;
+    left:25px;
+    top:20px;
+    width:50px;
+    height:75px;
+    border:6px solid #e8c85b;
+    border-top-left-radius:12px;
+    border-top-right-radius:12px;
+    border-bottom-left-radius:35px;
+    border-bottom-right-radius:35px;
     background:
         linear-gradient(
             90deg,
-            transparent,
-            #65b2ff,
-            #fff,
-            #65b2ff,
-            transparent
+            rgba(255,255,255,.35),
+            rgba(222,181,56,.1),
+            rgba(255,255,255,.28)
         );
+    box-shadow:
+        inset 7px 0 10px rgba(255,255,255,.2),
+        0 0 30px rgba(245,201,68,.18);
 }
 
-.join-box::after{
-    content:"✦";
-
+.trophy-cup::before,
+.trophy-cup::after{
+    content:"";
     position:absolute;
-
     top:12px;
-    left:16px;
-
-    color:#70b8ff;
-
-    font-size:15px;
-
-    opacity:.7;
+    width:30px;
+    height:35px;
+    border:5px solid #dcb84d;
 }
 
-.join-title{
-    font-size:19px;
-    font-weight:900;
-
-    color:#edf7ff;
-
-    margin-bottom:10px;
-
-    text-shadow:
-        0 0 12px rgba(73,157,255,.4);
+.trophy-cup::before{
+    right:43px;
+    border-right:0;
+    border-radius:25px 0 0 25px;
 }
 
-.join-text{
-    font-size:12px;
-    line-height:1.9;
-
-    color:#b5c9df;
-
-    margin-bottom:17px;
-
-    white-space:pre-line;
+.trophy-cup::after{
+    left:43px;
+    border-left:0;
+    border-radius:0 25px 25px 0;
 }
 
-.whatsapp-btn{
-    display:inline-flex;
+.trophy-stem{
+    position:absolute;
+    left:44px;
+    top:90px;
+    width:12px;
+    height:32px;
+    background:linear-gradient(90deg,#a88327,#fff0a0,#b48d2c);
+}
 
-    align-items:center;
-    justify-content:center;
+.trophy-base{
+    position:absolute;
+    left:28px;
+    top:120px;
+    width:44px;
+    height:14px;
+    border-radius:5px;
+    background:linear-gradient(90deg,#9b7620,#ffe98b,#9e7824);
+}
 
-    gap:8px;
+.trophy-text{
+    position:absolute;
+    top:52px;
+    right:45px;
+    left:45px;
+    text-align:center;
+}
 
+.trophy-text .kicker{
+    font-family:Orbitron;
+    color:#c7a74a;
+    letter-spacing:4px;
+    font-size:8px;
+}
+
+.trophy-text h2{
+    margin-top:8px;
+    font-family:Orbitron;
+    font-size:clamp(24px,5vw,45px);
+}
+
+.trophy-text p{
+    color:#71809b;
+    font-size:10px;
+    margin-top:6px;
+}
+
+/* =========================================================
+   WHATSAPP / JOIN
+   ========================================================= */
+
+.join{
+    margin-top:30px;
+    padding:25px;
+    border-radius:23px;
+    border:1px solid rgba(49,220,150,.14);
     background:
         linear-gradient(
             135deg,
-            #168d59,
-            #20b76f
+            rgba(11,43,40,.72),
+            rgba(3,14,20,.9)
         );
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
 
-    color:#fff;
+.join-left{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
 
-    padding:12px 22px;
+.whatsapp{
+    width:55px;
+    height:55px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    background:rgba(39,213,133,.12);
+    border:1px solid rgba(39,213,133,.25);
+}
 
-    border-radius:13px;
+.join h3{
+    font-size:15px;
+}
 
-    font-size:14px;
+.join p{
+    color:#64798b;
+    font-size:9px;
+}
+
+.join button{
+    border:0;
+    border-radius:12px;
+    padding:12px 20px;
+    font-family:Cairo;
     font-weight:900;
-
-    text-decoration:none;
-
-    border:1px solid rgba(255,255,255,.22);
-
-    box-shadow:
-        0 8px 20px rgba(0,130,80,.25);
-}
-
-.whatsapp-btn:hover{
-    transform:translateY(-2px);
-}
-
-.whatsapp-icon{
-    width:23px;
-    height:23px;
+    cursor:pointer;
+    color:#00180f;
+    background:linear-gradient(100deg,#76f1bc,#2ed789);
 }
 
 /* =========================================================
    BOTTOM NAV
    ========================================================= */
 
-.bottom-bar{
+.bottom-nav{
     position:fixed;
-
-    z-index:999;
-
-    bottom:10px;
     left:50%;
-
+    bottom:15px;
     transform:translateX(-50%);
-
-    width:94%;
-    max-width:600px;
-
-    height:68px;
-
+    width:min(650px,92%);
+    z-index:4000;
+    padding:8px;
+    border:1px solid rgba(98,170,255,.16);
+    border-radius:22px;
     background:
         linear-gradient(
             180deg,
-            rgba(8,27,55,.94),
-            rgba(2,11,27,.96)
+            rgba(11,22,48,.9),
+            rgba(3,8,20,.96)
         );
-
     backdrop-filter:blur(22px);
-
-    border:1px solid rgba(93,164,234,.25);
-
-    border-radius:22px;
-
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-
     box-shadow:
-        0 10px 35px rgba(0,0,0,.5),
-        0 0 25px rgba(22,81,157,.12);
+        0 20px 70px rgba(0,0,0,.65),
+        0 0 30px rgba(0,103,255,.08);
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:5px;
 }
 
-.bottom-bar::before{
-    content:"";
-
-    position:absolute;
-
-    top:-1px;
-    left:18%;
-    right:18%;
-
-    height:1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #63afff,
-            transparent
-        );
-}
-
-.nav-btn{
+.nav-item{
     position:relative;
-
-    min-width:60px;
-
-    color:#607997;
-
+    padding:9px 4px;
+    border-radius:15px;
     text-align:center;
-
+    color:#526683;
     cursor:pointer;
-
-    font-size:10px;
-
-    text-decoration:none;
-
     transition:.25s;
 }
 
-.nav-btn i{
-    font-style:normal;
-
-    font-size:23px;
-
-    display:block;
-
-    margin-bottom:3px;
-
-    filter:grayscale(.35);
-
-    transition:.25s;
+.nav-item.active{
+    color:#fff;
+    background:rgba(41,135,255,.11);
 }
 
-.nav-btn.active{
-    color:#e9f5ff;
-
-    text-shadow:
-        0 0 12px rgba(76,165,255,.7);
-}
-
-.nav-btn.active i{
-    filter:none;
-
-    transform:translateY(-2px);
-
-    text-shadow:
-        0 0 12px rgba(74,165,255,.7);
-}
-
-.nav-btn.active::after{
+.nav-item.active::before{
     content:"";
-
     position:absolute;
-
-    bottom:-7px;
-    left:50%;
-
-    width:25px;
+    top:0;
+    left:35%;
+    right:35%;
     height:2px;
+    border-radius:10px;
+    background:#4acbff;
+    box-shadow:0 0 12px #4acbff;
+}
 
-    transform:translateX(-50%);
+.nav-icon{
+    display:block;
+    font-size:19px;
+    margin-bottom:2px;
+}
 
-    background:#62adff;
-
-    box-shadow:
-        0 0 9px #62adff;
-
-    border-radius:5px;
+.nav-text{
+    font-size:8px;
+    font-weight:800;
 }
 
 /* =========================================================
-   MOBILE
+   LOADING
    ========================================================= */
 
-@media(max-width:420px){
+.loading{
+    position:fixed;
+    inset:0;
+    z-index:9000;
+    background:#02040b;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.5s;
+}
 
-    .top-bar{
-        padding-left:9px;
-        padding-right:9px;
+.loading.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader{
+    text-align:center;
+}
+
+.loader-ball{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    border:1px solid rgba(78,199,255,.3);
+    margin:auto;
+    position:relative;
+    animation:loaderSpin 1.3s linear infinite;
+}
+
+.loader-ball::before{
+    content:"✦";
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#58d7ff;
+    font-size:26px;
+    text-shadow:0 0 20px #31baff;
+}
+
+.loader p{
+    margin-top:18px;
+    color:#60728e;
+    font-family:Orbitron;
+    font-size:8px;
+    letter-spacing:3px;
+}
+
+@keyframes loaderSpin{
+    to{transform:rotate(360deg)}
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:1000px){
+
+    .games-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .profile-avatar{
-        width:39px;
-        height:39px;
+    .starball{
+        width:220px;
+        height:220px;
+        right:3%;
+        opacity:.75;
     }
 
-    .email-short{
-        font-size:10px;
+    .hero-content{
+        padding-right:35px;
+        padding-left:35px;
+    }
+}
+
+@media(max-width:700px){
+
+    .topbar{
+        padding:0 12px;
+        height:68px;
     }
 
-    .xp-bar-container{
-        width:75px;
+    main{
+        padding-top:70px;
     }
 
-    .stat-box{
+    .user-info{
         display:none;
     }
 
-    .ticket-box{
-        min-width:43px;
+    .xp{
+        width:75px;
     }
 
-    .logo{
-        font-size:31px;
+    .hero{
+        min-height:540px;
+        border-radius:25px;
     }
 
-    .subtitle{
-        font-size:10px;
-        letter-spacing:2px;
+    .hero-content{
+        padding:48px 25px;
     }
 
-    .slide h3{
-        font-size:15px;
+    .hero h1{
+        font-size:39px;
+        max-width:370px;
+    }
+
+    .hero p{
+        font-size:12px;
+    }
+
+    .starball{
+        width:190px;
+        height:190px;
+        top:auto;
+        bottom:-35px;
+        right:50%;
+        transform:translateX(50%);
+        opacity:.55;
+    }
+
+    .hero-badge{
+        right:18px;
+        top:18px;
+    }
+
+    .hero-meta{
+        display:none;
+    }
+
+    .match-strip{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .team,
+    .team:last-child{
+        justify-content:center;
+    }
+
+    .vs{
+        order:3;
+    }
+
+    .games-grid{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
     }
 
     .game-card{
-        min-height:138px;
+        min-height:270px;
+    }
+
+    .game-card h3{
+        font-size:15px;
+    }
+
+    .game-icon{
+        width:85px;
+        height:85px;
+        font-size:35px;
+    }
+
+    .join{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .join button{
+        width:100%;
+    }
+
+    .trophy-section{
+        min-height:340px;
+    }
+
+    .trophy-text{
+        top:38px;
     }
 }
 
-/* =========================================================
-   EXTRA LIGHT EFFECT
-   ========================================================= */
+@media(max-width:430px){
 
-.light-beam{
-    position:fixed;
-
-    z-index:1;
-
-    width:2px;
-    height:75vh;
-
-    top:-10%;
-    left:50%;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(100,180,255,0),
-            rgba(100,180,255,.08),
-            rgba(255,255,255,.18),
-            rgba(100,180,255,0)
-        );
-
-    filter:blur(8px);
-
-    transform-origin:top;
-
-    animation:beamMove 8s ease-in-out infinite;
-
-    pointer-events:none;
-}
-
-@keyframes beamMove{
-    0%,100%{
-        transform:rotate(-18deg) scaleY(.9);
-        opacity:.35;
+    .games-grid{
+        grid-template-columns:1fr;
     }
-    50%{
-        transform:rotate(18deg) scaleY(1.1);
-        opacity:.7;
+
+    .game-card{
+        min-height:220px;
+    }
+
+    .game-icon{
+        margin-top:20px;
+    }
+
+    .game-content{
+        bottom:15px;
+    }
+
+    .hero h1{
+        font-size:34px;
+    }
+
+    .tickets{
+        font-size:9px;
     }
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     BACKGROUND
-     ===================================================== -->
+<!-- ======================================================
+     CINEMATIC INTRO
+====================================================== -->
 
-<div id="bg"></div>
+<div class="intro">
+    <div class="intro-content">
+        <div class="intro-small">WELCOME TO</div>
+        <div class="intro-logo">L&amp;S</div>
+        <div class="intro-title">CHAMPIONS NIGHT</div>
+        <div class="intro-line"></div>
+        <div class="intro-status">THE ULTIMATE GAME EXPERIENCE</div>
+    </div>
+</div>
+
+<!-- ======================================================
+     STADIUM
+====================================================== -->
+
+<div class="stadium">
+    <div class="stadium-sky"></div>
+    <div class="stadium-arc"></div>
+    <div class="stadium-field"></div>
+
+    <div class="floodlight f1"></div>
+    <div class="floodlight f2"></div>
+    <div class="floodlight f3"></div>
+    <div class="floodlight f4"></div>
+    <div class="floodlight f5"></div>
+</div>
+
 <div id="particles"></div>
-<div class="light-beam"></div>
 
-
-<!-- =====================================================
+<!-- ======================================================
      TOP BAR
-     ===================================================== -->
+====================================================== -->
 
-<div class="top-bar">
+<header class="topbar">
 
-    <div class="left-top">
+    <button class="menu-btn" onclick="openDrawer()">☰</button>
 
-        <div class="menu-btn" onclick="toggleDrawer()">
-            <span></span>
-            <span></span>
-            <span></span>
+    <div class="profile">
+
+        <div class="avatar" id="avatar">
+            LS
         </div>
 
-        <div class="profile-info" onclick="goToPage('ACCOUNT.html')">
+        <div class="user-info">
 
-            <div class="profile-avatar" id="profileAvatar">
-                ؟
+            <div class="username" id="username">
+                L&amp;S PLAYER
             </div>
 
-            <div class="email-info">
-
-                <div class="email-short" id="emailShort">
-                    @ضيف
-                </div>
-
-                <div class="xp-bar-container">
-
-                    <div class="xp-bar" id="xpBar"></div>
-
-                    <div class="xp-text" id="xpText">
-                        0/1000
-                    </div>
-
-                </div>
-
+            <div class="rank">
+                CHAMPIONS • LEVEL 12
             </div>
 
+            <div class="xp">
+                <span></span>
+            </div>
+
+        </div>
+
+        <div class="tickets">
+            🎟️ <span id="tickets">250</span>
         </div>
 
     </div>
 
+</header>
 
-    <div class="stats-info">
-
-        <div class="stat-box">
-
-            <div class="stat-label">
-                المركز
-            </div>
-
-            <div class="stat-value" id="rank">
-                صغير
-            </div>
-
-        </div>
-
-
-        <div class="ticket-box">
-
-            <svg viewBox="0 0 24 24" fill="none">
-                <path
-                    d="M3 8H21V16H3V8Z"
-                    stroke="white"
-                    stroke-width="2"
-                />
-                <path
-                    d="M8 12H16"
-                    stroke="white"
-                    stroke-width="2"
-                />
-            </svg>
-
-            <span id="عداد_التذاكر">
-                0
-            </span>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
+<!-- ======================================================
      DRAWER
-     ===================================================== -->
+====================================================== -->
 
-<div
-    class="drawer-overlay"
-    id="drawerOverlay"
-    onclick="toggleDrawer()">
-</div>
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
 
+<aside class="drawer" id="drawer">
 
-<div class="drawer" id="drawer">
+    <div class="drawer-head">
 
-    <div class="drawer-header">
-
-        <div class="drawer-avatar" id="drawerAvatar">
-            ؟
+        <div class="drawer-brand">
+            L&amp;S GAMES
         </div>
 
-        <div class="drawer-email" id="drawerEmail">
-            loading...
-        </div>
+        <button class="close-btn" onclick="closeDrawer()">×</button>
 
     </div>
 
+    <div class="drawer-section">
 
-    <div
-        class="drawer-item"
-        onclick="goToPage('ss.html')">
-
-        <div class="drawer-item-icon">
-            ⚙️
+        <div class="drawer-label">
+            CHAMPIONS HUB
         </div>
 
-        <div class="drawer-item-text">
-            الإعدادات
-        </div>
+        <button class="drawer-item" onclick="go('index.html')">
+            <span class="drawer-icon">🏟️</span>
+            <span>الرئيسية</span>
+        </button>
+
+        <button class="drawer-item" onclick="go('auction.html')">
+            <span class="drawer-icon">🏆</span>
+            <span>مزاد النجوم</span>
+        </button>
+
+        <button class="drawer-item" onclick="go('games.html')">
+            <span class="drawer-icon">🎮</span>
+            <span>الألعاب الإضافية</span>
+        </button>
+
+        <button class="drawer-item" onclick="go('sombero.html')">
+            <span class="drawer-icon">⚽</span>
+            <span>السومبيرو</span>
+        </button>
 
     </div>
 
+    <div class="drawer-section">
 
-    <div
-        class="drawer-item"
-        onclick="alert('التحديات اليومية قريبا 🔥')">
-
-        <div class="drawer-item-icon">
-            🎯
+        <div class="drawer-label">
+            PLAYER
         </div>
 
-        <div class="drawer-item-text">
-            التحديات اليومية
-        </div>
+        <button class="drawer-item" onclick="go('profile.html')">
+            <span class="drawer-icon">👤</span>
+            <span>حسابي</span>
+        </button>
+
+        <button class="drawer-item" onclick="dailyChallenge()">
+            <span class="drawer-icon">🔥</span>
+            <span>التحديات اليومية</span>
+        </button>
+
+        <button class="drawer-item" onclick="showInfo()">
+            <span class="drawer-icon">ℹ️</span>
+            <span>عن L&amp;S GAMES</span>
+        </button>
 
     </div>
 
+    <div class="drawer-section">
 
-    <div
-        class="drawer-item"
-        onclick="window.open('https://chat.whatsapp.com/L4cde3Xbd0dDi5YbN5nGsr','_blank')">
-
-        <div class="drawer-item-icon">
-            📞
-        </div>
-
-        <div class="drawer-item-text">
-            التواصل
-        </div>
+        <button class="drawer-item" onclick="logout()">
+            <span class="drawer-icon">🚪</span>
+            <span>تسجيل الخروج</span>
+        </button>
 
     </div>
 
+</aside>
 
-    <div
-        class="drawer-item logout"
-        onclick="logout()">
-
-        <div class="drawer-item-icon">
-            🚪
-        </div>
-
-        <div class="drawer-item-text">
-            تسجيل خروج
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
+<!-- ======================================================
      LOADING
-     ===================================================== -->
+====================================================== -->
 
-<div class="loading-screen" id="loadingScreen">
+<div class="loading" id="loading">
 
-    <div class="spinner"></div>
+    <div class="loader">
 
-    <div class="loading-text">
-        جاري الدخول إلى المباراة...
-    </div>
+        <div class="loader-ball"></div>
 
-    <div class="loading-sub">
-        NIGHT OF CHAMPIONS
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     HEADER
-     ===================================================== -->
-
-<div class="header">
-
-    <div class="champions-mini">
-        ✦ NIGHT OF CHAMPIONS ✦
-    </div>
-
-    <div class="logo">
-        L&S GAMES
-    </div>
-
-    <div class="subtitle">
-        مركز الألعاب الرسمي
-    </div>
-
-    <div class="header-line"></div>
-
-</div>
-
-
-<!-- =====================================================
-     HERO SLIDER
-     ===================================================== -->
-
-<div class="slider">
-
-    <div
-        class="slide active"
-        style="background-image:url('https://i.postimg.cc/VJ7ZckqB/online.jpg')">
-
-        <div class="slide-badge">
-            LIVE EXPERIENCE
-        </div>
-
-        <h3>
-            ⚽ العب مع أصحابك أونلاين
-        </h3>
-
-    </div>
-
-
-    <div
-        class="slide"
-        style="background-image:url('https://i.postimg.cc/RWPpzZ7f/tournaments.jpg')">
-
-        <div class="slide-badge">
-            CHAMPIONS
-        </div>
-
-        <h3>
-            🏆 بطولات وجوائز حقيقية
-        </h3>
-
-    </div>
-
-
-    <div
-        class="slide"
-        style="background-image:url('https://i.postimg.cc/RWPpzZ7f/tournaments.jpg')">
-
-        <div class="slide-badge">
-            OFFICIAL
-        </div>
-
-        <h3>
-            🔥 الإصدار الرسمي
-        </h3>
-
-    </div>
-
-
-    <div class="dots">
-
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
+        <p>
+            ENTERING CHAMPIONS NIGHT
+        </p>
 
     </div>
 
 </div>
 
+<!-- ======================================================
+     MAIN
+====================================================== -->
 
-<!-- =====================================================
-     GAMES
-     ===================================================== -->
+<main>
 
 <div class="container">
 
-    <div class="section-title">
-        ✦ العب الآن ✦
+    <!-- ==================================================
+         HERO
+    ================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-badge">
+            MATCHDAY • LIVE
+        </div>
+
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                <span class="live-dot"></span>
+                L&amp;S CHAMPIONS EXPERIENCE
+            </div>
+
+            <h1>
+                <span>THE NIGHT</span><br>
+                OF CHAMPIONS
+            </h1>
+
+            <p>
+                هنا تبدأ ليلة مختلفة تمامًا.
+                ادخل الملعب، كوّن فريقك، نافس،
+                اجمع النجوم واصنع لحظتك الأسطورية
+                داخل عالم L&amp;S GAMES.
+            </p>
+
+            <div class="hero-actions">
+
+                <button
+                    class="hero-btn primary"
+                    onclick="go('auction.html')"
+                >
+                    ⚡ ادخل المزاد
+                </button>
+
+                <button
+                    class="hero-btn secondary"
+                    onclick="scrollToGames()"
+                >
+                    اكتشف الألعاب
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- ORIGINAL STARBALL -->
+        <div class="starball">
+
+            <div class="ball-core"></div>
+
+            <div class="ball-star"></div>
+
+            <div class="ball-orbit"></div>
+            <div class="ball-orbit"></div>
+            <div class="ball-orbit"></div>
+
+        </div>
+
+        <div class="hero-meta">
+            <span>ULTIMATE STAGE</span>
+            <span>•</span>
+            <span>LEGENDS NEVER REST</span>
+            <span>•</span>
+            <span>L&amp;S 2026</span>
+        </div>
+
+    </section>
+
+    <!-- ==================================================
+         MATCHDAY
+    ================================================== -->
+
+    <div class="section-head">
+
+        <div>
+            <div class="section-kicker">
+                TONIGHT'S FEATURE
+            </div>
+
+            <div class="section-title">
+                MATCH<span>NIGHT</span>
+            </div>
+        </div>
+
+        <div class="section-more">
+            L&amp;S BROADCAST
+        </div>
+
     </div>
 
+    <section class="match-strip">
 
-    <div class="games-grid">
+        <div class="team">
 
-
-        <div
-            class="game-card"
-            onclick="goToPage('mazad1234.html')">
-
-            <div class="game-icon">
-                ⚽
+            <div class="team-logo">
+                LS
             </div>
 
-            <div class="game-name">
-                مزاد النجوم
-            </div>
-
-            <div class="game-desc">
-                كوّن فريق أحلامك
+            <div>
+                <div class="team-name">
+                    L&amp;S ELITE
+                </div>
+                <div class="team-sub">
+                    HOME
+                </div>
             </div>
 
         </div>
 
+        <div class="vs">
 
-        <div
-            class="game-card"
-            onclick="goToPage('games.html')">
+            VS
 
-            <div class="game-icon">
-                🎮
-            </div>
+            <div class="match-label">
+                CHAMPIONS NIGHT
 
-            <div class="game-name">
-                ألعاب إضافية
-            </div>
-
-            <div class="game-desc">
-                مجموعة ألعاب مصغرة
             </div>
 
         </div>
 
+        <div class="team">
 
-        <div
-            class="game-card"
-            onclick="alert('🔒 السومبيرو مقفلة حاليا\\nارجع قريب')">
+            <div>
 
-            <div class="game-icon">
-                🔒
+                <div class="team-name">
+                    ALL STARS
+                </div>
+
+                <div class="team-sub">
+                    AWAY
+                </div>
+
             </div>
 
-            <div class="game-name">
-                السومبيرو
+            <div class="team-logo">
+                ★
             </div>
 
-            <div class="game-desc">
-                قريباً
+        </div>
+
+    </section>
+
+    <!-- ==================================================
+         GAMES
+    ================================================== -->
+
+    <div id="gamesSection">
+
+        <div class="section-head">
+
+            <div>
+
+                <div class="section-kicker">
+                    CHOOSE YOUR BATTLE
+                </div>
+
+                <div class="section-title">
+                    GAME<span>DAY</span>
+                </div>
+
+            </div>
+
+            <div class="section-more">
+                04 EXPERIENCES
             </div>
 
         </div>
 
+        <section class="games-grid">
 
-        <div
-            class="game-card"
-            onclick="goToPage('dealloby.html')">
+            <!-- CARD 1 -->
 
-            <div class="game-icon">
-                💼
-            </div>
+            <article
+                class="game-card"
+                onclick="go('auction.html')"
+            >
 
-            <div class="game-name">
-                DEAL OR NO DEAL
-            </div>
+                <div class="card-lines"></div>
 
-            <div class="game-desc">
-                العبها بذكاء
-            </div>
+                <div class="game-number">
+                    01
+                </div>
 
-        </div>
+                <div class="game-icon">
+                    🏆
+                </div>
+
+                <div class="game-content">
+
+                    <span class="game-tag">
+                        MARKET • LIVE
+                    </span>
+
+                    <h3>
+                        مزاد النجوم
+                    </h3>
+
+                    <p>
+                        خطف النجوم وبناء فريق الأحلام
+                    </p>
+
+                </div>
+
+                <div class="play-arrow">
+                    ←
+                </div>
+
+            </article>
+
+            <!-- CARD 2 -->
+
+            <article
+                class="game-card"
+                onclick="go('games.html')"
+            >
+
+                <div class="card-lines"></div>
+
+                <div class="game-number">
+                    02
+                </div>
+
+                <div class="game-icon">
+                    🎮
+                </div>
+
+                <div class="game-content">
+
+                    <span class="game-tag">
+                        ARCADE
+                    </span>
+
+                    <h3>
+                        ألعاب إضافية
+                    </h3>
+
+                    <p>
+                        تحديات كروية سريعة ومجنونة
+                    </p>
+
+                </div>
+
+                <div class="play-arrow">
+                    ←
+                </div>
+
+            </article>
+
+            <!-- CARD 3 -->
+
+            <article
+                class="game-card"
+                onclick="go('sombero.html')"
+            >
+
+                <div class="card-lines"></div>
+
+                <div class="game-number">
+                    03
+                </div>
+
+                <div class="game-icon">
+                    ⚽
+                </div>
+
+                <div class="game-content">
+
+                    <span class="game-tag">
+                        FOOTBALL
+                    </span>
+
+                    <h3>
+                        السومبيرو
+                    </h3>
+
+                    <p>
+                        كرة القدم بأسلوب L&amp;S
+                    </p>
+
+                </div>
+
+                <div class="play-arrow">
+                    ←
+                </div>
+
+            </article>
+
+            <!-- CARD 4 -->
+
+            <article
+                class="game-card"
+                onclick="go('deal.html')"
+            >
+
+                <div class="card-lines"></div>
+
+                <div class="game-number">
+                    04
+                </div>
+
+                <div class="game-icon">
+                    💎
+                </div>
+
+                <div class="game-content">
+
+                    <span class="game-tag">
+                        STRATEGY
+                    </span>
+
+                    <h3>
+                        DEAL OR NO DEAL
+                    </h3>
+
+                    <p>
+                        المخاطرة أو الصفقة الأسطورية
+                    </p>
+
+                </div>
+
+                <div class="play-arrow">
+                    ←
+                </div>
+
+            </article>
+
+        </section>
 
     </div>
 
+    <!-- ==================================================
+         TROPHY
+    ================================================== -->
 
-    <!-- =================================================
-         JOIN
-         ================================================= -->
+    <section class="trophy-section">
 
-    <div class="join-box">
+        <div class="trophy-glow"></div>
 
-        <div class="join-title">
-            🏆 انضم إلى مجتمع الأبطال
+        <div class="trophy">
+
+            <div class="trophy-cup"></div>
+
+            <div class="trophy-stem"></div>
+
+            <div class="trophy-base"></div>
+
         </div>
 
-        <div class="join-text">🚨🔥 جاهزين لتجربة جديدة؟ 🔥🚨
-👑⚽ L&S GAMES وصلت!
-✦ ادخل المنافسة واثبت إنك بطل ✦</div>
+        <div class="trophy-text">
 
+            <div class="kicker">
+                THE ULTIMATE STAGE
+            </div>
 
-        <a
-            href="https://chat.whatsapp.com/L4cde3Xbd0dDi5YbN5nGsr"
-            target="_top"
-            class="whatsapp-btn">
+            <h2>
+                PLAY FOR GLORY
+            </h2>
 
-            <svg
-                class="whatsapp-icon"
-                viewBox="0 0 24 24"
-                fill="white">
+            <p>
+                كل مباراة لها لحظة.
+                كل لاعب له قصة.
+                وكل بطل يبدأ من هنا.
+            </p>
 
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.271.296-1.043 1.02-1.043 2.488s1.068 2.883 1.218 3.082c.149.199 2.105 3.211 5.1 4.504.714.309 1.27.493 1.706.63.717.228 1.37.196 1.885.119.575-.086 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.273-.198-.57-.347"/>
-            </svg>
+        </div>
 
-            انضم للجروب الآن
+    </section>
 
-        </a>
+    <!-- ==================================================
+         WHATSAPP
+    ================================================== -->
 
-    </div>
+    <section class="join">
+
+        <div class="join-left">
+
+            <div class="whatsapp">
+                💬
+            </div>
+
+            <div>
+
+                <h3>
+                    انضم لمجتمع L&amp;S
+                </h3>
+
+                <p>
+                    تابع التحديات والبطولات والأخبار
+                </p>
+
+            </div>
+
+        </div>
+
+        <button onclick="joinWhatsApp()">
+            انضم الآن
+        </button>
+
+    </section>
 
 </div>
 
+</main>
 
-<!-- =====================================================
+<!-- ======================================================
      BOTTOM NAV
-     ===================================================== -->
+====================================================== -->
 
-<div class="bottom-bar">
+<nav class="bottom-nav">
 
-    <a
-        href="home.html"
-        class="nav-btn active">
+    <div
+        class="nav-item active"
+        onclick="go('index.html')"
+    >
 
-        <i>🏠</i>
-        الرئيسية
+        <span class="nav-icon">
+            🏠
+        </span>
 
-    </a>
+        <span class="nav-text">
+            الرئيسية
+        </span>
 
+    </div>
 
-    <a
-        href="shop.html"
-        class="nav-btn">
+    <div
+        class="nav-item"
+        onclick="go('store.html')"
+    >
 
-        <i>🛒</i>
-        المتجر
+        <span class="nav-icon">
+            🛒
+        </span>
 
-    </a>
+        <span class="nav-text">
+            المتجر
+        </span>
 
+    </div>
 
-    <a
-        href="ACCOUNT.html"
-        class="nav-btn">
+    <div
+        class="nav-item"
+        onclick="go('profile.html')"
+    >
 
-        <i>👤</i>
-        الحساب
+        <span class="nav-icon">
+            👤
+        </span>
 
-    </a>
+        <span class="nav-text">
+            الحساب
+        </span>
 
+    </div>
 
-    <a
-        href="memory.html"
-        class="nav-btn">
+    <div
+        class="nav-item"
+        onclick="go('memory.html')"
+    >
 
-        <i>🧠</i>
-        الذاكرة
+        <span class="nav-icon">
+            🧠
+        </span>
 
-    </a>
+        <span class="nav-text">
+            الذاكرة
+        </span>
 
-</div>
+    </div>
 
-
-<!-- =====================================================
-     JAVASCRIPT
-     ===================================================== -->
+</nav>
 
 <script>
-
 /* =========================================================
-   STAR FIELD
+   L&S GAMES — JAVASCRIPT
    ========================================================= */
 
-const particles = document.getElementById('particles');
+/* ---------------------------------------------------------
+   PARTICLES
+--------------------------------------------------------- */
 
-for(let i = 0; i < 75; i++){
+const particles = document.getElementById("particles");
 
-    const star = document.createElement('div');
+for(let i=0;i<100;i++){
 
-    star.className = 'star';
+    const star = document.createElement("span");
 
-    const size = Math.random() > .85 ? 3 : 1.5;
+    star.className = "star";
 
-    star.style.width = size + 'px';
-    star.style.height = size + 'px';
+    star.style.left = Math.random()*100 + "%";
+    star.style.top = Math.random()*100 + "%";
 
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 100 + '%';
-
-    star.style.animationDuration =
-        (5 + Math.random() * 12) + 's';
+    star.style.setProperty(
+        "--d",
+        (2 + Math.random()*5) + "s"
+    );
 
     star.style.animationDelay =
-        (-Math.random() * 12) + 's';
-
-    star.style.opacity =
-        (.2 + Math.random() * .8);
+        (-Math.random()*5) + "s";
 
     particles.appendChild(star);
 }
 
-
-/* =========================================================
-   SLIDER
-   ========================================================= */
-
-let slideIndex = 0;
-
-const slides =
-    document.querySelectorAll('.slide');
-
-const dots =
-    document.querySelectorAll('.dot');
-
-
-function showSlide(n){
-
-    slides.forEach(function(slide){
-        slide.classList.remove('active');
-    });
-
-    dots.forEach(function(dot){
-        dot.classList.remove('active');
-    });
-
-    slides[n].classList.add('active');
-    dots[n].classList.add('active');
-}
-
-
-setInterval(function(){
-
-    slideIndex =
-        (slideIndex + 1) % slides.length;
-
-    showSlide(slideIndex);
-
-},4000);
-
-
-/* =========================================================
+/* ---------------------------------------------------------
    DRAWER
-   ========================================================= */
+--------------------------------------------------------- */
 
-function toggleDrawer(){
-
-    document
-        .getElementById('drawer')
-        .classList.toggle('active');
+function openDrawer(){
 
     document
-        .getElementById('drawerOverlay')
-        .classList.toggle('active');
+        .getElementById("drawer")
+        .classList.add("active");
+
+    document
+        .getElementById("drawerOverlay")
+        .classList.add("active");
+
 }
 
+function closeDrawer(){
 
-/* =========================================================
+    document
+        .getElementById("drawer")
+        .classList.remove("active");
+
+    document
+        .getElementById("drawerOverlay")
+        .classList.remove("active");
+
+}
+
+/* ---------------------------------------------------------
+   NAVIGATION
+--------------------------------------------------------- */
+
+function go(page){
+
+    try{
+        playClick();
+    }catch(e){}
+
+    setTimeout(()=>{
+
+        window.location.href = page;
+
+    },100);
+
+}
+
+/* ---------------------------------------------------------
+   SCROLL
+--------------------------------------------------------- */
+
+function scrollToGames(){
+
+    document
+        .getElementById("gamesSection")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+/* ---------------------------------------------------------
+   WHATSAPP
+--------------------------------------------------------- */
+
+function joinWhatsApp(){
+
+    const number = "201000000000";
+
+    const url =
+        "https://wa.me/" + number;
+
+    window.open(url,"_blank");
+
+}
+
+/* ---------------------------------------------------------
+   DAILY CHALLENGE
+--------------------------------------------------------- */
+
+function dailyChallenge(){
+
+    closeDrawer();
+
+    setTimeout(()=>{
+
+        alert(
+            "🔥 التحدي اليومي\n\n" +
+            "اربح مباراة واحدة واحصل على +500 XP!"
+        );
+
+    },300);
+
+}
+
+/* ---------------------------------------------------------
+   INFO
+--------------------------------------------------------- */
+
+function showInfo(){
+
+    closeDrawer();
+
+    setTimeout(()=>{
+
+        alert(
+            "L&S GAMES\n\n" +
+            "CHAMPIONS NIGHT\n\n" +
+            "منصة ألعاب كروية من L&S GAMES ⚽"
+        );
+
+    },300);
+
+}
+
+/* ---------------------------------------------------------
    LOGOUT
-   ========================================================= */
+--------------------------------------------------------- */
 
 function logout(){
 
-    localStorage.clear();
+    const confirmLogout =
+        confirm(
+            "هل تريد تسجيل الخروج؟"
+        );
+
+    if(!confirmLogout) return;
+
+    localStorage.removeItem("player");
 
     window.location.href =
-        'login.html';
+        "login.html";
+
 }
 
-
-/* =========================================================
+/* ---------------------------------------------------------
    PLAYER DATA
-   ========================================================= */
+--------------------------------------------------------- */
 
 function loadPlayerData(){
 
-    if(
-        localStorage.getItem("isLoggedIn")
-        !== "true"
-    ){
+    let player = null;
 
-        window.location.href =
-            "login.html";
+    try{
 
-        return;
+        player =
+            JSON.parse(
+                localStorage.getItem("player")
+            );
+
+    }catch(e){
+
+        player = null;
+
     }
 
+    if(!player) return;
 
-    let email =
-        localStorage.getItem("email")
-        || "guest@ls.com";
+    const username =
+        document.getElementById("username");
 
+    const avatar =
+        document.getElementById("avatar");
 
-    let xp =
-        parseInt(
-            localStorage.getItem("xp")
-        ) || 0;
+    if(player.name){
 
+        username.textContent =
+            player.name;
 
-    let shortEmail =
-        email
-            .split('@')[0]
-            .substring(0,6)
-            + '@';
+        avatar.textContent =
+            player.name
+                .substring(0,2)
+                .toUpperCase();
 
+    }
 
-    let firstLetter =
-        email
-            .charAt(0)
-            .toUpperCase();
+    if(player.tickets !== undefined){
 
+        document.getElementById("tickets")
+            .textContent =
+            player.tickets;
 
-    document
-        .getElementById("emailShort")
-        .innerText =
-        shortEmail;
+    }
 
-
-    document
-        .getElementById("profileAvatar")
-        .innerText =
-        firstLetter;
-
-
-    document
-        .getElementById("drawerEmail")
-        .innerText =
-        email;
-
-
-    document
-        .getElementById("drawerAvatar")
-        .innerText =
-        firstLetter;
-
-
-    let currentLevelXP =
-        xp % 1000;
-
-
-    let percent =
-        (currentLevelXP / 1000) * 100;
-
-
-    document
-        .getElementById("xpBar")
-        .style.width =
-        percent + '%';
-
-
-    document
-        .getElementById("xpText")
-        .innerText =
-        currentLevelXP + '/1000';
-
-
-    let rank = "صغير";
-
-
-    if(xp >= 1000)
-        rank = "محترف";
-
-
-    if(xp >= 5000)
-        rank = "أسطوري";
-
-
-    document
-        .getElementById("rank")
-        .innerText =
-        rank;
 }
 
+/* ---------------------------------------------------------
+   CLICK SOUND
+   WebAudio synthesized UI sound.
+--------------------------------------------------------- */
 
-/* =========================================================
+let audioContext = null;
+
+function playClick(){
+
+    try{
+
+        if(!audioContext){
+
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }
+
+        const osc =
+            audioContext.createOscillator();
+
+        const gain =
+            audioContext.createGain();
+
+        osc.type = "sine";
+
+        osc.frequency.setValueAtTime(
+            620,
+            audioContext.currentTime
+        );
+
+        osc.frequency.exponentialRampToValueAtTime(
+            950,
+            audioContext.currentTime + .08
+        );
+
+        gain.gain.setValueAtTime(
+            .0001,
+            audioContext.currentTime
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .055,
+            audioContext.currentTime + .01
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .0001,
+            audioContext.currentTime + .12
+        );
+
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+
+        osc.start();
+
+        osc.stop(
+            audioContext.currentTime + .13
+        );
+
+    }catch(e){}
+
+}
+
+/* ---------------------------------------------------------
+   CARD RIPPLE
+--------------------------------------------------------- */
+
+document
+    .querySelectorAll(".game-card")
+    .forEach(card=>{
+
+        card.addEventListener(
+            "pointerdown",
+            function(e){
+
+                const rect =
+                    this.getBoundingClientRect();
+
+                const ripple =
+                    document.createElement("span");
+
+                ripple.style.position =
+                    "absolute";
+
+                ripple.style.width =
+                    "10px";
+
+                ripple.style.height =
+                    "10px";
+
+                ripple.style.borderRadius =
+                    "50%";
+
+                ripple.style.left =
+                    (e.clientX - rect.left) + "px";
+
+                ripple.style.top =
+                    (e.clientY - rect.top) + "px";
+
+                ripple.style.background =
+                    "rgba(80,210,255,.35)";
+
+                ripple.style.transform =
+                    "translate(-50%,-50%) scale(1)";
+
+                ripple.style.pointerEvents =
+                    "none";
+
+                ripple.style.transition =
+                    "transform .7s, opacity .7s";
+
+                this.appendChild(ripple);
+
+                requestAnimationFrame(()=>{
+
+                    ripple.style.transform =
+                        "translate(-50%,-50%) scale(25)";
+
+                    ripple.style.opacity =
+                        "0";
+
+                });
+
+                setTimeout(
+                    ()=>ripple.remove(),
+                    700
+                );
+
+            }
+        );
+
+    });
+
+/* ---------------------------------------------------------
+   PARALLAX HERO
+--------------------------------------------------------- */
+
+document.addEventListener(
+    "mousemove",
+    e=>{
+
+        if(window.innerWidth < 800)
+            return;
+
+        const x =
+            (e.clientX / window.innerWidth - .5);
+
+        const y =
+            (e.clientY / window.innerHeight - .5);
+
+        const ball =
+            document.querySelector(".starball");
+
+        if(ball){
+
+            ball.style.marginLeft =
+                (x * 15) + "px";
+
+            ball.style.marginTop =
+                (y * 10) + "px";
+
+        }
+
+    }
+);
+
+/* ---------------------------------------------------------
+   ESC CLOSE DRAWER
+--------------------------------------------------------- */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(e.key === "Escape"){
+
+            closeDrawer();
+
+        }
+
+    }
+);
+
+/* ---------------------------------------------------------
    PAGE LOAD
-   ========================================================= */
+--------------------------------------------------------- */
 
-window.onload = function(){
+window.addEventListener(
+    "load",
+    ()=>{
 
-    let tickets =
-        localStorage.getItem("التذاكر")
-        || 0;
+        loadPlayerData();
 
+        setTimeout(()=>{
 
-    document
-        .getElementById("عداد_التذاكر")
-        .innerText =
-        tickets;
+            const loading =
+                document.getElementById("loading");
 
+            loading.classList.add("hide");
 
-    loadPlayerData();
-};
+        },900);
 
-
-/* =========================================================
-   PAGE NAVIGATION
-   ========================================================= */
-
-function goToPage(url){
-
-    document
-        .getElementById('loadingScreen')
-        .classList.add('active');
-
-
-    if(
-        document
-            .getElementById('drawer')
-            .classList.contains('active')
-    ){
-
-        toggleDrawer();
     }
+);
 
+/* ---------------------------------------------------------
+   PREVENT DOUBLE TAP ZOOM
+--------------------------------------------------------- */
 
-    setTimeout(function(){
+let lastTouchEnd = 0;
 
-        window.location.href =
-            url;
+document.addEventListener(
+    "touchend",
+    function(event){
 
-    },700);
-}
+        const now =
+            Date.now();
 
+        if(now - lastTouchEnd <= 300){
+
+            event.preventDefault();
+
+        }
+
+        lastTouchEnd = now;
+
+    },
+    false
+);
 </script>
 
 </body>
 </html>
-```
