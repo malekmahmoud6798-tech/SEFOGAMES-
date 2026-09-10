@@ -186,7 +186,7 @@ roomRef.on('value', (snapshot) => {
   if(data.player1?.ready && data.player2?.ready &&!data.started){
     roomRef.update({started: true});
     setTimeout(()=>{
-      window.location.href = `online1.html?room=${room}&player=${myPlayer}&type=${type}&name=${encodeURIComponent(email)}`;
+      window.location.href = `online1(2).html?room=${room}&player=${myPlayer}&type=${type}&name=${encodeURIComponent(email)}`;
     }, 1000);
   }
 })
