@@ -1,368 +1,2215 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>L&S GAMES - مركز الالعاب</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@900&display=swap" rel="stylesheet">
+
+<title>L&S GAMES - Night of Champions</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color: transparent}
+
+/* =========================================================
+   L&S GAMES
+   NIGHT OF CHAMPIONS EDITION
+   ========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
 body{
-  font-family:'Cairo';color:#fff;background:#000;overflow-x:hidden;
-  padding-bottom:90px;
-  padding-top: 70px;
+    font-family:'Cairo',sans-serif;
+    color:#fff;
+    background:#020817;
+    overflow-x:hidden;
+    padding-top:78px;
+    padding-bottom:100px;
+    min-height:100vh;
 }
 
-#bg{position:fixed;width:100%;height:100%;background:radial-gradient(circle at 50% 20%, #1a0033 0%, #000 60%);z-index:0}
-#particles{position:fixed;width:100%;height:100%;z-index:1}
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
 
-/* الشريط العلوي للموبايل */
-.top-bar {
-  position: fixed; top: 0; left: 0; width: 100%; z-index: 9998;
-  background: linear-gradient(135deg, #0f0c29, #302b63);
-  backdrop-filter: blur(20px);
-  padding: 10px 12px;
-  display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 2px solid #00ccff;
-  box-shadow: 0 0 20px rgba(0,204,255,0.5);
-  height: 70px;
-}
-.left-top {display: flex; align-items: center; gap: 10px;}
-.menu-btn {
-  width: 38px; height: 38px; background: rgba(0,0,0,0.3);
-  border-radius: 10px; display: flex; flex-direction: column;
-  justify-content: center; align-items: center; gap: 4px;
-  cursor: pointer; border: 1px solid rgba(255,215,0,0.3);
-}
-.menu-btn span {width: 20px; height: 2px; background: #ffd700; border-radius: 2px;}
-
-.profile-info {display: flex; align-items: center; gap: 10px; cursor: pointer;}
-.profile-avatar {
-  width: 42px; height: 42px; border-radius: 50%;
-  border: 2px solid gold;
-  background: linear-gradient(135deg, #00ccff, #ffd700);
-  box-shadow: 0 0 15px gold;
-  display: flex; justify-content: center; align-items: center;
-  font-size: 18px; font-weight: 900; color: white; text-transform: uppercase;
-}
-.email-info {display: flex; flex-direction: column; gap: 3px;}
-.email-short {font-size: 13px; font-weight: 900; color: #ffd700;}
-.xp-bar-container {
-  width: 90px; height: 14px; background: rgba(0,0,0,0.5);
-  border-radius: 10px; border: 1px solid #00ccff;
-  overflow: hidden; position: relative;
-}
-.xp-bar {
-  height: 100%; background: linear-gradient(90deg, #00ccff, #ffd700);
-  border-radius: 10px; transition: width 0.5s ease;
-}
-.xp-text {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  font-size: 9px; font-weight: 900; color: white;
+#bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(25,88,190,.48) 0%,
+            rgba(5,28,70,.55) 25%,
+            rgba(2,8,23,.96) 65%,
+            #01040c 100%
+        );
 }
 
-.stats-info {display: flex; gap: 6px; align-items: center;}
-.stat-box {
-  background: rgba(0,0,0,0.4); padding: 4px 8px;
-  border-radius: 10px; color: white; text-align: center;
-  border: 1px solid rgba(255,215,0,0.3);
+#bg::before{
+    content:"";
+    position:absolute;
+    width:900px;
+    height:900px;
+    left:50%;
+    top:-500px;
+    transform:translateX(-50%);
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(68,150,255,.20),
+            rgba(30,95,190,.07) 35%,
+            transparent 70%
+        );
+    filter:blur(8px);
+    animation:skyPulse 5s ease-in-out infinite;
 }
-.stat-label {font-size: 9px; color: #aaa;}
-.stat-value {font-size: 12px; font-weight: 900; color: #ffd700;}
 
-.ticket-box {
-  background: linear-gradient(135deg, #FFD700, #FF8C00);
-  padding: 5px 10px; border-radius: 15px; display: flex;
-  align-items: center; gap: 4px; box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
-  border: 1px solid white; font-weight: 900;
+#bg::after{
+    content:"";
+    position:absolute;
+    left:-10%;
+    right:-10%;
+    bottom:-20%;
+    height:60%;
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.95),
+            transparent
+        );
+    pointer-events:none;
 }
-.ticket-box span {color: white;font-size: 14px;}
-.ticket-box svg{width:18px;height:18px}
 
-/* ال Drawer */
-.drawer-overlay {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-  z-index: 9999; opacity: 0; visibility: hidden;
-  transition: 0.3s;
+@keyframes skyPulse{
+    0%,100%{
+        opacity:.65;
+        transform:translateX(-50%) scale(1);
+    }
+    50%{
+        opacity:1;
+        transform:translateX(-50%) scale(1.08);
+    }
 }
-.drawer-overlay.active {opacity: 1; visibility: visible;}
-.drawer {
-  position: fixed; top: 0; right: -85%; width: 85%; height: 100%;
-  background: linear-gradient(180deg, #0f0c29, #302b63);
-  border-left: 2px solid #00ccff; z-index: 10000;
-  transition: 0.4s; padding: 15px; overflow-y: auto;
+
+#particles{
+    position:fixed;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
 }
-.drawer.active {right: 0;}
-.drawer-header {text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,215,0,0.3);}
-.drawer-avatar {
-  width: 70px; height: 70px; border-radius: 50%;
-  background: linear-gradient(135deg, #00ccff, #ffd700);
-  margin: 0 auto 10px; display: flex; justify-content: center; align-items: center;
-  font-size: 30px; font-weight: 900; border: 2px solid gold;
+
+/* نجوم صغيرة */
+.star{
+    position:absolute;
+    width:2px;
+    height:2px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 7px #fff;
+    animation:starFloat linear infinite;
 }
-.drawer-email {font-size: 14px; font-weight: 700; color: #ffd700; word-break: break-all;}
-.drawer-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px; margin-bottom: 8px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 12px; cursor: pointer;
+
+@keyframes starFloat{
+    0%{
+        transform:translateY(0);
+        opacity:.15;
+    }
+    50%{
+        opacity:1;
+    }
+    100%{
+        transform:translateY(-110vh);
+        opacity:0;
+    }
 }
-.drawer-item-icon {font-size: 20px;}
-.drawer-item-text {font-size: 15px; font-weight: 700;}
-.logout {background: rgba(255,0,0,0.2)!important;}
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.top-bar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:78px;
+    z-index:9998;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:9px 14px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(4,17,43,.97),
+            rgba(2,10,27,.94)
+        );
+
+    border-bottom:1px solid rgba(92,165,255,.55);
+
+    box-shadow:
+        0 2px 25px rgba(0,65,180,.28),
+        inset 0 -1px 0 rgba(255,255,255,.04);
+
+    backdrop-filter:blur(18px);
+}
+
+.top-bar::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:-1px;
+    height:1px;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #4da3ff,
+            #dcecff,
+            #4da3ff,
+            transparent
+        );
+    opacity:.8;
+}
+
+.left-top{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.menu-btn{
+    width:40px;
+    height:40px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(40,106,190,.28),
+            rgba(3,15,37,.8)
+        );
+
+    border:1px solid rgba(105,177,255,.35);
+
+    box-shadow:
+        inset 0 0 15px rgba(60,130,255,.08),
+        0 0 15px rgba(0,80,200,.12);
+
+    transition:.25s;
+}
+
+.menu-btn:hover{
+    transform:translateY(-1px);
+    border-color:#6db6ff;
+}
+
+.menu-btn span{
+    width:21px;
+    height:2px;
+    background:#d9edff;
+    border-radius:10px;
+    box-shadow:0 0 7px rgba(95,175,255,.7);
+}
+
+.profile-info{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    cursor:pointer;
+}
+
+.profile-avatar{
+    width:43px;
+    height:43px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:50%;
+
+    font-size:18px;
+    font-weight:900;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            #5eb4ff,
+            #1451a5 45%,
+            #071936 100%
+        );
+
+    border:2px solid #8ac5ff;
+
+    box-shadow:
+        0 0 12px rgba(65,150,255,.65),
+        inset 0 0 12px rgba(255,255,255,.15);
+}
+
+.email-info{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.email-short{
+    font-size:12px;
+    font-weight:900;
+    color:#eaf5ff;
+}
+
+.xp-bar-container{
+    width:90px;
+    height:12px;
+
+    position:relative;
+    overflow:hidden;
+
+    border-radius:20px;
+
+    background:rgba(0,0,0,.5);
+
+    border:1px solid rgba(112,181,255,.35);
+}
+
+.xp-bar{
+    height:100%;
+    width:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            #1b62bd,
+            #4ba7ff,
+            #dbeeff
+        );
+
+    box-shadow:0 0 10px rgba(74,164,255,.8);
+
+    transition:width .6s ease;
+}
+
+.xp-text{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:8px;
+    font-weight:900;
+
+    color:#fff;
+    text-shadow:0 1px 3px #000;
+}
+
+.stats-info{
+    display:flex;
+    gap:6px;
+    align-items:center;
+}
+
+.stat-box{
+    min-width:52px;
+
+    padding:4px 7px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(35,86,145,.24),
+            rgba(0,0,0,.3)
+        );
+
+    border:1px solid rgba(125,190,255,.22);
+    border-radius:10px;
+}
+
+.stat-label{
+    font-size:8px;
+    color:#8299b7;
+}
+
+.stat-value{
+    font-size:11px;
+    font-weight:900;
+    color:#eaf5ff;
+}
+
+.ticket-box{
+    min-width:48px;
+
+    padding:6px 9px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #174f9c,
+            #2b79ce
+        );
+
+    border:1px solid #82bdff;
+
+    box-shadow:
+        0 0 14px rgba(40,125,230,.4),
+        inset 0 0 10px rgba(255,255,255,.1);
+
+    font-weight:900;
+}
+
+.ticket-box span{
+    color:#fff;
+    font-size:13px;
+}
+
+.ticket-box svg{
+    width:17px;
+    height:17px;
+}
+
+/* =========================================================
+   DRAWER
+   ========================================================= */
+
+.drawer-overlay{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,4,13,.82);
+
+    backdrop-filter:blur(7px);
+
+    z-index:9999;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.3s;
+}
+
+.drawer-overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.drawer{
+    position:fixed;
+
+    top:0;
+    right:-88%;
+
+    width:86%;
+    max-width:390px;
+    height:100%;
+
+    z-index:10000;
+
+    padding:18px;
+
+    overflow-y:auto;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(40,106,190,.3),
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            #061936,
+            #020817 75%
+        );
+
+    border-left:1px solid #4f9de9;
+
+    box-shadow:
+        -15px 0 45px rgba(0,40,110,.35);
+
+    transition:.4s cubic-bezier(.22,.61,.36,1);
+}
+
+.drawer.active{
+    right:0;
+}
+
+.drawer-header{
+    text-align:center;
+
+    margin-bottom:22px;
+    padding-bottom:18px;
+
+    border-bottom:1px solid rgba(104,172,244,.2);
+}
+
+.drawer-header::before{
+    content:"✦  NIGHT OF CHAMPIONS  ✦";
+
+    display:block;
+
+    margin-bottom:15px;
+
+    font-family:'Orbitron';
+    font-size:9px;
+    letter-spacing:1px;
+
+    color:#9ccfff;
+}
+
+.drawer-avatar{
+    width:76px;
+    height:76px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    margin:0 auto 12px;
+
+    border-radius:50%;
+
+    font-size:30px;
+    font-weight:900;
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            #65b6ff,
+            #185aa7 45%,
+            #06142e 100%
+        );
+
+    border:2px solid #a7d6ff;
+
+    box-shadow:
+        0 0 25px rgba(62,148,255,.55),
+        inset 0 0 20px rgba(255,255,255,.12);
+}
+
+.drawer-email{
+    font-size:13px;
+    font-weight:700;
+    color:#cce7ff;
+    word-break:break-all;
+}
+
+.drawer-item{
+    display:flex;
+    align-items:center;
+    gap:13px;
+
+    padding:14px;
+
+    margin-bottom:9px;
+
+    border-radius:13px;
+
+    cursor:pointer;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(40,98,164,.17),
+            rgba(255,255,255,.025)
+        );
+
+    border:1px solid rgba(105,174,245,.13);
+
+    transition:.25s;
+}
+
+.drawer-item:hover{
+    transform:translateX(-3px);
+    border-color:rgba(100,175,255,.45);
+    background:rgba(55,120,200,.14);
+}
+
+.drawer-item-icon{
+    font-size:21px;
+}
+
+.drawer-item-text{
+    font-size:14px;
+    font-weight:700;
+}
+
+.logout{
+    background:rgba(190,30,45,.12)!important;
+    border-color:rgba(255,80,90,.15)!important;
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
 
 .loading-screen{
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
-  z-index: 99999; display: none; justify-content: center; align-items: center;
-  flex-direction: column; gap: 15px;
-}
-.loading-screen.active{ display: flex; }
-.spinner{
-  width: 50px; height: 50px; border: 3px solid rgba(0,204,255,0.2);
-  border-top: 3px solid #00ccff; border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-@keyframes spin{0%{transform: rotate(0deg)}100%{transform: rotate(360deg)}}
-.loading-text{font-size: 18px; font-weight: 700; color: #ffd700;}
+    position:fixed;
+    inset:0;
 
-.header{position:relative;z-index:2;text-align:center;padding:25px 15px}
-.logo{
-  font-family:'Orbitron';font-size:40px;font-weight:900;
-  background:linear-gradient(90deg,#00ccff,#ffd700,#ff00ff,#00ccff);
-  background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:gradient 4s ease infinite;
+    background:
+        radial-gradient(
+            circle,
+            rgba(14,57,120,.45),
+            rgba(0,4,12,.98) 65%
+        );
+
+    backdrop-filter:blur(12px);
+
+    z-index:99999;
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+    gap:18px;
 }
-@keyframes gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.subtitle{color:#aaa;font-size:14px;letter-spacing:2px;margin-top:8px}
+
+.loading-screen.active{
+    display:flex;
+}
+
+.spinner{
+    width:62px;
+    height:62px;
+
+    border-radius:50%;
+
+    border:2px solid rgba(100,180,255,.15);
+    border-top-color:#6bb8ff;
+    border-right-color:#dceeff;
+
+    animation:spin .8s linear infinite;
+
+    box-shadow:
+        0 0 25px rgba(55,145,255,.45);
+}
+
+.loading-text{
+    font-size:16px;
+    font-weight:900;
+    color:#ddecff;
+    letter-spacing:1px;
+}
+
+.loading-sub{
+    font-size:10px;
+    color:#6784a8;
+    letter-spacing:2px;
+    font-family:'Orbitron';
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header{
+    position:relative;
+    z-index:2;
+
+    text-align:center;
+
+    padding:27px 15px 18px;
+}
+
+.champions-mini{
+    font-family:'Orbitron';
+    font-size:9px;
+
+    letter-spacing:3px;
+
+    color:#87bfff;
+
+    margin-bottom:8px;
+
+    text-shadow:
+        0 0 10px rgba(85,164,255,.7);
+}
+
+.logo{
+    font-family:'Orbitron',sans-serif;
+
+    font-size:38px;
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #dceeff 30%,
+            #65aaff 62%,
+            #1c61b2 100%
+        );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    filter:
+        drop-shadow(0 0 10px rgba(80,160,255,.35));
+
+    animation:logoGlow 3s ease-in-out infinite;
+}
+
+@keyframes logoGlow{
+    0%,100%{
+        filter:drop-shadow(0 0 8px rgba(80,160,255,.25));
+    }
+    50%{
+        filter:drop-shadow(0 0 18px rgba(80,160,255,.6));
+    }
+}
+
+.subtitle{
+    margin-top:8px;
+
+    color:#9eb5d3;
+
+    font-size:12px;
+
+    letter-spacing:3px;
+}
+
+.header-line{
+    width:170px;
+    height:1px;
+
+    margin:15px auto 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #5caaff,
+            #e8f5ff,
+            #5caaff,
+            transparent
+        );
+
+    box-shadow:0 0 8px rgba(77,163,255,.5);
+}
+
+/* =========================================================
+   HERO / STADIUM
+   ========================================================= */
 
 .slider{
-  position:relative;z-index:2;margin:15px;border-radius:20px;overflow:hidden;
-  border:1px solid #00ccff;
-  aspect-ratio: 16/9;
-}
-.slide{
-  position:absolute;width:100%;height:100%;opacity:0;transition:1s;
-  background-size:cover; background-position:center;
-  display:flex;align-items:end;padding:15px
-}
-.slide.active{opacity:1}
-.slide::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,0.8))}
-.slide h3{position:relative;z-index:2;font-size:18px;text-shadow:0 0 10px #000}
-.dots{position:absolute;z-index:3;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
-.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.3)}
-.dot.active{background:#ffd700;width:20px;border-radius:4px}
+    position:relative;
+    z-index:2;
 
-.container{position:relative;z-index:2;padding:15px}
-.section-title{font-size:20px;font-weight:900;margin:20px 0 12px;color:#ffd700;text-align:center}
-.games-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.game-card{
-  background:rgba(255,255,255,0.05);backdrop-filter:blur(15px);
-  border:1px solid rgba(255,255,255,0.1);border-radius:15px;
-  padding:15px 10px;text-align:center;cursor:pointer;
+    margin:12px 14px 20px;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    border:1px solid rgba(99,174,255,.5);
+
+    aspect-ratio:16/9;
+
+    background:#030b1b;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.5),
+        0 0 30px rgba(24,95,185,.15);
 }
-.game-card:active{transform:scale(0.95)}
-.game-icon{font-size:40px;margin-bottom:8px}
-.game-name{font-size:15px;font-weight:700;margin-bottom:4px}
-.game-desc{font-size:11px;color:#aaa}
+
+.slider::before{
+    content:"";
+
+    position:absolute;
+    z-index:4;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #68b5ff,
+            #fff,
+            #68b5ff,
+            transparent
+        );
+
+    box-shadow:0 0 15px #4d9fff;
+}
+
+.slide{
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    opacity:0;
+
+    transition:1s;
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    align-items:flex-end;
+
+    padding:20px;
+}
+
+.slide.active{
+    opacity:1;
+}
+
+.slide::after{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0,20,55,.08),
+            rgba(0,4,14,.12) 35%,
+            rgba(0,4,13,.93) 100%
+        );
+}
+
+.slide::before{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 15%,
+            rgba(94,174,255,.23),
+            transparent 45%
+        );
+}
+
+.slide h3{
+    position:relative;
+    z-index:5;
+
+    font-size:18px;
+    font-weight:900;
+
+    color:#fff;
+
+    text-shadow:
+        0 2px 10px #000,
+        0 0 20px rgba(55,135,255,.4);
+}
+
+.slide-badge{
+    position:absolute;
+    z-index:5;
+
+    top:15px;
+    right:15px;
+
+    padding:6px 10px;
+
+    border-radius:20px;
+
+    background:rgba(2,15,37,.72);
+
+    border:1px solid rgba(121,191,255,.45);
+
+    font-size:9px;
+    font-weight:900;
+
+    color:#cfe9ff;
+
+    backdrop-filter:blur(8px);
+}
+
+.dots{
+    position:absolute;
+
+    z-index:6;
+
+    bottom:11px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    display:flex;
+    gap:7px;
+}
+
+.dot{
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.3);
+
+    transition:.3s;
+}
+
+.dot.active{
+    width:23px;
+    border-radius:5px;
+
+    background:#70b8ff;
+
+    box-shadow:0 0 10px #4c9eff;
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.container{
+    position:relative;
+    z-index:2;
+
+    padding:0 15px;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    font-size:19px;
+    font-weight:900;
+
+    margin:25px 0 14px;
+
+    color:#eaf5ff;
+
+    text-shadow:
+        0 0 15px rgba(67,155,255,.45);
+}
+
+.section-title::before,
+.section-title::after{
+    content:"";
+
+    width:45px;
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #5daaff
+        );
+}
+
+.section-title::after{
+    background:
+        linear-gradient(
+            90deg,
+            #5daaff,
+            transparent
+        );
+}
+
+/* =========================================================
+   GAME CARDS
+   ========================================================= */
+
+.games-grid{
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:12px;
+}
+
+.game-card{
+    position:relative;
+
+    overflow:hidden;
+
+    min-height:145px;
+
+    padding:18px 10px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    border-radius:18px;
+
+    background:
+        radial-gradient(
+            circle at 50% -20%,
+            rgba(68,139,224,.25),
+            transparent 55%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(19,54,100,.48),
+            rgba(3,13,30,.82)
+        );
+
+    border:1px solid rgba(99,171,242,.2);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.04);
+
+    transition:
+        transform .25s,
+        border-color .25s,
+        box-shadow .25s;
+}
+
+.game-card::before{
+    content:"";
+
+    position:absolute;
+
+    top:-70px;
+    left:50%;
+
+    width:130px;
+    height:130px;
+
+    transform:translateX(-50%);
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(77,160,255,.2),
+            transparent 70%
+        );
+}
+
+.game-card::after{
+    content:"";
+
+    position:absolute;
+
+    left:10%;
+    right:10%;
+    bottom:0;
+
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(90,168,255,.7),
+            transparent
+        );
+}
+
+.game-card:hover{
+    transform:translateY(-5px);
+
+    border-color:rgba(102,183,255,.65);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.4),
+        0 0 25px rgba(43,126,222,.18);
+}
+
+.game-card:active{
+    transform:scale(.96);
+}
+
+.game-icon{
+    position:relative;
+    z-index:2;
+
+    width:65px;
+    height:65px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin:0 auto 10px;
+
+    border-radius:18px;
+
+    font-size:34px;
+
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            rgba(110,184,255,.35),
+            rgba(10,38,76,.75)
+        );
+
+    border:1px solid rgba(117,190,255,.25);
+
+    box-shadow:
+        inset 0 0 20px rgba(79,159,255,.1),
+        0 0 15px rgba(30,105,200,.12);
+}
+
+.game-name{
+    position:relative;
+    z-index:2;
+
+    font-size:14px;
+    font-weight:900;
+
+    color:#f1f7ff;
+
+    margin-bottom:4px;
+}
+
+.game-desc{
+    position:relative;
+    z-index:2;
+
+    font-size:10px;
+
+    color:#829ab8;
+}
+
+/* =========================================================
+   JOIN BOX
+   ========================================================= */
 
 .join-box{
-  background:linear-gradient(135deg, rgba(0,204,255,0.1), rgba(255,215,0,0.1));
-  backdrop-filter:blur(15px);
-  border:1px solid #00ccff;border-radius:20px;
-  padding:20px 15px;margin:25px 0;text-align:center;
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(53,123,207,.23),
+            transparent 55%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(19,59,108,.35),
+            rgba(2,11,28,.85)
+        );
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(91,166,239,.35);
+
+    border-radius:22px;
+
+    padding:25px 17px;
+
+    margin:28px 0;
+
+    text-align:center;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.3);
 }
-.join-title{font-size:20px;font-weight:900;color:#ffd700;margin-bottom:12px}
-.join-text{font-size:13px;line-height:1.7;color:#ddd;margin-bottom:15px;white-space:pre-line}
+
+.join-box::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #65b2ff,
+            #fff,
+            #65b2ff,
+            transparent
+        );
+}
+
+.join-box::after{
+    content:"✦";
+
+    position:absolute;
+
+    top:12px;
+    left:16px;
+
+    color:#70b8ff;
+
+    font-size:15px;
+
+    opacity:.7;
+}
+
+.join-title{
+    font-size:19px;
+    font-weight:900;
+
+    color:#edf7ff;
+
+    margin-bottom:10px;
+
+    text-shadow:
+        0 0 12px rgba(73,157,255,.4);
+}
+
+.join-text{
+    font-size:12px;
+    line-height:1.9;
+
+    color:#b5c9df;
+
+    margin-bottom:17px;
+
+    white-space:pre-line;
+}
+
 .whatsapp-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  background:linear-gradient(135deg,#25D366,#128C7E);
-  color:#fff;padding:12px 20px;border-radius:12px;
-  font-size:15px;font-weight:900;text-decoration:none;
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #168d59,
+            #20b76f
+        );
+
+    color:#fff;
+
+    padding:12px 22px;
+
+    border-radius:13px;
+
+    font-size:14px;
+    font-weight:900;
+
+    text-decoration:none;
+
+    border:1px solid rgba(255,255,255,.22);
+
+    box-shadow:
+        0 8px 20px rgba(0,130,80,.25);
 }
-.whatsapp-icon{width:24px;height:24px}
+
+.whatsapp-btn:hover{
+    transform:translateY(-2px);
+}
+
+.whatsapp-icon{
+    width:23px;
+    height:23px;
+}
+
+/* =========================================================
+   BOTTOM NAV
+   ========================================================= */
 
 .bottom-bar{
-  position:fixed;z-index:10;bottom:10px;left:50%;transform:translateX(-50%);
-  width:95%;height:65px;
-  background:rgba(10,10,10,0.8);backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.1);border-radius:20px;
-  display:flex;justify-content:space-around;align-items:center;
+    position:fixed;
+
+    z-index:999;
+
+    bottom:10px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:94%;
+    max-width:600px;
+
+    height:68px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(8,27,55,.94),
+            rgba(2,11,27,.96)
+        );
+
+    backdrop-filter:blur(22px);
+
+    border:1px solid rgba(93,164,234,.25);
+
+    border-radius:22px;
+
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.5),
+        0 0 25px rgba(22,81,157,.12);
 }
-.nav-btn{color:#888;text-align:center;cursor:pointer;font-size:11px;text-decoration:none}
-.nav-btn.active{color:#00ccff}
-.nav-btn i{font-size:24px;display:block;margin-bottom:3px}
+
+.bottom-bar::before{
+    content:"";
+
+    position:absolute;
+
+    top:-1px;
+    left:18%;
+    right:18%;
+
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #63afff,
+            transparent
+        );
+}
+
+.nav-btn{
+    position:relative;
+
+    min-width:60px;
+
+    color:#607997;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    font-size:10px;
+
+    text-decoration:none;
+
+    transition:.25s;
+}
+
+.nav-btn i{
+    font-style:normal;
+
+    font-size:23px;
+
+    display:block;
+
+    margin-bottom:3px;
+
+    filter:grayscale(.35);
+
+    transition:.25s;
+}
+
+.nav-btn.active{
+    color:#e9f5ff;
+
+    text-shadow:
+        0 0 12px rgba(76,165,255,.7);
+}
+
+.nav-btn.active i{
+    filter:none;
+
+    transform:translateY(-2px);
+
+    text-shadow:
+        0 0 12px rgba(74,165,255,.7);
+}
+
+.nav-btn.active::after{
+    content:"";
+
+    position:absolute;
+
+    bottom:-7px;
+    left:50%;
+
+    width:25px;
+    height:2px;
+
+    transform:translateX(-50%);
+
+    background:#62adff;
+
+    box-shadow:
+        0 0 9px #62adff;
+
+    border-radius:5px;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:420px){
+
+    .top-bar{
+        padding-left:9px;
+        padding-right:9px;
+    }
+
+    .profile-avatar{
+        width:39px;
+        height:39px;
+    }
+
+    .email-short{
+        font-size:10px;
+    }
+
+    .xp-bar-container{
+        width:75px;
+    }
+
+    .stat-box{
+        display:none;
+    }
+
+    .ticket-box{
+        min-width:43px;
+    }
+
+    .logo{
+        font-size:31px;
+    }
+
+    .subtitle{
+        font-size:10px;
+        letter-spacing:2px;
+    }
+
+    .slide h3{
+        font-size:15px;
+    }
+
+    .game-card{
+        min-height:138px;
+    }
+}
+
+/* =========================================================
+   EXTRA LIGHT EFFECT
+   ========================================================= */
+
+.light-beam{
+    position:fixed;
+
+    z-index:1;
+
+    width:2px;
+    height:75vh;
+
+    top:-10%;
+    left:50%;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(100,180,255,0),
+            rgba(100,180,255,.08),
+            rgba(255,255,255,.18),
+            rgba(100,180,255,0)
+        );
+
+    filter:blur(8px);
+
+    transform-origin:top;
+
+    animation:beamMove 8s ease-in-out infinite;
+
+    pointer-events:none;
+}
+
+@keyframes beamMove{
+    0%,100%{
+        transform:rotate(-18deg) scaleY(.9);
+        opacity:.35;
+    }
+    50%{
+        transform:rotate(18deg) scaleY(1.1);
+        opacity:.7;
+    }
+}
+
 </style>
 </head>
+
 <body>
+
+<!-- =====================================================
+     BACKGROUND
+     ===================================================== -->
 
 <div id="bg"></div>
 <div id="particles"></div>
+<div class="light-beam"></div>
+
+
+<!-- =====================================================
+     TOP BAR
+     ===================================================== -->
 
 <div class="top-bar">
-  <div class="left-top">
-    <div class="menu-btn" onclick="toggleDrawer()">
-      <span></span><span></span><span></span>
-    </div>
-    <div class="profile-info" onclick="goToPage('ACCOUNT.html')">
-      <div class="profile-avatar" id="profileAvatar">؟</div>
-      <div class="email-info">
-        <div class="email-short" id="emailShort">@ضيف</div>
-        <div class="xp-bar-container">
-          <div class="xp-bar" id="xpBar"></div>
-          <div class="xp-text" id="xpText">0/1000</div>
+
+    <div class="left-top">
+
+        <div class="menu-btn" onclick="toggleDrawer()">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-      </div>
+
+        <div class="profile-info" onclick="goToPage('ACCOUNT.html')">
+
+            <div class="profile-avatar" id="profileAvatar">
+                ؟
+            </div>
+
+            <div class="email-info">
+
+                <div class="email-short" id="emailShort">
+                    @ضيف
+                </div>
+
+                <div class="xp-bar-container">
+
+                    <div class="xp-bar" id="xpBar"></div>
+
+                    <div class="xp-text" id="xpText">
+                        0/1000
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
-  <div class="stats-info">
-    <div class="stat-box">
-      <div class="stat-label" data-key="rank">المركز</div>
-      <div class="stat-value" id="rank">صغير</div>
+
+
+    <div class="stats-info">
+
+        <div class="stat-box">
+
+            <div class="stat-label">
+                المركز
+            </div>
+
+            <div class="stat-value" id="rank">
+                صغير
+            </div>
+
+        </div>
+
+
+        <div class="ticket-box">
+
+            <svg viewBox="0 0 24 24" fill="none">
+                <path
+                    d="M3 8H21V16H3V8Z"
+                    stroke="white"
+                    stroke-width="2"
+                />
+                <path
+                    d="M8 12H16"
+                    stroke="white"
+                    stroke-width="2"
+                />
+            </svg>
+
+            <span id="عداد_التذاكر">
+                0
+            </span>
+
+        </div>
+
     </div>
-    <div class="ticket-box">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M3 8H21V16H3V8Z" stroke="white" stroke-width="2"/><path d="M8 12H16" stroke="white" stroke-width="2"/></svg>
-      <span id="عداد_التذاكر">0</span>
-    </div>
-  </div>
+
 </div>
 
-<div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
-<div class="drawer" id="drawer">
-  <div class="drawer-header">
-    <div class="drawer-avatar" id="drawerAvatar">؟</div>
-    <div class="drawer-email" id="drawerEmail">loading...</div>
-  </div>
-  <div class="drawer-item" onclick="goToPage('ss.html')">
-    <div class="drawer-item-icon">⚙️</div>
-    <div class="drawer-item-text" data-key="settings">الاعدادات</div>
-  </div>
-  <div class="drawer-item" onclick="alert('التحديات اليومية قريبا 🔥')">
-    <div class="drawer-item-icon">🎯</div>
-    <div class="drawer-item-text">التحديات اليومية</div>
-  </div>
-  <div class="drawer-item" onclick="window.open('https://chat.whatsapp.com/L4cde3Xbd0dDi5YbN5nGsr', '_blank')">
-    <div class="drawer-item-icon">📞</div>
-    <div class="drawer-item-text">التواصل</div>
-  </div>
-  <div class="drawer-item logout" onclick="logout()">
-    <div class="drawer-item-icon">🚪</div>
-    <div class="drawer-item-text">تسجيل خروج</div>
-  </div>
+
+<!-- =====================================================
+     DRAWER
+     ===================================================== -->
+
+<div
+    class="drawer-overlay"
+    id="drawerOverlay"
+    onclick="toggleDrawer()">
 </div>
+
+
+<div class="drawer" id="drawer">
+
+    <div class="drawer-header">
+
+        <div class="drawer-avatar" id="drawerAvatar">
+            ؟
+        </div>
+
+        <div class="drawer-email" id="drawerEmail">
+            loading...
+        </div>
+
+    </div>
+
+
+    <div
+        class="drawer-item"
+        onclick="goToPage('ss.html')">
+
+        <div class="drawer-item-icon">
+            ⚙️
+        </div>
+
+        <div class="drawer-item-text">
+            الإعدادات
+        </div>
+
+    </div>
+
+
+    <div
+        class="drawer-item"
+        onclick="alert('التحديات اليومية قريبا 🔥')">
+
+        <div class="drawer-item-icon">
+            🎯
+        </div>
+
+        <div class="drawer-item-text">
+            التحديات اليومية
+        </div>
+
+    </div>
+
+
+    <div
+        class="drawer-item"
+        onclick="window.open('https://chat.whatsapp.com/L4cde3Xbd0dDi5YbN5nGsr','_blank')">
+
+        <div class="drawer-item-icon">
+            📞
+        </div>
+
+        <div class="drawer-item-text">
+            التواصل
+        </div>
+
+    </div>
+
+
+    <div
+        class="drawer-item logout"
+        onclick="logout()">
+
+        <div class="drawer-item-icon">
+            🚪
+        </div>
+
+        <div class="drawer-item-text">
+            تسجيل خروج
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     LOADING
+     ===================================================== -->
 
 <div class="loading-screen" id="loadingScreen">
-  <div class="spinner"></div>
-  <div class="loading-text">جار التحميل...</div>
+
+    <div class="spinner"></div>
+
+    <div class="loading-text">
+        جاري الدخول إلى المباراة...
+    </div>
+
+    <div class="loading-sub">
+        NIGHT OF CHAMPIONS
+    </div>
+
 </div>
+
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
 
 <div class="header">
-  <div class="logo">L&S GAMES</div>
-  <div class="subtitle">مركز الالعاب الرسمي</div>
+
+    <div class="champions-mini">
+        ✦ NIGHT OF CHAMPIONS ✦
+    </div>
+
+    <div class="logo">
+        L&S GAMES
+    </div>
+
+    <div class="subtitle">
+        مركز الألعاب الرسمي
+    </div>
+
+    <div class="header-line"></div>
+
 </div>
+
+
+<!-- =====================================================
+     HERO SLIDER
+     ===================================================== -->
 
 <div class="slider">
-  <div class="slide active" style="background-image:url('https://i.postimg.cc/VJ7ZckqB/online.jpg')"><h3>👑 العب مع اصحابك اونلاين</h3></div>
-  <div class="slide" style="background-image:url('https://i.postimg.cc/RWPpzZ7f/tournaments.jpg')"><h3>🏆 بطولات وجوائز حقيقية</h3></div>
-  <div class="slide" style="background-image:url('https://i.postimg.cc/RWPpzZ7f/tournaments.jpg')"><h3>🔥 الاصدار الرسمي</h3></div>
-  <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+
+    <div
+        class="slide active"
+        style="background-image:url('https://i.postimg.cc/VJ7ZckqB/online.jpg')">
+
+        <div class="slide-badge">
+            LIVE EXPERIENCE
+        </div>
+
+        <h3>
+            ⚽ العب مع أصحابك أونلاين
+        </h3>
+
+    </div>
+
+
+    <div
+        class="slide"
+        style="background-image:url('https://i.postimg.cc/RWPpzZ7f/tournaments.jpg')">
+
+        <div class="slide-badge">
+            CHAMPIONS
+        </div>
+
+        <h3>
+            🏆 بطولات وجوائز حقيقية
+        </h3>
+
+    </div>
+
+
+    <div
+        class="slide"
+        style="background-image:url('https://i.postimg.cc/RWPpzZ7f/tournaments.jpg')">
+
+        <div class="slide-badge">
+            OFFICIAL
+        </div>
+
+        <h3>
+            🔥 الإصدار الرسمي
+        </h3>
+
+    </div>
+
+
+    <div class="dots">
+
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+
+    </div>
+
 </div>
+
+
+<!-- =====================================================
+     GAMES
+     ===================================================== -->
 
 <div class="container">
-  <div class="section-title">⚡ العب الان ⚡</div>
-  <div class="games-grid">
-    <div class="game-card" onclick="goToPage('mazad1234.html')"><div class="game-icon">⚽</div><div class="game-name">مزاد النجوم</div><div class="game-desc">كون فريق احلامك</div></div>
-    <div class="game-card" onclick="goToPage('games.html')"><div class="game-icon">🎮</div><div class="game-name">العاب اضافيه</div><div class="game-desc">مجموعة العاب مصغرة</div></div>
-    <div class="game-card" onclick="alert('🔒 السومبيرو مقفلة حاليا\nارجع قريب')"><div class="game-icon">🔒</div><div class="game-name">السومبيرو</div><div class="game-desc">قريبا</div></div>
-    <div class="game-card" onclick="goToPage('dealloby.html')"><div class="game-icon">💼</div><div class="game-name">DEAL OR NO DEAL</div><div class="game-desc">العبها بذكاء</div></div>
-  </div>
 
-  <div class="join-box">
-    <div class="join-title">📢 انظم لمركز الالعاب الرسمي</div>
-    <div class="join-text">🚨🔥 جاهزين لتجربة جديدة؟ 🔥🚨
-👑⚽ L&S GAMES وصلت!</div>
-    <a href="https://chat.whatsapp.com/L4cde3Xbd0dDi5YbN5nGsr" target="_top" class="whatsapp-btn">
-      <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.271.296-1.043 1.02-1.043 2.488s1.068 2.883 1.218 3.082c.149.199 2.105 3.211 5.1 4.504.714.309 1.27.493 1.706.63.717.228 1.37.196 1.885.119.575-.086 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.273-.198-.57-.347"/></svg>
-      انضم للجروب الان
-    </a>
-  </div>
+    <div class="section-title">
+        ✦ العب الآن ✦
+    </div>
+
+
+    <div class="games-grid">
+
+
+        <div
+            class="game-card"
+            onclick="goToPage('mazad1234.html')">
+
+            <div class="game-icon">
+                ⚽
+            </div>
+
+            <div class="game-name">
+                مزاد النجوم
+            </div>
+
+            <div class="game-desc">
+                كوّن فريق أحلامك
+            </div>
+
+        </div>
+
+
+        <div
+            class="game-card"
+            onclick="goToPage('games.html')">
+
+            <div class="game-icon">
+                🎮
+            </div>
+
+            <div class="game-name">
+                ألعاب إضافية
+            </div>
+
+            <div class="game-desc">
+                مجموعة ألعاب مصغرة
+            </div>
+
+        </div>
+
+
+        <div
+            class="game-card"
+            onclick="alert('🔒 السومبيرو مقفلة حاليا\\nارجع قريب')">
+
+            <div class="game-icon">
+                🔒
+            </div>
+
+            <div class="game-name">
+                السومبيرو
+            </div>
+
+            <div class="game-desc">
+                قريباً
+            </div>
+
+        </div>
+
+
+        <div
+            class="game-card"
+            onclick="goToPage('dealloby.html')">
+
+            <div class="game-icon">
+                💼
+            </div>
+
+            <div class="game-name">
+                DEAL OR NO DEAL
+            </div>
+
+            <div class="game-desc">
+                العبها بذكاء
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         JOIN
+         ================================================= -->
+
+    <div class="join-box">
+
+        <div class="join-title">
+            🏆 انضم إلى مجتمع الأبطال
+        </div>
+
+        <div class="join-text">🚨🔥 جاهزين لتجربة جديدة؟ 🔥🚨
+👑⚽ L&S GAMES وصلت!
+✦ ادخل المنافسة واثبت إنك بطل ✦</div>
+
+
+        <a
+            href="https://chat.whatsapp.com/L4cde3Xbd0dDi5YbN5nGsr"
+            target="_top"
+            class="whatsapp-btn">
+
+            <svg
+                class="whatsapp-icon"
+                viewBox="0 0 24 24"
+                fill="white">
+
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.271.296-1.043 1.02-1.043 2.488s1.068 2.883 1.218 3.082c.149.199 2.105 3.211 5.1 4.504.714.309 1.27.493 1.706.63.717.228 1.37.196 1.885.119.575-.086 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.273-.198-.57-.347"/>
+            </svg>
+
+            انضم للجروب الآن
+
+        </a>
+
+    </div>
+
 </div>
+
+
+<!-- =====================================================
+     BOTTOM NAV
+     ===================================================== -->
 
 <div class="bottom-bar">
-  <a href="home.html" class="nav-btn active"><i>🏠</i>الرئيسية</a>
-  <a href="shop.html" class="nav-btn"><i>🛒</i>المتجر</a>
-  <a href="ACCOUNT.html" class="nav-btn"><i>👤</i>الحساب</a>
-  <a href="memory.html" class="nav-btn"><i>🧠</i>الذاكره</a>
+
+    <a
+        href="home.html"
+        class="nav-btn active">
+
+        <i>🏠</i>
+        الرئيسية
+
+    </a>
+
+
+    <a
+        href="shop.html"
+        class="nav-btn">
+
+        <i>🛒</i>
+        المتجر
+
+    </a>
+
+
+    <a
+        href="ACCOUNT.html"
+        class="nav-btn">
+
+        <i>👤</i>
+        الحساب
+
+    </a>
+
+
+    <a
+        href="memory.html"
+        class="nav-btn">
+
+        <i>🧠</i>
+        الذاكرة
+
+    </a>
+
 </div>
 
+
+<!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
+
 <script>
-for(let i=0; i<40; i++){
-  let p = document.createElement('div');
-  p.style.position='absolute';p.style.width='2px';p.style.height='2px';
-  p.style.background='#00aaff';p.style.borderRadius='50%';
-  p.style.left=Math.random()*100+'%';p.style.top=Math.random()*100+'%';
-  p.style.animation=`float ${5+Math.random()*10}s infinite linear`;
-  p.style.boxShadow='0 0 8px #00aaff';p.style.zIndex=1;
-  document.getElementById('particles').appendChild(p);
+
+/* =========================================================
+   STAR FIELD
+   ========================================================= */
+
+const particles = document.getElementById('particles');
+
+for(let i = 0; i < 75; i++){
+
+    const star = document.createElement('div');
+
+    star.className = 'star';
+
+    const size = Math.random() > .85 ? 3 : 1.5;
+
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+
+    star.style.animationDuration =
+        (5 + Math.random() * 12) + 's';
+
+    star.style.animationDelay =
+        (-Math.random() * 12) + 's';
+
+    star.style.opacity =
+        (.2 + Math.random() * .8);
+
+    particles.appendChild(star);
 }
-document.head.insertAdjacentHTML('beforeend',`<style>@keyframes float{0%{transform:translateY(0)}100%{transform:translateY(-100vh)}}</style>`)
+
+
+/* =========================================================
+   SLIDER
+   ========================================================= */
 
 let slideIndex = 0;
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
+
+const slides =
+    document.querySelectorAll('.slide');
+
+const dots =
+    document.querySelectorAll('.dot');
+
+
 function showSlide(n){
-  slides.forEach(s=>s.classList.remove('active'));
-  dots.forEach(d=>d.classList.remove('active'));
-  slides[n].classList.add('active');
-  dots[n].classList.add('active');
-}
-setInterval(()=>{slideIndex=(slideIndex+1)%3;showSlide(slideIndex)},4000);
 
-function toggleDrawer() {
-  document.getElementById('drawer').classList.toggle('active');
-  document.getElementById('drawerOverlay').classList.toggle('active');
-}
+    slides.forEach(function(slide){
+        slide.classList.remove('active');
+    });
 
-function logout() {
-  localStorage.clear();
-  window.location.href = 'login.html';
+    dots.forEach(function(dot){
+        dot.classList.remove('active');
+    });
+
+    slides[n].classList.add('active');
+    dots[n].classList.add('active');
 }
 
-function loadPlayerData() {
-  if(localStorage.getItem("isLoggedIn")!== "true"){
-    window.location.href = "login.html";
-    return;
-  }
-  let email = localStorage.getItem("email") || "guest@ls.com";
-  let xp = parseInt(localStorage.getItem("xp")) || 0;
-  let shortEmail = email.split('@')[0].substring(0, 6) + '@';
-  let firstLetter = email.charAt(0).toUpperCase();
-  document.getElementById("emailShort").innerText = shortEmail;
-  document.getElementById("profileAvatar").innerText = firstLetter;
-  document.getElementById("drawerEmail").innerText = email;
-  document.getElementById("drawerAvatar").innerText = firstLetter;
-  let currentLevelXP = xp % 1000;
-  let percent = (currentLevelXP / 1000) * 100;
-  document.getElementById("xpBar").style.width = percent + '%';
-  document.getElementById("xpText").innerText = currentLevelXP + '/1000';
-  let rank = "صغير";
-  if(xp >= 1000) rank = "محترف";
-  if(xp >= 5000) rank = "اسطوري";
-  document.getElementById("rank").innerText = rank;
+
+setInterval(function(){
+
+    slideIndex =
+        (slideIndex + 1) % slides.length;
+
+    showSlide(slideIndex);
+
+},4000);
+
+
+/* =========================================================
+   DRAWER
+   ========================================================= */
+
+function toggleDrawer(){
+
+    document
+        .getElementById('drawer')
+        .classList.toggle('active');
+
+    document
+        .getElementById('drawerOverlay')
+        .classList.toggle('active');
 }
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+function logout(){
+
+    localStorage.clear();
+
+    window.location.href =
+        'login.html';
+}
+
+
+/* =========================================================
+   PLAYER DATA
+   ========================================================= */
+
+function loadPlayerData(){
+
+    if(
+        localStorage.getItem("isLoggedIn")
+        !== "true"
+    ){
+
+        window.location.href =
+            "login.html";
+
+        return;
+    }
+
+
+    let email =
+        localStorage.getItem("email")
+        || "guest@ls.com";
+
+
+    let xp =
+        parseInt(
+            localStorage.getItem("xp")
+        ) || 0;
+
+
+    let shortEmail =
+        email
+            .split('@')[0]
+            .substring(0,6)
+            + '@';
+
+
+    let firstLetter =
+        email
+            .charAt(0)
+            .toUpperCase();
+
+
+    document
+        .getElementById("emailShort")
+        .innerText =
+        shortEmail;
+
+
+    document
+        .getElementById("profileAvatar")
+        .innerText =
+        firstLetter;
+
+
+    document
+        .getElementById("drawerEmail")
+        .innerText =
+        email;
+
+
+    document
+        .getElementById("drawerAvatar")
+        .innerText =
+        firstLetter;
+
+
+    let currentLevelXP =
+        xp % 1000;
+
+
+    let percent =
+        (currentLevelXP / 1000) * 100;
+
+
+    document
+        .getElementById("xpBar")
+        .style.width =
+        percent + '%';
+
+
+    document
+        .getElementById("xpText")
+        .innerText =
+        currentLevelXP + '/1000';
+
+
+    let rank = "صغير";
+
+
+    if(xp >= 1000)
+        rank = "محترف";
+
+
+    if(xp >= 5000)
+        rank = "أسطوري";
+
+
+    document
+        .getElementById("rank")
+        .innerText =
+        rank;
+}
+
+
+/* =========================================================
+   PAGE LOAD
+   ========================================================= */
 
 window.onload = function(){
-    let التذاكر = localStorage.getItem("التذاكر") || 0;
-    document.getElementById("عداد_التذاكر").innerText = التذاكر;
+
+    let tickets =
+        localStorage.getItem("التذاكر")
+        || 0;
+
+
+    document
+        .getElementById("عداد_التذاكر")
+        .innerText =
+        tickets;
+
+
     loadPlayerData();
-}
+};
+
+
+/* =========================================================
+   PAGE NAVIGATION
+   ========================================================= */
 
 function goToPage(url){
-  document.getElementById('loadingScreen').classList.add('active');
-  toggleDrawer();
-  setTimeout(() => { window.location.href = url; }, 800);
+
+    document
+        .getElementById('loadingScreen')
+        .classList.add('active');
+
+
+    if(
+        document
+            .getElementById('drawer')
+            .classList.contains('active')
+    ){
+
+        toggleDrawer();
+    }
+
+
+    setTimeout(function(){
+
+        window.location.href =
+            url;
+
+    },700);
 }
+
 </script>
+
 </body>
 </html>
+```
