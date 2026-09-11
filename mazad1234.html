@@ -3,208 +3,1503 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=400, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>مزاد النجوم</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@900&display=swap" rel="stylesheet">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html, body{width:400px;margin:0 auto;background:#000;overflow-x:hidden;}
-body{font-family:'Cairo';color:#fff;background:#000;min-height:100vh}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-.vs-bg{position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); font-family:'Orbitron'; font-size:180px; font-weight:900; background: linear-gradient(90deg, #ff0000 50%, #0066ff 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0.1; z-index:0; pointer-events:none;}
+html,
+body{
+  width:400px;
+  margin:0 auto;
+  overflow-x:hidden;
+}
 
-.container{position:relative;z-index:2;padding:20px 10px;width:100%;text-align:center}
-.main-title{font-size:28px; font-weight:900; color:#ffd700; margin-bottom:5px}
+body{
+  min-height:100vh;
+  font-family:'Cairo',sans-serif;
+  color:#fff;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(35,105,220,.55),transparent 45%),
+    radial-gradient(circle at 15% 80%,rgba(0,70,190,.18),transparent 35%),
+    radial-gradient(circle at 90% 60%,rgba(0,120,255,.15),transparent 30%),
+    #020611;
+}
 
-.auctions-wrapper{display:flex; gap:10px; justify-content:center; width:100%; flex-wrap:wrap;}
-.auction-card{width:150px; height:180px; background:rgba(255,255,255,0.05); backdrop-filter:blur(15px); border:2px solid rgba(0,204,255,0.3); border-radius:15px; padding:6px; cursor:pointer; transition:0.3s; display:flex; flex-direction:column;}
-.auction-card:hover{transform:translateY(-5px); border-color:#00ccff; box-shadow:0 0 20px rgba(0,204,255,0.6)}
-.auction-card img{width:100%; height:120px; border-radius:10px; margin-bottom:6px; object-fit:cover; flex-shrink:0;}
-.auction-name{font-size:14px; font-weight:700; color:#00ccff; flex-grow:1; display:flex; align-items:center; justify-content:center;}
-.pro-card{border-color:rgba(255,215,0,0.4)} .pro-card .auction-name{color:#ffd700}
+/* نجوم الخلفية */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
 
-.billion-card{width:320px; height:180px; border-color:rgba(0,255,136,0.5)}
-.billion-card img{width:100%; height:140px; aspect-ratio:16/9; object-fit:cover}
-.billion-card .auction-name{color:#00ff88; font-size:15px; padding-top:4px}
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,.9) 1px,transparent 1.5px),
+    radial-gradient(circle,rgba(70,160,255,.7) 1px,transparent 1.5px),
+    radial-gradient(circle,rgba(255,215,70,.5) 1px,transparent 1.5px);
 
-.options-menu{display:none; background:rgba(0,0,0,0.9); backdrop-filter:blur(30px); border:2px solid #ffd700; border-radius:15px; padding:15px; margin-top:15px; width:320px; margin:15px auto 0 auto;}
-.options-menu.active{display:block}
-.options-title{font-size:18px; font-weight:900; color:#ffd700; margin-bottom:10px}
-.option-btn{width:100%; padding:10px; margin:6px 0; background:linear-gradient(135deg,#00ccff,#0066ff); border:none; border-radius:10px; color:#fff; font-size:14px; font-weight:700; cursor:pointer; font-family:'Cairo';}
-.option-btn.ai{background:linear-gradient(135deg,#ff00ff,#9900ff)}
-.option-btn.room{background:linear-gradient(135deg,#ffd700,#ff8c00); color:#000}
-.room-popup{display:none; background:rgba(0,0,0,0.95); border:2px solid #00ff88; border-radius:15px; padding:20px; margin-top:10px; animation:pop 0.3s;}
-.room-popup.active{display:block}
-@keyframes pop{from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1}}
-.room-code{font-family:'Orbitron'; font-size:32px; color:#00ff88; background:#111; padding:15px; border-radius:10px; margin:10px 0; letter-spacing:5px; border:2px dashed #00ff88;}
-.copy-btn{background:#00ff88; color:#000; padding:8px; border-radius:8px; border:none; font-weight:900; cursor:pointer; width:100%;}
-.join-box{margin-top:15px; padding-top:15px; border-top:1px solid #333}
-.join-input{width:100%; padding:10px; background:#111; border:2px solid #00ccff; border-radius:8px; color:#fff; text-align:center; font-size:18px; font-family:'Orbitron'; margin-bottom:8px;}
-.join-btn{background:linear-gradient(135deg,#00ff88,#00cc88); color:#000; padding:10px; border:none; border-radius:8px; font-weight:900; cursor:pointer; width:100%;}
-.status{font-size:12px; color:#00ff88; margin-top:5px}
+  background-size:
+    110px 110px,
+    170px 170px,
+    230px 230px;
+
+  background-position:
+    0 0,
+    35px 70px,
+    90px 30px;
+
+  opacity:.35;
+}
+
+/* توهج أزرق */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(0,110,255,.12),
+      transparent 35%
+    );
+
+  box-shadow:
+    inset 0 0 120px rgba(0,80,220,.18);
+}
+
+/* VS في الخلفية */
+.vs-bg{
+  position:fixed;
+  top:50%;
+  left:50%;
+
+  transform:translate(-50%,-50%);
+
+  font-family:'Orbitron',sans-serif;
+  font-size:180px;
+  font-weight:900;
+
+  background:
+    linear-gradient(
+      90deg,
+      #55baff 20%,
+      #ffffff 50%,
+      #ffd84a 80%
+    );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  opacity:.07;
+  z-index:0;
+
+  pointer-events:none;
+
+  text-shadow:
+    0 0 40px rgba(40,150,255,.5);
+}
+
+/* المحتوى */
+.container{
+  position:relative;
+  z-index:3;
+
+  width:100%;
+  min-height:100vh;
+
+  padding:18px 10px 40px;
+
+  text-align:center;
+}
+
+/* =========================
+   العنوان
+========================= */
+
+.main-title{
+  position:relative;
+
+  margin-bottom:18px;
+
+  font-family:'Orbitron','Cairo',sans-serif;
+  font-size:27px;
+  font-weight:900;
+  letter-spacing:1px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #72c4ff 52%,
+      #ffffff 100%
+    );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  text-shadow:
+    0 0 18px rgba(50,160,255,.5);
+}
+
+.main-title::before{
+  content:'⭐';
+
+  display:block;
+
+  margin-bottom:3px;
+
+  font-size:30px;
+
+  -webkit-text-fill-color:#ffd84a;
+
+  filter:
+    drop-shadow(0 0 8px rgba(255,215,70,.7))
+    drop-shadow(0 0 18px rgba(255,215,70,.4));
+}
+
+/* خط تحت العنوان */
+.main-title::after{
+  content:'CHAMPIONS NIGHT';
+
+  display:block;
+
+  margin-top:2px;
+
+  font-family:'Orbitron',sans-serif;
+
+  font-size:8px;
+  letter-spacing:4px;
+
+  color:#69bdff;
+
+  opacity:.8;
+}
+
+/* =========================
+   الكروت
+========================= */
+
+.auctions-wrapper{
+  display:flex;
+
+  flex-wrap:wrap;
+
+  justify-content:center;
+
+  gap:11px;
+
+  width:100%;
+}
+
+/* الكرت الأساسي */
+.auction-card{
+  position:relative;
+
+  width:150px;
+  height:180px;
+
+  padding:6px;
+
+  cursor:pointer;
+
+  display:flex;
+  flex-direction:column;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(12,39,78,.95),
+      rgba(2,10,28,.98)
+    );
+
+  border:
+    1px solid rgba(75,166,255,.5);
+
+  border-radius:19px;
+
+  box-shadow:
+    inset 0 0 25px rgba(0,110,255,.08),
+    0 10px 28px rgba(0,0,0,.5),
+    0 0 15px rgba(0,90,255,.08);
+
+  transition:
+    transform .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+/* لمعان الكرت */
+.auction-card::before{
+  content:'';
+
+  position:absolute;
+
+  top:-70%;
+  left:-40%;
+
+  width:70%;
+  height:220%;
+
+  transform:rotate(25deg);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.08),
+      transparent
+    );
+
+  pointer-events:none;
+
+  transition:left .6s ease;
+}
+
+.auction-card:hover::before{
+  left:120%;
+}
+
+.auction-card:hover{
+  transform:translateY(-6px) scale(1.02);
+
+  border-color:#6bc5ff;
+
+  box-shadow:
+    0 0 25px rgba(0,125,255,.4),
+    0 12px 35px rgba(0,0,0,.5);
+}
+
+.auction-card:active{
+  transform:scale(.97);
+}
+
+/* صورة الكرت */
+.auction-card img{
+  width:100%;
+  height:120px;
+
+  flex-shrink:0;
+
+  object-fit:cover;
+
+  border-radius:13px;
+
+  border:
+    1px solid rgba(255,255,255,.12);
+
+  box-shadow:
+    0 5px 15px rgba(0,0,0,.4);
+}
+
+/* اسم المزاد */
+.auction-name{
+  flex-grow:1;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  color:#fff;
+
+  font-size:14px;
+  font-weight:900;
+
+  text-shadow:
+    0 0 9px rgba(70,170,255,.55);
+}
+
+/* الذهبي */
+.pro-card{
+  border-color:
+    rgba(255,215,70,.65);
+
+  box-shadow:
+    inset 0 0 25px rgba(255,215,70,.06),
+    0 0 20px rgba(255,215,70,.1),
+    0 10px 28px rgba(0,0,0,.5);
+}
+
+.pro-card:hover{
+  border-color:#ffd84a;
+
+  box-shadow:
+    0 0 30px rgba(255,215,70,.3),
+    0 12px 35px rgba(0,0,0,.5);
+}
+
+.pro-card .auction-name{
+  color:#ffd84a;
+
+  text-shadow:
+    0 0 10px rgba(255,215,70,.45);
+}
+
+/* مليار */
+.billion-card{
+  width:320px;
+  height:180px;
+
+  border-color:
+    rgba(80,190,255,.55);
+}
+
+.billion-card img{
+  width:100%;
+  height:140px;
+
+  aspect-ratio:16/9;
+
+  object-fit:cover;
+}
+
+.billion-card .auction-name{
+  color:#ffd84a;
+
+  font-size:15px;
+
+  padding-top:4px;
+
+  text-shadow:
+    0 0 10px rgba(255,215,70,.4);
+}
+
+/* =========================
+   القوائم
+========================= */
+
+.options-menu{
+  display:none;
+
+  width:320px;
+
+  margin:16px auto 0;
+
+  padding:15px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(7,25,55,.98),
+      rgba(1,8,22,.99)
+    );
+
+  backdrop-filter:blur(30px);
+
+  border:
+    1px solid rgba(255,215,70,.65);
+
+  border-radius:19px;
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.6),
+    0 0 25px rgba(0,100,255,.15),
+    inset 0 0 30px rgba(0,90,200,.06);
+
+  animation:menuIn .3s ease;
+}
+
+.options-menu.active{
+  display:block;
+}
+
+@keyframes menuIn{
+  from{
+    opacity:0;
+    transform:translateY(-10px) scale(.97);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+/* عنوان القائمة */
+.options-title{
+  margin-bottom:10px;
+
+  color:#ffd84a;
+
+  font-size:18px;
+  font-weight:900;
+
+  text-shadow:
+    0 0 10px rgba(255,215,70,.4);
+}
+
+/* =========================
+   الأزرار
+========================= */
+
+.option-btn{
+  width:100%;
+
+  margin:6px 0;
+
+  padding:10px;
+
+  border:none;
+
+  border-radius:10px;
+
+  color:#fff;
+
+  font-family:'Cairo',sans-serif;
+
+  font-size:14px;
+  font-weight:900;
+
+  cursor:pointer;
+
+  background:
+    linear-gradient(
+      90deg,
+      #176bc1,
+      #48b6ff,
+      #176bc1
+    );
+
+  box-shadow:
+    0 0 14px rgba(0,130,255,.18);
+
+  transition:
+    transform .2s ease,
+    filter .2s ease,
+    box-shadow .2s ease;
+}
+
+.option-btn:hover{
+  filter:brightness(1.15);
+
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 0 20px rgba(60,170,255,.35);
+}
+
+.option-btn:active{
+  transform:scale(.97);
+}
+
+/* AI */
+.option-btn.ai{
+  background:
+    linear-gradient(
+      90deg,
+      #254e9b,
+      #4c8cff,
+      #254e9b
+    );
+
+  box-shadow:
+    0 0 15px rgba(60,120,255,.2);
+}
+
+/* الغرفة */
+.option-btn.room{
+  background:
+    linear-gradient(
+      90deg,
+      #b98a16,
+      #ffd84a,
+      #b98a16
+    );
+
+  color:#061020;
+
+  box-shadow:
+    0 0 18px rgba(255,215,70,.18);
+}
+
+/* =========================
+   نافذة الغرفة
+========================= */
+
+.room-popup{
+  display:none;
+
+  margin-top:10px;
+
+  padding:20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(4,22,48,.98),
+      rgba(1,7,20,.99)
+    );
+
+  border:
+    1px solid rgba(78,184,255,.65);
+
+  border-radius:15px;
+
+  box-shadow:
+    inset 0 0 25px rgba(0,110,255,.1),
+    0 10px 30px rgba(0,0,0,.5);
+
+  animation:pop .3s ease;
+}
+
+.room-popup.active{
+  display:block;
+}
+
+@keyframes pop{
+  from{
+    transform:scale(.8);
+    opacity:0;
+  }
+
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+/* =========================
+   كود الغرفة
+========================= */
+
+.room-code{
+  margin:10px 0;
+
+  padding:15px;
+
+  font-family:'Orbitron',sans-serif;
+
+  font-size:32px;
+
+  color:#fff;
+
+  background:#020b1b;
+
+  border:
+    1px dashed #ffd84a;
+
+  border-radius:10px;
+
+  letter-spacing:5px;
+
+  text-shadow:
+    0 0 12px rgba(80,180,255,.8);
+
+  box-shadow:
+    inset 0 0 20px rgba(0,100,255,.12);
+}
+
+/* نسخ */
+.copy-btn{
+  width:100%;
+
+  padding:8px;
+
+  border:none;
+
+  border-radius:8px;
+
+  cursor:pointer;
+
+  font-family:'Cairo',sans-serif;
+
+  font-weight:900;
+
+  color:#071020;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ffd84a,
+      #fff0a0
+    );
+
+  transition:.2s;
+}
+
+.copy-btn:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 0 15px rgba(255,215,70,.3);
+}
+
+.copy-btn:active{
+  transform:scale(.97);
+}
+
+/* =========================
+   الانتظار
+========================= */
+
+.status{
+  margin-top:7px;
+
+  color:#ffd84a;
+
+  font-size:12px;
+  font-weight:700;
+
+  text-shadow:
+    0 0 8px rgba(255,215,70,.3);
+}
+
+/* =========================
+   دخول الغرفة
+========================= */
+
+.join-box{
+  margin-top:15px;
+
+  padding-top:15px;
+
+  border-top:
+    1px solid rgba(100,160,220,.18);
+}
+
+.join-input{
+  width:100%;
+
+  margin-bottom:8px;
+
+  padding:10px;
+
+  background:#020a18;
+
+  border:
+    1px solid rgba(73,170,255,.6);
+
+  border-radius:8px;
+
+  color:#fff;
+
+  text-align:center;
+
+  font-family:'Orbitron',sans-serif;
+
+  font-size:18px;
+
+  outline:none;
+
+  box-shadow:
+    inset 0 0 15px rgba(0,100,255,.08);
+
+  transition:.2s;
+}
+
+.join-input:focus{
+  border-color:#62c3ff;
+
+  box-shadow:
+    0 0 15px rgba(70,170,255,.2),
+    inset 0 0 15px rgba(0,100,255,.1);
+}
+
+.join-input::placeholder{
+  color:#6e8eaf;
+
+  font-family:'Cairo',sans-serif;
+
+  font-size:13px;
+}
+
+/* دخول */
+.join-btn{
+  width:100%;
+
+  padding:10px;
+
+  border:none;
+
+  border-radius:8px;
+
+  cursor:pointer;
+
+  font-family:'Cairo',sans-serif;
+
+  font-weight:900;
+
+  color:#061020;
+
+  background:
+    linear-gradient(
+      90deg,
+      #277fd1,
+      #62c3ff
+    );
+
+  transition:.2s;
+}
+
+.join-btn:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 0 18px rgba(60,180,255,.3);
+}
+
+.join-btn:active{
+  transform:scale(.97);
+}
+
+/* =========================
+   شاشات صغيرة
+========================= */
+
+@media(max-width:400px){
+
+  html,
+  body{
+    width:100%;
+  }
+
+  .container{
+    padding-left:8px;
+    padding-right:8px;
+  }
+
+  .auction-card{
+    width:145px;
+  }
+
+  .billion-card{
+    width:300px;
+  }
+
+  .options-menu{
+    width:300px;
+  }
+}
+
 </style>
 </head>
+
 <body>
 
+<!-- VS خلفية -->
 <div class="vs-bg">VS</div>
 
 <div class="container">
-  <div class="main-title">مزاد النجوم</div>
 
+  <!-- العنوان -->
+  <div class="main-title">
+    مزاد النجوم
+  </div>
+
+  <!-- أنواع المزاد -->
   <div class="auctions-wrapper">
-    <div class="auction-card pro-card" onclick="show('pro')">
-      <img src="https://i.postimg.cc/Wdsn7wnd/image.png">
-      <div class="auction-name">الذهبي 👑</div>
+
+    <!-- الذهبي -->
+    <div
+      class="auction-card pro-card"
+      onclick="show('pro')"
+    >
+
+      <img
+        src="https://i.postimg.cc/Wdsn7wnd/image.png"
+        alt="المزاد الذهبي"
+      >
+
+      <div class="auction-name">
+        الذهبي 👑
+      </div>
+
     </div>
-    <div class="auction-card" onclick="show('normal')">
-      <img src="https://i.postimg.cc/pmPZBJZr/image.png">
-      <div class="auction-name">العادي ⚽</div>
+
+
+    <!-- العادي -->
+    <div
+      class="auction-card"
+      onclick="show('normal')"
+    >
+
+      <img
+        src="https://i.postimg.cc/pmPZBJZr/image.png"
+        alt="المزاد العادي"
+      >
+
+      <div class="auction-name">
+        العادي ⚽
+      </div>
+
     </div>
-    <div class="auction-card billion-card" onclick="show('billion')">
-      <img src="https://i.postimg.cc/D8YTYNBy/image.png">
-      <div class="auction-name">مزاد المليار 💰</div>
+
+
+    <!-- مليار -->
+    <div
+      class="auction-card billion-card"
+      onclick="show('billion')"
+    >
+
+      <img
+        src="https://i.postimg.cc/D8YTYNBy/image.png"
+        alt="مزاد المليار"
+      >
+
+      <div class="auction-name">
+        مزاد المليار 💰
+      </div>
+
     </div>
+
   </div>
 
-  <!-- الذهبي -->
-  <div class="options-menu" id="pro">
-    <div class="options-title">المزاد الذهبي 👑</div>
-    <button class="option-btn room" onclick="createRoom('pro')">انشاء غرفة</button>
-    <button class="option-btn ai" onclick="window.location.href='mazad2.html'">ضد الذكاء الاصطناعي 🤖</button>
-    <div class="room-popup" id="room-pro">
-      <div>كود الغرفة:</div>
-      <div class="room-code" id="code-pro">...</div>
-      <button class="copy-btn" onclick="copyCode('code-pro')">نسخ الكود</button>
-      <div class="status" id="status-pro">في انتظار لاعب 2...</div>
-      <div class="join-box">
-        <input type="text" class="join-input" id="join-pro" placeholder="اكتب الكود" maxlength="6">
-        <button class="join-btn" onclick="joinRoom('pro')">دخول</button>
-      </div>
+
+  <!-- =========================
+       المزاد الذهبي
+  ========================== -->
+
+  <div
+    class="options-menu"
+    id="pro"
+  >
+
+    <div class="options-title">
+      المزاد الذهبي 👑
     </div>
+
+    <button
+      class="option-btn room"
+      onclick="createRoom('pro')"
+    >
+      انشاء غرفة
+    </button>
+
+    <button
+      class="option-btn ai"
+      onclick="window.location.href='mazad2.html'"
+    >
+      ضد الذكاء الاصطناعي 🤖
+    </button>
+
+
+    <div
+      class="room-popup"
+      id="room-pro"
+    >
+
+      <div>
+        كود الغرفة:
+      </div>
+
+      <div
+        class="room-code"
+        id="code-pro"
+      >
+        ...
+      </div>
+
+      <button
+        class="copy-btn"
+        onclick="copyCode('code-pro')"
+      >
+        نسخ الكود
+      </button>
+
+      <div
+        class="status"
+        id="status-pro"
+      >
+        في انتظار لاعب 2...
+      </div>
+
+      <div class="join-box">
+
+        <input
+          type="text"
+          class="join-input"
+          id="join-pro"
+          placeholder="اكتب الكود"
+          maxlength="6"
+        >
+
+        <button
+          class="join-btn"
+          onclick="joinRoom('pro')"
+        >
+          دخول
+        </button>
+
+      </div>
+
+    </div>
+
   </div>
 
-  <!-- العادي -->
-  <div class="options-menu" id="normal">
-    <div class="options-title">المزاد العادي ⚽</div>
-    <button class="option-btn room" onclick="createRoom('normal')">انشاء غرفة</button>
-    <button class="option-btn ai" onclick="window.location.href='mazadnormal.html'">ضد الذكاء الاصطناعي 🤖</button>
-    <div class="room-popup" id="room-normal">
-      <div>كود الغرفة:</div>
-      <div class="room-code" id="code-normal">...</div>
-      <button class="copy-btn" onclick="copyCode('code-normal')">نسخ الكود</button>
-      <div class="status" id="status-normal">في انتظار لاعب 2...</div>
-      <div class="join-box">
-        <input type="text" class="join-input" id="join-normal" placeholder="اكتب الكود" maxlength="6">
-        <button class="join-btn" onclick="joinRoom('normal')">دخول</button>
-      </div>
+
+  <!-- =========================
+       المزاد العادي
+  ========================== -->
+
+  <div
+    class="options-menu"
+    id="normal"
+  >
+
+    <div class="options-title">
+      المزاد العادي ⚽
     </div>
+
+    <button
+      class="option-btn room"
+      onclick="createRoom('normal')"
+    >
+      انشاء غرفة
+    </button>
+
+    <button
+      class="option-btn ai"
+      onclick="window.location.href='mazadnormal.html'"
+    >
+      ضد الذكاء الاصطناعي 🤖
+    </button>
+
+
+    <div
+      class="room-popup"
+      id="room-normal"
+    >
+
+      <div>
+        كود الغرفة:
+      </div>
+
+      <div
+        class="room-code"
+        id="code-normal"
+      >
+        ...
+      </div>
+
+      <button
+        class="copy-btn"
+        onclick="copyCode('code-normal')"
+      >
+        نسخ الكود
+      </button>
+
+      <div
+        class="status"
+        id="status-normal"
+      >
+        في انتظار لاعب 2...
+      </div>
+
+      <div class="join-box">
+
+        <input
+          type="text"
+          class="join-input"
+          id="join-normal"
+          placeholder="اكتب الكود"
+          maxlength="6"
+        >
+
+        <button
+          class="join-btn"
+          onclick="joinRoom('normal')"
+        >
+          دخول
+        </button>
+
+      </div>
+
+    </div>
+
   </div>
 
-  <!-- مزاد المليار -->
-  <div class="options-menu" id="billion">
-    <div class="options-title">مزاد المليار 💰</div>
-    <button class="option-btn room" onclick="createRoom('billion')">انشاء غرفة</button>
-    <button class="option-btn ai" onclick="window.location.href='bilpno1.html'">ضد الذكاء الاصطناعي 🤖</button>
-    <div class="room-popup" id="room-billion">
-      <div>كود الغرفة:</div>
-      <div class="room-code" id="code-billion">...</div>
-      <button class="copy-btn" onclick="copyCode('code-billion')">نسخ الكود</button>
-      <div class="status" id="status-billion">في انتظار لاعب 2...</div>
-      <div class="join-box">
-        <input type="text" class="join-input" id="join-billion" placeholder="اكتب الكود" maxlength="6">
-        <button class="join-btn" onclick="joinRoom('billion')">دخول</button>
-      </div>
+
+  <!-- =========================
+       مزاد المليار
+  ========================== -->
+
+  <div
+    class="options-menu"
+    id="billion"
+  >
+
+    <div class="options-title">
+      مزاد المليار 💰
     </div>
+
+    <button
+      class="option-btn room"
+      onclick="createRoom('billion')"
+    >
+      انشاء غرفة
+    </button>
+
+    <button
+      class="option-btn ai"
+      onclick="window.location.href='bilpno1.html'"
+    >
+      ضد الذكاء الاصطناعي 🤖
+    </button>
+
+
+    <div
+      class="room-popup"
+      id="room-billion"
+    >
+
+      <div>
+        كود الغرفة:
+      </div>
+
+      <div
+        class="room-code"
+        id="code-billion"
+      >
+        ...
+      </div>
+
+      <button
+        class="copy-btn"
+        onclick="copyCode('code-billion')"
+      >
+        نسخ الكود
+      </button>
+
+      <div
+        class="status"
+        id="status-billion"
+      >
+        في انتظار لاعب 2...
+      </div>
+
+      <div class="join-box">
+
+        <input
+          type="text"
+          class="join-input"
+          id="join-billion"
+          placeholder="اكتب الكود"
+          maxlength="6"
+        >
+
+        <button
+          class="join-btn"
+          onclick="joinRoom('billion')"
+        >
+          دخول
+        </button>
+
+      </div>
+
+    </div>
+
   </div>
 
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
 
 <script>
-const firebaseConfig = { databaseURL: "https://mazad-noogom-default-rtdb.firebaseio.com" };
+
+const firebaseConfig = {
+  databaseURL:
+    "https://mazad-noogom-default-rtdb.firebaseio.com"
+};
+
 firebase.initializeApp(firebaseConfig);
+
 const db = firebase.database();
 
 let currentRoomRef = null;
-const userEmail = localStorage.getItem('userEmail') || 'guest';
+
+const userEmail =
+  localStorage.getItem('userEmail') || 'guest';
+
+
+/* =========================
+   إظهار قائمة المزاد
+========================= */
 
 function show(t){
-  document.querySelectorAll('.options-menu').forEach(m=>m.classList.remove('active'))
-  document.getElementById(t).classList.add('active')
+
+  document
+    .querySelectorAll('.options-menu')
+    .forEach(m =>
+      m.classList.remove('active')
+    );
+
+  const menu =
+    document.getElementById(t);
+
+  if(menu){
+    menu.classList.add('active');
+
+    menu.scrollIntoView({
+      behavior:'smooth',
+      block:'nearest'
+    });
+  }
 }
 
+
+/* =========================
+   إنشاء كود الغرفة
+========================= */
+
 function generateCode(){
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
+  const chars =
+    'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
   let code = '';
-  for(let i=0; i<6; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
+
+  for(let i = 0; i < 6; i++){
+
+    code += chars.charAt(
+      Math.floor(
+        Math.random() * chars.length
+      )
+    );
+
+  }
+
   return code;
 }
 
+
+/* =========================
+   الذهاب للّوبي
+========================= */
+
 function goToLobby(code, player, type){
-  // كل نوع ليه اللوبي بتاعه
-  let lobbyPage = 'loby.html'; // الذهبي default
-  if(type === 'normal') lobbyPage = 'loby2.html';
-  if(type === 'billion') lobbyPage = 'loby3.html';
-  
-  window.location.href = `${lobbyPage}?room=${code}&player=${player}&type=${type}&name=${encodeURIComponent(userEmail)}`;
+
+  let lobbyPage = 'loby.html';
+
+  if(type === 'normal'){
+    lobbyPage = 'loby2.html';
+  }
+
+  if(type === 'billion'){
+    lobbyPage = 'loby3.html';
+  }
+
+  window.location.href =
+    `${lobbyPage}?room=${code}` +
+    `&player=${player}` +
+    `&type=${type}` +
+    `&name=${encodeURIComponent(userEmail)}`;
+
 }
+
+
+/* =========================
+   إنشاء غرفة
+========================= */
 
 async function createRoom(type){
-  const statusEl = document.getElementById('status-' + type);
-  statusEl.textContent = 'جاري انشاء الغرفة...';
-  
+
+  const statusEl =
+    document.getElementById(
+      'status-' + type
+    );
+
+  statusEl.textContent =
+    'جاري انشاء الغرفة...';
+
   let code = generateCode();
-  currentRoomRef = db.ref('rooms/' + type + '/' + code);
-  
-  const snapshot = await currentRoomRef.get();
-  if(snapshot.exists()) return createRoom(type);
-  
-  await currentRoomRef.set({
-    player1: userEmail,
-    player2: "", // فاضية مش null
-    type: type,
-    status: 'waiting'
-  });
-  
-  document.getElementById('code-' + type).textContent = code;
-  document.getElementById('room-' + type).classList.add('active');
-  statusEl.textContent = 'في انتظار لاعب 2...';
-  
-  currentRoomRef.on('value', (snap) => {
-    const data = snap.val();
-    if(data && data.player2 && data.player2 !== "" && data.status !== 'started'){
-      currentRoomRef.update({status: 'started'});
-      statusEl.textContent = 'لاعب انضم! جاري الدخول للوبي...';
-      setTimeout(()=> goToLobby(code, 1, type), 1000)
+
+  currentRoomRef =
+    db.ref(
+      'rooms/' +
+      type +
+      '/' +
+      code
+    );
+
+
+  try{
+
+    const snapshot =
+      await currentRoomRef.get();
+
+
+    /* لو الكود موجود بالفعل */
+    if(snapshot.exists()){
+
+      return createRoom(type);
+
     }
-  });
+
+
+    /* إنشاء الغرفة */
+
+    await currentRoomRef.set({
+
+      player1:userEmail,
+
+      player2:"",
+
+      type:type,
+
+      status:'waiting'
+
+    });
+
+
+    /* إظهار الكود */
+
+    document.getElementById(
+      'code-' + type
+    ).textContent = code;
+
+
+    document.getElementById(
+      'room-' + type
+    ).classList.add('active');
+
+
+    statusEl.textContent =
+      'في انتظار لاعب 2...';
+
+
+    /* مراقبة الغرفة */
+
+    currentRoomRef.on(
+      'value',
+      (snap) => {
+
+        const data =
+          snap.val();
+
+
+        if(
+          data &&
+          data.player2 &&
+          data.player2 !== "" &&
+          data.status !== 'started'
+        ){
+
+          currentRoomRef.update({
+            status:'started'
+          });
+
+
+          statusEl.textContent =
+            'لاعب انضم! جاري الدخول للوبي...';
+
+
+          setTimeout(
+            () => {
+              goToLobby(
+                code,
+                1,
+                type
+              );
+            },
+            1000
+          );
+
+        }
+
+      }
+    );
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    statusEl.textContent =
+      'حصل خطأ أثناء إنشاء الغرفة';
+
+    alert(
+      'حصل خطأ في إنشاء الغرفة'
+    );
+
+  }
+
 }
+
+
+/* =========================
+   دخول غرفة
+========================= */
 
 async function joinRoom(type){
-  const code = document.getElementById('join-' + type).value.toUpperCase();
-  if(code.length < 4) return alert('دخل كود صحيح');
-  
-  currentRoomRef = db.ref('rooms/' + type + '/' + code);
-  const snapshot = await currentRoomRef.get();
-  
-  if(!snapshot.exists()) return alert('الكود ده مش موجود');
-  
-  const data = snapshot.val();
-  if(data.player2 && data.player2 !== "") return alert('الغرفة ممتلئة');
-  if(data.status === 'started') return alert('الجيم بدأ خلاص');
-  
-  await currentRoomRef.update({
-    player2: userEmail
-  });
 
-  goToLobby(code, 2, type);
+  const input =
+    document.getElementById(
+      'join-' + type
+    );
+
+  const code =
+    input.value
+      .trim()
+      .toUpperCase();
+
+
+  if(code.length < 4){
+
+    alert(
+      'دخل كود صحيح'
+    );
+
+    return;
+
+  }
+
+
+  currentRoomRef =
+    db.ref(
+      'rooms/' +
+      type +
+      '/' +
+      code
+    );
+
+
+  try{
+
+    const snapshot =
+      await currentRoomRef.get();
+
+
+    /* الغرفة غير موجودة */
+
+    if(!snapshot.exists()){
+
+      alert(
+        'الكود ده مش موجود'
+      );
+
+      return;
+
+    }
+
+
+    const data =
+      snapshot.val();
+
+
+    /* الغرفة ممتلئة */
+
+    if(
+      data.player2 &&
+      data.player2 !== ""
+    ){
+
+      alert(
+        'الغرفة ممتلئة'
+      );
+
+      return;
+
+    }
+
+
+    /* اللعبة بدأت */
+
+    if(data.status === 'started'){
+
+      alert(
+        'الجيم بدأ خلاص'
+      );
+
+      return;
+
+    }
+
+
+    /* تسجيل اللاعب الثاني */
+
+    await currentRoomRef.update({
+
+      player2:userEmail
+
+    });
+
+
+    /* الذهاب للّوبي */
+
+    goToLobby(
+      code,
+      2,
+      type
+    );
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      'حصل خطأ أثناء دخول الغرفة'
+    );
+
+  }
+
 }
+
+
+/* =========================
+   نسخ الكود
+========================= */
 
 function copyCode(id){
-  navigator.clipboard.writeText(document.getElementById(id).textContent);
-  alert('تم نسخ الكود');
+
+  const code =
+    document.getElementById(id)
+      .textContent;
+
+
+  if(
+    navigator.clipboard &&
+    navigator.clipboard.writeText
+  ){
+
+    navigator.clipboard
+      .writeText(code)
+      .then(() => {
+
+        alert(
+          'تم نسخ الكود'
+        );
+
+      })
+      .catch(() => {
+
+        alert(
+          'انسخ الكود يدويًا: ' +
+          code
+        );
+
+      });
+
+  }
+  else{
+
+    alert(
+      'انسخ الكود يدويًا: ' +
+      code
+    );
+
+  }
+
 }
+
 </script>
+
 </body>
 </html>
