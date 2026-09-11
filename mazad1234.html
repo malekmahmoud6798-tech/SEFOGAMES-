@@ -8,783 +8,218 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@900&display=swap" rel="stylesheet">
 
+
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&family=Orbitron:wght@600;700;800;900&display=swap');
 
-html,
+:root{--blue:#147cff;--cyan:#48d8ff;--gold:#ffd45a;--navy:#020817;--white:#f5f9ff}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Cairo,Arial,sans-serif}
 body{
-  width:400px;
-  margin:0 auto;
-  overflow-x:hidden;
+ color:var(--white);overflow-x:hidden;
+ background:
+ radial-gradient(circle at 50% 20%,rgba(22,105,255,.34),transparent 28%),
+ radial-gradient(circle at 50% 100%,rgba(0,190,255,.12),transparent 35%),
+ #01040d;
+}
+body:before{
+ content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+ background:
+  linear-gradient(rgba(1,5,15,.68),rgba(1,5,15,.78)),
+  url("https://i.postimg.cc/hg5jQgBD/uefa-champions-league-star-sky-design-4naonnwbj0ncjr50.jpg") center/cover;
+}
+body:after{
+ content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
+ background-image:
+  radial-gradient(circle,#fff 0 1px,transparent 1.5px),
+  radial-gradient(circle,#58bdff 0 1px,transparent 1.5px);
+ background-size:97px 97px,151px 151px;
+ animation:starMove 16s linear infinite;
+ opacity:.55;
+}
+@keyframes starMove{to{background-position:0 97px,0 -151px}}
+
+.container{position:relative;z-index:3;width:min(980px,94%);margin:auto;padding:18px 0 60px}
+
+/* دوري الأبطال: نجمة ضخمة خلف الصفحة */
+.container:before{
+ content:"✦";position:fixed;z-index:-1;left:50%;top:48%;
+ transform:translate(-50%,-50%);
+ font-size:min(75vw,720px);line-height:1;color:transparent;
+ -webkit-text-stroke:1px rgba(64,154,255,.09);
+ text-shadow:0 0 80px rgba(25,124,255,.09);
+ animation:championStar 9s ease-in-out infinite;
+}
+@keyframes championStar{
+ 0%,100%{transform:translate(-50%,-50%) rotate(0deg) scale(1);opacity:.65}
+ 50%{transform:translate(-50%,-50%) rotate(9deg) scale(1.06);opacity:1}
 }
 
-body{
-  min-height:100vh;
-  font-family:'Cairo',sans-serif;
-  color:#fff;
-  background:
-    radial-gradient(circle at 50% -10%,rgba(35,105,220,.55),transparent 45%),
-    radial-gradient(circle at 15% 80%,rgba(0,70,190,.18),transparent 35%),
-    radial-gradient(circle at 90% 60%,rgba(0,120,255,.15),transparent 30%),
-    #020611;
-}
-
-/* نجوم الخلفية */
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-
-  background-image:
-    radial-gradient(circle,rgba(255,255,255,.9) 1px,transparent 1.5px),
-    radial-gradient(circle,rgba(70,160,255,.7) 1px,transparent 1.5px),
-    radial-gradient(circle,rgba(255,215,70,.5) 1px,transparent 1.5px);
-
-  background-size:
-    110px 110px,
-    170px 170px,
-    230px 230px;
-
-  background-position:
-    0 0,
-    35px 70px,
-    90px 30px;
-
-  opacity:.35;
-}
-
-/* توهج أزرق */
-body::after{
-  content:'';
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:1;
-
-  background:
-    radial-gradient(
-      circle at 50% 20%,
-      rgba(0,110,255,.12),
-      transparent 35%
-    );
-
-  box-shadow:
-    inset 0 0 120px rgba(0,80,220,.18);
-}
-
-/* VS في الخلفية */
-.vs-bg{
-  position:fixed;
-  top:50%;
-  left:50%;
-
-  transform:translate(-50%,-50%);
-
-  font-family:'Orbitron',sans-serif;
-  font-size:180px;
-  font-weight:900;
-
-  background:
-    linear-gradient(
-      90deg,
-      #55baff 20%,
-      #ffffff 50%,
-      #ffd84a 80%
-    );
-
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  opacity:.07;
-  z-index:0;
-
-  pointer-events:none;
-
-  text-shadow:
-    0 0 40px rgba(40,150,255,.5);
-}
-
-/* المحتوى */
-.container{
-  position:relative;
-  z-index:3;
-
-  width:100%;
-  min-height:100vh;
-
-  padding:18px 10px 40px;
-
-  text-align:center;
-}
-
-/* =========================
-   العنوان
-========================= */
-
+/* الهيدر */
 .main-title{
-  position:relative;
-
-  margin-bottom:18px;
-
-  font-family:'Orbitron','Cairo',sans-serif;
-  font-size:27px;
-  font-weight:900;
-  letter-spacing:1px;
-
-  background:
-    linear-gradient(
-      180deg,
-      #ffffff 0%,
-      #72c4ff 52%,
-      #ffffff 100%
-    );
-
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  text-shadow:
-    0 0 18px rgba(50,160,255,.5);
+ position:relative;text-align:center;margin:0 auto 36px;padding:20px 10px 18px;
+ border-radius:22px;overflow:hidden;
+ border:1px solid rgba(86,171,255,.35);
+ background:linear-gradient(180deg,rgba(7,28,66,.88),rgba(2,8,24,.78));
+ box-shadow:0 0 45px rgba(16,112,255,.18),inset 0 1px rgba(255,255,255,.08);
+ font:900 clamp(24px,6vw,44px) Orbitron,Cairo,sans-serif;
+ letter-spacing:2px;text-shadow:0 0 22px rgba(64,168,255,.7);
+}
+.main-title:before{
+ content:"";position:absolute;top:-120%;left:-25%;width:35%;height:340%;
+ transform:rotate(25deg);
+ background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+ animation:titleShine 3.5s ease-in-out infinite;
+}
+@keyframes titleShine{0%,45%{left:-45%;opacity:0}55%{opacity:1}100%{left:125%;opacity:0}}
+.main-title:after{
+ content:"★  UEFA CHAMPIONS NIGHT  ★";
+ display:block;margin-top:7px;color:#8ec9ff;
+ font:800 10px Orbitron,Cairo,sans-serif;letter-spacing:4px;
 }
 
-.main-title::before{
-  content:'⭐';
-
-  display:block;
-
-  margin-bottom:3px;
-
-  font-size:30px;
-
-  -webkit-text-fill-color:#ffd84a;
-
-  filter:
-    drop-shadow(0 0 8px rgba(255,215,70,.7))
-    drop-shadow(0 0 18px rgba(255,215,70,.4));
-}
-
-/* خط تحت العنوان */
-.main-title::after{
-  content:'CHAMPIONS NIGHT';
-
-  display:block;
-
-  margin-top:2px;
-
-  font-family:'Orbitron',sans-serif;
-
-  font-size:8px;
-  letter-spacing:4px;
-
-  color:#69bdff;
-
-  opacity:.8;
-}
-
-/* =========================
-   الكروت
-========================= */
-
+/* شبكة الكروت */
 .auctions-wrapper{
-  display:flex;
-
-  flex-wrap:wrap;
-
-  justify-content:center;
-
-  gap:11px;
-
-  width:100%;
+ display:grid;grid-template-columns:repeat(2,1fr);gap:24px;
+ perspective:1200px;
 }
-
-/* الكرت الأساسي */
 .auction-card{
-  position:relative;
-
-  width:150px;
-  height:180px;
-
-  padding:6px;
-
-  cursor:pointer;
-
-  display:flex;
-  flex-direction:column;
-
-  overflow:hidden;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(12,39,78,.95),
-      rgba(2,10,28,.98)
-    );
-
-  border:
-    1px solid rgba(75,166,255,.5);
-
-  border-radius:19px;
-
-  box-shadow:
-    inset 0 0 25px rgba(0,110,255,.08),
-    0 10px 28px rgba(0,0,0,.5),
-    0 0 15px rgba(0,90,255,.08);
-
-  transition:
-    transform .3s ease,
-    border-color .3s ease,
-    box-shadow .3s ease;
+ position:relative;min-height:355px;overflow:hidden;cursor:pointer;
+ border-radius:28px;
+ border:1px solid rgba(77,169,255,.35);
+ background:
+  linear-gradient(145deg,rgba(10,38,87,.94),rgba(1,7,21,.98)),
+  radial-gradient(circle at 50% 20%,rgba(34,143,255,.25),transparent 50%);
+ box-shadow:0 25px 65px rgba(0,0,0,.7),inset 0 1px rgba(255,255,255,.09);
+ transform-style:preserve-3d;
+ transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s,border-color .45s;
+ animation:cardFloat 5s ease-in-out infinite;
 }
-
-/* لمعان الكرت */
-.auction-card::before{
-  content:'';
-
-  position:absolute;
-
-  top:-70%;
-  left:-40%;
-
-  width:70%;
-  height:220%;
-
-  transform:rotate(25deg);
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,255,255,.08),
-      transparent
-    );
-
-  pointer-events:none;
-
-  transition:left .6s ease;
+.auction-card:nth-child(2){animation-delay:-1.5s}
+.auction-card:nth-child(3){animation-delay:-3s}
+@keyframes cardFloat{
+ 0%,100%{transform:translateY(0)}
+ 50%{transform:translateY(-6px)}
 }
-
-.auction-card:hover::before{
-  left:120%;
-}
-
 .auction-card:hover{
-  transform:translateY(-6px) scale(1.02);
-
-  border-color:#6bc5ff;
-
-  box-shadow:
-    0 0 25px rgba(0,125,255,.4),
-    0 12px 35px rgba(0,0,0,.5);
+ transform:translateY(-16px) rotateX(5deg) rotateY(-2deg) scale(1.025)!important;
+ border-color:rgba(90,192,255,.85);
+ box-shadow:0 38px 90px rgba(0,0,0,.8),0 0 55px rgba(22,126,255,.28);
 }
-
-.auction-card:active{
-  transform:scale(.97);
+.auction-card:before{
+ content:"";position:absolute;inset:-2px;border-radius:30px;z-index:0;
+ background:conic-gradient(from 0deg,transparent 0 15%,rgba(50,174,255,.9) 23%,transparent 32% 60%,rgba(92,207,255,.65) 69%,transparent 78%);
+ mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+ mask-composite:exclude;padding:1px;
+ animation:borderOrbit 5s linear infinite;
 }
+@keyframes borderOrbit{to{transform:rotate(360deg)}}
 
-/* صورة الكرت */
+.auction-card .energy{
+ position:absolute;left:50%;top:32px;width:260px;height:260px;
+ transform:translateX(-50%);
+ border-radius:50%;
+ border:1px solid rgba(64,171,255,.18);
+ box-shadow:0 0 35px rgba(30,143,255,.18),inset 0 0 40px rgba(30,143,255,.12);
+ animation:energy 4s ease-in-out infinite;
+}
+.auction-card .energy:before,.auction-card .energy:after{
+ content:"";position:absolute;inset:14%;border-radius:50%;
+ border:1px solid rgba(84,202,255,.22);
+ transform:rotate(30deg) scaleX(.5);
+}
+.auction-card .energy:after{transform:rotate(-30deg) scaleX(.5)}
+@keyframes energy{50%{transform:translateX(-50%) scale(1.08) rotate(180deg);opacity:.7}}
+
 .auction-card img{
-  width:100%;
-  height:120px;
-
-  flex-shrink:0;
-
-  object-fit:cover;
-
-  border-radius:13px;
-
-  border:
-    1px solid rgba(255,255,255,.12);
-
-  box-shadow:
-    0 5px 15px rgba(0,0,0,.4);
+ position:relative;z-index:2;display:block;width:88%;height:270px;margin:15px auto 0;
+ object-fit:contain;filter:drop-shadow(0 22px 25px rgba(0,0,0,.65));
+ animation:playerFloat 3.8s ease-in-out infinite;
+ transition:.45s;
 }
+@keyframes playerFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-9px) rotate(.7deg)}}
+.auction-card:hover img{transform:translateY(-15px) scale(1.06)}
 
-/* اسم المزاد */
 .auction-name{
-  flex-grow:1;
-
-  display:flex;
-
-  align-items:center;
-  justify-content:center;
-
-  color:#fff;
-
-  font-size:14px;
-  font-weight:900;
-
-  text-shadow:
-    0 0 9px rgba(70,170,255,.55);
+ position:absolute;z-index:5;left:14px;right:14px;bottom:14px;
+ padding:12px;border-radius:15px;text-align:center;
+ background:linear-gradient(180deg,rgba(7,25,55,.72),rgba(1,7,19,.94));
+ border:1px solid rgba(93,179,255,.3);
+ backdrop-filter:blur(12px);
+ font-size:20px;font-weight:900;
+ box-shadow:0 10px 30px rgba(0,0,0,.35);
 }
-
-/* الذهبي */
+.auction-name:before{content:"✦ ";color:var(--cyan)}
 .pro-card{
-  border-color:
-    rgba(255,215,70,.65);
-
-  box-shadow:
-    inset 0 0 25px rgba(255,215,70,.06),
-    0 0 20px rgba(255,215,70,.1),
-    0 10px 28px rgba(0,0,0,.5);
+ border-color:rgba(255,213,87,.62);
+ background:linear-gradient(145deg,rgba(67,49,9,.92),rgba(8,8,5,.98));
+ box-shadow:0 25px 70px rgba(0,0,0,.72),0 0 55px rgba(255,192,42,.16);
 }
+.pro-card:before{background:conic-gradient(from 0deg,transparent 0 15%,#ffe889 23%,transparent 32% 60%,#ffad19 69%,transparent 78%)}
+.pro-card .energy{border-color:rgba(255,213,83,.25);box-shadow:0 0 50px rgba(255,191,35,.25)}
+.pro-card .auction-name{color:#ffe28a;border-color:rgba(255,210,76,.38)}
+.pro-card .auction-name:before{color:#ffd54e}
 
-.pro-card:hover{
-  border-color:#ffd84a;
-
-  box-shadow:
-    0 0 30px rgba(255,215,70,.3),
-    0 12px 35px rgba(0,0,0,.5);
-}
-
-.pro-card .auction-name{
-  color:#ffd84a;
-
-  text-shadow:
-    0 0 10px rgba(255,215,70,.45);
-}
-
-/* مليار */
 .billion-card{
-  width:320px;
-  height:180px;
-
-  border-color:
-    rgba(80,190,255,.55);
+ grid-column:1/-1;min-height:290px;
+ display:flex;align-items:center;justify-content:center;
+ background:linear-gradient(120deg,rgba(8,48,105,.96),rgba(2,8,24,.98));
 }
+.billion-card img{height:235px;width:72%;margin:0 auto}
 
-.billion-card img{
-  width:100%;
-  height:140px;
-
-  aspect-ratio:16/9;
-
-  object-fit:cover;
-}
-
-.billion-card .auction-name{
-  color:#ffd84a;
-
-  font-size:15px;
-
-  padding-top:4px;
-
-  text-shadow:
-    0 0 10px rgba(255,215,70,.4);
-}
-
-/* =========================
-   القوائم
-========================= */
-
+/* أزرار وقوائم */
 .options-menu{
-  display:none;
-
-  width:320px;
-
-  margin:16px auto 0;
-
-  padding:15px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(7,25,55,.98),
-      rgba(1,8,22,.99)
-    );
-
-  backdrop-filter:blur(30px);
-
-  border:
-    1px solid rgba(255,215,70,.65);
-
-  border-radius:19px;
-
-  box-shadow:
-    0 15px 40px rgba(0,0,0,.6),
-    0 0 25px rgba(0,100,255,.15),
-    inset 0 0 30px rgba(0,90,200,.06);
-
-  animation:menuIn .3s ease;
+ display:none;position:relative;margin:24px auto 0;max-width:680px;padding:22px;
+ border-radius:24px;border:1px solid rgba(76,164,255,.35);
+ background:linear-gradient(145deg,rgba(7,24,55,.96),rgba(1,7,20,.98));
+ box-shadow:0 25px 70px rgba(0,0,0,.72),0 0 35px rgba(20,125,255,.16);
 }
-
-.options-menu.active{
-  display:block;
-}
-
-@keyframes menuIn{
-  from{
-    opacity:0;
-    transform:translateY(-10px) scale(.97);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
-}
-
-/* عنوان القائمة */
-.options-title{
-  margin-bottom:10px;
-
-  color:#ffd84a;
-
-  font-size:18px;
-  font-weight:900;
-
-  text-shadow:
-    0 0 10px rgba(255,215,70,.4);
-}
-
-/* =========================
-   الأزرار
-========================= */
-
+.options-menu.active{display:block;animation:menuIn .4s cubic-bezier(.2,.8,.2,1)}
+@keyframes menuIn{from{opacity:0;transform:translateY(25px) scale(.97)}to{opacity:1;transform:none}}
 .option-btn{
-  width:100%;
-
-  margin:6px 0;
-
-  padding:10px;
-
-  border:none;
-
-  border-radius:10px;
-
-  color:#fff;
-
-  font-family:'Cairo',sans-serif;
-
-  font-size:14px;
-  font-weight:900;
-
-  cursor:pointer;
-
-  background:
-    linear-gradient(
-      90deg,
-      #176bc1,
-      #48b6ff,
-      #176bc1
-    );
-
-  box-shadow:
-    0 0 14px rgba(0,130,255,.18);
-
-  transition:
-    transform .2s ease,
-    filter .2s ease,
-    box-shadow .2s ease;
+ position:relative;overflow:hidden;width:100%;padding:13px;margin:6px 0;
+ border-radius:13px;cursor:pointer;
+ color:#eaf5ff;font:900 15px Cairo;
+ background:linear-gradient(180deg,rgba(26,79,148,.58),rgba(7,28,63,.85));
+ border:1px solid rgba(88,169,255,.3);
+ transition:.25s;
 }
-
-.option-btn:hover{
-  filter:brightness(1.15);
-
-  transform:translateY(-2px);
-
-  box-shadow:
-    0 0 20px rgba(60,170,255,.35);
-}
-
-.option-btn:active{
-  transform:scale(.97);
-}
-
-/* AI */
-.option-btn.ai{
-  background:
-    linear-gradient(
-      90deg,
-      #254e9b,
-      #4c8cff,
-      #254e9b
-    );
-
-  box-shadow:
-    0 0 15px rgba(60,120,255,.2);
-}
-
-/* الغرفة */
-.option-btn.room{
-  background:
-    linear-gradient(
-      90deg,
-      #b98a16,
-      #ffd84a,
-      #b98a16
-    );
-
-  color:#061020;
-
-  box-shadow:
-    0 0 18px rgba(255,215,70,.18);
-}
-
-/* =========================
-   نافذة الغرفة
-========================= */
+.option-btn:hover{transform:translateX(-5px);border-color:#5ec6ff;box-shadow:0 0 25px rgba(30,137,255,.2)}
+.option-btn.room{color:#111a2c;background:linear-gradient(180deg,#fff0a1,#ffd24c,#d99011);border-color:#fff0a2}
+.option-btn.ai{background:linear-gradient(180deg,#2b8fff,#0d4ca7)}
 
 .room-popup{
-  display:none;
-
-  margin-top:10px;
-
-  padding:20px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(4,22,48,.98),
-      rgba(1,7,20,.99)
-    );
-
-  border:
-    1px solid rgba(78,184,255,.65);
-
-  border-radius:15px;
-
-  box-shadow:
-    inset 0 0 25px rgba(0,110,255,.1),
-    0 10px 30px rgba(0,0,0,.5);
-
-  animation:pop .3s ease;
+ display:none;margin-top:16px;padding:18px;text-align:center;border-radius:18px;
+ background:rgba(1,6,17,.82);border:1px solid rgba(255,207,75,.3);
 }
-
-.room-popup.active{
-  display:block;
-}
-
-@keyframes pop{
-  from{
-    transform:scale(.8);
-    opacity:0;
-  }
-
-  to{
-    transform:scale(1);
-    opacity:1;
-  }
-}
-
-/* =========================
-   كود الغرفة
-========================= */
-
+.room-popup.active{display:block;animation:menuIn .3s ease}
 .room-code{
-  margin:10px 0;
-
-  padding:15px;
-
-  font-family:'Orbitron',sans-serif;
-
-  font-size:32px;
-
-  color:#fff;
-
-  background:#020b1b;
-
-  border:
-    1px dashed #ffd84a;
-
-  border-radius:10px;
-
-  letter-spacing:5px;
-
-  text-shadow:
-    0 0 12px rgba(80,180,255,.8);
-
-  box-shadow:
-    inset 0 0 20px rgba(0,100,255,.12);
+ width:250px;max-width:100%;margin:9px auto;padding:12px;
+ color:#ffe58d;background:#01050d;border:1px solid rgba(255,215,90,.45);
+ border-radius:13px;font:900 26px Orbitron;letter-spacing:7px;
+ box-shadow:0 0 30px rgba(255,183,30,.12);
 }
+.copy-btn,.join-btn{padding:10px 18px;border:0;border-radius:11px;cursor:pointer;font:900 13px Cairo}
+.copy-btn{background:#162c50;color:#e2efff}.join-btn{background:linear-gradient(180deg,#4ed7ff,#1479ec);color:#fff}
+.status{min-height:22px;margin:10px;color:#8db7e9;font-size:13px;font-weight:800}
+.join-box{display:flex;gap:8px}
+.join-input{flex:1;min-width:0;padding:11px;text-align:center;color:#fff;background:#020711;border:1px solid rgba(88,165,255,.3);border-radius:11px;outline:none;font:800 14px Cairo}
+.join-input:focus{border-color:#4dbbff;box-shadow:0 0 20px rgba(44,153,255,.18)}
 
-/* نسخ */
-.copy-btn{
-  width:100%;
-
-  padding:8px;
-
-  border:none;
-
-  border-radius:8px;
-
-  cursor:pointer;
-
-  font-family:'Cairo',sans-serif;
-
-  font-weight:900;
-
-  color:#071020;
-
-  background:
-    linear-gradient(
-      90deg,
-      #ffd84a,
-      #fff0a0
-    );
-
-  transition:.2s;
+@media(max-width:650px){
+ .auctions-wrapper{grid-template-columns:1fr}
+ .billion-card{grid-column:auto;min-height:340px}
+ .billion-card img{height:260px;width:88%}
 }
-
-.copy-btn:hover{
-  transform:translateY(-2px);
-
-  box-shadow:
-    0 0 15px rgba(255,215,70,.3);
+@media(max-width:430px){
+ .container{width:92%;padding-top:10px}
+ .main-title{margin-bottom:22px}
+ .auction-card{min-height:325px}
+ .auction-card img{height:250px}
+ .join-box{flex-direction:column}
 }
-
-.copy-btn:active{
-  transform:scale(.97);
-}
-
-/* =========================
-   الانتظار
-========================= */
-
-.status{
-  margin-top:7px;
-
-  color:#ffd84a;
-
-  font-size:12px;
-  font-weight:700;
-
-  text-shadow:
-    0 0 8px rgba(255,215,70,.3);
-}
-
-/* =========================
-   دخول الغرفة
-========================= */
-
-.join-box{
-  margin-top:15px;
-
-  padding-top:15px;
-
-  border-top:
-    1px solid rgba(100,160,220,.18);
-}
-
-.join-input{
-  width:100%;
-
-  margin-bottom:8px;
-
-  padding:10px;
-
-  background:#020a18;
-
-  border:
-    1px solid rgba(73,170,255,.6);
-
-  border-radius:8px;
-
-  color:#fff;
-
-  text-align:center;
-
-  font-family:'Orbitron',sans-serif;
-
-  font-size:18px;
-
-  outline:none;
-
-  box-shadow:
-    inset 0 0 15px rgba(0,100,255,.08);
-
-  transition:.2s;
-}
-
-.join-input:focus{
-  border-color:#62c3ff;
-
-  box-shadow:
-    0 0 15px rgba(70,170,255,.2),
-    inset 0 0 15px rgba(0,100,255,.1);
-}
-
-.join-input::placeholder{
-  color:#6e8eaf;
-
-  font-family:'Cairo',sans-serif;
-
-  font-size:13px;
-}
-
-/* دخول */
-.join-btn{
-  width:100%;
-
-  padding:10px;
-
-  border:none;
-
-  border-radius:8px;
-
-  cursor:pointer;
-
-  font-family:'Cairo',sans-serif;
-
-  font-weight:900;
-
-  color:#061020;
-
-  background:
-    linear-gradient(
-      90deg,
-      #277fd1,
-      #62c3ff
-    );
-
-  transition:.2s;
-}
-
-.join-btn:hover{
-  transform:translateY(-2px);
-
-  box-shadow:
-    0 0 18px rgba(60,180,255,.3);
-}
-
-.join-btn:active{
-  transform:scale(.97);
-}
-
-/* =========================
-   شاشات صغيرة
-========================= */
-
-@media(max-width:400px){
-
-  html,
-  body{
-    width:100%;
-  }
-
-  .container{
-    padding-left:8px;
-    padding-right:8px;
-  }
-
-  .auction-card{
-    width:145px;
-  }
-
-  .billion-card{
-    width:300px;
-  }
-
-  .options-menu{
-    width:300px;
-  }
-}
-
 </style>
+
 </head>
 
 <body>
