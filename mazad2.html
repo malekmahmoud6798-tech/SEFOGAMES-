@@ -35,7 +35,7 @@ box-shadow:inset 0 0 50px #001b0d,0 10px 35px #0008}
 .team-name.user{color:#61dcff}.team-name.ai{color:#ff7180}
 .slot{position:absolute;z-index:8;width:62px;height:70px;transform:translate(-50%,-50%);text-align:center}
 .player-mini{height:52px;width:44px;margin:auto;border-radius:8px;border:2px solid #d9e5ef;background:linear-gradient(145deg,#152234,#05070a);box-shadow:0 5px 12px #0009;overflow:hidden;position:relative}
-.player-mini img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.player-mini img{width:100%;height:100%;object-fit:contain;object-position:center bottom;background:transparent;display:block}
 .player-mini .mini-fallback{font-size:16px;padding-top:14px}
 .slot .slot-pos{font-size:9px;font-weight:900;background:#05070ddd;border-radius:4px;padding:1px 4px;display:inline-block;margin-top:-2px}
 .slot .slot-name{font-size:8px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62px;text-shadow:0 2px 3px #000}
@@ -53,7 +53,7 @@ box-shadow:inset 0 0 50px #001b0d,0 10px 35px #0008}
 .player-card .shine{position:absolute;width:180%;height:70px;top:42%;left:-40%;transform:rotate(-18deg);background:linear-gradient(90deg,transparent,#fff3,transparent);animation:shine 3s infinite}
 @keyframes shine{0%,45%{left:-140%}75%,100%{left:120%}}
 .photo-box{height:245px;position:relative;display:flex;align-items:end;justify-content:center;padding-top:8px}
-.photo-box img{height:235px;max-width:92%;object-fit:contain;filter:drop-shadow(0 12px 12px #000);z-index:2}
+.photo-box img{height:235px;max-width:94%;width:auto;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 12px 12px #000);z-index:2;display:block}
 .photo-fallback{font-size:70px;font-weight:900;color:#8da1ba;align-self:center}
 .rating{position:absolute;top:14px;left:16px;font-family:Orbitron;color:var(--gold);font-size:36px;line-height:1;z-index:5;text-shadow:0 3px 12px #000}
 .rating small{display:block;font:900 11px Cairo;color:#fff;text-align:center;margin-top:4px}
@@ -72,6 +72,61 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .loading{position:fixed;inset:0;z-index:120;background:#02050af5;display:none;align-items:center;justify-content:center;flex-direction:column}.loader-ball{width:90px;height:90px;border:4px solid var(--gold);border-radius:50%;border-top-color:transparent;animation:spin 1s linear infinite;box-shadow:0 0 35px #ffd84d55}@keyframes spin{to{transform:rotate(360deg)}}.loading h3{color:var(--gold)}
 @media(max-width:900px){.layout{grid-template-columns:1fr}.auction{position:relative;top:auto}.pitch{aspect-ratio:1.45/1}.slot{width:54px;height:62px}.player-mini{width:38px;height:45px}.slot .slot-name{font-size:7px;max-width:55px}.p-GK{left:7%}.p-LB{left:20%}.p-CB1,.p-CB2{left:27%}.p-RB{left:20%}.p-CM1,.p-CM2{left:47%}.p-CAM{left:63%}.p-LW,.p-RW{left:76%}.p-ST{left:89%}}
 @media(max-width:520px){header{position:relative}.stats{grid-template-columns:1fr 80px 1fr}.money{padding:7px 3px;font-size:11px}.money b{font-size:13px}.round{min-width:0;padding:7px 3px;font-size:11px}.pitch-wrap{padding:7px}.pitch{border-width:2px}.slot{transform:translate(-50%,-50%) scale(.84)}.team-name{font-size:11px}.teams{grid-template-columns:1fr}.player-card{min-height:360px}.photo-box{height:220px}.photo-box img{height:215px}.card-name{font-size:20px}.score{font-size:35px}.match-grid{grid-template-columns:1fr}.result-top h2{font-size:21px}}
+
+/* ===== Player photo + name inside formation ===== */
+.formation-player{
+  position:relative;
+  width:76px;
+  min-height:92px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-end;
+  gap:3px;
+  z-index:5;
+  pointer-events:none;
+}
+.formation-player .fp-photo{
+  width:52px;
+  height:52px;
+  object-fit:contain;
+  object-position:center bottom;
+  filter:drop-shadow(0 4px 7px rgba(0,0,0,.65));
+}
+.formation-player .fp-name{
+  max-width:76px;
+  padding:2px 5px;
+  border-radius:6px;
+  background:rgba(0,0,0,.78);
+  border:1px solid rgba(255,255,255,.22);
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+  line-height:1.15;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  text-shadow:0 1px 2px #000;
+}
+.formation-player .fp-pos{
+  position:absolute;
+  top:-2px;
+  right:2px;
+  font-size:8px;
+  font-weight:900;
+  color:#ffd84d;
+  background:rgba(0,0,0,.7);
+  padding:1px 4px;
+  border-radius:4px;
+}
+@media(max-width:600px){
+  .formation-player{width:62px;min-height:78px}
+  .formation-player .fp-photo{width:43px;height:43px}
+  .formation-player .fp-name{max-width:62px;font-size:8px}
+  .formation-player .fp-pos{font-size:7px}
+}
+
 </style>
 </head>
 <body>
@@ -105,7 +160,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
     <div class="card-info"><div class="card-name" id="name">—</div><div class="card-pos" id="pos">—</div><div class="price" id="price">—</div></div>
   </div>
   <div class="bid-display"><button class="minus" id="minusBtn">−</button><div class="bid-value" id="currentBidDisplay">0$</div><button class="plus" id="plusBtn">+</button></div>
-  <div class="actions"><button class="take" id="takeBtn">خده</button><button class="bid" id="bidBtn">مزايدة</button><button class="skip" id="skipBtn">تخطي اللاعب</button></div>
+  <div class="actions"><button class="take" id="takeBtn">خده</button><button class="bid" id="bidBtn">مزايدة</button></div>
   <div class="log" id="log">جاري تجهيز أول لاعب...</div>
 </aside>
 </main>
@@ -145,7 +200,7 @@ const POSITIONS=[
 ];
 
 const ROLE_KEY={GK:"GK",LB:"LB",CB1:"CB",CB2:"CB",RB:"RB",CM1:"CM",CM2:"CM",CAM:"CAM",LW:"LW",ST:"ST",RW:"RW"};
-const posOrder=POSITIONS.flatMap(p=>[p.key,p.key]);
+const posOrder=POSITIONS.map(p=>p.key);
 
 const db={
 GK:[
@@ -241,7 +296,7 @@ const $=id=>document.getElementById(id);
 function money(n){return Math.round(n).toLocaleString("en-US")+"$"}
 function roleLabel(k){return POSITIONS.find(p=>p.key===k)?.label||k}
 function roleBase(k){return ROLE_KEY[k]}
-function hasRole(team,key){return state.teams[team].some(p=>p.slot===key||roleBase(p.slot)===roleBase(key))}
+function hasRole(team,key){return state.teams[team].some(p=>p.slot===key)}
 function freeRoleSlot(team,key){
   const base=roleBase(key);
   return state.teams[team].find(p=>roleBase(p.slot)===base)?.slot||null;
@@ -275,22 +330,52 @@ function choosePlayer(key){
 async function getWikiImage(name){
   const title=aliases[name]||name;
   if(state.imageCache.has(title))return state.imageCache.get(title);
-  const endpoint="https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&origin=*&redirects=1&prop=pageimages&piprop=thumbnail&pilicense=free&pithumbsize=500&titles="+encodeURIComponent(title);
+  // لا نستخدم pilicense=free هنا لأن أغلب صور اللاعبين على ويكيبيديا تكون
+  // صوراً تعليمية/موسوعية وقد تختفي إذا طلبنا الصور المرخصة الحرة فقط.
+  const endpoint="https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&origin=*&redirects=1&prop=pageimages&piprop=thumbnail&pithumbsize=700&titles="+encodeURIComponent(title);
   try{
     const res=await fetch(endpoint,{cache:"force-cache"});
+    if(!res.ok)throw new Error("Wikipedia HTTP "+res.status);
     const data=await res.json();
     const page=data?.query?.pages?.[0];
-    const src=page?.thumbnail?.source||"";
+    const src=page?.thumbnail?.source||page?.original?.source||"";
     state.imageCache.set(title,src);
     return src;
-  }catch(e){state.imageCache.set(title,"");return ""}
+  }catch(e){
+    console.warn("تعذر تحميل صورة اللاعب:",title,e);
+    state.imageCache.set(title,"");
+    return "";
+  }
 }
 
 async function loadPlayerImage(player,imgEl,fallback){
-  imgEl.style.display="none";fallback.style.display="block";fallback.textContent="⚽";
+  if(!imgEl||!fallback||!player)return;
+  const key=String(player.id||player.wiki||player.n);
+  imgEl.dataset.playerKey=key;
+  imgEl.style.display="none";
+  imgEl.removeAttribute("src");
+  fallback.style.display="block";
+  fallback.textContent="⚽";
+
   const src=await getWikiImage(player.wiki);
-  if(src){imgEl.src=src;imgEl.style.display="block";fallback.style.display="none"}
-  else fallback.textContent=player.n.slice(0,1);
+  if(imgEl.dataset.playerKey!==key)return;
+
+  if(src){
+    imgEl.onload=()=>{
+      if(imgEl.dataset.playerKey!==key)return;
+      imgEl.style.display="block";
+      fallback.style.display="none";
+    };
+    imgEl.onerror=()=>{
+      if(imgEl.dataset.playerKey!==key)return;
+      imgEl.style.display="none";
+      fallback.style.display="block";
+      fallback.textContent=player.n.slice(0,1);
+    };
+    imgEl.src=src;
+  }else{
+    fallback.textContent=player.n.slice(0,1);
+  }
 }
 
 function updateStats(){
@@ -302,18 +387,47 @@ function updateStats(){
 }
 
 function renderTeam(team){
-  const list=$(team===1?"userList":"aiList");list.innerHTML="";
+  const list=$(team===1?"userList":"aiList");
+  list.innerHTML="";
+
+  // امسح الخانات أولاً حتى لا تبقى صورة لاعب قديم.
+  POSITIONS.forEach(pos=>{
+    const el=$((team===1?"u-":"a-")+pos.key);
+    if(!el)return;
+    el.classList.remove("filled");
+    el.classList.add("empty");
+    const nameEl=el.querySelector(".slot-name");
+    if(nameEl)nameEl.textContent="فارغ";
+    const box=el.querySelector(".player-mini");
+    if(box)box.innerHTML='<div class="mini-fallback">+</div>';
+  });
+
   state.teams[team].forEach(p=>{
-    const c=document.createElement("div");c.className="chip";c.innerHTML="<b>"+p.slot+"</b> "+escapeHtml(p.n)+" • "+p.r;
+    const c=document.createElement("div");
+    c.className="chip";
+    c.innerHTML="<b>"+escapeHtml(p.slot)+"</b> "+escapeHtml(p.n)+" • "+p.r;
     list.appendChild(c);
-    const slot=$(team===1?"u-":"a-")+p.slot;
-    const el=$(slot);if(!el)return;
-    el.classList.remove("empty");el.classList.add("filled");
-    el.querySelector(".slot-name").textContent=p.n;
-    const box=el.querySelector(".player-mini");box.innerHTML='<img alt="'+escapeHtml(p.n)+'"><div class="mini-fallback" style="display:none"></div>';
-    loadPlayerImage(p,box.querySelector("img"),box.querySelector(".mini-fallback"));
+
+    const el=$((team===1?"u-":"a-")+p.slot);
+    if(!el)return;
+    el.classList.remove("empty");
+    el.classList.add("filled");
+
+    const nameEl=el.querySelector(".slot-name");
+    if(nameEl){
+      nameEl.textContent=p.n;
+      nameEl.title=p.n;
+    }
+
+    const box=el.querySelector(".player-mini");
+    if(!box)return;
+    box.innerHTML='<img alt="'+escapeHtml(p.n)+'"><div class="mini-fallback">⚽</div>';
+    const img=box.querySelector("img");
+    const fb=box.querySelector(".mini-fallback");
+    loadPlayerImage(p,img,fb);
   });
 }
+
 function renderAll(){renderTeam(1);renderTeam(2);updateStats()}
 
 async function startRound(){
@@ -329,17 +443,19 @@ async function startRound(){
   $("currentBidDisplay").textContent=money(state.userBid);
   $("turn").textContent="دور المزايدة: أنت";
   $("log").textContent="🎯 اللاعب ظهر. الهدف الآن تجهيز المركز "+roleLabel(key);
-  const img=$("playerImg"),fb=$("photoFallback");await loadPlayerImage(state.current,img,fb);
+  const img=$("playerImg"),fb=$("photoFallback");loadPlayerImage(state.current,img,fb);
   updateButtons();updateStats();
 }
 function updateButtons(){
-  const userMustLose=hasRole(1,state.current.slot),aiMustLose=hasRole(2,state.current.slot);
-  const userCanBid=!userMustLose && state.turn===1 && !state.thinking;
-  $("bidBtn").disabled=!userCanBid;$("takeBtn").disabled=!userCanBid;
-  $("plusBtn").disabled=!userCanBid;$("minusBtn").disabled=!userCanBid;
-  $("skipBtn").disabled=state.turn!==1||state.thinking||userMustLose;
-  if(userMustLose)$("log").textContent="ℹ️ لديك هذا المركز بالفعل؛ هذه الجولة مخصصة للـ AI.";
-  if(aiMustLose)$("log").textContent="🔥 AI لديه هذا المركز بالفعل؛ اللاعب متاح لك بقوة.";
+  const userHasSlot=hasRole(1,state.current.slot);
+  const aiHasSlot=hasRole(2,state.current.slot);
+  const userCanAct=state.turn===1 && !state.thinking && !userHasSlot;
+  $("bidBtn").disabled=!userCanAct;
+  $("takeBtn").disabled=state.turn!==1 || state.thinking;
+  $("plusBtn").disabled=!userCanAct;
+  $("minusBtn").disabled=!userCanAct;
+  if(userHasSlot) $("log").textContent="ℹ️ هذا المركز موجود عندك، لذلك لا يمكنك مزايدة هذا اللاعب.";
+  else if(aiHasSlot) $("log").textContent="🔥 AI لديه لاعب في هذا المركز، وقد يترك لك اللاعب.";
 }
 
 function increaseBid(){if($("plusBtn").disabled)return;const next=state.userBid+1000000;if(next>state.money[1]){alert("ميزانيتك لا تكفي.");return}state.userBid=next;$("currentBidDisplay").textContent=money(state.userBid)}
@@ -356,9 +472,52 @@ function bid(){
   $("log").textContent="🔵 أنت رفعت إلى "+money(state.currentBid);
   updateButtons();setTimeout(aiMove,850+Math.random()*650);
 }
-function take(){if(state.turn!==1)return;if(state.highest!==1){alert("لازم تعمل مزايدة أولاً.");return}award(1)}
-function skip(){if(state.turn!==1)return;if(hasRole(1,state.current.slot)){forceAIWin();return}state.highest=2;award(2)}
-function forceAIWin(){state.highest=2;state.currentBid=Math.max(state.currentBid,Math.min(state.money[2],state.current.p.p||state.current.p));award(2)}
+function take(){
+  if(state.turn!==1 || state.thinking)return;
+  takeBy(1);
+}
+
+// زر "خده": الذي يضغطه يأخذ لاعباً عشوائياً من نفس المركز،
+// والخصم يحصل على لاعب المزاد ويدفع السعر الحالي.
+function takeBy(taker){
+  const auctionWinner=taker===1?2:1;
+  const p=state.current;
+  if(!p)return;
+
+  // إذا كان للخصم خانة المزاد بالفعل، لا نكرر الخانة.
+  if(hasRole(auctionWinner,p.slot)){
+    $("log").textContent="⚠️ لا يوجد مكان متاح لهذا المركز.";
+    return;
+  }
+
+  const randomPlayer=chooseRandomForTeam(roleBase(p.slot),taker,p.slot);
+  if(state.money[auctionWinner] < state.currentBid){
+    // الخصم لا يستطيع الدفع: صاحب زر "خده" يأخذ لاعب المزاد نفسه.
+    state.money[taker]-=state.currentBid;
+    state.teams[taker].push({...p,paid:state.currentBid});
+    $("log").textContent="💰 الخصم لا يملك المبلغ، فأخذت لاعب المزاد.";
+  }else{
+    state.money[auctionWinner]-=state.currentBid;
+    state.teams[auctionWinner].push({...p,paid:state.currentBid});
+    if(randomPlayer) state.teams[taker].push({...randomPlayer,paid:0,random:true});
+    $("log").textContent=taker===1
+      ? "🔄 أنت قلت خده: AI أخذ لاعب المزاد، وأنت حصلت على لاعب عشوائي من نفس المركز."
+      : "🔄 AI قال خده: أنت أخذت لاعب المزاد، وAI حصل على لاعب عشوائي من نفس المركز.";
+  }
+  renderAll();
+  state.turn=1;state.highest=0;state.thinking=false;
+  setTimeout(()=>{state.round++;startRound()},650);
+}
+
+function chooseRandomForTeam(base,taker,currentSlot){
+  const availableSlot=POSITIONS.map(x=>x.key).find(k=>roleBase(k)===base && !hasRole(taker,k));
+  if(!availableSlot)return null;
+  const pool=getPool(base).filter(x=>!state.used.has(x[0]));
+  if(!pool.length)return null;
+  const arr=pool[Math.floor(Math.random()*pool.length)];
+  state.used.add(arr[0]);
+  return makePlayer(arr,availableSlot);
+}
 
 function aiStrength(){
   const team=state.teams[2];const avg=team.length?team.reduce((a,p)=>a+p.r,0)/team.length:82;
@@ -372,7 +531,10 @@ function aiMove(){
   setTimeout(()=>{
     if(hasRole(2,state.current.slot)){award(1);return}
     const x=aiStrength(), value=state.current.r*700000, ceiling=Math.min(state.money[2],Math.max(state.currentBid+1000000,value*(1.2+x.aggression)));
-    const wants=state.current.r>=84 && Math.random()<x.aggression;
+    // الـAI لا يزايد كل مرة: أحياناً ينسحب ويترك اللاعب يأخذ اللاعب بالسعر الحالي.
+    // كلما كان اللاعب أقوى أو احتاجه AI تزيد فرصة المزايدة، لكن تظل هناك فرصة واضحة لـ "خده".
+    const bidChance = Math.min(0.78, Math.max(0.28, 0.42 + (state.current.r-80)*0.012 + (x.need?0.10:0) + (x.aggression-0.55)*0.20));
+    const wants=state.current.r>=78 && Math.random()<bidChance;
     if(wants && ceiling>state.currentBid+1000000){
       const jump=Math.max(1000000,Math.round((1+Math.random()*3))*1000000);
       state.currentBid=Math.min(ceiling,state.currentBid+jump);state.highest=2;state.turn=1;
@@ -383,8 +545,13 @@ function aiMove(){
       $("log").textContent="🔴 AI زايد إلى "+money(state.currentBid);
       state.thinking=false;updateButtons();
     }else{
-      $("log").textContent="🤖 AI: خده!";
-      state.thinking=false;award(2);
+      // AI ينسحب: آخر مزايد (أنت) يأخذ اللاعب بالسعر الحالي.
+      $("turn").textContent="🤖 AI: خده! 🔥";
+      $("log").textContent="🤖 AI قال: خده! اللاعب لك بالسعر الحالي.";
+      state.thinking=false;
+      state.turn=1;
+      updateButtons();
+      setTimeout(()=>award(1),450);
     }
   },750+Math.random()*850);
 }
@@ -458,8 +625,9 @@ function showResult(m){
   $("events").innerHTML=events.map(x=>`<div class="event">${x}</div>`).join("");
 }
 
-$("plusBtn").onclick=increaseBid;$("minusBtn").onclick=decreaseBid;$("bidBtn").onclick=bid;$("takeBtn").onclick=take;$("skipBtn").onclick=skip;
+$("plusBtn").onclick=increaseBid;$("minusBtn").onclick=decreaseBid;$("bidBtn").onclick=bid;$("takeBtn").onclick=take;
 renderAll();startRound();
 </script>
+
 </body>
 </html>
