@@ -127,6 +127,13 @@ button:disabled{opacity:.45;cursor:not-allowed}
   .formation-player .fp-pos{font-size:7px}
 }
 
+
+/* ===== FINAL IMAGE FIX ===== */
+.player-mini{display:flex;align-items:flex-end;justify-content:center;position:relative;overflow:hidden;}
+.player-mini img.formation-photo{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;border:0;border-radius:0;background:transparent;filter:drop-shadow(0 4px 5px #000b);}
+.mini-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;color:#ffd84d;z-index:2;}
+.photo-box img{width:auto!important;max-width:92%!important;height:235px!important;object-fit:contain!important;object-position:center bottom!important;}
+@media(max-width:520px){.photo-box img{height:215px!important;}.player-mini img.formation-photo{object-fit:contain;}}
 </style>
 </head>
 <body>
@@ -258,6 +265,49 @@ RB:[
 ["Kieran Trippier","تريبير",82,20000000],["Malo Gusto","مالو غوستو",82,22000000],["Vanderson","فانديرسون",81,18000000]
 ]};
 
+/* ===== EXTRA 68 PLAYERS: LEGENDS + CURRENT STARS ===== */
+const extraPlayers={
+GK:[
+["Edwin van der Sar","إدوين فان دير سار",92,17000000],["Iker Casillas","إيكر كاسياس",92,17000000],["Peter Schmeichel","بيتر شمايكل",91,15000000],["Oliver Kahn","أوليفر كان",91,15000000],["Lev Yashin","ليف ياشين",95,22000000],["Dino Zoff","دينوزوف",91,14000000]
+],
+ST:[
+["Eusebio","أوزيبيو",97,70000000],["Marco van Basten","ماركو فان باستن",96,60000000],["Romario","روماريو",95,55000000],["Gabriel Batistuta","باتيستوتا",94,50000000],["Thierry Henry","تييري هنري",96,60000000],["Alan Shearer","آلان شيرر",92,40000000],["George Weah","جورج وياه",94,48000000]
+],
+RW:[
+["Johan Cruyff","يوهان كرويف",97,65000000],["Garrincha","غارينشا",96,60000000],["George Best","جورج بست",95,55000000],["Luis Figo","لويس فيغو",93,45000000],["David Beckham","ديفيد بيكهام",92,42000000],["Arjen Robben","آريين روبن",92,40000000]
+],
+LW:[
+["Ronaldinho","رونالدينيو",97,65000000],["Rivaldo","ريفالدو",95,55000000],["Gareth Bale","غاريث بيل",94,45000000],["Franck Ribery","فرانك ريبيري",91,35000000],["Sadio Mane","ساديو ماني",89,35000000],["Eden Hazard","إيدين هازارد",91,38000000]
+],
+CAM:[
+["Zinedine Zidane","زين الدين زيدان",98,70000000],["Diego Maradona","دييغو مارادونا",99,80000000],["Michel Platini","ميشيل بلاتيني",96,60000000],["Kaka","كاكا",94,50000000],["Mesut Ozil","مسعود أوزيل",89,30000000],["Francesco Totti","فرانشيسكو توتي",95,55000000]
+],
+CM:[
+["Luka Modric","لوكا مودريتش",93,42000000],["Xavi","تشافي",96,60000000],["Andres Iniesta","أندريس إنييستا",97,65000000],["Andrea Pirlo","أندريا بيرلو",95,52000000],["Steven Gerrard","ستيفن جيرارد",94,50000000],["Frank Lampard","فرانك لامبارد",93,45000000]
+],
+CB:[
+["Paolo Maldini","باولو مالديني",98,65000000],["Franco Baresi","فرانكو باريزي",97,60000000],["Fabio Cannavaro","فابيو كانافارو",96,55000000],["Alessandro Nesta","أليساندرو نيستا",96,55000000],["Carles Puyol","كارليس بويول",93,45000000],["Rio Ferdinand","ريو فيرديناند",92,42000000]
+],
+LB:[
+["Roberto Carlos","روبرتو كارلوس",97,60000000],["Marcelo","مارسيلو",93,45000000],["Ashley Cole","أشلي كول",92,40000000],["Patrice Evra","باتريس إيفرا",89,30000000],["Jordi Alba","جوردي ألبا",89,30000000],["Cesar Azpilicueta","سيزار أزبيليكويتا",87,25000000]
+],
+RB:[
+["Cafu","كافو",97,60000000],["Dani Alves","داني ألفيس",95,55000000],["Lilian Thuram","ليليان تورام",96,55000000],["Javier Zanetti","خافيير زانيتي",94,48000000],["Philipp Lahm","فيليب لام",95,50000000],["Gary Neville","غاري نيفيل",89,30000000]
+]};
+Object.keys(extraPlayers).forEach(role=>{db[role]=(db[role]||[]).concat(extraPlayers[role]);});
+/* ===== EXTRA 37 PLAYERS ===== */
+const extraPlayers2={
+GK:[["Edwin van der Sar","فان دير سار",92,17000000],["Petr Cech","بيتر تشيك",91,16000000],["Victor Valdes","فيكتور فالديز",88,12000000],["Claudio Taffarel","تافاريل",90,13000000],["Jose Luis Chilavert","تشيلابيرت",90,14000000]],
+ST:[["Eusebio","أوزيبيو",97,70000000],["Gerd Muller","غيرد مولر",97,65000000],["Hugo Sanchez","هوغو سانشيز",94,48000000],["Luis Suarez","لويس سواريز",91,42000000]],
+RW:[["Luis Figo","لويس فيغو",93,45000000],["Angel Di Maria","أنخيل دي ماريا",90,35000000],["Riyad Mahrez","رياض محرز",85,30000000],["Mohamed Kudus","محمد قدوس",85,30000000]],
+LW:[["Gareth Bale","غاريث بيل",94,45000000],["Kvaratskhelia","كفاراتسخيليا",89,50000000],["Khvicha Kvaratskhelia","كفاراتسخيليا",89,50000000],["Nico Williams","نيكو ويليامز",86,33000000]],
+CAM:[["David Silva","دافيد سيلفا",92,38000000],["Juan Roman Riquelme","خوان رومان ريكيلمي",94,45000000],["Rui Costa","روي كوستا",93,42000000],["Dennis Bergkamp","دينيس بيركامب",94,48000000]],
+CM:[["Paul Scholes","بول سكولز",93,40000000],["Clarence Seedorf","كلارنس سيدورف",94,42000000],["Patrick Vieira","باتريك فييرا",94,45000000],["Lothar Matthaus","لوثار ماتيوس",97,60000000]],
+CB:[["Sergio Ramos","سيرجيو راموس",95,50000000],["Nemanja Vidic","نيمانيا فيديتش",93,40000000],["Thiago Silva","تياغو سيلفا",91,35000000],["Laurent Blanc","لوران بلان",94,45000000]],
+LB:[["David Alaba","دافيد ألابا",89,30000000],["John Arne Riise","جون آرني ريسه",89,28000000],["Eric Abidal","إريك أبيدال",89,27000000],["Bixente Lizarazu","ليزارازو",91,30000000]],
+RB:[["Maicon","مايكون",94,45000000],["Willy Sagnol","ويلي سانيول",91,32000000],["Dani Carvajal","داني كارفاخال",90,30000000],["Juan Cuadrado","خوان كوادرادو",88,28000000]]};
+Object.keys(extraPlayers2).forEach(role=>{db[role]=(db[role]||[]).concat(extraPlayers2[role]);});
+
 const aliases={
 "Thibaut Courtois":"Thibaut Courtois","Alisson Becker":"Alisson","Jan Oblak":"Jan Oblak","Gianluigi Donnarumma":"Gianluigi Donnarumma",
 "Marc-Andre ter Stegen":"Marc-André ter Stegen","Manuel Neuer":"Manuel Neuer","Ederson":"Ederson","Emiliano Martinez":"Emiliano Martínez",
@@ -314,6 +364,7 @@ function buildPitches(){
   });
 }
 buildPitches();
+setTimeout(warmAllImages,120);
 
 function makePlayer(arr,key){
   return {wiki:aliases[arr[0]]||arr[0],n:arr[1],r:arr[2],p:arr[3],slot:key,id:arr[0]+"-"+key+"-"+Math.random()};
@@ -329,38 +380,51 @@ function choosePlayer(key){
 
 async function getWikiImage(name){
   const title=aliases[name]||name;
-  if(state.imageCache.has(title))return state.imageCache.get(title);
-  // لا نستخدم pilicense=free هنا لأن أغلب صور اللاعبين على ويكيبيديا تكون
-  // صوراً تعليمية/موسوعية وقد تختفي إذا طلبنا الصور المرخصة الحرة فقط.
-  const endpoint="https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&origin=*&redirects=1&prop=pageimages&piprop=thumbnail&pithumbsize=700&titles="+encodeURIComponent(title);
+  if(state.imageCache.has(title)) return state.imageCache.get(title);
+
+  const api1="https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&origin=*&redirects=1&prop=pageimages&piprop=thumbnail&pithumbsize=700&titles="+encodeURIComponent(title);
+  const api2="https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&origin=*&redirects=1&prop=pageimages&piprop=original&titles="+encodeURIComponent(title);
+  const rest="https://en.wikipedia.org/api/rest_v1/page/summary/"+encodeURIComponent(title.replace(/ /g,"_"));
+
   try{
-    const res=await fetch(endpoint,{cache:"force-cache"});
-    if(!res.ok)throw new Error("Wikipedia HTTP "+res.status);
-    const data=await res.json();
-    const page=data?.query?.pages?.[0];
-    const src=page?.thumbnail?.source||page?.original?.source||"";
-    state.imageCache.set(title,src);
-    return src;
+    let res=await fetch(api1,{cache:"no-store"});
+    let data=await res.json();
+    let page=data?.query?.pages?.[0];
+    let src=page?.thumbnail?.source||page?.original?.source||"";
+    if(src){state.imageCache.set(title,src);return src;}
+
+    res=await fetch(api2,{cache:"no-store"});
+    data=await res.json();
+    page=data?.query?.pages?.[0];
+    src=page?.original?.source||page?.thumbnail?.source||"";
+    if(src){state.imageCache.set(title,src);return src;}
+
+    res=await fetch(rest,{cache:"no-store"});
+    data=await res.json();
+    src=data?.originalimage?.source||data?.thumbnail?.source||"";
+    state.imageCache.set(title,src||"");
+    return src||"";
   }catch(e){
-    console.warn("تعذر تحميل صورة اللاعب:",title,e);
+    console.warn("Image load failed:",title,e);
     state.imageCache.set(title,"");
     return "";
   }
 }
 
 async function loadPlayerImage(player,imgEl,fallback){
-  if(!imgEl||!fallback||!player)return;
+  if(!imgEl||!fallback||!player)return "";
   const key=String(player.id||player.wiki||player.n);
   imgEl.dataset.playerKey=key;
   imgEl.style.display="none";
   imgEl.removeAttribute("src");
-  fallback.style.display="block";
+  fallback.style.display="flex";
   fallback.textContent="⚽";
 
-  const src=await getWikiImage(player.wiki);
-  if(imgEl.dataset.playerKey!==key)return;
+  const src=player.photo||await getWikiImage(player.wiki);
+  if(imgEl.dataset.playerKey!==key)return "";
 
   if(src){
+    player.photo=src;
     imgEl.onload=()=>{
       if(imgEl.dataset.playerKey!==key)return;
       imgEl.style.display="block";
@@ -369,13 +433,41 @@ async function loadPlayerImage(player,imgEl,fallback){
     imgEl.onerror=()=>{
       if(imgEl.dataset.playerKey!==key)return;
       imgEl.style.display="none";
-      fallback.style.display="block";
-      fallback.textContent=player.n.slice(0,1);
+      fallback.style.display="flex";
+      fallback.textContent=(player.n||"⚽").slice(0,1);
     };
     imgEl.src=src;
   }else{
-    fallback.textContent=player.n.slice(0,1);
+    fallback.textContent=(player.n||"⚽").slice(0,1);
   }
+  return src||"";
+}
+
+async function preparePlayerImage(player){
+  if(!player)return "";
+  if(player.photo)return player.photo;
+  const src=await getWikiImage(player.wiki);
+  if(src)player.photo=src;
+  return src;
+}
+
+// تجهيز صور اللاعبين في الخلفية من البداية، حتى تظهر صور AI تلقائياً.
+let imageWarmStarted=false;
+function warmAllImages(){
+  if(imageWarmStarted)return;
+  imageWarmStarted=true;
+  const all=[];
+  Object.keys(db).forEach(role=>{
+    (db[role]||[]).forEach(arr=>all.push(aliases[arr[0]]||arr[0]));
+  });
+  let i=0;
+  const batch=async()=>{
+    const jobs=[];
+    for(let n=0;n<5 && i<all.length;n++,i++) jobs.push(getWikiImage(all[i]));
+    await Promise.all(jobs);
+    if(i<all.length)setTimeout(batch,80);
+  };
+  batch();
 }
 
 function updateStats(){
@@ -390,7 +482,6 @@ function renderTeam(team){
   const list=$(team===1?"userList":"aiList");
   list.innerHTML="";
 
-  // امسح الخانات أولاً حتى لا تبقى صورة لاعب قديم.
   POSITIONS.forEach(pos=>{
     const el=$((team===1?"u-":"a-")+pos.key);
     if(!el)return;
@@ -414,16 +505,15 @@ function renderTeam(team){
     el.classList.add("filled");
 
     const nameEl=el.querySelector(".slot-name");
-    if(nameEl){
-      nameEl.textContent=p.n;
-      nameEl.title=p.n;
-    }
+    if(nameEl){nameEl.textContent=p.n;nameEl.title=p.n;}
 
     const box=el.querySelector(".player-mini");
     if(!box)return;
-    box.innerHTML='<img alt="'+escapeHtml(p.n)+'"><div class="mini-fallback">⚽</div>';
+    box.innerHTML='<img class="formation-photo" alt=""><div class="mini-fallback">⚽</div>';
     const img=box.querySelector("img");
     const fb=box.querySelector(".mini-fallback");
+    const cached=state.imageCache.get(aliases[p.wiki]||p.wiki);
+    if(cached && !p.photo)p.photo=cached;
     loadPlayerImage(p,img,fb);
   });
 }
@@ -433,7 +523,10 @@ function renderAll(){renderTeam(1);renderTeam(2);updateStats()}
 async function startRound(){
   if(state.round>=posOrder.length){finishMatch();return}
   state.thinking=false;state.turn=1;state.highest=0;
-  const key=posOrder[state.round];state.current=choosePlayer(key);
+  const key=posOrder[state.round];
+  state.current=choosePlayer(key);
+  // جهّز صورة لاعب المزاد قبل عرض الجولة حتى لا يظهر الكرت فارغاً.
+  await preparePlayerImage(state.current);
   state.currentBid=Math.max(1000000,Math.round(state.current.p/2/1000000)*1000000);
   state.userBid=state.currentBid+1000000;
   $("positionBadge").textContent=key+" • "+roleLabel(key);
@@ -479,7 +572,7 @@ function take(){
 
 // زر "خده": الذي يضغطه يأخذ لاعباً عشوائياً من نفس المركز،
 // والخصم يحصل على لاعب المزاد ويدفع السعر الحالي.
-function takeBy(taker){
+async function takeBy(taker){
   const auctionWinner=taker===1?2:1;
   const p=state.current;
   if(!p)return;
@@ -491,6 +584,8 @@ function takeBy(taker){
   }
 
   const randomPlayer=chooseRandomForTeam(roleBase(p.slot),taker,p.slot);
+  // جهّز صور اللاعب المزاد واللاعب العشوائي قبل تحديث تشكيل AI/فريقك.
+  await Promise.all([preparePlayerImage(p), randomPlayer ? preparePlayerImage(randomPlayer) : Promise.resolve()]);
   if(state.money[auctionWinner] < state.currentBid){
     // الخصم لا يستطيع الدفع: صاحب زر "خده" يأخذ لاعب المزاد نفسه.
     state.money[taker]-=state.currentBid;
@@ -556,10 +651,11 @@ function aiMove(){
   },750+Math.random()*850);
 }
 
-function award(winner){
+async function award(winner){
   const p=state.current;if(!p)return;
   if(winner===1 && state.money[1]<state.currentBid){alert("ميزانيتك لا تكفي.");return}
   if(winner===2 && state.money[2]<state.currentBid){winner=1}
+  await preparePlayerImage(p);
   state.money[winner]-=state.currentBid;
   state.teams[winner].push({...p,paid:state.currentBid});
   $("log").textContent=(winner===1?"🏆 أخذته أنت: ":"🤖 أخذه AI: ")+p.n+" مقابل "+money(state.currentBid);
