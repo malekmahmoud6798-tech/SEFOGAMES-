@@ -570,48 +570,82 @@ function take(){
   takeBy(1);
 }
 
-// زر "خده": الذي يضغطه يأخذ لاعباً عشوائياً من نفس المركز،
-// والخصم يحصل على لاعب المزاد ويدفع السعر الحالي.
+// "خده" = صاحب الزر يأخذ لاعب المزاد، والطرف الآخر
+// يحصل على لاعب عشوائي مجاناً من نفس نوع المركز إن أمكن.
 async function takeBy(taker){
-  const auctionWinner=taker===1?2:1;
-  const p=state.current;
-  if(!p)return;
+  const opponent=taker===1?2:1;
+  const auctionPlayer=state.current;
+  if(!auctionPlayer)return;
 
-  // إذا كان للخصم خانة المزاد بالفعل، لا نكرر الخانة.
-  if(hasRole(auctionWinner,p.slot)){
-    $("log").textContent="⚠️ لا يوجد مكان متاح لهذا المركز.";
+  // اللاعب العشوائي للخصم يجب أن يكون من نفس المركز/النوع.
+  const randomPlayer=chooseRandomSameRole(opponent, auctionPlayer.slot);
+
+  // لا نكمل الصفقة إذا لم نجد لاعباً عشوائياً من نفس المركز.
+  // هذا يمنع أن يظهر "خده" وكأن الصفقة تمت بدون أن يحصل الطرف الآخر على لاعب.
+  if(!randomPlayer){
+    $("log").textContent="⚠️ لا يوجد لاعب عشوائي متاح من نفس المركز للخصم.";
+    state.thinking=false;
+    updateButtons();
     return;
   }
 
-  const randomPlayer=chooseRandomForTeam(roleBase(p.slot),taker,p.slot);
-  // جهّز صور اللاعب المزاد واللاعب العشوائي قبل تحديث تشكيل AI/فريقك.
-  await Promise.all([preparePlayerImage(p), randomPlayer ? preparePlayerImage(randomPlayer) : Promise.resolve()]);
-  if(state.money[auctionWinner] < state.currentBid){
-    // الخصم لا يستطيع الدفع: صاحب زر "خده" يأخذ لاعب المزاد نفسه.
-    state.money[taker]-=state.currentBid;
-    state.teams[taker].push({...p,paid:state.currentBid});
-    $("log").textContent="💰 الخصم لا يملك المبلغ، فأخذت لاعب المزاد.";
-  }else{
-    state.money[auctionWinner]-=state.currentBid;
-    state.teams[auctionWinner].push({...p,paid:state.currentBid});
-    if(randomPlayer) state.teams[taker].push({...randomPlayer,paid:0,random:true});
-    $("log").textContent=taker===1
-      ? "🔄 أنت قلت خده: AI أخذ لاعب المزاد، وأنت حصلت على لاعب عشوائي من نفس المركز."
-      : "🔄 AI قال خده: أنت أخذت لاعب المزاد، وAI حصل على لاعب عشوائي من نفس المركز.";
+  if(state.money[taker] < state.currentBid){
+    $("log").textContent="⚠️ ميزانية صاحب «خده» لا تكفي.";
+    state.thinking=false;
+    updateButtons();
+    return;
   }
+
+  await Promise.all([
+    preparePlayerImage(auctionPlayer),
+    preparePlayerImage(randomPlayer)
+  ]);
+
+  // صاحب "خده" يأخذ لاعب المزاد ويدفع السعر الحالي.
+  state.money[taker]-=state.currentBid;
+  state.teams[taker].push({...auctionPlayer,paid:state.currentBid});
+
+  // الخصم يأخذ لاعباً عشوائياً مجاناً من نفس نوع المركز.
+  state.teams[opponent].push({...randomPlayer,paid:0,random:true});
+
+  $("log").textContent=taker===1
+    ? "🔄 أنت خدت اللاعب: "+auctionPlayer.n+" — والـAI أخذ مجاناً لاعباً عشوائياً من نفس المركز: "+randomPlayer.n
+    : "🤖 AI قال خده: أنت أخذت "+auctionPlayer.n+" — والـAI أخذ مجاناً لاعباً عشوائياً من نفس المركز: "+randomPlayer.n;
+
   renderAll();
-  state.turn=1;state.highest=0;state.thinking=false;
-  setTimeout(()=>{state.round++;startRound()},650);
+
+  state.turn=1;
+  state.highest=0;
+  state.thinking=false;
+
+  setTimeout(()=>{
+    state.round++;
+    startRound();
+  },650);
 }
 
-function chooseRandomForTeam(base,taker,currentSlot){
-  const availableSlot=POSITIONS.map(x=>x.key).find(k=>roleBase(k)===base && !hasRole(taker,k));
-  if(!availableSlot)return null;
-  const pool=getPool(base).filter(x=>!state.used.has(x[0]));
+// يختار لاعباً عشوائياً حقيقياً من نفس نوع مركز لاعب المزاد.
+// مثال: ST -> ST، LW -> LW، CB -> CB.
+// لا يختار اللاعب الحالي نفسه ولا لاعباً مستخدماً من قبل.
+function chooseRandomSameRole(team, auctionSlot){
+  const base=roleBase(auctionSlot);
+
+  const freeSlots=POSITIONS
+    .filter(pos=>roleBase(pos.key)===base && !hasRole(team,pos.key))
+    .map(pos=>pos.key);
+
+  if(!freeSlots.length)return null;
+
+  const pool=getPool(base).filter(player=>!state.used.has(player[0]));
+
   if(!pool.length)return null;
-  const arr=pool[Math.floor(Math.random()*pool.length)];
-  state.used.add(arr[0]);
-  return makePlayer(arr,availableSlot);
+
+  const player=pool[Math.floor(Math.random()*pool.length)];
+  const slot=freeSlots[Math.floor(Math.random()*freeSlots.length)];
+
+  state.used.add(player[0]);
+
+  return makePlayer(player,slot);
 }
 
 function aiStrength(){
@@ -640,13 +674,16 @@ function aiMove(){
       $("log").textContent="🔴 AI زايد إلى "+money(state.currentBid);
       state.thinking=false;updateButtons();
     }else{
-      // AI ينسحب: آخر مزايد (أنت) يأخذ اللاعب بالسعر الحالي.
+      // AI يقول "خده":
+      // أنت تأخذ لاعب المزاد، والـAI يأخذ لاعباً عشوائياً مجاناً
+      // من نفس نوع المركز. لا نستخدم award(1) هنا لأنه كان
+      // يعطي اللاعب لك فقط ويترك الـAI بدون لاعب.
       $("turn").textContent="🤖 AI: خده! 🔥";
-      $("log").textContent="🤖 AI قال: خده! اللاعب لك بالسعر الحالي.";
+      $("log").textContent="🤖 AI قال: خده! — جاري إعطاءك اللاعب وإعطاء AI لاعباً عشوائياً من نفس المركز...";
       state.thinking=false;
       state.turn=1;
       updateButtons();
-      setTimeout(()=>award(1),450);
+      setTimeout(()=>takeBy(1),450);
     }
   },750+Math.random()*850);
 }
