@@ -1,251 +1,2022 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تسجيل الدخول - مزاد نجوم</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>FOOTBALL ARENA - تسجيل الدخول</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Orbitron:wght@500;700;800;900&display=swap" rel="stylesheet">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);font-family:'Cairo',sans-serif;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
-.container{width:400px;max-width:100%;background: rgba(255,255,255,0.95);border-radius: 25px;padding:40px 30px;box-shadow: 0 20px 60px rgba(0,0,0,0.3)}
-h1{font-size:28px;font-weight:900;color:#333;margin-bottom:10px;text-align:center}
-.subtitle{color:#888;text-align:center;margin-bottom:25px;font-size:14px}
-.input-group{margin-bottom:18px}
-.input-group label{display:block;color:#555;font-weight:700;margin-bottom:8px;font-size:15px}
-.input-group input{width:100%;padding:14px 18px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-family:'Cairo';background:#f8f8f8}
-.input-group input:focus{outline:none;border-color:#667eea;background:#fff}
-.login-btn{width:100%;padding:16px;background: linear-gradient(90deg, #667eea, #764ba2);border:none;border-radius:12px;color:#fff;font-size:18px;font-weight:900;cursor:pointer;margin-top:10px;display:flex;justify-content:center;align-items:center;gap:10px}
-.login-btn:disabled{opacity:0.6;cursor:not-allowed}
-.google-btn{width:100%;padding:14px;background:#fff;border:2px solid #e0e0e0;border-radius:12px;color:#333;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:15px;font-family:'Cairo'}
-.signup{text-align:center;margin-top:20px;font-size:14px;color:#666}
-.signup a{color:#667eea;font-weight:700;text-decoration:none;cursor:pointer}
-.error{color:#ff4444;text-align:center;margin:10px 0;font-size:14px;font-weight:700;min-height:20px}
-.success{color:#00aa00;text-align:center;margin:10px 0;font-size:14px;font-weight:700;min-height:20px}
-.divider{text-align:center;margin:20px 0;color:#aaa;font-weight:700}
-.spinner{border:3px solid #f3f3f3;border-top:3px solid #fff;border-radius:50%;width:20px;height:20px;animation:spin 1s linear infinite;display:none}
-@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(102,126,234,0.9);display:none;justify-content:center;align-items:center;flex-direction:column;z-index:999;color:#fff;font-size:22px;font-weight:900}
-.overlay.spinner{width:60px;height:60px;border:5px solid rgba(255,255,255,0.3);border-top:5px solid #fff;margin-bottom:15px}
-.forgot{ text-align: left; margin-top: -10px; margin-bottom: 15px; }
-.forgot a{color:#667eea;font-size:13px;font-weight:700;text-decoration:none;cursor:pointer}
-</style>
-</head>
-<body>
 
-<div class="container">
-  <h1 id="formTitle">تسجيل الدخول</h1>
-  <p class="subtitle" id="formSubtitle">دخل بياناتك عشان تبدأ المزاد</p>
-  <p class="error" id="errorMsg"></p>
-  <p class="success" id="successMsg"></p>
-
-  <form id="authForm">
-    <div class="input-group">
-      <label>البريد الالكتروني</label>
-      <input type="email" id="email" placeholder="example@email.com" required>
-    </div>
-
-    <div class="input-group" id="passwordGroup">
-      <label>كلمة السر</label>
-      <input type="password" id="password" placeholder="6 حروف على الاقل" required minlength="6">
-    </div>
-
-    <div class="forgot" id="forgotDiv">
-      <a id="forgotBtn">نسيت كلمة السر؟</a>
-    </div>
-
-    <button type="submit" class="login-btn" id="submitBtn">
-      <span id="btnText">دخول</span>
-      <div class="spinner" id="btnSpinner"></div>
-    </button>
-  </form>
-
-  <div class="divider" id="divider">او</div>
-
-  <button type="button" class="google-btn" id="googleLogin">
-    <img src="https://www.svgrepo.com/show/355037/google.svg" width="20">
-    الدخول بحساب جوجل
-  </button>
-
-  <p class="signup">معندكش حساب؟ <a id="toggleBtn">سجل الآن</a></p>
-</div>
-
-<div class="overlay" id="overlay">
-  <div class="spinner"></div>
-  <p id="overlayText">جاري تسجيل الدخول...</p>
-</div>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC_55Rv6wCni9EwQurtUILswB1WjkXp6hM",
-  authDomain: "mazad-noogom.firebaseapp.com",
-  databaseURL: "https://mazad-noogom-default-rtdb.firebaseio.com",
-  projectId: "mazad-noogom",
-  storageBucket: "mazad-noogom.firebasestorage.app",
-  messagingSenderId: "183884985831",
-  appId: "1:183884985831:web:db231949dace2b0798b942"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getDatabase(app);
-const provider = new GoogleAuthProvider();
-provider.addScope('email'); // مهم عشان يجيب الايميل
-provider.addScope('profile'); // مهم عشان يجيب الصورة
-
-const errorMsg = document.getElementById('errorMsg');
-const successMsg = document.getElementById('successMsg');
-const overlay = document.getElementById('overlay');
-const overlayText = document.getElementById('overlayText');
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
-const btnSpinner = document.getElementById('btnSpinner');
-const btnText = document.getElementById('btnText');
-const submitBtn = document.getElementById('submitBtn');
-const forgotBtn = document.getElementById('forgotBtn');
-
-// دالة واحدة تحفظ كل حاجة بجد
-function saveUserData(user) {
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('email', user.email); // الايميل الحقي من جوجل
-    localStorage.setItem('avatar', user.photoURL || 'https://i.imgur.com/8Km9tLL.png'); // الصورة الحقي
-    localStorage.setItem('uid', user.uid);
-    localStorage.setItem('displayName', user.displayName || user.email.split('@')[0]);
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-async function loadUserData(uid) {
-    const userRef = ref(db, 'users/' + uid);
-    const snapshot = await get(userRef);
-    if(snapshot.exists()){
-        const data = snapshot.val();
-        localStorage.setItem('xp', data.xp || 0);
-        localStorage.setItem('التذاكر', data.tickets || 5);
-    } else {
-        await set(userRef, { xp: 0, tickets: 5, email: auth.currentUser.email });
-        localStorage.setItem('xp', 0);
-        localStorage.setItem('التذاكر', 5);
+html,
+body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+    font-family:'Cairo',sans-serif;
+    background:#02050a;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.bg{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:-10;
+    background:
+        radial-gradient(circle at 50% 15%,rgba(0,195,255,.18),transparent 32%),
+        radial-gradient(circle at 10% 85%,rgba(0,80,255,.16),transparent 30%),
+        radial-gradient(circle at 90% 75%,rgba(0,255,170,.10),transparent 25%),
+        #02050a;
+}
+
+.bg::before{
+    content:"";
+    position:absolute;
+    inset:-50%;
+    background:
+        linear-gradient(rgba(0,200,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,200,255,.035) 1px,transparent 1px);
+    background-size:45px 45px;
+    transform:perspective(600px) rotateX(62deg);
+    animation:gridMove 10s linear infinite;
+}
+
+@keyframes gridMove{
+    from{
+        transform:perspective(600px) rotateX(62deg) translateY(0);
+    }
+    to{
+        transform:perspective(600px) rotateX(62deg) translateY(45px);
     }
 }
 
-// تشيك لو راجع من جوجل
-getRedirectResult(auth).then(async (result) => {
-  if(result && result.user){
-    saveUserData(result.user);
-    await loadUserData(result.user.uid);
-    window.location.href = '(home20260915-213703).html';
-  }
-}).catch((error) => {
-    if(error.code!== 'auth/no-auth-event') errorMsg.innerText = 'خطأ: ' + error.message;
-});
+/* =========================
+   GLOW BALL
+========================= */
 
-// لو مسجل قبل كده روح للهوم
-onAuthStateChanged(auth, async user => {
-  if(user){
-    saveUserData(user);
-    await loadUserData(user.uid);
-    window.location.href = '(home20260915-213703).html';
-  }
-});
+.glow-ball{
+    position:absolute;
+    width:360px;
+    height:360px;
+    border-radius:50%;
+    left:50%;
+    top:15%;
+    transform:translate(-50%,-50%);
+    background:
+        radial-gradient(circle,
+        rgba(0,220,255,.22) 0%,
+        rgba(0,150,255,.08) 35%,
+        transparent 70%);
+    filter:blur(10px);
+    animation:ballPulse 4s ease-in-out infinite;
+}
+
+@keyframes ballPulse{
+    0%,100%{
+        opacity:.55;
+        transform:translate(-50%,-50%) scale(.9);
+    }
+    50%{
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1.15);
+    }
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+.particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-2;
+}
+
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#00d9ff;
+    box-shadow:0 0 12px #00d9ff;
+    animation:floatParticle linear infinite;
+}
+
+.particle:nth-child(1){left:8%;top:80%;animation-duration:7s}
+.particle:nth-child(2){left:15%;top:45%;animation-duration:9s}
+.particle:nth-child(3){left:24%;top:90%;animation-duration:8s}
+.particle:nth-child(4){left:35%;top:35%;animation-duration:11s}
+.particle:nth-child(5){left:47%;top:80%;animation-duration:6s}
+.particle:nth-child(6){left:58%;top:30%;animation-duration:10s}
+.particle:nth-child(7){left:68%;top:75%;animation-duration:8s}
+.particle:nth-child(8){left:78%;top:40%;animation-duration:12s}
+.particle:nth-child(9){left:88%;top:82%;animation-duration:7s}
+.particle:nth-child(10){left:94%;top:20%;animation-duration:9s}
+
+@keyframes floatParticle{
+    0%{
+        transform:translateY(80px) scale(.5);
+        opacity:0;
+    }
+    15%{
+        opacity:1;
+    }
+    85%{
+        opacity:1;
+    }
+    100%{
+        transform:translateY(-350px) scale(1.2);
+        opacity:0;
+    }
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.page{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:25px 16px;
+}
+
+.container{
+    width:100%;
+    max-width:430px;
+    position:relative;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo{
+    text-align:center;
+    margin-bottom:20px;
+    animation:logoEnter .9s ease both;
+}
+
+.logo-icon{
+    width:78px;
+    height:78px;
+    margin:auto;
+    border-radius:50%;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        radial-gradient(circle at 35% 30%,#ffffff 0%,#b8f7ff 7%,#006cff 45%,#001a46 100%);
+
+    border:2px solid rgba(255,255,255,.7);
+
+    box-shadow:
+        0 0 15px rgba(0,200,255,.8),
+        0 0 40px rgba(0,100,255,.5),
+        inset 0 0 20px rgba(255,255,255,.3);
+
+    animation:logoSpin 8s linear infinite;
+}
+
+.logo-icon::before{
+    content:"⚽";
+    font-size:43px;
+    filter:drop-shadow(0 0 7px #fff);
+}
+
+.logo-ring{
+    position:absolute;
+    inset:-8px;
+    border:1px solid rgba(0,220,255,.7);
+    border-radius:50%;
+    border-top-color:transparent;
+    border-bottom-color:transparent;
+    animation:ringSpin 3s linear infinite;
+}
+
+@keyframes logoSpin{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-5px);
+    }
+}
+
+@keyframes ringSpin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes logoEnter{
+    from{
+        opacity:0;
+        transform:translateY(-30px) scale(.8);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.brand{
+    margin-top:16px;
+    font-family:'Orbitron',sans-serif;
+    font-size:24px;
+    font-weight:900;
+    letter-spacing:2px;
+
+    background:linear-gradient(
+        90deg,
+        #ffffff,
+        #7eeeff,
+        #00bfff,
+        #ffffff
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    text-shadow:0 0 20px rgba(0,200,255,.4);
+}
+
+.brand-sub{
+    margin-top:3px;
+    color:#6f899d;
+    font-size:11px;
+    letter-spacing:3px;
+    font-family:'Orbitron',sans-serif;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+    position:relative;
+    padding:30px 23px 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(13,28,43,.96),
+            rgba(3,9,16,.98)
+        );
+
+    border:1px solid rgba(0,209,255,.28);
+
+    clip-path:polygon(
+        0 15px,
+        15px 0,
+        calc(100% - 15px) 0,
+        100% 15px,
+        100% calc(100% - 15px),
+        calc(100% - 15px) 100%,
+        15px 100%,
+        0 calc(100% - 15px)
+    );
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.65),
+        0 0 45px rgba(0,145,255,.10);
+
+    animation:cardEnter .8s .15s ease both;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    inset:1px;
+
+    border:1px solid rgba(255,255,255,.05);
+
+    clip-path:inherit;
+    pointer-events:none;
+}
+
+.card::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:70%;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.06),
+        transparent
+    );
+
+    transform:skewX(-20deg);
+    animation:cardShine 5s ease-in-out infinite;
+    pointer-events:none;
+}
+
+@keyframes cardEnter{
+    from{
+        opacity:0;
+        transform:translateY(35px) scale(.96);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+@keyframes cardShine{
+    0%,65%{
+        left:-100%;
+    }
+    85%{
+        left:140%;
+    }
+    100%{
+        left:140%;
+    }
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.form-title{
+    text-align:center;
+    font-size:25px;
+    font-weight:900;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#718b9d;
+    font-size:12px;
+    margin-bottom:23px;
+}
+
+/* =========================
+   MESSAGES
+========================= */
+
+.message{
+    min-height:24px;
+    text-align:center;
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.error{
+    color:#ff5964;
+    text-shadow:0 0 10px rgba(255,40,60,.25);
+}
+
+.success{
+    color:#43f0a5;
+    text-shadow:0 0 10px rgba(0,255,150,.25);
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.input-group{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    color:#a8bac7;
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+.input-wrap{
+    position:relative;
+}
+
+.input-icon{
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:16px;
+    opacity:.7;
+}
+
+input{
+    width:100%;
+    height:52px;
+
+    padding:0 44px 0 15px;
+
+    color:#fff;
+    background:#06101a;
+
+    border:1px solid #183244;
+    border-radius:10px;
+
+    outline:none;
+
+    font-family:'Cairo',sans-serif;
+    font-size:14px;
+
+    transition:.25s;
+}
+
+input::placeholder{
+    color:#496171;
+}
+
+input:focus{
+    border-color:#00cfff;
+    background:#071520;
+
+    box-shadow:
+        0 0 0 3px rgba(0,200,255,.07),
+        0 0 20px rgba(0,200,255,.08);
+}
+
+/* =========================
+   FORGOT
+========================= */
+
+.forgot{
+    text-align:left;
+    margin-top:-4px;
+    margin-bottom:16px;
+}
+
+.forgot a{
+    color:#00cfff;
+    font-size:11px;
+    font-weight:800;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+/* =========================
+   MAIN BUTTON
+========================= */
+
+.login-btn{
+    width:100%;
+    height:54px;
+
+    border:0;
+    border-radius:10px;
+
+    color:#001018;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00d9ff,
+            #00aaff,
+            #00f0b0
+        );
+
+    font-family:'Cairo',sans-serif;
+    font-size:17px;
+    font-weight:900;
+
+    cursor:pointer;
+
+    position:relative;
+    overflow:hidden;
+
+    box-shadow:
+        0 8px 25px rgba(0,190,255,.22);
+
+    transition:.2s;
+}
+
+.login-btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:60%;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.45),
+        transparent
+    );
+
+    transform:skewX(-20deg);
+    transition:.5s;
+}
+
+.login-btn:hover::before{
+    left:130%;
+}
+
+.login-btn:active{
+    transform:scale(.98);
+}
+
+.login-btn:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+/* =========================
+   BUTTON LOADER
+========================= */
+
+.btn-content{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+}
+
+.spinner{
+    width:19px;
+    height:19px;
+
+    border:3px solid rgba(0,0,0,.15);
+    border-top-color:#001018;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
+    display:none;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* =========================
+   DIVIDER
+========================= */
+
+.divider{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    color:#506879;
+    font-size:11px;
+    font-weight:800;
+
+    margin:20px 0;
+}
+
+.divider::before,
+.divider::after{
+    content:"";
+    height:1px;
+    flex:1;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #203847
+    );
+}
+
+.divider::after{
+    background:linear-gradient(
+        90deg,
+        #203847,
+        transparent
+    );
+}
+
+/* =========================
+   GOOGLE
+========================= */
+
+.google-btn{
+    width:100%;
+    height:50px;
+
+    border:1px solid #263d4d;
+    border-radius:10px;
+
+    background:#08131d;
+    color:#fff;
+
+    font-family:'Cairo',sans-serif;
+    font-size:13px;
+    font-weight:800;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    transition:.2s;
+}
+
+.google-btn:hover{
+    border-color:#5a7383;
+    background:#0b1823;
+}
+
+.google-btn:active{
+    transform:scale(.98);
+}
+
+.google-btn img{
+    width:20px;
+    height:20px;
+}
+
+/* =========================
+   SIGN UP
+========================= */
+
+.signup{
+    text-align:center;
+    color:#62798a;
+    font-size:12px;
+    margin-top:19px;
+}
+
+.signup a{
+    color:#00d4ff;
+    font-weight:900;
+    cursor:pointer;
+    text-decoration:none;
+}
+
+/* =========================
+   BOTTOM
+========================= */
+
+.footer{
+    text-align:center;
+    margin-top:16px;
+    color:#304755;
+    font-size:9px;
+    letter-spacing:1px;
+    font-family:'Orbitron',sans-serif;
+}
+
+/* =========================
+   FULL SCREEN LOADING
+========================= */
+
+.overlay{
+    position:fixed;
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,110,180,.20),
+            rgba(0,0,0,.97) 65%
+        );
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+
+    z-index:9999;
+}
+
+.overlay-logo{
+    width:80px;
+    height:80px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        radial-gradient(
+            circle,
+            #fff 0%,
+            #00bfff 30%,
+            #003c75 100%
+        );
+
+    box-shadow:
+        0 0 25px #00cfff,
+        0 0 70px rgba(0,180,255,.4);
+
+    animation:overlayPulse 1.3s infinite;
+}
+
+.overlay-logo::after{
+    content:"⚽";
+    font-size:42px;
+}
+
+@keyframes overlayPulse{
+    0%,100%{
+        transform:scale(.92);
+    }
+    50%{
+        transform:scale(1.08);
+    }
+}
+
+.overlay-text{
+    margin-top:22px;
+    font-size:15px;
+    font-weight:900;
+    color:#fff;
+}
+
+.overlay-sub{
+    margin-top:5px;
+    font-size:10px;
+    color:#628294;
+    letter-spacing:2px;
+    font-family:'Orbitron',sans-serif;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:420px){
+
+    .page{
+        padding:18px 12px;
+    }
+
+    .logo{
+        margin-bottom:15px;
+    }
+
+    .logo-icon{
+        width:67px;
+        height:67px;
+    }
+
+    .logo-icon::before{
+        font-size:37px;
+    }
+
+    .brand{
+        font-size:21px;
+    }
+
+    .card{
+        padding:25px 18px 21px;
+    }
+
+    .form-title{
+        font-size:22px;
+    }
+
+    input{
+        height:50px;
+    }
+
+    .login-btn{
+        height:52px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     BACKGROUND
+========================= -->
+
+<div class="bg">
+    <div class="glow-ball"></div>
+</div>
+
+<div class="particles">
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+</div>
+
+
+<!-- =========================
+     PAGE
+========================= -->
+
+<main class="page">
+
+<div class="container">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            <div class="logo-ring"></div>
+        </div>
+
+        <div class="brand">
+            FOOTBALL ARENA
+        </div>
+
+        <div class="brand-sub">
+            THE GAME STARTS HERE
+        </div>
+
+    </div>
+
+
+    <section class="card">
+
+        <h1 class="form-title" id="formTitle">
+            تسجيل الدخول
+        </h1>
+
+        <p class="subtitle" id="formSubtitle">
+            ادخل حسابك وابدأ رحلتك الكروية
+        </p>
+
+
+        <div class="message error" id="errorMsg"></div>
+        <div class="message success" id="successMsg"></div>
+
+
+        <form id="authForm">
+
+            <!-- EMAIL -->
+
+            <div class="input-group">
+
+                <label>
+                    البريد الإلكتروني
+                </label>
+
+                <div class="input-wrap">
+
+                    <span class="input-icon">
+                        ✉️
+                    </span>
+
+                    <input
+                        type="email"
+                        id="email"
+                        autocomplete="email"
+                        placeholder="example@email.com"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="input-group" id="passwordGroup">
+
+                <label>
+                    كلمة السر
+                </label>
+
+                <div class="input-wrap">
+
+                    <span class="input-icon">
+                        🔐
+                    </span>
+
+                    <input
+                        type="password"
+                        id="password"
+                        autocomplete="current-password"
+                        placeholder="6 حروف على الأقل"
+                        minlength="6"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- FORGOT -->
+
+            <div class="forgot" id="forgotDiv">
+
+                <a id="forgotBtn">
+                    نسيت كلمة السر؟
+                </a>
+
+            </div>
+
+
+            <!-- LOGIN -->
+
+            <button
+                type="submit"
+                class="login-btn"
+                id="submitBtn"
+            >
+
+                <div class="btn-content">
+
+                    <span id="btnText">
+                        دخول إلى اللعبة ⚽
+                    </span>
+
+                    <span
+                        class="spinner"
+                        id="btnSpinner"
+                    ></span>
+
+                </div>
+
+            </button>
+
+        </form>
+
+
+        <!-- GOOGLE -->
+
+        <div class="divider" id="divider">
+            أو
+        </div>
+
+
+        <button
+            type="button"
+            class="google-btn"
+            id="googleLogin"
+        >
+
+            <img
+                src="https://www.svgrepo.com/show/355037/google.svg"
+                alt="Google"
+            >
+
+            الدخول بحساب جوجل
+
+        </button>
+
+
+        <!-- REGISTER -->
+
+        <p class="signup">
+
+            <span id="signupText">
+                معندكش حساب؟
+            </span>
+
+            <a id="toggleBtn">
+                سجل الآن
+            </a>
+
+        </p>
+
+    </section>
+
+
+    <div class="footer">
+        FOOTBALL ARENA • ONLINE
+    </div>
+
+</div>
+
+</main>
+
+
+<!-- =========================
+     LOADING OVERLAY
+========================= -->
+
+<div
+    class="overlay"
+    id="overlay"
+>
+
+    <div class="overlay-logo"></div>
+
+    <div
+        class="overlay-text"
+        id="overlayText"
+    >
+        جاري تسجيل الدخول...
+    </div>
+
+    <div class="overlay-sub">
+        FOOTBALL ARENA
+    </div>
+
+</div>
+
+
+<script type="module">
+
+/* =====================================================
+   FIREBASE
+===================================================== */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithRedirect,
+    getRedirectResult,
+    onAuthStateChanged,
+    sendPasswordResetEmail,
+    setPersistence,
+    browserLocalPersistence
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    getDatabase,
+    ref,
+    get,
+    set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyC_55Rv6wCni9EwQurtUILswB1WjkXp6hM",
+
+    authDomain:
+        "mazad-noogom.firebaseapp.com",
+
+    databaseURL:
+        "https://mazad-noogom-default-rtdb.firebaseio.com",
+
+    projectId:
+        "mazad-noogom",
+
+    storageBucket:
+        "mazad-noogom.firebasestorage.app",
+
+    messagingSenderId:
+        "183884985831",
+
+    appId:
+        "1:183884985831:web:db231949dace2b0798b942"
+};
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getDatabase(app);
+
+const provider = new GoogleAuthProvider();
+
+provider.addScope("email");
+provider.addScope("profile");
+
+
+/* =====================================================
+   HOME FILE
+===================================================== */
+
+const HOME_PAGE =
+    "home(20260915-213703).html";
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const authForm =
+    document.getElementById("authForm");
+
+const emailInput =
+    document.getElementById("email");
+
+const passwordInput =
+    document.getElementById("password");
+
+const submitBtn =
+    document.getElementById("submitBtn");
+
+const btnText =
+    document.getElementById("btnText");
+
+const btnSpinner =
+    document.getElementById("btnSpinner");
+
+const googleLogin =
+    document.getElementById("googleLogin");
+
+const forgotBtn =
+    document.getElementById("forgotBtn");
+
+const toggleBtn =
+    document.getElementById("toggleBtn");
+
+const formTitle =
+    document.getElementById("formTitle");
+
+const formSubtitle =
+    document.getElementById("formSubtitle");
+
+const forgotDiv =
+    document.getElementById("forgotDiv");
+
+const divider =
+    document.getElementById("divider");
+
+const passwordGroup =
+    document.getElementById("passwordGroup");
+
+const signupText =
+    document.getElementById("signupText");
+
+const errorMsg =
+    document.getElementById("errorMsg");
+
+const successMsg =
+    document.getElementById("successMsg");
+
+const overlay =
+    document.getElementById("overlay");
+
+const overlayText =
+    document.getElementById("overlayText");
+
+
+/* =====================================================
+   STATE
+===================================================== */
 
 let isLogin = true;
-const formTitle = document.getElementById('formTitle');
-const formSubtitle = document.getElementById('formSubtitle');
-const toggleBtn = document.getElementById('toggleBtn');
-const forgotDiv = document.getElementById('forgotDiv');
-const divider = document.getElementById('divider');
 
-toggleBtn.onclick = () => {
-  isLogin =!isLogin;
-  formTitle.innerText = isLogin? 'تسجيل الدخول' : 'انشاء حساب جديد';
-  formSubtitle.innerText = isLogin? 'دخل بياناتك عشان تبدأ المزاد' : 'سجل بياناتك للانضمام';
-  btnText.innerText = isLogin? 'دخول' : 'تسجيل';
-  toggleBtn.innerText = isLogin? 'سجل الآن' : 'عندك حساب؟ سجل دخول';
-  forgotDiv.style.display = isLogin? 'block' : 'none';
-  divider.style.display = isLogin? 'block' : 'none';
-  document.getElementById('googleLogin').style.display = isLogin? 'flex' : 'none';
-  errorMsg.innerText = '';
-  successMsg.innerText = '';
+let redirecting = false;
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function showError(message){
+
+    errorMsg.textContent = message;
+
+    successMsg.textContent = "";
+
 }
 
-function validateForm(email, password){
-  errorMsg.innerText = '';
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if(!emailRegex.test(email)){ errorMsg.innerText = 'اكتب ايميل صحيح من فضلك'; return false; }
-  if(password.length < 6){ errorMsg.innerText = 'كلمة السر لازم 6 حروف على الاقل'; return false; }
-  return true;
+function showSuccess(message){
+
+    successMsg.textContent = message;
+
+    errorMsg.textContent = "";
+
 }
 
-forgotBtn.onclick = () => {
-  const email = emailInput.value.trim();
-  if(!email){ errorMsg.innerText = 'اكتب ايميلك الاول'; return; }
-  overlay.style.display = 'flex';
-  overlayText.innerText = 'جاري ارسال رابط الاستعادة...';
-  sendPasswordResetEmail(auth, email)
- .then(() => {
-    overlay.style.display = 'none';
-    successMsg.innerText = '✅ تم ارسال رابط اعادة التعيين على ايميلك';
-  })
- .catch(() => {
-    overlay.style.display = 'none';
-    errorMsg.innerText = 'الايميل ده مش متسجل عندنا';
-  });
+function clearMessages(){
+
+    errorMsg.textContent = "";
+
+    successMsg.textContent = "";
+
 }
 
-document.getElementById('authForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = emailInput.value.trim();
-  const password = passwordInput.value.trim();
+function showOverlay(text){
 
-  if(!validateForm(email, password)) return;
+    overlayText.textContent = text;
 
-  submitBtn.disabled = true;
-  btnSpinner.style.display = 'block';
-  btnText.innerText = 'جاري الدخول...';
-  overlay.style.display = 'flex';
-  overlayText.innerText = 'جاري تسجيل الدخول...';
+    overlay.style.display = "flex";
 
-  if(isLogin){
-    signInWithEmailAndPassword(auth, email, password)
-   .then(async (userCredential) => {
-      const user = userCredential.user;
-      saveUserData(user);
-      await loadUserData(user.uid);
-      window.location.href = '(home20260915-213703).html'
-    })
-   .catch(() => {
-      overlay.style.display = 'none';
-      submitBtn.disabled = false;
-      btnSpinner.style.display = 'none';
-      btnText.innerText = 'دخول';
-      errorMsg.innerText = 'البريد او كلمة السر غلط';
-    });
-  } else {
-    createUserWithEmailAndPassword(auth, email, password)
-   .then(async (userCredential) => {
-      const user = userCredential.user;
-      saveUserData(user);
-      await loadUserData(user.uid);
-      window.location.href = '(home20260915-213703).html'
-    })
-   .catch(() => {
-      overlay.style.display = 'none';
-      submitBtn.disabled = false;
-      btnSpinner.style.display = 'none';
-      btnText.innerText = 'تسجيل';
-      errorMsg.innerText = 'الايميل مستخدم او كلمة السر ضعيفة';
-    });
-  }
-});
+}
 
-document.getElementById('googleLogin').addEventListener('click', () => {
-  overlay.style.display = 'flex';
-  overlayText.innerText = 'جاري تسجيل الدخول بجوجل...';
-  signInWithRedirect(auth, provider);
-});
+function hideOverlay(){
+
+    overlay.style.display = "none";
+
+}
+
+
+/* =====================================================
+   SAVE USER
+===================================================== */
+
+function saveUserData(user){
+
+    if(!user) return;
+
+    localStorage.setItem(
+        "isLoggedIn",
+        "true"
+    );
+
+    localStorage.setItem(
+        "email",
+        user.email || ""
+    );
+
+    localStorage.setItem(
+        "avatar",
+        user.photoURL ||
+        "https://i.imgur.com/8Km9tLL.png"
+    );
+
+    localStorage.setItem(
+        "uid",
+        user.uid
+    );
+
+    localStorage.setItem(
+        "displayName",
+        user.displayName ||
+        (
+            user.email
+                ? user.email.split("@")[0]
+                : "Player"
+        )
+    );
+
+}
+
+
+/* =====================================================
+   LOAD USER DATA FROM FIREBASE
+===================================================== */
+
+async function loadUserData(uid){
+
+    if(!uid) return;
+
+    try{
+
+        const userRef =
+            ref(db,"users/" + uid);
+
+        const snapshot =
+            await get(userRef);
+
+
+        if(snapshot.exists()){
+
+            const data =
+                snapshot.val() || {};
+
+            localStorage.setItem(
+                "xp",
+                data.xp ?? 0
+            );
+
+            localStorage.setItem(
+                "التذاكر",
+                data.tickets ?? 5
+            );
+
+        }else{
+
+            const currentUser =
+                auth.currentUser;
+
+            const newUserData = {
+
+                xp:0,
+
+                tickets:5,
+
+                email:
+                    currentUser?.email || "",
+
+                displayName:
+                    currentUser?.displayName ||
+                    (
+                        currentUser?.email
+                        ? currentUser.email.split("@")[0]
+                        : "Player"
+                    ),
+
+                avatar:
+                    currentUser?.photoURL || ""
+
+            };
+
+
+            await set(
+                userRef,
+                newUserData
+            );
+
+
+            localStorage.setItem(
+                "xp",
+                "0"
+            );
+
+            localStorage.setItem(
+                "التذاكر",
+                "5"
+            );
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "Firebase user data error:",
+            error
+        );
+
+        /*
+           لا نوقف الدخول بسبب مشكلة مؤقتة
+           في قراءة بيانات اللاعب.
+        */
+
+        if(
+            localStorage.getItem("xp") === null
+        ){
+
+            localStorage.setItem(
+                "xp",
+                "0"
+            );
+
+        }
+
+        if(
+            localStorage.getItem("التذاكر") === null
+        ){
+
+            localStorage.setItem(
+                "التذاكر",
+                "5"
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   GO HOME
+===================================================== */
+
+async function goHome(user){
+
+    if(!user || redirecting) return;
+
+    redirecting = true;
+
+    saveUserData(user);
+
+    showOverlay(
+        "تم تسجيل الدخول ✓"
+    );
+
+    await loadUserData(
+        user.uid
+    );
+
+    setTimeout(() => {
+
+        window.location.replace(
+            HOME_PAGE
+        );
+
+    },350);
+
+}
+
+
+/* =====================================================
+   FIREBASE LOCAL PERSISTENCE
+===================================================== */
+
+try{
+
+    await setPersistence(
+        auth,
+        browserLocalPersistence
+    );
+
+}catch(error){
+
+    console.warn(
+        "Firebase persistence:",
+        error
+    );
+
+}
+
+
+/* =====================================================
+   FAST LOCAL CHECK
+=====================================================
+
+   لو الجهاز عليه جلسة محفوظة،
+   نبدأ الانتقال فوراً.
+
+   لكن Firebase هو المصدر الأساسي
+   للتحقق من أن الجلسة حقيقية.
+===================================================== */
+
+const locallyLogged =
+    localStorage.getItem("isLoggedIn") === "true";
+
+const storedUid =
+    localStorage.getItem("uid");
+
+if(
+    locallyLogged &&
+    storedUid
+){
+
+    showOverlay(
+        "جاري استعادة حسابك..."
+    );
+
+}
+
+
+/* =====================================================
+   GOOGLE REDIRECT RESULT
+===================================================== */
+
+try{
+
+    const result =
+        await getRedirectResult(auth);
+
+    if(
+        result &&
+        result.user
+    ){
+
+        await goHome(
+            result.user
+        );
+
+    }
+
+}catch(error){
+
+    console.error(
+        "Google redirect error:",
+        error
+    );
+
+    hideOverlay();
+
+}
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        if(user){
+
+            await goHome(user);
+
+        }else{
+
+            /*
+               لا يوجد حساب Firebase فعال.
+
+               نمسح الجلسة المحلية حتى لا يدخل
+               المستخدم للهوم اعتماداً على قيمة قديمة.
+            */
+
+            if(!redirecting){
+
+                localStorage.removeItem(
+                    "isLoggedIn"
+                );
+
+                localStorage.removeItem(
+                    "uid"
+                );
+
+                hideOverlay();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   TOGGLE LOGIN / REGISTER
+===================================================== */
+
+toggleBtn.addEventListener(
+    "click",
+    () => {
+
+        isLogin = !isLogin;
+
+        clearMessages();
+
+        if(isLogin){
+
+            formTitle.textContent =
+                "تسجيل الدخول";
+
+            formSubtitle.textContent =
+                "ادخل حسابك وابدأ رحلتك الكروية";
+
+            btnText.textContent =
+                "دخول إلى اللعبة ⚽";
+
+            toggleBtn.textContent =
+                "سجل الآن";
+
+            signupText.textContent =
+                "معندكش حساب؟";
+
+            forgotDiv.style.display =
+                "block";
+
+            divider.style.display =
+                "flex";
+
+            googleLogin.style.display =
+                "flex";
+
+            passwordInput.autocomplete =
+                "current-password";
+
+        }else{
+
+            formTitle.textContent =
+                "إنشاء حساب جديد";
+
+            formSubtitle.textContent =
+                "سجل حسابك وانضم إلى الساحة";
+
+            btnText.textContent =
+                "إنشاء الحساب 🚀";
+
+            toggleBtn.textContent =
+                "عندك حساب؟ سجل دخول";
+
+            signupText.textContent =
+                "";
+
+            forgotDiv.style.display =
+                "none";
+
+            divider.style.display =
+                "none";
+
+            googleLogin.style.display =
+                "none";
+
+            passwordInput.autocomplete =
+                "new-password";
+
+        }
+
+        passwordInput.value = "";
+
+    }
+);
+
+
+/* =====================================================
+   VALIDATION
+===================================================== */
+
+function validateForm(
+    email,
+    password
+){
+
+    clearMessages();
+
+    const emailRegex =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    if(!emailRegex.test(email)){
+
+        showError(
+            "اكتب بريد إلكتروني صحيح"
+        );
+
+        return false;
+
+    }
+
+
+    if(password.length < 6){
+
+        showError(
+            "كلمة السر لازم تكون 6 حروف على الأقل"
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   BUTTON LOADING
+===================================================== */
+
+function setButtonLoading(
+    loading,
+    text
+){
+
+    submitBtn.disabled =
+        loading;
+
+    btnSpinner.style.display =
+        loading
+        ? "block"
+        : "none";
+
+    btnText.textContent =
+        text;
+
+}
+
+
+/* =====================================================
+   FORGOT PASSWORD
+===================================================== */
+
+forgotBtn.addEventListener(
+    "click",
+    async () => {
+
+        const email =
+            emailInput.value.trim();
+
+
+        if(!email){
+
+            showError(
+                "اكتب إيميلك الأول"
+            );
+
+            emailInput.focus();
+
+            return;
+
+        }
+
+
+        const emailRegex =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+        if(!emailRegex.test(email)){
+
+            showError(
+                "اكتب بريد إلكتروني صحيح"
+            );
+
+            return;
+
+        }
+
+
+        clearMessages();
+
+        showOverlay(
+            "جاري إرسال رابط الاستعادة..."
+        );
+
+
+        try{
+
+            await sendPasswordResetEmail(
+                auth,
+                email
+            );
+
+            hideOverlay();
+
+            showSuccess(
+                "✅ تم إرسال رابط إعادة التعيين على إيميلك"
+            );
+
+        }catch(error){
+
+            hideOverlay();
+
+            console.error(error);
+
+            showError(
+                "الإيميل ده مش متسجل عندنا"
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   LOGIN / REGISTER
+===================================================== */
+
+authForm.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        const email =
+            emailInput.value.trim();
+
+        const password =
+            passwordInput.value.trim();
+
+
+        if(
+            !validateForm(
+                email,
+                password
+            )
+        ){
+
+            return;
+
+        }
+
+
+        clearMessages();
+
+
+        setButtonLoading(
+            true,
+            isLogin
+                ? "جاري الدخول..."
+                : "جاري إنشاء الحساب..."
+        );
+
+
+        showOverlay(
+            isLogin
+                ? "جاري تسجيل الدخول..."
+                : "جاري إنشاء حسابك..."
+        );
+
+
+        try{
+
+            let userCredential;
+
+
+            if(isLogin){
+
+                userCredential =
+                    await signInWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+
+            }else{
+
+                userCredential =
+                    await createUserWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+
+            }
+
+
+            const user =
+                userCredential.user;
+
+
+            saveUserData(user);
+
+
+            await loadUserData(
+                user.uid
+            );
+
+
+            await goHome(user);
+
+
+        }catch(error){
+
+            console.error(
+                "Authentication error:",
+                error
+            );
+
+
+            hideOverlay();
+
+
+            setButtonLoading(
+                false,
+                isLogin
+                    ? "دخول إلى اللعبة ⚽"
+                    : "إنشاء الحساب 🚀"
+            );
+
+
+            let message =
+                "حصل خطأ، حاول مرة أخرى";
+
+
+            if(
+                error.code ===
+                "auth/invalid-credential"
+            ){
+
+                message =
+                    "البريد الإلكتروني أو كلمة السر غلط";
+
+            }else if(
+                error.code ===
+                "auth/user-not-found"
+            ){
+
+                message =
+                    "الحساب ده مش موجود";
+
+            }else if(
+                error.code ===
+                "auth/wrong-password"
+            ){
+
+                message =
+                    "كلمة السر غلط";
+
+            }else if(
+                error.code ===
+                "auth/email-already-in-use"
+            ){
+
+                message =
+                    "الإيميل ده مستخدم بالفعل";
+
+            }else if(
+                error.code ===
+                "auth/weak-password"
+            ){
+
+                message =
+                    "كلمة السر ضعيفة، استخدم 6 حروف على الأقل";
+
+            }else if(
+                error.code ===
+                "auth/invalid-email"
+            ){
+
+                message =
+                    "البريد الإلكتروني غير صحيح";
+
+            }else if(
+                error.code ===
+                "auth/too-many-requests"
+            ){
+
+                message =
+                    "محاولات كثيرة، حاول بعد شوية";
+
+            }
+
+
+            showError(message);
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   GOOGLE LOGIN
+===================================================== */
+
+googleLogin.addEventListener(
+    "click",
+    async () => {
+
+        clearMessages();
+
+        showOverlay(
+            "جاري تسجيل الدخول بحساب جوجل..."
+        );
+
+
+        try{
+
+            await signInWithRedirect(
+                auth,
+                provider
+            );
+
+        }catch(error){
+
+            console.error(
+                "Google login error:",
+                error
+            );
+
+            hideOverlay();
+
+            showError(
+                "حصل خطأ أثناء تسجيل الدخول بجوجل"
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   PREVENT BACK BUTTON DURING REDIRECT
+===================================================== */
+
+window.addEventListener(
+    "pageshow",
+    event => {
+
+        if(event.persisted){
+
+            window.location.reload();
+
+        }
+
+    }
+);
+
 </script>
+
 </body>
 </html>
+```
