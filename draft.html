@@ -1,0 +1,2618 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<title>ULTIMATE DRAFT</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    background:
+        radial-gradient(circle at 50% 0%,#123b24 0%,#06150d 35%,#010504 75%);
+    color:white;
+    font-family:Cairo,sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.16;
+    background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:35px 35px;
+}
+
+.screen{
+    display:none;
+    min-height:100vh;
+    padding:18px 12px 40px;
+    animation:screenIn .45s ease;
+}
+
+.screen.active{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+@keyframes screenIn{
+    from{
+        opacity:0;
+        transform:translateY(18px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+/* =========================
+   START
+========================= */
+
+.logo{
+    margin-top:50px;
+    font-family:Orbitron;
+    font-size:clamp(32px,10vw,65px);
+    font-weight:900;
+    background:linear-gradient(#fff,#ffe35b,#ff9d00);
+    -webkit-background-clip:text;
+    color:transparent;
+    text-shadow:0 0 30px rgba(255,190,0,.2);
+}
+
+.logoSub{
+    font-family:Orbitron;
+    color:#7f9287;
+    font-size:10px;
+    letter-spacing:5px;
+}
+
+.startBox{
+    width:min(470px,100%);
+    margin-top:60px;
+    padding:25px 18px;
+    border-radius:25px;
+    background:linear-gradient(145deg,#10291a,#030806);
+    border:1px solid rgba(255,215,70,.25);
+    box-shadow:0 25px 80px rgba(0,0,0,.6);
+}
+
+.startBox h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.input{
+    width:100%;
+    height:58px;
+    border-radius:15px;
+    background:#06110b;
+    color:#fff;
+    border:1px solid #263b30;
+    outline:none;
+    text-align:center;
+    font-family:Cairo;
+    font-size:16px;
+}
+
+.mainBtn{
+    width:100%;
+    min-height:57px;
+    margin-top:15px;
+    border:0;
+    border-radius:16px;
+    background:linear-gradient(135deg,#fff06d,#ffae00);
+    color:#171008;
+    font-family:Cairo;
+    font-weight:900;
+    font-size:17px;
+    cursor:pointer;
+    box-shadow:0 10px 35px rgba(255,174,0,.2);
+}
+
+.mainBtn:disabled{
+    opacity:.35;
+}
+
+/* =========================
+   TITLES
+========================= */
+
+.title{
+    font-family:Orbitron,Cairo;
+    font-size:clamp(23px,7vw,40px);
+    margin-top:10px;
+    background:linear-gradient(#fff,#ffd83e,#ff9d00);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.desc{
+    color:#8c9b92;
+    font-size:12px;
+    text-align:center;
+    margin:7px 0 25px;
+}
+
+/* =========================
+   CLUBS
+========================= */
+
+.leagues{
+    width:min(1000px,100%);
+}
+
+.league{
+    margin-bottom:23px;
+}
+
+.leagueTitle{
+    font-weight:900;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.leagueTitle i{
+    width:4px;
+    height:22px;
+    background:#ffd63e;
+    border-radius:10px;
+}
+
+.clubGrid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:9px;
+}
+
+.club{
+    min-height:125px;
+    border-radius:17px;
+    background:linear-gradient(145deg,#10281a,#050c08);
+    border:1px solid rgba(255,255,255,.08);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.club:active{
+    transform:scale(.96);
+}
+
+.club.selected{
+    border-color:#ffd63e;
+    box-shadow:
+        0 0 25px rgba(255,210,40,.2),
+        inset 0 0 25px rgba(255,210,40,.05);
+}
+
+.club img{
+    width:57px;
+    height:57px;
+    object-fit:contain;
+    margin-bottom:7px;
+}
+
+.club span{
+    font-size:10px;
+    font-weight:900;
+    text-align:center;
+}
+
+/* =========================
+   INTRO
+========================= */
+
+.intro{
+    width:min(550px,100%);
+    margin:auto;
+    text-align:center;
+    padding:35px 20px;
+    border-radius:28px;
+    background:
+        radial-gradient(circle at 50% 0%,rgba(255,210,50,.13),transparent 45%),
+        #07140d;
+    border:1px solid rgba(255,215,70,.2);
+}
+
+.introBall{
+    font-size:80px;
+    filter:drop-shadow(0 0 25px rgba(255,210,50,.3));
+}
+
+.introName{
+    color:#ffd83e;
+    font-size:20px;
+    font-weight:900;
+}
+
+.introClub{
+    color:#89988e;
+    margin-bottom:20px;
+}
+
+/* =========================
+   FORMATIONS
+========================= */
+
+.formations{
+    width:min(1000px,100%);
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.formation{
+    padding:10px;
+    border-radius:19px;
+    background:#07160d;
+    border:1px solid rgba(255,255,255,.09);
+    cursor:pointer;
+}
+
+.formation.selected{
+    border-color:#ffd83e;
+    box-shadow:0 0 25px rgba(255,210,40,.15);
+}
+
+.miniPitch{
+    height:200px;
+    position:relative;
+    border-radius:13px;
+    overflow:hidden;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,.035) 0,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px,
+            transparent 34px
+        ),
+        #08713c;
+}
+
+.miniPitch:before{
+    content:"";
+    position:absolute;
+    inset:6%;
+    border:1px solid rgba(255,255,255,.5);
+}
+
+.miniDot{
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:white;
+    border:3px solid #ffd83e;
+    position:absolute;
+    transform:translate(-50%,-50%);
+}
+
+.formationName{
+    text-align:center;
+    font-family:Orbitron;
+    margin-top:9px;
+}
+
+.formationDesc{
+    text-align:center;
+    color:#829188;
+    font-size:9px;
+}
+
+/* =========================
+   DRAFT HEADER
+========================= */
+
+.draftTop{
+    width:min(1050px,100%);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:10px;
+}
+
+.counter{
+    padding:7px 13px;
+    border-radius:12px;
+    background:#081910;
+    border:1px solid rgba(255,216,62,.2);
+    color:#ffd83e;
+    font-family:Orbitron;
+    font-size:11px;
+}
+
+.prompt{
+    width:min(1000px,100%);
+    text-align:center;
+    padding:12px;
+    border-radius:15px;
+    margin-bottom:14px;
+    background:rgba(5,18,11,.9);
+    border:1px solid rgba(255,255,255,.08);
+    font-size:13px;
+}
+
+.prompt strong{
+    color:#ffd83e;
+}
+
+/* =========================
+   PITCH
+========================= */
+
+.pitch{
+    width:min(850px,100%);
+    height:min(570px,72vh);
+    min-height:390px;
+    position:relative;
+    border-radius:27px;
+    overflow:hidden;
+    border:2px solid rgba(255,255,255,.22);
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,.035) 0,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px,
+            transparent 50px
+        ),
+        linear-gradient(90deg,#064426,#08733b,#064426);
+    box-shadow:
+        inset 0 0 60px rgba(0,0,0,.25),
+        0 25px 70px rgba(0,0,0,.55);
+}
+
+.pitch:before{
+    content:"";
+    position:absolute;
+    inset:3%;
+    border:2px solid rgba(255,255,255,.5);
+}
+
+.midline{
+    position:absolute;
+    left:3%;
+    right:3%;
+    top:50%;
+    height:2px;
+    background:rgba(255,255,255,.4);
+}
+
+.centerCircle{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:21%;
+    aspect-ratio:1;
+    transform:translate(-50%,-50%);
+    border:2px solid rgba(255,255,255,.45);
+    border-radius:50%;
+}
+
+.area{
+    position:absolute;
+    left:31%;
+    right:31%;
+    height:22%;
+    border:2px solid rgba(255,255,255,.4);
+}
+
+.area.top{
+    top:3%;
+    border-top:0;
+}
+
+.area.bottom{
+    bottom:3%;
+    border-bottom:0;
+}
+
+/* =========================
+   FIFA STYLE CARD
+========================= */
+
+.slot{
+    position:absolute;
+    transform:translate(-50%,-50%);
+    width:84px;
+    height:112px;
+    z-index:10;
+}
+
+.empty{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    border:2px dashed rgba(255,255,255,.75);
+    background:rgba(0,0,0,.3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#ffd83e;
+    font-size:26px;
+    cursor:pointer;
+    margin:auto;
+}
+
+.emptyLabel{
+    text-align:center;
+    color:white;
+    font-size:7px;
+    font-weight:900;
+    margin-top:3px;
+}
+
+/* MAIN CARD */
+
+.fifaCard{
+    width:100%;
+    height:100%;
+    position:relative;
+    overflow:hidden;
+
+    clip-path:polygon(
+        8% 0%,
+        92% 0%,
+        100% 7%,
+        96% 92%,
+        50% 100%,
+        4% 92%,
+        0% 7%
+    );
+
+    background:
+        radial-gradient(circle at 50% 18%,rgba(255,255,255,.4),transparent 22%),
+        linear-gradient(145deg,#fff0a2,#c89524 48%,#493008);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.7),
+        0 0 20px rgba(255,210,40,.25);
+}
+
+.fifaCard:before{
+    content:"";
+    position:absolute;
+    inset:5px;
+    clip-path:inherit;
+    border:2px solid rgba(255,255,255,.75);
+    z-index:8;
+}
+
+.fifaCard:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            115deg,
+            transparent 25%,
+            rgba(255,255,255,.28) 38%,
+            transparent 50%
+        );
+    animation:shine 3s infinite;
+    z-index:7;
+    pointer-events:none;
+}
+
+@keyframes shine{
+    0%,55%{
+        transform:translateX(-130%);
+    }
+    75%,100%{
+        transform:translateX(130%);
+    }
+}
+
+.cardRating{
+    position:absolute;
+    left:13px;
+    top:11px;
+    font-family:Orbitron;
+    font-size:20px;
+    font-weight:900;
+    z-index:10;
+}
+
+.cardPosition{
+    position:absolute;
+    left:15px;
+    top:35px;
+    font-size:8px;
+    font-weight:900;
+    z-index:10;
+}
+
+.cardPlayer{
+    position:absolute;
+    width:91%;
+    height:67%;
+    left:50%;
+    bottom:19%;
+    transform:translateX(-50%);
+    object-fit:contain;
+    object-position:center bottom;
+    z-index:5;
+}
+
+.cardClub{
+    position:absolute;
+    right:10px;
+    top:12px;
+    width:28px;
+    height:28px;
+    object-fit:contain;
+    z-index:10;
+}
+
+.cardName{
+    position:absolute;
+    left:5px;
+    right:5px;
+    bottom:7px;
+    text-align:center;
+    font-size:8px;
+    font-weight:900;
+    color:#fff;
+    text-shadow:0 2px 5px #000;
+    z-index:10;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/* =========================
+   PLAYER PICK AREA
+========================= */
+
+.options{
+    width:min(1100px,100%);
+    margin-top:18px;
+    padding:15px;
+    border-radius:24px;
+    background:
+        linear-gradient(145deg,rgba(13,35,23,.98),rgba(2,8,5,.98));
+    border:1px solid rgba(255,216,62,.2);
+}
+
+.optionsHead{
+    text-align:center;
+    font-weight:900;
+    margin-bottom:14px;
+}
+
+.optionsHead span{
+    color:#ffd83e;
+    font-family:Orbitron;
+}
+
+.cardsGrid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:13px;
+}
+
+/* BIG FIFA CARDS */
+
+.bigCard{
+    position:relative;
+    height:330px;
+    cursor:pointer;
+    transition:.25s;
+    filter:drop-shadow(0 14px 15px rgba(0,0,0,.5));
+}
+
+.bigCard:hover{
+    transform:translateY(-9px) scale(1.025);
+}
+
+.bigCard:active{
+    transform:scale(.96);
+}
+
+.bigCard .fifaCard{
+    clip-path:polygon(
+        8% 0%,
+        92% 0%,
+        100% 7%,
+        96% 92%,
+        50% 100%,
+        4% 92%,
+        0% 7%
+    );
+}
+
+/* CARD TIERS */
+
+.card-common .fifaCard{
+    background:
+        radial-gradient(circle at 50% 20%,rgba(255,255,255,.3),transparent 25%),
+        linear-gradient(145deg,#e9e9e9,#8d8d8d,#333);
+}
+
+.card-rare .fifaCard{
+    background:
+        radial-gradient(circle at 50% 15%,rgba(255,255,255,.45),transparent 25%),
+        linear-gradient(145deg,#a9f0ff,#1689b9,#06395a);
+}
+
+.card-epic .fifaCard{
+    background:
+        radial-gradient(circle at 50% 15%,rgba(255,255,255,.45),transparent 25%),
+        linear-gradient(145deg,#ffdd72,#b97915,#442b06);
+}
+
+.card-legend .fifaCard{
+    background:
+        radial-gradient(circle at 50% 10%,rgba(255,255,255,.5),transparent 22%),
+        linear-gradient(145deg,#ffeeb0,#c7932d,#4d3006);
+}
+
+.card-icon .fifaCard{
+    background:
+        radial-gradient(circle at 50% 12%,rgba(255,255,255,.5),transparent 22%),
+        linear-gradient(145deg,#fff1b3,#e0aa31,#694307);
+}
+
+.card-future .fifaCard{
+    background:
+        radial-gradient(circle at 50% 15%,rgba(255,255,255,.4),transparent 25%),
+        linear-gradient(145deg,#e99aff,#7720ba,#1c063d);
+}
+
+/* crystals */
+
+.crystals{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.crystals i{
+    position:absolute;
+    width:8px;
+    height:18px;
+    transform:rotate(35deg);
+    background:rgba(255,255,255,.5);
+    clip-path:polygon(50% 0,100% 35%,75% 100%,25% 100%,0 35%);
+    filter:drop-shadow(0 0 7px currentColor);
+    animation:crystalFloat 2.4s infinite alternate ease-in-out;
+}
+
+.crystals i:nth-child(1){
+    left:8%;
+    top:35%;
+}
+
+.crystals i:nth-child(2){
+    right:10%;
+    top:42%;
+    animation-delay:.4s;
+}
+
+.crystals i:nth-child(3){
+    left:16%;
+    bottom:18%;
+    animation-delay:.8s;
+}
+
+.crystals i:nth-child(4){
+    right:16%;
+    bottom:24%;
+    animation-delay:1s;
+}
+
+@keyframes crystalFloat{
+    from{
+        transform:rotate(30deg) translateY(0);
+    }
+    to{
+        transform:rotate(45deg) translateY(-7px);
+    }
+}
+
+.bigCard .cardRating{
+    font-size:35px;
+    left:23px;
+    top:22px;
+}
+
+.bigCard .cardPosition{
+    font-size:12px;
+    left:27px;
+    top:67px;
+}
+
+.bigCard .cardPlayer{
+    height:72%;
+    width:90%;
+    bottom:14%;
+}
+
+.bigCard .cardClub{
+    width:43px;
+    height:43px;
+    top:24px;
+    right:23px;
+}
+
+.bigCard .cardName{
+    font-size:15px;
+    bottom:12px;
+}
+
+.cardCountry{
+    position:absolute;
+    left:27px;
+    top:85px;
+    font-size:7px;
+    z-index:10;
+    color:#fff;
+    text-shadow:0 1px 4px #000;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loader{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    border:3px solid rgba(255,255,255,.15);
+    border-top-color:#ffd83e;
+    animation:spin .7s linear infinite;
+    z-index:20;
+}
+
+@keyframes spin{
+    to{
+        transform:translate(-50%,-50%) rotate(360deg);
+    }
+}
+
+/* =========================
+   RESULT
+========================= */
+
+.resultTitle{
+    font-family:Orbitron;
+    font-size:clamp(25px,8vw,45px);
+    margin:10px 0 15px;
+    background:linear-gradient(#fff,#ffd83e,#ff9700);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.resultPitch{
+    width:min(850px,100%);
+    height:min(570px,72vh);
+    min-height:390px;
+    position:relative;
+    overflow:hidden;
+    border-radius:25px;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,.035) 0,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px,
+            transparent 50px
+        ),
+        #08703b;
+    border:2px solid rgba(255,255,255,.2);
+}
+
+.stats{
+    width:min(650px,100%);
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin:18px 0;
+}
+
+.stat{
+    padding:15px 5px;
+    border-radius:15px;
+    background:#08170e;
+    border:1px solid rgba(255,255,255,.08);
+    text-align:center;
+}
+
+.stat b{
+    display:block;
+    font-family:Orbitron;
+    color:#ffd83e;
+    font-size:21px;
+}
+
+.stat span{
+    color:#89968e;
+    font-size:9px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translate(-50%,100px);
+    background:#101c15;
+    border:1px solid rgba(255,216,62,.35);
+    padding:11px 20px;
+    border-radius:14px;
+    z-index:9999;
+    transition:.3s;
+    white-space:nowrap;
+    font-size:12px;
+}
+
+.toast.show{
+    transform:translate(-50%,0);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px){
+
+    .clubGrid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .formations{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .cardsGrid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .bigCard{
+        height:285px;
+    }
+
+    .bigCard .cardRating{
+        font-size:29px;
+        left:18px;
+        top:17px;
+    }
+
+    .bigCard .cardPosition{
+        left:21px;
+        top:53px;
+    }
+
+    .bigCard .cardClub{
+        width:35px;
+        height:35px;
+        top:19px;
+        right:19px;
+    }
+
+    .bigCard .cardName{
+        font-size:12px;
+    }
+
+    .pitch,
+    .resultPitch{
+        height:430px;
+        min-height:430px;
+    }
+
+    .slot{
+        width:62px;
+        height:82px;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .screen{
+        padding-left:8px;
+        padding-right:8px;
+    }
+
+    .clubGrid{
+        gap:6px;
+    }
+
+    .club{
+        min-height:105px;
+    }
+
+    .club img{
+        width:45px;
+        height:45px;
+    }
+
+    .club span{
+        font-size:8px;
+    }
+
+    .miniPitch{
+        height:160px;
+    }
+
+    .pitch,
+    .resultPitch{
+        height:360px;
+        min-height:360px;
+        border-radius:20px;
+    }
+
+    .slot{
+        width:51px;
+        height:68px;
+    }
+
+    .empty{
+        width:45px;
+        height:45px;
+        font-size:22px;
+    }
+
+    .emptyLabel{
+        font-size:6px;
+    }
+
+    .cardsGrid{
+        gap:7px;
+    }
+
+    .bigCard{
+        height:245px;
+    }
+
+    .bigCard .cardRating{
+        font-size:24px;
+        left:15px;
+        top:15px;
+    }
+
+    .bigCard .cardPosition{
+        font-size:8px;
+        left:17px;
+        top:43px;
+    }
+
+    .bigCard .cardClub{
+        width:30px;
+        height:30px;
+        top:17px;
+        right:16px;
+    }
+
+    .bigCard .cardName{
+        font-size:10px;
+        bottom:9px;
+    }
+
+    .cardCountry{
+        left:18px;
+        top:58px;
+        font-size:6px;
+    }
+
+    .stats{
+        gap:6px;
+    }
+
+    .stat b{
+        font-size:16px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     NAME
+===================================================== -->
+
+<section id="nameScreen" class="screen active">
+
+    <div class="logo">
+        ULTIMATE
+    </div>
+
+    <div class="logoSub">
+        DRAFT
+    </div>
+
+    <div class="startBox">
+
+        <h2>⚽ ULTIMATE DRAFT</h2>
+
+        <input
+            id="nameInput"
+            class="input"
+            maxlength="20"
+            placeholder="اكتب اسمك"
+        >
+
+        <button class="mainBtn" onclick="startGame()">
+            دخول الـ Draft 🔥
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CLUB
+===================================================== -->
+
+<section id="clubScreen" class="screen">
+
+    <div class="title">
+        اختر ناديك
+    </div>
+
+    <div class="desc">
+        اختار النادي الذي سيمثل فريقك
+    </div>
+
+    <div id="leagues" class="leagues"></div>
+
+    <button
+        id="clubButton"
+        class="mainBtn"
+        style="max-width:500px"
+        disabled
+        onclick="continueClub()">
+        اختر ناديًا
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     INTRO
+===================================================== -->
+
+<section id="introScreen" class="screen">
+
+    <div class="intro">
+
+        <div class="introBall">
+            ⚽
+        </div>
+
+        <div
+            id="introName"
+            class="introName">
+        </div>
+
+        <div
+            id="introClub"
+            class="introClub">
+        </div>
+
+        <h2>
+            مستعد لبناء فريقك؟
+        </h2>
+
+        <p style="color:#8c9991;font-size:12px;margin:12px 0 25px">
+            اختار التشكيلة وبعدها اختار أي مركز
+            وابدأ في بناء الـ Ultimate XI.
+        </p>
+
+        <button class="mainBtn" onclick="openFormations()">
+            اختيار التشكيلة
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FORMATIONS
+===================================================== -->
+
+<section id="formationScreen" class="screen">
+
+    <div class="title">
+        اختر التشكيلة
+    </div>
+
+    <div class="desc">
+        كل المراكز ستكون متاحة للاختيار بالترتيب الذي تريده
+    </div>
+
+    <div id="formations" class="formations"></div>
+
+    <button
+        id="formationButton"
+        class="mainBtn"
+        style="max-width:500px"
+        disabled
+        onclick="startDraft()">
+        اختر تشكيلة
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     DRAFT
+===================================================== -->
+
+<section id="draftScreen" class="screen">
+
+    <div class="draftTop">
+
+        <div>
+            <b id="draftName"></b>
+            <div
+                id="draftClub"
+                style="font-size:9px;color:#849289">
+            </div>
+        </div>
+
+        <div
+            id="counter"
+            class="counter">
+            0 / 11
+        </div>
+
+    </div>
+
+    <div
+        id="prompt"
+        class="prompt">
+        اضغط على <strong>أي مركز</strong> للبدء
+    </div>
+
+    <div id="pitch" class="pitch">
+
+        <div class="midline"></div>
+        <div class="centerCircle"></div>
+        <div class="area top"></div>
+        <div class="area bottom"></div>
+
+    </div>
+
+    <div
+        id="options"
+        class="options"
+        style="display:none">
+
+        <div class="optionsHead">
+            اختر لاعب مركز
+            <span id="positionName"></span>
+        </div>
+
+        <div
+            id="cardsGrid"
+            class="cardsGrid">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESULT
+===================================================== -->
+
+<section id="resultScreen" class="screen">
+
+    <div class="resultTitle">
+        ULTIMATE XI
+    </div>
+
+    <div
+        id="resultInfo"
+        style="color:#95a199;text-align:center;margin-bottom:15px;font-size:12px">
+    </div>
+
+    <div
+        id="resultPitch"
+        class="resultPitch">
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            <b id="average"></b>
+            <span>متوسط التقييم</span>
+        </div>
+
+        <div class="stat">
+            <b id="total"></b>
+            <span>مجموع التقييم</span>
+        </div>
+
+        <div class="stat">
+            <b>11</b>
+            <span>لاعب</span>
+        </div>
+
+    </div>
+
+    <button
+        class="mainBtn"
+        style="max-width:500px"
+        onclick="location.reload()">
+        Draft جديد 🔥
+    </button>
+
+</section>
+
+
+<div id="toast" class="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   GAME
+========================================================= */
+
+const game = {
+    name:"",
+    club:null,
+    formation:null,
+    picks:[],
+    selectedSlot:null
+};
+
+
+/* =========================================================
+   CLUBS
+========================================================= */
+
+const clubNames = [
+
+    ["Premier League",[
+        "Manchester City",
+        "Liverpool",
+        "Arsenal",
+        "Chelsea",
+        "Manchester United"
+    ]],
+
+    ["La Liga",[
+        "Real Madrid",
+        "Barcelona",
+        "Atlético Madrid",
+        "Sevilla",
+        "Athletic Bilbao"
+    ]],
+
+    ["Serie A",[
+        "Inter Milan",
+        "AC Milan",
+        "Juventus",
+        "Napoli",
+        "Roma"
+    ]],
+
+    ["Bundesliga",[
+        "Bayern Munich",
+        "Borussia Dortmund",
+        "RB Leipzig",
+        "Bayer Leverkusen",
+        "Eintracht Frankfurt"
+    ]],
+
+    ["Ligue 1",[
+        "Paris Saint-Germain",
+        "Marseille",
+        "Lyon",
+        "Monaco",
+        "Lille"
+    ]]
+
+];
+
+
+/* =========================================================
+   500 PLAYER DATABASE
+========================================================= */
+
+const players = {
+
+GK:[
+"Alisson Becker","Ederson","Thibaut Courtois","Jan Oblak","Gianluigi Donnarumma",
+"Manuel Neuer","Marc-André ter Stegen","Mike Maignan","Emiliano Martínez","Yann Sommer",
+"David Raya","Gregor Kobel","Diogo Costa","Unai Simón","Jordan Pickford",
+"Marc-André ter Stegen","Keylor Navas","Hugo Lloris","David de Gea","Iker Casillas",
+"Oliver Kahn","Gianluigi Buffon","Petr Čech","Edwin van der Sar","Peter Schmeichel",
+"Lev Yashin","Dino Zoff","Walter Zenga","Sepp Maier","Claudio Bravo",
+"Pepe Reina","Samir Handanović","Wojciech Szczęsny","Bernd Leno","André Onana",
+"David Ospina","Rui Patrício","Kasper Schmeichel","Kepa Arrizabalaga","Aaron Ramsdale",
+"Nick Pope","Robert Sánchez","Guglielmo Vicario","Lukáš Hrádecký","Yassine Bounou",
+"Andre Onana","Salvatore Sirigu","José Luis Chilavert","Jorge Campos","Fabien Barthez"
+],
+
+CB:[
+"Virgil van Dijk","Rúben Dias","Antonio Rüdiger","William Saliba","Marquinhos",
+"Éder Militão","Alessandro Bastoni","Ronald Araújo","Matthijs de Ligt","John Stones",
+"William Carvalho","Gabriel Magalhães","Kim Min-jae","Pau Torres","Ibrahima Konaté",
+"Dayot Upamecano","Wesley Fofana","Lisandro Martínez","Cristian Romero","Raphaël Varane",
+"Sergio Ramos","Gerard Piqué","Carles Puyol","Paolo Maldini","Fabio Cannavaro",
+"Alessandro Nesta","Franco Baresi","Nemanja Vidić","Rio Ferdinand","John Terry",
+"Thiago Silva","Giorgio Chiellini","Leonardo Bonucci","Javier Mascherano","Diego Godín",
+"Pepe","Samuel Umtiti","Mats Hummels","Jerome Boateng","Kalidou Koulibaly",
+"Raphael Varane","Laurent Blanc","Marcel Desailly","Lúcio","Walter Samuel",
+"Fernando Hierro","Ronald Koeman","Jaap Stam","Ricardo Carvalho","Daniel Passarella"
+],
+
+LB:[
+"Theo Hernández","Alphonso Davies","Andrew Robertson","Nuno Mendes","João Cancelo",
+"Ben Chilwell","Oleksandr Zinchenko","Luke Shaw","Andy Robertson","Ferland Mendy",
+"José Gayà","Alejandro Grimaldo","Pervis Estupiñán","Destiny Udogie","Kieran Tierney",
+"Marc Cucurella","David Alaba","Raphaël Guerreiro","Robin Gosens","Renan Lodi",
+"Roberto Carlos","Marcelo","Ashley Cole","Patrice Evra","Jordi Alba",
+"Philipp Lahm","Gianluca Zambrotta","Eric Abidal","Bixente Lizarazu","César Azpilicueta",
+"Maxwell","Gaël Clichy","Leighton Baines","Pavel Nedvěd","Juan Pablo Sorín",
+"Antonio Cabrini","Andreas Brehme","Ruud Krol","Silvio Marzolini","José María Giménez",
+"Lucas Digne","Emerson Palmieri","Sergio Reguilón","Rayan Aït-Nouri","Milos Kerkez",
+"Quilindschy Hartman","Ian Maatsen","Sergio Gómez","Miguel Gutiérrez","Ferland Mendy"
+],
+
+RB:[
+"Achraf Hakimi","Trent Alexander-Arnold","Kyle Walker","Reece James","Dani Carvajal",
+"Jeremie Frimpong","Benjamin Pavard","Kieran Trippier","Diogo Dalot","Pedro Porro",
+"Ben White","João Cancelo","Giovanni Di Lorenzo","Denzel Dumfries","Noussair Mazraoui",
+"Timothy Castagne","Vanderson","Yan Couto","Tino Livramento","Malo Gusto",
+"Cafu","Lilian Thuram","Javier Zanetti","Dani Alves","Philipp Lahm",
+"Gary Neville","Carlos Alberto","Maicon","César Azpilicueta","Branislav Ivanović",
+"Zé Roberto","Willy Sagnol","Lilian Thuram","Micah Richards","Kyle Walker",
+"Juanfran","Héctor Bellerín","Nelson Semedo","Aaron Wan-Bissaka","Sergi Roberto",
+"De Marcos","Kieran Trippier","Pedro Porro","Tariq Lamptey","Vladimír Coufal",
+"Jeremie Frimpong","Malo Gusto","Iván Fresneda","Achraf Hakimi","Dani Carvajal"
+],
+
+CM:[
+"Rodri","Kevin De Bruyne","Luka Modrić","Jude Bellingham","Toni Kroos",
+"Federico Valverde","Pedri","Frenkie de Jong","Bernardo Silva","Declan Rice",
+"Martin Zubimendi","Nicolò Barella","Eduardo Camavinga","Aurélien Tchouaméni","Joshua Kimmich",
+"Leon Goretzka","İlkay Gündoğan","Enzo Fernández","Alexis Mac Allister","Bruno Guimarães",
+"Xavi","Andrés Iniesta","Steven Gerrard","Frank Lampard","Paul Scholes",
+"Andrea Pirlo","Clarence Seedorf","Patrick Vieira","Claude Makélélé","Yaya Touré",
+"Xabi Alonso","Sergio Busquets","Cesc Fàbregas","David Silva","Michael Ballack",
+"Michael Essien","Frank Rijkaard","Ruud Gullit","Lothar Matthäus","Zinedine Zidane",
+"Johan Neeskens","Sócrates","Dunga","Kaká","Rui Costa",
+"Deco","Mesut Özil","Thiago Alcântara","N'Golo Kanté","Paul Pogba"
+],
+
+CAM:[
+"Martin Ødegaard","Jamal Musiala","Florian Wirtz","Cole Palmer","Bruno Fernandes",
+"Phil Foden","James Maddison","Dani Olmo","Dominik Szoboszlai","Xavi Simons",
+"Paulo Dybala","Antoine Griezmann","Bernardo Silva","Kai Havertz","Mason Mount",
+"Christopher Nkunku","James Rodríguez","Juan Mata","David Silva","Mesut Özil",
+"Zinedine Zidane","Kaká","Ronaldinho","Rivaldo","Michel Platini",
+"Diego Maradona","Johan Cruyff","Dennis Bergkamp","Francesco Totti","Alessandro Del Piero",
+"Roberto Baggio","Michael Laudrup","Sócrates","Hristo Stoichkov","Kevin De Bruyne",
+"Juan Román Riquelme","Wesley Sneijder","Karel Poborský","Rui Costa","Pablo Aimar",
+"Jérémy Doku","Nabil Fekir","Isco","Giovani Lo Celso","Rayan Cherki",
+"Harvey Elliott","Morgan Gibbs-White","Lovro Majer","Giovani Reyna","Dani Olmo"
+],
+
+LW:[
+"Vinícius Júnior","Rafael Leão","Khvicha Kvaratskhelia","Luis Díaz","Neymar",
+"Sadio Mané","Jack Grealish","Son Heung-min","Kingsley Coman","Leroy Sané",
+"Gabriel Martinelli","Marcus Rashford","Luis Sinisterra","Moussa Diaby","Ansu Fati",
+"Rodrygo","Eden Hazard","Franck Ribéry","Arjen Robben","Ryan Giggs",
+"Ronaldinho","Cristiano Ronaldo","Neymar","Kylian Mbappé","Gareth Bale",
+"Thierry Henry","Rivaldo","Dries Mertens","Willian","Douglas Costa",
+"Alexis Sánchez","Pedro Rodríguez","David Ginola","Marc Overmars","Pires",
+"Robert Pirès","Ryan Giggs","John Barnes","George Best","Pavel Nedvěd",
+"Franck Ribéry","Ángel Di María","Pedro Neto","Nico Williams","Savinho",
+"Samuel Chukwueze","Bryan Mbeumo","Kaoru Mitoma","Adama Traoré","Jérémy Doku"
+],
+
+RW:[
+"Mohamed Salah","Bukayo Saka","Lamine Yamal","Rodrygo","Riyad Mahrez",
+"Ousmane Dembélé","Lionel Messi","Bernardo Silva","Raphinha","Federico Chiesa",
+"Jadon Sancho","Antony","Nico González","Takefusa Kubo","Yeremy Pino",
+"Arjen Robben","Garrincha","George Best","Jairzinho","Luís Figo",
+"David Beckham","Luis Suárez","Angel Di María","Joaquín","Pedro Rodríguez",
+"Jesús Navas","Willian","Suso","Adama Traoré","Raphinha",
+"Kingsley Coman","Serge Gnabry","Leroy Sané","Michael Olise","Cole Palmer",
+"Michael Laudrup","Stanley Matthews","Johan Cruyff","Rivaldo","Kaká",
+"Riyad Mahrez","Hakim Ziyech","Nabil Fekir","Dejan Kulusevski","Federico Chiesa",
+"Dominik Szoboszlai","Takefusa Kubo","Yeremy Pino","Dani Olmo","Raphinha"
+],
+
+ST:[
+"Kylian Mbappé","Erling Haaland","Harry Kane","Robert Lewandowski","Victor Osimhen",
+"Lautaro Martínez","Karim Benzema","Romelu Lukaku","Dušan Vlahović","Alexander Isak",
+"Darwin Núñez","Julián Álvarez","Rasmus Højlund","Victor Boniface","Ollie Watkins",
+"Gabriel Jesus","Kai Havertz","Marcus Thuram","Gonçalo Ramos","Randal Kolo Muani",
+"Ronaldo Nazário","Pelé","Diego Maradona","Alfredo Di Stéfano","Marco van Basten",
+"Ferenc Puskás","Gerd Müller","Eusébio","Romário","Gabriel Batistuta",
+"Alan Shearer","Thierry Henry","Didier Drogba","Samuel Eto'o","Zlatan Ibrahimović",
+"Wayne Rooney","Luis Suárez","Ruud van Nistelrooy","David Villa","Raúl",
+"Fernando Torres","Sergio Agüero","Andriy Shevchenko","Filippo Inzaghi","George Weah",
+"Michael Owen","Dennis Bergkamp","Hernán Crespo","Gabriel Omar Batistuta","Edinson Cavani"
+]
+
+};
+
+
+/* =========================================================
+   تحويل قاعدة الـ500 إلى لاعبين فعليين
+========================================================= */
+
+const positions=[
+    "GK","CB","LB","RB","CM","CAM","LW","RW","ST"
+];
+
+const clubPool=[
+    "Real Madrid",
+    "Barcelona",
+    "Manchester City",
+    "Liverpool",
+    "Arsenal",
+    "Chelsea",
+    "Manchester United",
+    "Bayern Munich",
+    "Paris Saint-Germain",
+    "Inter Milan",
+    "AC Milan",
+    "Juventus",
+    "Napoli",
+    "Atlético Madrid",
+    "Bayer Leverkusen"
+];
+
+const legendNames=new Set([
+    "Lev Yashin","Gianluigi Buffon","Iker Casillas","Oliver Kahn",
+    "Peter Schmeichel","Dino Zoff","Paolo Maldini","Fabio Cannavaro",
+    "Franco Baresi","Alessandro Nesta","Cafu","Carlos Alberto",
+    "Roberto Carlos","Javier Zanetti","Xavi","Andrés Iniesta",
+    "Steven Gerrard","Frank Lampard","Paul Scholes","Andrea Pirlo",
+    "Zinedine Zidane","Ronaldinho","Rivaldo","Diego Maradona",
+    "Johan Cruyff","Kaká","Michel Platini","Ronaldo Nazário",
+    "Pelé","Alfredo Di Stéfano","Marco van Basten","Ferenc Puskás",
+    "Gerd Müller","Eusébio","Romário","Gabriel Batistuta",
+    "Alan Shearer","Thierry Henry","Didier Drogba","Samuel Eto'o",
+    "Zlatan Ibrahimović","Wayne Rooney","Garrincha","George Best"
+]);
+
+
+/* =========================================================
+   تنظيف التكرار والحصول على 500 لاعب
+========================================================= */
+
+let allPlayers=[];
+
+positions.forEach(pos=>{
+
+    players[pos].forEach((name,index)=>{
+
+        allPlayers.push({
+            name:name,
+            position:pos,
+            rating:generateRating(name,pos,index),
+            club:clubPool[
+                Math.floor(
+                    Math.random()*clubPool.length
+                )
+            ]
+        });
+
+    });
+
+});
+
+
+/*
+   ضمان أن العدد لا يقل عن 500.
+   بعض الأسماء مكررة في المصادر، لذلك نضيف
+   لاعبين حقيقيين إضافيين عند الحاجة.
+*/
+
+const extraPlayers=[
+
+"Thierry Henry","Patrick Kluivert","Robin van Persie",
+"Ruud Gullit","Dennis Bergkamp","Edgar Davids",
+"Clarence Seedorf","Edgar Davids","Wesley Sneijder",
+"Arjen Robben","Ruud van Nistelrooy","Rafael Márquez",
+"Javier Saviola","Juan Sebastián Verón","Hernán Crespo",
+"Javier Mascherano","Carlos Tevez","Diego Forlán",
+"Diego Milito","Miroslav Klose","Lukas Podolski",
+"Mesut Özil","Bastian Schweinsteiger","Thomas Müller",
+"Arjen Robben","Franck Ribéry","Philipp Lahm",
+"Per Mertesacker","Miroslav Klose","Mario Gómez",
+"David Trezeguet","Eric Cantona","Patrick Vieira",
+"Thierry Henry","Nicolas Anelka","Claude Makélélé",
+"Didier Deschamps","Marcel Desailly","Laurent Blanc",
+"Lilian Thuram","Bixente Lizarazu","Fabio Cannavaro",
+"Gianluca Zambrotta","Francesco Totti","Alessandro Del Piero",
+"Roberto Baggio","Christian Vieri","Paolo Rossi",
+"Daniele De Rossi","Gennaro Gattuso","Antonio Di Natale",
+"Zlatan Ibrahimović","Henrik Larsson","Michael Owen",
+"Steven Gerrard","Frank Lampard","John Terry",
+"Rio Ferdinand","Nemanja Vidić","Ashley Cole",
+"David Beckham","Wayne Rooney","Paul Gascoigne",
+"Kevin Keegan","Bobby Charlton","Bobby Moore",
+"Alan Shearer","Gary Lineker","Ian Rush",
+"Mark Hughes","Ryan Giggs","Paul Scholes",
+"Roy Keane","Peter Beardsley","Michael Carrick",
+"David Silva","Sergio Busquets","Cesc Fàbregas",
+"Xabi Alonso","Fernando Torres","David Villa",
+"Carles Puyol","Gerard Piqué","Sergio Ramos",
+"Casillas","Xavi","Iniesta","Villa","Pedro",
+"Busquets","Jordi Alba","Dani Alves","Marcelo",
+"Ronaldo Nazário","Romário","Rivaldo","Ronaldinho",
+"Adriano","Robinho","Kaká","Cafu","Roberto Carlos",
+"Lucio","Dida","Julio Cesar","Thiago Silva",
+"Marcelo","Casemiro","Oscar","Willian",
+"Neymar","Vinícius Júnior","Rodrygo","Endrick",
+"Gabriel Martinelli","Richarlison","Gabriel Jesus",
+"Bruno Guimarães","Casemiro","Fabinho","Fred",
+"Lucas Paquetá","Éverton Ribeiro","Rafinha","Dani Alves",
+"Juan Mata","David Silva","Santi Cazorla","Isco",
+"David Villa","Fernando Morientes","Raúl","Fernando Hierro",
+"Xavi Alonso","Iker Casillas","Pepe Reina","Victor Valdés"
+];
+
+
+extraPlayers.forEach((name,index)=>{
+
+    if(allPlayers.length<500){
+
+        allPlayers.push({
+            name:name,
+            position:positions[
+                index%positions.length
+            ],
+            rating:82+(index%13),
+            club:clubPool[
+                index%clubPool.length
+            ]
+        });
+
+    }
+
+});
+
+
+/*
+   ترتيب وتثبيت أول 500 لاعب فقط
+*/
+
+allPlayers=allPlayers.slice(0,500);
+
+
+/* =========================================================
+   RATINGS
+========================================================= */
+
+function generateRating(name,pos,index){
+
+    if(legendNames.has(name)){
+        return 91+(name.length%8);
+    }
+
+    /*
+       بعض النجوم يحصلون على تقييم أعلى
+    */
+
+    const stars=[
+        "Kylian Mbappé",
+        "Erling Haaland",
+        "Mohamed Salah",
+        "Vinícius Júnior",
+        "Jude Bellingham",
+        "Rodri",
+        "Harry Kane",
+        "Lionel Messi",
+        "Cristiano Ronaldo",
+        "Neymar",
+        "Kevin De Bruyne",
+        "Robert Lewandowski"
+    ];
+
+    if(stars.includes(name)){
+        return 89+(name.length%4);
+    }
+
+    return 80+(index%10);
+}
+
+
+/* =========================================================
+   GROUP PLAYERS
+========================================================= */
+
+const playerPool={};
+
+positions.forEach(pos=>{
+    playerPool[pos]=allPlayers.filter(
+        p=>p.position===pos
+    );
+});
+
+
+/* =========================================================
+   WIKIPEDIA IMAGE
+========================================================= */
+
+const imageCache={};
+
+async function getWikiImage(name){
+
+    if(imageCache[name]){
+        return imageCache[name];
+    }
+
+    try{
+
+        let response=await fetch(
+            "https://en.wikipedia.org/api/rest_v1/page/summary/"
+            +encodeURIComponent(name),
+            {
+                headers:{
+                    "Accept":"application/json"
+                }
+            }
+        );
+
+        if(response.ok){
+
+            const data=await response.json();
+
+            if(
+                data.thumbnail &&
+                data.thumbnail.source
+            ){
+
+                let src=data.thumbnail.source;
+
+                src=src.replace(
+                    /\/\d+px-/,
+                    "/500px-"
+                );
+
+                imageCache[name]=src;
+
+                return src;
+            }
+        }
+
+    }catch(e){
+        console.log("Wikipedia image error",name);
+    }
+
+    return "";
+}
+
+
+/* =========================================================
+   SCREEN
+========================================================= */
+
+function showScreen(id){
+
+    document.querySelectorAll(".screen")
+        .forEach(s=>s.classList.remove("active"));
+
+    document.getElementById(id)
+        .classList.add("active");
+
+    window.scrollTo(0,0);
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+function startGame(){
+
+    const name=
+        document.getElementById("nameInput")
+        .value.trim();
+
+    if(!name){
+
+        toast("اكتب اسمك أولًا");
+
+        return;
+    }
+
+    game.name=name;
+
+    renderClubs();
+
+    showScreen("clubScreen");
+}
+
+
+/* =========================================================
+   CLUBS
+========================================================= */
+
+function renderClubs(){
+
+    const container=
+        document.getElementById("leagues");
+
+    container.innerHTML="";
+
+    clubNames.forEach(league=>{
+
+        const section=
+            document.createElement("div");
+
+        section.className="league";
+
+        section.innerHTML=`
+            <div class="leagueTitle">
+                <i></i>
+                ${league[0]}
+            </div>
+        `;
+
+        const grid=
+            document.createElement("div");
+
+        grid.className="clubGrid";
+
+        league[1].forEach(name=>{
+
+            const card=
+                document.createElement("div");
+
+            card.className="club";
+
+            const img=
+                document.createElement("img");
+
+            img.alt=name;
+
+            img.referrerPolicy="no-referrer";
+
+            img.src=
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/128px-Soccerball.svg.png";
+
+            getWikiImage(name).then(src=>{
+
+                if(src){
+                    img.src=src;
+                }
+
+            });
+
+            const text=
+                document.createElement("span");
+
+            text.textContent=name;
+
+            card.appendChild(img);
+            card.appendChild(text);
+
+            card.onclick=()=>{
+
+                document
+                    .querySelectorAll(".club")
+                    .forEach(x=>
+                        x.classList.remove("selected")
+                    );
+
+                card.classList.add("selected");
+
+                game.club=name;
+
+                const btn=
+                    document.getElementById("clubButton");
+
+                btn.disabled=false;
+                btn.textContent="متابعة 🔥";
+
+            };
+
+            grid.appendChild(card);
+
+        });
+
+        section.appendChild(grid);
+
+        container.appendChild(section);
+
+    });
+
+}
+
+
+/* =========================================================
+   CONTINUE CLUB
+========================================================= */
+
+function continueClub(){
+
+    if(!game.club){
+        toast("اختار ناديك");
+        return;
+    }
+
+    document.getElementById("introName")
+        .textContent=game.name;
+
+    document.getElementById("introClub")
+        .textContent="🏆 "+game.club;
+
+    showScreen("introScreen");
+}
+
+
+/* =========================================================
+   FORMATIONS
+========================================================= */
+
+const formations={
+
+"4-3-3":{
+    positions:[
+        "GK","LB","CB","CB","RB",
+        "CM","CM","CM",
+        "LW","ST","RW"
+    ],
+    coords:[
+        [50,91],
+        [16,72],[40,77],[60,77],[84,72],
+        [27,54],[50,57],[73,54],
+        [17,30],[50,24],[83,30]
+    ],
+    desc:"هجومية متوازنة"
+},
+
+"4-2-3-1":{
+    positions:[
+        "GK","LB","CB","CB","RB",
+        "CM","CM",
+        "LW","CAM","RW",
+        "ST"
+    ],
+    coords:[
+        [50,91],
+        [16,72],[40,77],[60,77],[84,72],
+        [35,58],[65,58],
+        [18,38],[50,42],[82,38],
+        [50,23]
+    ],
+    desc:"سيطرة على الوسط"
+},
+
+"4-4-2":{
+    positions:[
+        "GK","LB","CB","CB","RB",
+        "LW","CM","CM","RW",
+        "ST","ST"
+    ],
+    coords:[
+        [50,91],
+        [16,72],[40,77],[60,77],[84,72],
+        [16,50],[37,54],[63,54],[84,50],
+        [38,25],[62,25]
+    ],
+    desc:"كلاسيكية قوية"
+},
+
+"3-4-3":{
+    positions:[
+        "GK","CB","CB","CB",
+        "LB","CM","CM","RB",
+        "LW","ST","RW"
+    ],
+    coords:[
+        [50,91],
+        [27,75],[50,79],[73,75],
+        [15,52],[37,56],[63,56],[85,52],
+        [18,30],[50,24],[82,30]
+    ],
+    desc:"ضغط وهجوم"
+}
+
+};
+
+
+function openFormations(){
+
+    renderFormations();
+
+    showScreen("formationScreen");
+}
+
+
+function renderFormations(){
+
+    const grid=
+        document.getElementById("formations");
+
+    grid.innerHTML="";
+
+    Object.entries(formations)
+    .forEach(([name,data])=>{
+
+        const card=
+            document.createElement("div");
+
+        card.className="formation";
+
+        const pitch=
+            document.createElement("div");
+
+        pitch.className="miniPitch";
+
+        data.coords.forEach(c=>{
+
+            const dot=
+                document.createElement("div");
+
+            dot.className="miniDot";
+
+            dot.style.left=c[0]+"%";
+            dot.style.top=c[1]+"%";
+
+            pitch.appendChild(dot);
+
+        });
+
+        card.innerHTML+=`
+            <div class="formationName">${name}</div>
+            <div class="formationDesc">${data.desc}</div>
+        `;
+
+        card.prepend(pitch);
+
+        card.onclick=()=>{
+
+            document
+                .querySelectorAll(".formation")
+                .forEach(x=>
+                    x.classList.remove("selected")
+                );
+
+            card.classList.add("selected");
+
+            game.formation=data;
+
+            document.getElementById(
+                "formationButton"
+            ).disabled=false;
+
+            document.getElementById(
+                "formationButton"
+            ).textContent="ابدأ الـ Draft 🔥";
+
+        };
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   START DRAFT
+========================================================= */
+
+function startDraft(){
+
+    game.picks=[];
+    game.selectedSlot=null;
+
+    document.getElementById("draftName")
+        .textContent=game.name;
+
+    document.getElementById("draftClub")
+        .textContent=
+        game.club;
+
+    document.getElementById("counter")
+        .textContent="0 / 11";
+
+    document.getElementById("options")
+        .style.display="none";
+
+    document.getElementById("prompt")
+        .innerHTML=
+        'اضغط على <strong>أي مركز</strong> للبدء';
+
+    showScreen("draftScreen");
+
+    renderPitch();
+}
+
+
+/* =========================================================
+   RENDER PITCH
+========================================================= */
+
+function renderPitch(){
+
+    const pitch=
+        document.getElementById("pitch");
+
+    pitch.innerHTML=`
+        <div class="midline"></div>
+        <div class="centerCircle"></div>
+        <div class="area top"></div>
+        <div class="area bottom"></div>
+    `;
+
+    game.formation.positions
+    .forEach((pos,index)=>{
+
+        const slot=
+            document.createElement("div");
+
+        slot.className="slot";
+
+        const coord=
+            game.formation.coords[index];
+
+        slot.style.left=coord[0]+"%";
+        slot.style.top=coord[1]+"%";
+
+        const picked=
+            game.picks.find(
+                p=>p.index===index
+            );
+
+        if(picked){
+
+            slot.appendChild(
+                createSmallCard(
+                    picked.player
+                )
+            );
+
+        }else{
+
+            const empty=
+                document.createElement("div");
+
+            empty.className="empty";
+
+            empty.innerHTML="+";
+
+            const label=
+                document.createElement("div");
+
+            label.className="emptyLabel";
+
+            label.textContent=pos;
+
+            slot.appendChild(empty);
+            slot.appendChild(label);
+
+            slot.onclick=()=>{
+                choosePosition(index);
+            };
+
+        }
+
+        pitch.appendChild(slot);
+
+    });
+
+}
+
+
+/* =========================================================
+   SMALL CARD
+========================================================= */
+
+function createSmallCard(player){
+
+    const card=
+        document.createElement("div");
+
+    card.className="fifaCard";
+
+    card.innerHTML=`
+
+        <div class="cardRating">
+            ${player.rating}
+        </div>
+
+        <div class="cardPosition">
+            ${player.position}
+        </div>
+
+        <div class="cardName">
+            ${player.name}
+        </div>
+
+    `;
+
+    const img=
+        document.createElement("img");
+
+    img.className="cardPlayer";
+
+    img.alt=player.name;
+
+    img.referrerPolicy="no-referrer";
+
+    img.src=
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/128px-Soccerball.svg.png";
+
+    getWikiImage(player.name).then(src=>{
+
+        if(src){
+            img.src=src;
+        }
+
+    });
+
+    card.appendChild(img);
+
+    return card;
+}
+
+
+/* =========================================================
+   POSITION
+========================================================= */
+
+function choosePosition(index){
+
+    if(
+        game.picks.some(
+            p=>p.index===index
+        )
+    ){
+        return;
+    }
+
+    game.selectedSlot=index;
+
+    const position=
+        game.formation.positions[index];
+
+    document.getElementById(
+        "positionName"
+    ).textContent=position;
+
+    document.getElementById(
+        "prompt"
+    ).innerHTML=`
+        اختر كارت لاعب لمركز
+        <strong>${position}</strong>
+    `;
+
+    document.getElementById(
+        "options"
+    ).style.display="block";
+
+    renderCards(position);
+
+    setTimeout(()=>{
+
+        document.getElementById("options")
+            .scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
+
+    },100);
+}
+
+
+/* =========================================================
+   CARD TIER
+========================================================= */
+
+function getTier(player){
+
+    if(legendNames.has(player.name)){
+        return "legend";
+    }
+
+    if(player.rating>=91){
+        return "icon";
+    }
+
+    if(player.rating>=88){
+        return "epic";
+    }
+
+    if(player.rating>=85){
+        return "rare";
+    }
+
+    return "common";
+}
+
+
+/* =========================================================
+   PLAYER CARD
+========================================================= */
+
+function renderCards(position){
+
+    const grid=
+        document.getElementById("cardsGrid");
+
+    grid.innerHTML="";
+
+    let pool=
+        playerPool[position] || [];
+
+    /*
+       خلط اللاعبين
+    */
+
+    pool=[...pool].sort(
+        ()=>Math.random()-.5
+    );
+
+    /*
+       أربع كروت فقط
+    */
+
+    pool.slice(0,4).forEach(player=>{
+
+        const tier=
+            getTier(player);
+
+        const wrapper=
+            document.createElement("div");
+
+        wrapper.className=
+            "bigCard card-"+tier;
+
+        wrapper.innerHTML=`
+
+            <div class="fifaCard">
+
+                <div class="crystals">
+
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+
+                </div>
+
+                <div class="cardRating">
+                    ${player.rating}
+                </div>
+
+                <div class="cardPosition">
+                    ${player.position}
+                </div>
+
+                <div class="cardCountry">
+                    ${tier.toUpperCase()}
+                </div>
+
+                <img
+                    class="cardClub"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/128px-Soccerball.svg.png"
+                    alt="${player.club}"
+                >
+
+                <div
+                    class="loader"
+                    id="loader-${CSS.escape(player.name)}">
+                </div>
+
+                <img
+                    class="cardPlayer"
+                    alt="${player.name}"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/128px-Soccerball.svg.png"
+                >
+
+                <div class="cardName">
+                    ${player.name}
+                </div>
+
+            </div>
+        `;
+
+        /*
+           صورة اللاعب
+        */
+
+        const img=
+            wrapper.querySelector(".cardPlayer");
+
+        const loader=
+            wrapper.querySelector(".loader");
+
+        img.referrerPolicy="no-referrer";
+
+        img.onload=()=>{
+            loader.remove();
+        };
+
+        getWikiImage(player.name).then(src=>{
+
+            if(src){
+
+                img.src=src;
+
+            }else{
+
+                loader.remove();
+
+            }
+
+        });
+
+
+        /*
+           صورة النادي
+        */
+
+        const clubImg=
+            wrapper.querySelector(".cardClub");
+
+        getWikiImage(player.club).then(src=>{
+
+            if(src){
+                clubImg.src=src;
+            }
+
+        });
+
+
+        wrapper.onclick=()=>{
+
+            selectPlayer(player);
+
+        };
+
+        grid.appendChild(wrapper);
+
+    });
+
+}
+
+
+/* =========================================================
+   SELECT PLAYER
+========================================================= */
+
+function selectPlayer(player){
+
+    const index=
+        game.selectedSlot;
+
+    if(index===null){
+        return;
+    }
+
+    if(
+        game.picks.some(
+            p=>p.index===index
+        )
+    ){
+        return;
+    }
+
+    game.picks.push({
+
+        index:index,
+
+        position:
+            game.formation.positions[index],
+
+        player:player
+
+    });
+
+    game.selectedSlot=null;
+
+    document.getElementById(
+        "counter"
+    ).textContent=
+        `${game.picks.length} / 11`;
+
+    document.getElementById(
+        "options"
+    ).style.display="none";
+
+    renderPitch();
+
+    if(game.picks.length===11){
+
+        document.getElementById(
+            "prompt"
+        ).innerHTML=
+            "<strong>🔥 اكتمل فريقك!</strong>";
+
+        setTimeout(
+            finishDraft,
+            1000
+        );
+
+        return;
+    }
+
+    document.getElementById(
+        "prompt"
+    ).innerHTML=`
+        اختر مركزًا آخر من الملعب
+        ⚽
+    `;
+
+    toast(
+        player.name+" انضم للفريق 🔥"
+    );
+}
+
+
+/* =========================================================
+   FINISH
+========================================================= */
+
+function finishDraft(){
+
+    renderResult();
+
+    showScreen("resultScreen");
+
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+function renderResult(){
+
+    const pitch=
+        document.getElementById("resultPitch");
+
+    pitch.innerHTML="";
+
+    /*
+       خطوط الملعب
+    */
+
+    const line=
+        document.createElement("div");
+
+    line.style.position="absolute";
+    line.style.left="3%";
+    line.style.right="3%";
+    line.style.top="50%";
+    line.style.height="2px";
+    line.style.background="rgba(255,255,255,.4)";
+
+    pitch.appendChild(line);
+
+    let total=0;
+
+    game.picks.forEach(pick=>{
+
+        total+=pick.player.rating;
+
+        const coord=
+            game.formation.coords[pick.index];
+
+        const slot=
+            document.createElement("div");
+
+        slot.className="slot";
+
+        slot.style.left=coord[0]+"%";
+        slot.style.top=coord[1]+"%";
+
+        slot.appendChild(
+            createSmallCard(
+                pick.player
+            )
+        );
+
+        pitch.appendChild(slot);
+
+    });
+
+    const avg=
+        Math.round(total/11);
+
+    document.getElementById(
+        "average"
+    ).textContent=avg;
+
+    document.getElementById(
+        "total"
+    ).textContent=total;
+
+    document.getElementById(
+        "resultInfo"
+    ).textContent=
+        `${game.name} • ${game.club}`;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimeout;
+
+function toast(text){
+
+    const t=
+        document.getElementById("toast");
+
+    t.textContent=text;
+
+    t.classList.add("show");
+
+    clearTimeout(toastTimeout);
+
+    toastTimeout=setTimeout(()=>{
+
+        t.classList.remove("show");
+
+    },2200);
+
+}
+
+
+/* =========================================================
+   ENTER
+========================================================= */
+
+document.getElementById(
+    "nameInput"
+).addEventListener(
+    "keydown",
+    e=>{
+        if(e.key==="Enter"){
+            startGame();
+        }
+    }
+);
+
+</script>
+
+</body>
+</html>
