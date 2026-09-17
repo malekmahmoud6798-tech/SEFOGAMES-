@@ -1,1 +1,2098 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<title>L&S GAMES | LEADERBOARD</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    min-height:100%;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+
+    font-family:'Cairo',sans-serif;
+    color:#fff;
+
+    background:
+    radial-gradient(
+        circle at 50% -10%,
+        #4a2aa0 0%,
+        #21134f 25%,
+        #0a0719 60%,
+        #020207 100%
+    );
+}
+
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+.background{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.glow{
+    position:absolute;
+    width:320px;
+    height:320px;
+    border-radius:50%;
+    filter:blur(80px);
+    opacity:.22;
+}
+
+.glow1{
+    top:-120px;
+    right:-120px;
+    background:#7a4dff;
+
+    animation:
+    glowMove1 8s ease-in-out infinite alternate;
+}
+
+.glow2{
+    bottom:-150px;
+    left:-120px;
+    background:#00bfff;
+
+    animation:
+    glowMove2 10s ease-in-out infinite alternate;
+}
+
+@keyframes glowMove1{
+
+    from{
+        transform:translate(0,0) scale(.8);
+    }
+
+    to{
+        transform:translate(-80px,80px) scale(1.25);
+    }
+
+}
+
+@keyframes glowMove2{
+
+    from{
+        transform:translate(0,0) scale(.8);
+    }
+
+    to{
+        transform:translate(90px,-60px) scale(1.25);
+    }
+
+}
+
+
+/* =====================================================
+   PARTICLES
+===================================================== */
+
+#particles{
+    position:absolute;
+    inset:0;
+}
+
+.particle{
+    position:absolute;
+
+    width:4px;
+    height:4px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    box-shadow:
+    0 0 10px #8c6dff;
+
+    animation:
+    particleMove linear infinite;
+}
+
+@keyframes particleMove{
+
+    0%{
+        transform:translateY(110vh) scale(.2);
+        opacity:0;
+    }
+
+    15%{
+        opacity:1;
+    }
+
+    85%{
+        opacity:1;
+    }
+
+    100%{
+        transform:translateY(-10vh) scale(1);
+        opacity:0;
+    }
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+
+    position:sticky;
+    top:0;
+
+    z-index:100;
+
+    height:72px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:
+    0 17px;
+
+    background:
+    rgba(4,3,15,.78);
+
+    border-bottom:
+    1px solid rgba(142,108,255,.25);
+
+    backdrop-filter:blur(18px);
+}
+
+.logo{
+
+    font-family:'Orbitron',sans-serif;
+
+    font-size:19px;
+
+    font-weight:900;
+
+    letter-spacing:2px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #fff,
+        #9e7dff,
+        #4ad9ff,
+        #fff
+    );
+
+    background-size:300%;
+
+    -webkit-background-clip:text;
+    color:transparent;
+
+    animation:
+    logoAnimation 4s linear infinite;
+}
+
+@keyframes logoAnimation{
+
+    to{
+        background-position:300%;
+    }
+
+}
+
+.season{
+
+    padding:
+    7px 12px;
+
+    border-radius:30px;
+
+    background:
+    rgba(104,73,255,.13);
+
+    border:
+    1px solid rgba(141,112,255,.4);
+
+    color:#b9aaff;
+
+    font-family:'Orbitron',sans-serif;
+
+    font-size:9px;
+
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container{
+
+    position:relative;
+
+    z-index:5;
+
+    width:
+    min(680px,100%);
+
+    margin:auto;
+
+    padding:
+    25px 14px 50px;
+
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.titleArea{
+
+    text-align:center;
+
+    margin-bottom:24px;
+
+    animation:
+    titleEnter .8s ease;
+}
+
+@keyframes titleEnter{
+
+    from{
+        opacity:0;
+        transform:
+        translateY(-25px)
+        scale(.95);
+    }
+
+    to{
+        opacity:1;
+        transform:
+        translateY(0)
+        scale(1);
+    }
+
+}
+
+.title{
+
+    font-family:'Orbitron',sans-serif;
+
+    font-size:
+    clamp(27px,8vw,39px);
+
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    text-shadow:
+    0 5px 0 #26134e,
+    0 0 25px rgba(132,93,255,.8);
+
+}
+
+.title span{
+    color:#9d7aff;
+}
+
+.subtitle{
+
+    margin-top:7px;
+
+    color:#9d98b5;
+
+    font-size:12px;
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading{
+
+    text-align:center;
+
+    padding:40px 0;
+
+    color:#9993b4;
+
+    font-size:13px;
+}
+
+.spinner{
+
+    width:42px;
+    height:42px;
+
+    margin:
+    0 auto 14px;
+
+    border-radius:50%;
+
+    border:
+    3px solid rgba(255,255,255,.08);
+
+    border-top-color:#8b6cff;
+
+    animation:
+    spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+
+/* =====================================================
+   PODIUM
+===================================================== */
+
+.podium{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:center;
+
+    gap:7px;
+
+    height:265px;
+
+    margin-bottom:22px;
+}
+
+.podiumPlayer{
+
+    position:relative;
+
+    width:32%;
+
+    text-align:center;
+
+    animation:
+    podiumEnter .7s cubic-bezier(.2,.8,.2,1) backwards;
+}
+
+.podiumPlayer:nth-child(1){
+    animation-delay:.25s;
+}
+
+.podiumPlayer:nth-child(2){
+    animation-delay:0s;
+}
+
+.podiumPlayer:nth-child(3){
+    animation-delay:.4s;
+}
+
+@keyframes podiumEnter{
+
+    from{
+        opacity:0;
+        transform:
+        translateY(70px)
+        scale(.7)
+        rotate(4deg);
+    }
+
+    to{
+        opacity:1;
+        transform:
+        translateY(0)
+        scale(1)
+        rotate(0);
+    }
+
+}
+
+
+/* =====================================================
+   CROWN
+===================================================== */
+
+.crown{
+
+    position:absolute;
+
+    top:-31px;
+    left:50%;
+
+    transform:
+    translateX(-50%)
+    rotate(-8deg);
+
+    font-size:31px;
+
+    filter:
+    drop-shadow(0 0 12px #ffd34e);
+
+    z-index:10;
+
+}
+
+
+/* =====================================================
+   AVATAR
+===================================================== */
+
+.avatar{
+
+    width:82px;
+    height:82px;
+
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:27px;
+
+    background:
+    linear-gradient(
+        145deg,
+        #291958,
+        #090716
+    );
+
+    border:
+    3px solid #7961df;
+
+    box-shadow:
+    0 8px 0 #130d29,
+    0 0 25px rgba(126,96,255,.4);
+
+    font-size:39px;
+
+    position:relative;
+    z-index:3;
+}
+
+.first .avatar{
+
+    width:105px;
+    height:105px;
+
+    font-size:51px;
+
+    border-color:#ffd65a;
+
+    box-shadow:
+    0 9px 0 #513710,
+    0 0 35px rgba(255,205,70,.55);
+
+    animation:
+    championFloat 2.5s ease-in-out infinite;
+}
+
+@keyframes championFloat{
+
+    50%{
+        transform:
+        translateY(-8px)
+        rotate(-2deg);
+    }
+
+}
+
+
+/* =====================================================
+   RANK BADGE
+===================================================== */
+
+.rankBadge{
+
+    position:absolute;
+
+    top:-8px;
+    right:calc(50% - 58px);
+
+    width:29px;
+    height:29px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#100c21;
+
+    border:
+    2px solid #8972f4;
+
+    font-family:'Orbitron',sans-serif;
+
+    font-size:10px;
+
+    font-weight:900;
+
+    z-index:8;
+}
+
+.first .rankBadge{
+
+    color:#ffd75c;
+
+    border-color:#ffd75c;
+
+}
+
+
+/* =====================================================
+   PLAYER NAME
+===================================================== */
+
+.podiumName{
+
+    margin-top:8px;
+
+    font-size:12px;
+
+    font-weight:900;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+.podiumPoints{
+
+    margin-top:2px;
+
+    font-family:'Orbitron',sans-serif;
+
+    font-size:9px;
+
+    color:#aaa0df;
+}
+
+
+/* =====================================================
+   PODIUM BLOCK
+===================================================== */
+
+.podiumBlock{
+
+    height:67px;
+
+    margin-top:2px;
+
+    border-radius:
+    17px 17px 7px 7px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(117,84,255,.32),
+        rgba(24,17,55,.95)
+    );
+
+    border:
+    1px solid rgba(138,111,255,.3);
+
+    box-shadow:
+    0 7px 0 #0c081b,
+    inset 0 0 25px rgba(120,90,255,.08);
+}
+
+.second .podiumBlock{
+    height:84px;
+}
+
+.first .podiumBlock{
+
+    height:104px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(255,204,71,.23),
+        rgba(52,34,9,.85)
+    );
+
+    border-color:
+    rgba(255,215,92,.45);
+
+    box-shadow:
+    0 8px 0 #241806,
+    inset 0 0 25px rgba(255,204,71,.1);
+}
+
+
+/* =====================================================
+   BOARD
+===================================================== */
+
+.board{
+
+    padding:13px;
+
+    border-radius:27px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(24,17,53,.95),
+        rgba(5,4,15,.97)
+    );
+
+    border:
+    1px solid rgba(137,108,255,.3);
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.4),
+    inset 0 0 30px rgba(113,79,255,.05);
+}
+
+.boardHeader{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+    3px 5px 14px;
+}
+
+.boardTitle{
+
+    font-size:16px;
+
+    font-weight:900;
+}
+
+.live{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    color:#77728d;
+
+    font-size:9px;
+}
+
+.liveDot{
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#52e1ff;
+
+    box-shadow:
+    0 0 12px #52e1ff;
+
+    animation:
+    liveBlink 1.2s infinite;
+}
+
+@keyframes liveBlink{
+
+    50%{
+        opacity:.25;
+    }
+
+}
+
+
+/* =====================================================
+   PLAYER ROW
+===================================================== */
+
+.playerRow{
+
+    min-height:75px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:9px;
+
+    margin-bottom:8px;
+
+    border-radius:19px;
+
+    background:
+    linear-gradient(
+        100deg,
+        rgba(255,255,255,.045),
+        rgba(255,255,255,.012)
+    );
+
+    border:
+    1px solid rgba(255,255,255,.06);
+
+    overflow:hidden;
+
+    position:relative;
+
+    animation:
+    rowEnter .5s ease backwards;
+}
+
+@keyframes rowEnter{
+
+    from{
+        opacity:0;
+        transform:
+        translateX(35px);
+    }
+
+    to{
+        opacity:1;
+        transform:
+        translateX(0);
+    }
+
+}
+
+.playerRow:active{
+    transform:scale(.985);
+}
+
+.playerRow::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:100px;
+    height:150px;
+
+    right:-100px;
+    top:-40px;
+
+    background:
+    rgba(121,89,255,.15);
+
+    filter:blur(30px);
+
+    transform:rotate(20deg);
+}
+
+
+/* =====================================================
+   RANK NUMBER
+===================================================== */
+
+.rowRank{
+
+    width:32px;
+    height:32px;
+
+    flex:none;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:#100c22;
+
+    border:
+    1px solid rgba(134,108,255,.3);
+
+    font-family:'Orbitron',sans-serif;
+
+    font-size:10px;
+
+    font-weight:900;
+
+    color:#aaa5bc;
+}
+
+
+/* =====================================================
+   ROW AVATAR
+===================================================== */
+
+.rowAvatar{
+
+    width:46px;
+    height:46px;
+
+    flex:none;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:15px;
+
+    background:
+    linear-gradient(
+        145deg,
+        #25174d,
+        #080714
+    );
+
+    border:
+    2px solid rgba(132,106,255,.32);
+
+    font-size:23px;
+}
+
+
+/* =====================================================
+   INFO
+===================================================== */
+
+.userInfo{
+
+    flex:1;
+
+    min-width:0;
+}
+
+.userName{
+
+    font-size:12px;
+
+    font-weight:900;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+.userId{
+
+    margin-top:2px;
+
+    color:#68647b;
+
+    font-size:8px;
+}
+
+
+/* =====================================================
+   POINTS
+===================================================== */
+
+.points{
+
+    text-align:left;
+
+    flex:none;
+}
+
+.pointsValue{
+
+    font-family:'Orbitron',sans-serif;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    color:#c0b5ff;
+}
+
+.pointsLabel{
+
+    margin-top:2px;
+
+    font-size:7px;
+
+    color:#625d76;
+}
+
+
+/* =====================================================
+   TOP 3 COLORS
+===================================================== */
+
+.gold{
+
+    background:
+    linear-gradient(
+        100deg,
+        rgba(255,204,65,.11),
+        rgba(255,255,255,.02)
+    );
+
+    border-color:
+    rgba(255,213,84,.3);
+}
+
+.gold .rowRank{
+
+    color:#ffd75c;
+
+    border-color:
+    rgba(255,215,92,.5);
+}
+
+.silver .rowRank{
+
+    color:#d7dbe8;
+}
+
+.bronze .rowRank{
+
+    color:#db9b6c;
+}
+
+
+/* =====================================================
+   MY POSITION
+===================================================== */
+
+.myPosition{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-top:12px;
+
+    padding:13px;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+        100deg,
+        rgba(76,48,180,.3),
+        rgba(24,17,55,.85)
+    );
+
+    border:
+    1px solid rgba(129,100,255,.35);
+
+    box-shadow:
+    0 0 25px rgba(92,65,255,.08);
+}
+
+.myIcon{
+
+    width:43px;
+    height:43px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:#17102e;
+
+    font-size:21px;
+}
+
+.myText{
+
+    flex:1;
+}
+
+.myText b{
+
+    display:block;
+
+    font-size:12px;
+}
+
+.myText small{
+
+    display:block;
+
+    margin-top:2px;
+
+    color:#77718c;
+
+    font-size:8px;
+}
+
+.myRank{
+
+    font-family:'Orbitron',sans-serif;
+
+    font-size:13px;
+
+    color:#a792ff;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty{
+
+    padding:35px 15px;
+
+    text-align:center;
+
+    color:#77728e;
+
+    font-size:12px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer{
+
+    text-align:center;
+
+    margin-top:20px;
+
+    color:#57526b;
+
+    font-size:9px;
+
+    line-height:1.8;
+}
+
+.footer strong{
+    color:#8272bd;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:390px){
+
+    .header{
+        height:66px;
+    }
+
+    .logo{
+        font-size:17px;
+    }
+
+    .container{
+        padding-top:22px;
+    }
+
+    .podium{
+        height:245px;
+    }
+
+    .avatar{
+        width:69px;
+        height:69px;
+        font-size:33px;
+    }
+
+    .first .avatar{
+        width:89px;
+        height:89px;
+        font-size:43px;
+    }
+
+    .podiumBlock{
+        height:58px;
+    }
+
+    .second .podiumBlock{
+        height:71px;
+    }
+
+    .first .podiumBlock{
+        height:88px;
+    }
+
+    .playerRow{
+        min-height:70px;
+    }
+
+    .rowAvatar{
+        width:42px;
+        height:42px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     BACKGROUND
+===================================================== -->
+
+<div class="background">
+
+    <div class="glow glow1"></div>
+    <div class="glow glow2"></div>
+
+    <div id="particles"></div>
+
+</div>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo">
+        L&amp;S GAMES
+    </div>
+
+    <div class="season">
+        SEASON 03
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="container">
+
+
+    <section class="titleArea">
+
+        <div class="title">
+            LEADER<span>BOARD</span>
+        </div>
+
+        <div class="subtitle">
+            ترتيب أبطال L&amp;S GAMES 🔥
+        </div>
+
+    </section>
+
+
+    <!-- LOADING -->
+
+    <div class="loading" id="loading">
+
+        <div class="spinner"></div>
+
+        جاري تحميل الترتيب...
+
+    </div>
+
+
+    <!-- PODIUM -->
+
+    <section
+        class="podium"
+        id="podium"
+        style="display:none">
+    </section>
+
+
+    <!-- BOARD -->
+
+    <section
+        class="board"
+        id="board"
+        style="display:none">
+
+        <div class="boardHeader">
+
+            <div class="boardTitle">
+                🏆 ترتيب اللاعبين
+            </div>
+
+            <div class="live">
+
+                <span class="liveDot"></span>
+
+                LIVE
+
+            </div>
+
+        </div>
+
+
+        <div id="playersList"></div>
+
+
+        <div
+            class="myPosition"
+            id="myPosition"
+            style="display:none">
+
+            <div class="myIcon">
+                🎮
+            </div>
+
+            <div class="myText">
+
+                <b>
+                    مركزك الحالي
+                </b>
+
+                <small>
+                    العب أكثر واصعد للقمة 🔥
+                </small>
+
+            </div>
+
+            <div
+                class="myRank"
+                id="myRank">
+                #--
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="footer">
+
+        L&amp;S GAMES • SEASON 03
+
+        <br>
+
+        <strong>
+            KEEP PLAYING • KEEP CLIMBING
+        </strong>
+
+    </div>
+
+
+</main>
+
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+
+<script>
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+    "AIzaSyC_55Rv6wCni9EwQurtUILswB1WjkXp6hM",
+
+    authDomain:
+    "mazad-noogom.firebaseapp.com",
+
+    databaseURL:
+    "https://mazad-noogom-default-rtdb.firebaseio.com",
+
+    projectId:
+    "mazad-noogom",
+
+    storageBucket:
+    "mazad-noogom.firebasestorage.app",
+
+    messagingSenderId:
+    "183884985831",
+
+    appId:
+    "1:183884985831:web:db231949dace2b0798b942"
+
+};
+
+
+/* =====================================================
+   INIT FIREBASE
+===================================================== */
+
+if(!firebase.apps.length){
+
+    firebase.initializeApp(firebaseConfig);
+
+}
+
+const db =
+firebase.database();
+
+
+/* =====================================================
+   CURRENT USER
+===================================================== */
+
+const currentUser =
+localStorage.getItem("userEmail") ||
+localStorage.getItem("username") ||
+localStorage.getItem("name") ||
+"guest";
+
+
+/* =====================================================
+   CREATE SAFE PLAYER ID
+===================================================== */
+
+function makePlayerId(name){
+
+    return String(name)
+        .toLowerCase()
+        .trim()
+        .replace(/[.#$[\]/]/g,"_")
+        .replace(/\s+/g,"_");
+
+}
+
+
+/* =====================================================
+   PLAYER ICON
+===================================================== */
+
+function getAvatar(index){
+
+    const avatars = [
+        "👑",
+        "🦁",
+        "🐉",
+        "🐺",
+        "🦊",
+        "⚡",
+        "🔥",
+        "🐯",
+        "🦅",
+        "💀",
+        "🎮",
+        "🚀"
+    ];
+
+    return avatars[index % avatars.length];
+
+}
+
+
+/* =====================================================
+   LOAD LEADERBOARD
+===================================================== */
+
+const leaderboardRef =
+db.ref("leaderboard");
+
+
+leaderboardRef.on("value", snapshot => {
+
+    const data =
+    snapshot.val() || {};
+
+    const players =
+    Object.keys(data)
+    .map(key => {
+
+        return {
+
+            id:key,
+
+            ...data[key]
+
+        };
+
+    });
+
+
+    players.sort((a,b) => {
+
+        return (
+            Number(b.points || 0)
+            -
+            Number(a.points || 0)
+        );
+
+    });
+
+
+    renderLeaderboard(players);
+
+});
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function renderLeaderboard(players){
+
+    document.getElementById("loading").style.display="none";
+
+    document.getElementById("podium").style.display="flex";
+
+    document.getElementById("board").style.display="block";
+
+
+    const podium =
+    document.getElementById("podium");
+
+    const list =
+    document.getElementById("playersList");
+
+
+    podium.innerHTML="";
+    list.innerHTML="";
+
+
+    if(players.length === 0){
+
+        podium.style.display="none";
+
+        list.innerHTML=`
+
+            <div class="empty">
+
+                لا يوجد لاعبين حتى الآن 🎮
+
+                <br>
+
+                كن أول بطل في L&amp;S GAMES!
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* =================================================
+       TOP 3
+    ================================================= */
+
+    const top3 =
+    players.slice(0,3);
+
+
+    /*
+       ترتيب المنصة:
+       المركز 2
+       المركز 1
+       المركز 3
+    */
+
+    const podiumOrder = [
+        top3[1],
+        top3[0],
+        top3[2]
+    ];
+
+
+    podiumOrder.forEach((player, index) => {
+
+        if(!player) return;
+
+
+        const actualRank =
+        players.indexOf(player)+1;
+
+
+        const div =
+        document.createElement("div");
+
+
+        div.className =
+        "podiumPlayer " +
+        (actualRank===1 ? "first " : "") +
+        (actualRank===2 ? "second " : "") +
+        (actualRank===3 ? "third " : "");
+
+
+        div.innerHTML = `
+
+            ${
+                actualRank===1
+                ? `<div class="crown">👑</div>`
+                : ""
+            }
+
+            <div class="rankBadge">
+                ${actualRank}
+            </div>
+
+            <div class="avatar">
+                ${player.avatar || getAvatar(actualRank-1)}
+            </div>
+
+            <div class="podiumName">
+                ${escapeHTML(player.name || player.id)}
+            </div>
+
+            <div class="podiumPoints">
+                ${Number(player.points || 0).toLocaleString()}
+                POINTS
+            </div>
+
+            <div class="podiumBlock"></div>
+
+        `;
+
+
+        podium.appendChild(div);
+
+    });
+
+
+    /* =================================================
+       ALL PLAYERS
+    ================================================= */
+
+    players.forEach((player,index) => {
+
+        const rank =
+        index+1;
+
+
+        const row =
+        document.createElement("div");
+
+
+        let rankClass="";
+
+        if(rank===1) rankClass="gold";
+        if(rank===2) rankClass="silver";
+        if(rank===3) rankClass="bronze";
+
+
+        row.className =
+        "playerRow "+rankClass;
+
+
+        row.style.animationDelay =
+        Math.min(index*.04,.5)+"s";
+
+
+        row.innerHTML = `
+
+            <div class="rowRank">
+                ${rank}
+            </div>
+
+            <div class="rowAvatar">
+                ${player.avatar || getAvatar(index)}
+            </div>
+
+            <div class="userInfo">
+
+                <div class="userName">
+                    ${escapeHTML(player.name || player.id)}
+                </div>
+
+                <div class="userId">
+                    #${escapeHTML(player.id)}
+                </div>
+
+            </div>
+
+            <div class="points">
+
+                <div class="pointsValue">
+                    ${Number(player.points || 0).toLocaleString()}
+                </div>
+
+                <div class="pointsLabel">
+                    POINTS
+                </div>
+
+            </div>
+
+        `;
+
+
+        list.appendChild(row);
+
+    });
+
+
+    /* =================================================
+       CURRENT USER
+    ================================================= */
+
+    const currentId =
+    makePlayerId(currentUser);
+
+
+    const myIndex =
+    players.findIndex(
+        p => p.id === currentId
+    );
+
+
+    const myPosition =
+    document.getElementById("myPosition");
+
+
+    if(myIndex >= 0){
+
+        myPosition.style.display="flex";
+
+        document.getElementById("myRank")
+        .textContent =
+        "#"+(myIndex+1);
+
+    }
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   CREATE PLAYER IF NEEDED
+===================================================== */
+
+async function ensurePlayer(){
+
+    if(!currentUser || currentUser==="guest")
+        return;
+
+
+    const playerId =
+    makePlayerId(currentUser);
+
+
+    const ref =
+    db.ref(
+        "leaderboard/"+playerId
+    );
+
+
+    const snapshot =
+    await ref.once("value");
+
+
+    if(!snapshot.exists()){
+
+        await ref.set({
+
+            name:currentUser,
+
+            points:0,
+
+            wins:0,
+
+            draws:0,
+
+            losses:0,
+
+            games:0,
+
+            avatar:getAvatar(
+                Math.floor(
+                    Math.random()*12
+                )
+            ),
+
+            createdAt:
+            firebase.database.ServerValue.TIMESTAMP,
+
+            updatedAt:
+            firebase.database.ServerValue.TIMESTAMP
+
+        });
+
+    }
+
+}
+
+
+/* =====================================================
+   ADD MATCH RESULT
+=====================================================
+
+   WIN  = 10
+   DRAW = 5
+   LOSS = 1
+
+   IMPORTANT:
+   استدعِ الدالة دي عند نهاية المباراة
+   في صفحات الألعاب.
+
+===================================================== */
+
+async function recordMatchResult(result){
+
+    if(
+        !result ||
+        !result.outcome
+    ){
+
+        console.error(
+            "recordMatchResult: نتيجة غير صحيحة"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        currentUser==="guest" ||
+        !currentUser
+    ){
+
+        console.warn(
+            "لا يوجد لاعب مسجل دخول"
+        );
+
+        return;
+
+    }
+
+
+    const playerId =
+    makePlayerId(currentUser);
+
+
+    const playerRef =
+    db.ref(
+        "leaderboard/"+playerId
+    );
+
+
+    let pointsToAdd=0;
+
+    let field="";
+
+
+    if(result.outcome==="win"){
+
+        pointsToAdd=10;
+
+        field="wins";
+
+    }
+
+    else if(result.outcome==="draw"){
+
+        pointsToAdd=5;
+
+        field="draws";
+
+    }
+
+    else if(result.outcome==="loss"){
+
+        pointsToAdd=1;
+
+        field="losses";
+
+    }
+
+    else{
+
+        console.error(
+            "outcome يجب أن يكون win أو draw أو loss"
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Transaction مهمة جدًا
+       عشان لو لاعبين سجلوا في نفس الوقت
+       ما يحصلش فقد للنقاط.
+    */
+
+    await playerRef.transaction(player => {
+
+        if(!player){
+
+            player={
+
+                name:currentUser,
+
+                points:0,
+
+                wins:0,
+
+                draws:0,
+
+                losses:0,
+
+                games:0,
+
+                avatar:getAvatar(
+                    Math.floor(
+                        Math.random()*12
+                    )
+                )
+
+            };
+
+        }
+
+
+        player.name =
+        player.name ||
+        currentUser;
+
+
+        player.points =
+        Number(player.points || 0)
+        +
+        pointsToAdd;
+
+
+        player.games =
+        Number(player.games || 0)
+        +
+        1;
+
+
+        player[field] =
+        Number(player[field] || 0)
+        +
+        1;
+
+
+        player.updatedAt =
+        firebase.database.ServerValue.TIMESTAMP;
+
+
+        return player;
+
+    });
+
+
+    console.log(
+        "تم تسجيل نتيجة المباراة:",
+        result.outcome,
+        "+",
+        pointsToAdd
+    );
+
+}
+
+
+/* =====================================================
+   INIT CURRENT PLAYER
+===================================================== */
+
+ensurePlayer();
+
+
+/* =====================================================
+   PARTICLES
+===================================================== */
+
+const particles =
+document.getElementById("particles");
+
+
+for(let i=0;i<65;i++){
+
+    const p =
+    document.createElement("span");
+
+
+    p.className="particle";
+
+
+    p.style.left =
+    Math.random()*100+"%";
+
+
+    p.style.animationDuration =
+    (5+Math.random()*10)+"s";
+
+
+    p.style.animationDelay =
+    Math.random()*10+"s";
+
+
+    const size =
+    2+Math.random()*3;
+
+
+    p.style.width=size+"px";
+    p.style.height=size+"px";
+
+
+    particles.appendChild(p);
+
+}
+
+
+/* =====================================================
+   TOUCH SPARK
+===================================================== */
+
+document.addEventListener(
+"touchstart",
+function(e){
+
+    const x =
+    e.touches[0].clientX;
+
+    const y =
+    e.touches[0].clientY;
+
+
+    for(let i=0;i<6;i++){
+
+        const spark =
+        document.createElement("span");
+
+
+        spark.style.position="fixed";
+
+        spark.style.left=x+"px";
+        spark.style.top=y+"px";
+
+        spark.style.width="4px";
+        spark.style.height="4px";
+
+        spark.style.borderRadius="50%";
+
+        spark.style.background="#fff";
+
+        spark.style.boxShadow=
+        "0 0 12px #8565ff";
+
+        spark.style.pointerEvents="none";
+
+        spark.style.zIndex="9999";
+
+
+        document.body.appendChild(spark);
+
+
+        const angle =
+        Math.random()*Math.PI*2;
+
+
+        const distance =
+        30+Math.random()*55;
+
+
+        const dx =
+        Math.cos(angle)*distance;
+
+
+        const dy =
+        Math.sin(angle)*distance;
+
+
+        spark.animate(
+
+            [
+
+                {
+                    transform:
+                    "translate(0,0) scale(1)",
+
+                    opacity:1
+                },
+
+                {
+                    transform:
+                    `translate(${dx}px,${dy}px) scale(0)`,
+
+                    opacity:0
+                }
+
+            ],
+
+            {
+
+                duration:
+                550+Math.random()*300,
+
+                easing:
+                "cubic-bezier(.2,.8,.2,1)"
+
+            }
+
+        );
+
+
+        setTimeout(
+            ()=>spark.remove(),
+            900
+        );
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
+```
+
