@@ -1,0 +1,2548 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>كل باكة فيها اللي مكفيها</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+:root{
+    --bg:#030308;
+    --panel:#10101a;
+    --panel2:#171724;
+    --gold:#ffd34d;
+    --cyan:#19eaff;
+    --purple:#8b4dff;
+    --red:#ff3159;
+    --green:#35ff9a;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 50% 0%,rgba(116,45,255,.25),transparent 35%),
+        radial-gradient(circle at 0% 100%,rgba(0,220,255,.10),transparent 30%),
+        #030307;
+    color:#fff;
+    font-family:Cairo,sans-serif;
+    overflow-x:hidden;
+}
+
+button{
+    font-family:Cairo,sans-serif;
+    border:0;
+    cursor:pointer;
+}
+
+input,
+textarea{
+    font-family:Cairo,sans-serif;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* TOP */
+
+.topbar{
+    height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    background:rgba(5,5,12,.82);
+    backdrop-filter:blur(18px);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:900;
+}
+
+.logo span{
+    color:var(--gold);
+}
+
+.progress{
+    display:flex;
+    gap:7px;
+}
+
+.progress i{
+    width:11px;
+    height:11px;
+    border-radius:50%;
+    background:#333;
+    transition:.3s;
+}
+
+.progress i.active{
+    background:var(--gold);
+    box-shadow:0 0 14px var(--gold);
+}
+
+/* SCREENS */
+
+.screen{
+    min-height:calc(100vh - 72px);
+    padding:30px 18px 70px;
+}
+
+.center{
+    max-width:1250px;
+    margin:auto;
+}
+
+.hero{
+    text-align:center;
+    padding:35px 10px 25px;
+}
+
+.hero h1{
+    font-size:clamp(32px,6vw,70px);
+    font-weight:900;
+    line-height:1.1;
+    background:linear-gradient(90deg,#fff,var(--gold),#fff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    margin-top:12px;
+    color:#aaa;
+}
+
+/* START */
+
+.start-box{
+    max-width:650px;
+    margin:30px auto;
+    padding:35px;
+    border-radius:28px;
+    background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 25px 80px rgba(0,0,0,.4);
+    text-align:center;
+}
+
+.start-icon{
+    width:100px;
+    height:100px;
+    border-radius:28px;
+    margin:auto auto 20px;
+    display:grid;
+    place-items:center;
+    font-size:50px;
+    background:linear-gradient(145deg,#fff0a5,#c88900);
+    box-shadow:0 0 45px rgba(255,190,0,.35);
+}
+
+.main-btn{
+    margin-top:25px;
+    min-width:230px;
+    padding:15px 30px;
+    border-radius:15px;
+    color:#050505;
+    font-size:17px;
+    font-weight:900;
+    background:linear-gradient(135deg,#fff09a,#ffb900);
+    box-shadow:0 10px 35px rgba(255,190,0,.2);
+    transition:.2s;
+}
+
+.main-btn:hover{
+    transform:translateY(-3px) scale(1.02);
+}
+
+.secondary-btn{
+    margin-top:12px;
+    padding:13px 25px;
+    border-radius:14px;
+    background:#20202c;
+    color:#fff;
+}
+
+/* ROUND */
+
+.round-title{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.round-title h2{
+    font-size:30px;
+    font-weight:900;
+}
+
+.round-title p{
+    color:#8f8f9e;
+    margin-top:5px;
+}
+
+/* PACKS — SACHET / FOOTBALL PACKS */
+
+.packs{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:28px;
+    max-width:1120px;
+    margin:30px auto;
+    align-items:end;
+}
+
+.pack{
+    position:relative;
+    height:455px;
+    border-radius:18px 18px 25px 25px;
+    padding:15px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.3s;
+    isolation:isolate;
+    background:linear-gradient(145deg,#f7f7f4,#b9b9b3 45%,#f7f7f5);
+    border:1px solid rgba(0,0,0,.25);
+    box-shadow:0 28px 55px rgba(0,0,0,.58);
+    clip-path:polygon(5% 0,95% 0,99% 4%,96% 14%,98% 91%,94% 98%,83% 100%,17% 100%,6% 98%,2% 91%,4% 14%,1% 4%);
+}
+
+.pack:hover{
+    transform:translateY(-13px) scale(1.025);
+    border-color:var(--gold);
+    box-shadow:0 35px 70px rgba(0,0,0,.7),0 0 40px rgba(255,211,77,.2);
+}
+
+.pack:nth-child(2){
+    background:linear-gradient(145deg,#0b214f,#123c82 38%,#050b1c 82%,#081126);
+}
+
+.pack:nth-child(3){
+    background:linear-gradient(145deg,#4b0d16,#b51d2f 36%,#27080e 78%,#090407);
+}
+
+.pack::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-2;
+    background:
+        repeating-linear-gradient(105deg,rgba(255,255,255,.13) 0 2px,transparent 2px 22px),
+        repeating-linear-gradient(15deg,rgba(0,0,0,.09) 0 1px,transparent 1px 18px);
+    opacity:.65;
+}
+
+.pack::after{
+    content:"";
+    position:absolute;
+    inset:8px;
+    z-index:-1;
+    border:1px solid rgba(255,255,255,.35);
+    clip-path:polygon(4% 0,96% 0,100% 7%,96% 93%,90% 100%,10% 100%,4% 93%,0 7%);
+    pointer-events:none;
+}
+
+.pack-number{
+    position:absolute;
+    top:20px;
+    left:25px;
+    right:25px;
+    z-index:8;
+    display:flex;
+    justify-content:space-between;
+    color:rgba(255,255,255,.72);
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+.pack-number strong{
+    font-family:Orbitron;
+    color:#ffe36b;
+}
+
+.pack-logo{
+    position:absolute;
+    top:53px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:8;
+    font-family:Orbitron;
+    font-size:12px;
+    font-weight:900;
+    color:#fff;
+    letter-spacing:2px;
+    text-shadow:0 2px 10px #000;
+    white-space:nowrap;
+}
+
+.pack-player-photo{
+    position:absolute;
+    top:68px;
+    left:9%;
+    width:82%;
+    height:190px;
+    overflow:hidden;
+    z-index:2;
+    border-radius:16px 16px 38% 38%;
+    background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(0,0,0,.08));
+    box-shadow:inset 0 -50px 55px rgba(0,0,0,.35);
+}
+
+.pack-player-photo::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.55));
+}
+
+.pack-player-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center top;
+    display:block;
+    filter:saturate(1.15) contrast(1.05);
+}
+
+.pack-player-photo .pack-fallback{
+    position:absolute;
+    inset:0;
+    display:grid;
+    place-items:center;
+    font-size:72px;
+    background:radial-gradient(circle,rgba(255,255,255,.25),transparent 65%);
+}
+
+.pack-center-copy{
+    position:absolute;
+    left:15px;
+    right:15px;
+    top:260px;
+    z-index:9;
+    text-align:center;
+    text-shadow:0 3px 12px rgba(0,0,0,.8);
+}
+
+.pack-center-copy .season{
+    font-family:Orbitron;
+    font-size:10px;
+    letter-spacing:1px;
+    color:rgba(255,255,255,.8);
+}
+
+.pack-center-copy .pack-title{
+    margin-top:4px;
+    font-size:30px;
+    line-height:1;
+    font-weight:900;
+    color:#ffe36b;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.pack:nth-child(1) .pack-center-copy .pack-title{
+    color:#b98b25;
+    text-shadow:0 1px 0 #fff,0 3px 10px rgba(0,0,0,.25);
+}
+
+.pack-center-copy .pack-subtitle{
+    margin-top:8px;
+    font-size:12px;
+    font-weight:900;
+    color:#fff;
+}
+
+.pack-player-label{
+    position:absolute;
+    left:20px;
+    right:20px;
+    bottom:61px;
+    z-index:10;
+    text-align:center;
+    font-size:15px;
+    font-weight:900;
+    color:#fff;
+    text-shadow:0 2px 8px #000;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.pack-hint{
+    position:absolute;
+    bottom:22px;
+    left:15px;
+    right:15px;
+    z-index:10;
+    text-align:center;
+    color:rgba(255,255,255,.78);
+    font-size:10px;
+}
+
+/* eFootball-inspired mobile player card */
+.fifa-card{
+    position:relative;
+    width:205px;
+    height:280px;
+    margin:auto;
+    overflow:hidden;
+    border-radius:18px 18px 12px 12px;
+    background:
+        radial-gradient(circle at 70% 18%,rgba(74,196,255,.28),transparent 30%),
+        linear-gradient(145deg,#07152b,#0b4d78 48%,#02101f);
+    border:2px solid rgba(122,221,255,.85);
+    box-shadow:0 0 0 1px rgba(255,255,255,.18) inset,0 12px 30px rgba(0,0,0,.65),0 0 25px rgba(25,234,255,.22);
+}
+
+.fifa-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(135deg,transparent 0 25%,rgba(255,255,255,.13) 25.5% 26%,transparent 26.5% 55%,rgba(255,255,255,.08) 55.5% 56%,transparent 56.5%),
+        linear-gradient(180deg,rgba(255,255,255,.13),transparent 30%);
+    pointer-events:none;
+    z-index:5;
+}
+
+.fifa-card::after{
+    content:"";
+    position:absolute;
+    left:8px;
+    right:8px;
+    bottom:7px;
+    height:62px;
+    border-radius:12px;
+    background:linear-gradient(180deg,transparent,rgba(0,0,0,.88));
+    z-index:3;
+}
+
+.efootball-card{
+    background-image:var(--ef-card-art),linear-gradient(145deg,#07152b,#0b4d78,#02101f);
+    background-size:cover,cover;
+    background-position:center;
+    border:0;
+    box-shadow:0 8px 25px rgba(0,0,0,.65), inset 0 0 0 2px rgba(255,255,255,.22);
+}
+
+.efootball-card::before{
+    background:linear-gradient(135deg,rgba(0,0,0,.12),rgba(255,255,255,.08) 42%,rgba(0,0,0,.25));
+}
+
+.ef-shine{
+    position:absolute;inset:-30%;z-index:6;pointer-events:none;
+    background:linear-gradient(120deg,transparent 38%,rgba(255,255,255,.25) 48%,transparent 58%);
+    transform:rotate(8deg);
+    animation:efShine 3.8s linear infinite;
+}
+@keyframes efShine{0%{transform:translateX(-55%) rotate(8deg)}55%,100%{transform:translateX(55%) rotate(8deg)}}
+
+.card-rating-big{
+    position:absolute;
+    top:16px;
+    left:16px;
+    font-family:Orbitron;
+    font-size:31px;
+    font-weight:900;
+    z-index:8;
+    color:#fff;
+    text-shadow:0 2px 8px #000;
+}
+
+.card-position-big{
+    position:absolute;
+    top:53px;
+    left:18px;
+    font-size:12px;
+    font-weight:900;
+    z-index:8;
+    color:#8feaff;
+}
+
+.card-photo{
+    position:absolute;
+    width:175px;
+    height:218px;
+    top:17px;
+    right:8px;
+    overflow:hidden;
+    z-index:2;
+    border-radius:15px 15px 5px 5px;
+}
+
+.card-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center top;
+    display:block;
+    filter:saturate(1.12) contrast(1.06);
+    -webkit-mask-image:linear-gradient(to bottom,#000 76%,transparent 100%);
+    mask-image:linear-gradient(to bottom,#000 76%,transparent 100%);
+}
+
+.card-photo .photo-fallback{
+    position:absolute;
+    inset:0;
+    display:grid;
+    place-items:center;
+    font-size:70px;
+    background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.65));
+}
+
+.card-player-name{
+    position:absolute;
+    bottom:36px;
+    left:12px;
+    right:12px;
+    text-align:center;
+    font-size:15px;
+    font-weight:900;
+    color:#fff;
+    z-index:9;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    text-shadow:0 2px 8px #000;
+}
+
+.card-line{
+    position:absolute;
+    bottom:28px;
+    left:25px;
+    right:25px;
+    height:1px;
+    background:linear-gradient(90deg,transparent,#6de8ff,transparent);
+    z-index:9;
+}
+
+.card-stats{
+    position:absolute;
+    bottom:10px;
+    left:18px;
+    right:18px;
+    display:flex;
+    justify-content:space-around;
+    font-size:7px;
+    font-weight:900;
+    color:#d8f8ff;
+    z-index:9;
+}
+
+.card-type{
+    position:absolute;
+    top:17px;
+    right:14px;
+    z-index:9;
+    padding:3px 7px;
+    border-radius:7px;
+    font-size:7px;
+    font-weight:900;
+    background:rgba(0,0,0,.45);
+    color:#ffd86a;
+    border:1px solid rgba(255,216,106,.5);
+}
+
+.pack-card-mini{
+    transform:scale(.74);
+    transform-origin:center;
+}
+
+/* QUESTION */
+
+.question-box{
+    max-width:850px;
+    margin:30px auto;
+    padding:28px;
+    border-radius:28px;
+    background:
+        radial-gradient(circle at 100% 0%,rgba(115,60,255,.15),transparent 35%),
+        #0c0c14;
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 25px 70px rgba(0,0,0,.5);
+}
+
+.selected-pack{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:25px;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:20px;
+    background:#151521;
+}
+
+.small-card{
+    transform:scale(.55);
+    transform-origin:center;
+    width:205px;
+    height:280px;
+    margin:-55px;
+}
+
+.question-label{
+    font-weight:900;
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.question-input{
+    width:100%;
+    min-height:120px;
+    resize:vertical;
+    padding:17px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,.1);
+    outline:none;
+    color:#fff;
+    background:#171722;
+    font-size:15px;
+}
+
+.question-input:focus{
+    border-color:var(--purple);
+    box-shadow:0 0 20px rgba(139,77,255,.15);
+}
+
+.answer-box{
+    margin-top:22px;
+    padding:20px;
+    border-radius:18px;
+    background:#151521;
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.answer-box textarea{
+    width:100%;
+    min-height:100px;
+    resize:vertical;
+    padding:15px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.1);
+    background:#0d0d15;
+    color:#fff;
+    outline:none;
+}
+
+.answer-title{
+    color:var(--gold);
+    font-weight:900;
+    margin-bottom:10px;
+}
+
+.submit-question{
+    width:100%;
+    margin-top:15px;
+    padding:15px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#8b4dff,#4e23d8);
+    color:white;
+    font-weight:900;
+    font-size:16px;
+}
+
+.confirm-answer{
+    width:100%;
+    margin-top:12px;
+    padding:15px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#ffd94d,#ff9700);
+    color:#111;
+    font-weight:900;
+}
+
+/* TEAM */
+
+.team-section{
+    max-width:1100px;
+    margin:auto;
+}
+
+.team-board{
+    width:min(100%,1000px);
+    height:860px;
+    margin:20px auto;
+    position:relative;
+    overflow-x:hidden;
+    overflow-y:auto;
+
+    border-radius:35px;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(38,185,91,.3),
+            transparent 55%
+        ),
+        linear-gradient(
+            180deg,
+            #14713c,
+            #075326
+        );
+
+    border:4px solid rgba(255,255,255,.15);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.55),
+        inset 0 0 80px rgba(0,0,0,.15);
+}
+
+/* FIELD */
+
+.field{
+    position:absolute;
+    inset:25px;
+    border:2px solid rgba(255,255,255,.65);
+    border-radius:8px;
+}
+
+.field::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:50%;
+    border-top:2px solid rgba(255,255,255,.6);
+}
+
+.field::after{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    border:2px solid rgba(255,255,255,.6);
+    border-radius:50%;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+}
+
+.penalty-top,
+.penalty-bottom{
+    position:absolute;
+    width:260px;
+    height:120px;
+    border:2px solid rgba(255,255,255,.55);
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.penalty-top{
+    top:-2px;
+    border-top:0;
+}
+
+.penalty-bottom{
+    bottom:-2px;
+    border-bottom:0;
+}
+
+.team-title{
+    position:absolute;
+    top:10px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:20;
+    font-size:18px;
+    font-weight:900;
+    background:rgba(0,0,0,.3);
+    padding:5px 18px;
+    border-radius:20px;
+}
+
+/* REAL FORMATION — CARD PITCH */
+.formation{
+    position:absolute;
+    inset:30px;
+    z-index:10;
+    min-height:820px;
+}
+
+.field-player{
+    position:absolute;
+    transform:translateX(-50%);
+    width:126px;
+    text-align:center;
+    z-index:12;
+}
+
+.field-card{
+    width:96px;
+    height:132px;
+    margin:auto;
+    position:relative;
+    transform:perspective(700px) rotateX(1deg);
+    transition:.25s;
+}
+
+.field-card:hover{
+    transform:perspective(700px) translateY(-7px) scale(1.08);
+    z-index:30;
+}
+
+.field-card .fifa-card{
+    width:96px;
+    height:132px;
+    border-radius:10px 10px 7px 7px;
+}
+
+.field-card .card-rating-big{
+    top:8px;
+    left:8px;
+    font-size:15px;
+}
+
+.field-card .card-position-big{
+    top:28px;
+    left:10px;
+    font-size:6px;
+}
+
+.field-card .card-photo{
+    width:80px;
+    height:102px;
+    top:7px;
+    right:4px;
+    border-radius:8px 8px 3px 3px;
+}
+
+.field-card .card-player-name{
+    bottom:19px;
+    font-size:7px;
+    left:6px;
+    right:6px;
+}
+
+.field-card .card-line{
+    bottom:14px;
+    left:14px;
+    right:14px;
+}
+
+.field-card .card-stats{
+    bottom:5px;
+    left:6px;
+    right:6px;
+    font-size:3.8px;
+}
+
+.field-card .card-type{
+    top:8px;
+    right:6px;
+    padding:2px 4px;
+    font-size:4px;
+}
+
+.field-name{
+    margin-top:4px;
+    font-size:9px;
+    font-weight:900;
+    text-shadow:0 2px 5px #000;
+    white-space:nowrap;
+}
+
+/* 4-2-1-3 style: defense lower so all lines stay visible */
+.pos-gk{left:50%;bottom:2%}
+.pos-lb{left:13%;bottom:17%}
+.pos-cb1{left:39%;bottom:16%}
+.pos-cb2{left:61%;bottom:16%}
+.pos-rb{left:87%;bottom:17%}
+.pos-cm1{left:32%;bottom:38%}
+.pos-cm2{left:68%;bottom:38%}
+.pos-cam{left:50%;bottom:52%}
+.pos-lw{left:17%;bottom:66%}
+.pos-st{left:50%;bottom:74%}
+.pos-rw{left:83%;bottom:66%}
+
+/* Formation viewport: the board can scroll vertically on small screens */
+.team-board{
+    height:860px;
+    overflow-x:hidden;
+    overflow-y:auto;
+    scrollbar-width:thin;
+    scrollbar-color:#ffd34d rgba(255,255,255,.08);
+}
+
+.team-board::-webkit-scrollbar{width:8px}
+.team-board::-webkit-scrollbar-track{background:rgba(0,0,0,.2)}
+.team-board::-webkit-scrollbar-thumb{background:#ffd34d;border-radius:20px}
+
+/* COUNTDOWN */
+
+.countdown-screen{
+    display:grid;
+    place-items:center;
+    text-align:center;
+}
+
+.count-circle{
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    border:3px solid var(--gold);
+    box-shadow:0 0 70px rgba(255,193,7,.3);
+    background:radial-gradient(circle,#332a09,#080808 70%);
+}
+
+.count-number{
+    font-family:Orbitron;
+    font-size:100px;
+    font-weight:900;
+}
+
+.ready{
+    font-size:60px;
+    font-weight:900;
+    color:var(--gold);
+    animation:pulse .7s infinite alternate;
+}
+
+@keyframes pulse{
+    to{
+        transform:scale(1.1);
+        text-shadow:0 0 40px var(--gold);
+    }
+}
+
+/* MATCH */
+
+.match-header{
+    max-width:1000px;
+    margin:auto;
+}
+
+.scoreboard{
+    padding:25px;
+    border-radius:25px;
+    background:linear-gradient(145deg,#11111c,#08080e);
+    border:1px solid rgba(255,255,255,.1);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:35px;
+    text-align:center;
+}
+
+.team-name{
+    min-width:130px;
+    font-size:20px;
+    font-weight:900;
+}
+
+.score{
+    font-family:Orbitron;
+    font-size:54px;
+    font-weight:900;
+}
+
+.match-time{
+    color:var(--gold);
+    font-family:Orbitron;
+}
+
+.match-content{
+    max-width:1000px;
+    margin:20px auto;
+    display:grid;
+    grid-template-columns:1fr 320px;
+    gap:20px;
+}
+
+.events{
+    height:390px;
+    overflow:auto;
+    padding:18px;
+    border-radius:22px;
+    background:#0c0c14;
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.event{
+    padding:12px 14px;
+    margin-bottom:9px;
+    border-radius:12px;
+    background:#171722;
+    font-size:13px;
+}
+
+.event.goal{
+    border-right:3px solid var(--gold);
+}
+
+.event.info{
+    border-right:3px solid var(--cyan);
+}
+
+.mini-teams{
+    padding:20px;
+    border-radius:22px;
+    background:#0c0c14;
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.mini-team{
+    margin-bottom:20px;
+}
+
+.mini-team h3{
+    margin-bottom:10px;
+    font-size:14px;
+}
+
+.mini-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+}
+
+.mini-player{
+    font-size:9px;
+    background:#1c1c28;
+    padding:5px 7px;
+    border-radius:6px;
+}
+
+.match-actions{
+    text-align:center;
+    margin:25px auto;
+}
+
+.start-match{
+    padding:17px 50px;
+    border-radius:16px;
+    background:linear-gradient(135deg,#ffd94d,#ff9700);
+    font-size:18px;
+    font-weight:900;
+}
+
+/* RESULT */
+
+.result-box{
+    max-width:750px;
+    margin:50px auto;
+    text-align:center;
+    padding:45px 25px;
+    border-radius:30px;
+    background:
+        radial-gradient(circle at 50% 0%,rgba(255,196,0,.18),transparent 50%),
+        #0e0e17;
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.trophy{
+    font-size:75px;
+}
+
+.result-title{
+    margin-top:15px;
+    font-size:38px;
+    font-weight:900;
+}
+
+.final-score{
+    font-family:Orbitron;
+    font-size:55px;
+    margin:15px;
+}
+
+.result-sub{
+    color:#999;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .packs{
+        grid-template-columns:1fr;
+        max-width:380px;
+    }
+
+    .pack{
+        height:410px;
+    }
+
+    .team-board{
+        height:820px;
+        overflow-y:auto;
+    }
+
+    .formation{
+        transform:scale(.78);
+        transform-origin:top center;
+        inset:20px;
+        min-height:760px;
+    }
+
+    .field-player{
+        width:112px;
+    }
+
+    .field-card{
+        width:86px;
+        height:118px;
+    }
+
+    .field-card .fifa-card{
+        width:86px;
+        height:118px;
+    }
+
+    .field-card .card-photo{
+        width:71px;
+        height:91px;
+    }
+
+    .field-card .card-rating-big{
+        font-size:13px;
+    }
+
+    .match-content{
+        grid-template-columns:1fr;
+    }
+
+    .scoreboard{
+        gap:10px;
+        padding:18px 8px;
+    }
+
+    .team-name{
+        min-width:75px;
+        font-size:13px;
+    }
+
+    .score{
+        font-size:40px;
+    }
+
+    .selected-pack{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="logo">
+        كل باكة فيها <span>اللي مكفيها</span>
+    </div>
+
+    <div class="progress">
+        <i id="pr1" class="active"></i>
+        <i id="pr2"></i>
+        <i id="pr3"></i>
+        <i id="pr4"></i>
+        <i id="pr5"></i>
+    </div>
+
+</header>
+
+
+<!-- HOME -->
+
+<section id="home" class="screen">
+
+    <div class="center">
+
+        <div class="hero">
+
+            <h1>كل باكة فيها اللي مكفيها</h1>
+
+            <p>
+                اختار باكتك، اسأل عنها، واختار لاعبك وابني تشكيلتك.
+            </p>
+
+        </div>
+
+        <div class="start-box">
+
+            <div class="start-icon">
+                ⚽
+            </div>
+
+            <h2>جاهز للتحدي؟</h2>
+
+            <p style="color:#999;margin-top:8px">
+                في كل مركز هتشوف 3 باكات.
+                اختار باكة، اكتب سؤالك، وبعدها قرر مين هينضم لفريقك.
+            </p>
+
+            <button class="main-btn" onclick="startGame()">
+                ابدأ اللعبة
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PACK SELECTION -->
+
+<section id="packs" class="screen hidden">
+
+    <div class="round-title">
+
+        <h2 id="packsTitle">
+            اختار باكتك
+        </h2>
+
+        <p>
+            اختار الباكة اللي عايز تسأل عنها
+        </p>
+
+    </div>
+
+    <div id="packGrid" class="packs"></div>
+
+</section>
+
+
+<!-- QUESTION -->
+
+<section id="question" class="screen hidden">
+
+    <div class="round-title">
+
+        <h2 id="questionTitle">
+            اسأل عن الباكة
+        </h2>
+
+        <p>
+            اكتب أي سؤال أنت عايزه
+        </p>
+
+    </div>
+
+    <div class="question-box">
+
+        <div class="selected-pack">
+
+            <div id="selectedPackCard"></div>
+
+            <div>
+                <h3 id="selectedPackName">
+                    الباكة المختارة
+                </h3>
+
+                <p style="color:#999;margin-top:8px">
+                    دلوقتي اكتب السؤال اللي في دماغك.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="question-label">
+            سؤالك:
+        </div>
+
+        <textarea
+            id="userQuestion"
+            class="question-input"
+            placeholder="اكتب سؤالك هنا... مثال: اللاعب ده سريع؟"
+        ></textarea>
+
+        <button
+            class="submit-question"
+            onclick="sendQuestion()"
+        >
+            إرسال السؤال
+        </button>
+
+        <div id="answerArea" class="answer-box hidden">
+
+            <div class="answer-title">
+                ✍️ الإجابة
+            </div>
+
+            <textarea
+                id="userAnswer"
+                placeholder="الإجابة التلقائية هتظهر هنا، وتقدر تعدلها لو حبيت..."
+            ></textarea>
+
+            <button
+                class="confirm-answer"
+                onclick="confirmAnswer()"
+            >
+                تأكيد الإجابة والاختيار
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TEAM -->
+
+<section id="team" class="screen hidden">
+
+    <div class="round-title">
+
+        <h2>
+            تشكيلتك بتتبني
+        </h2>
+
+        <p id="teamSub">
+            اللاعب المختار انضم إلى فريقك
+        </p>
+
+    </div>
+
+    <div class="team-section">
+
+        <div class="team-board">
+
+            <div class="field">
+
+                <div class="penalty-top"></div>
+                <div class="penalty-bottom"></div>
+
+            </div>
+
+            <div class="team-title">
+                L&S FC
+            </div>
+
+            <div id="formation" class="formation"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- COUNTDOWN -->
+
+<section id="countdown" class="screen hidden countdown-screen">
+
+    <div>
+
+        <div class="count-circle">
+
+            <div id="countNumber" class="count-number">
+                3
+            </div>
+
+        </div>
+
+        <div id="readyText" class="ready hidden">
+            استعداد!
+        </div>
+
+        <p style="color:#888;margin-top:20px">
+            استعد للمواجهة...
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- MATCH -->
+
+<section id="match" class="screen hidden">
+
+    <div class="match-header">
+
+        <div class="scoreboard">
+
+            <div class="team-name">
+                L&S FC
+            </div>
+
+            <div>
+
+                <div class="match-time" id="matchClock">
+                    00:00
+                </div>
+
+                <div class="score">
+
+                    <span id="myScore">0</span>
+                    -
+                    <span id="aiScore">0</span>
+
+                </div>
+
+            </div>
+
+            <div class="team-name">
+                MATCH
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="match-content">
+
+        <div class="events" id="events"></div>
+
+        <div class="mini-teams">
+
+            <div class="mini-team">
+
+                <h3>👑 تشكيلتك</h3>
+
+                <div id="myMiniList" class="mini-list"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="match-actions">
+
+        <button
+            id="startMatchBtn"
+            class="start-match"
+            onclick="startMatch()"
+        >
+            ▶ بداية المباراة
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- RESULT -->
+
+<section id="result" class="screen hidden">
+
+    <div class="result-box">
+
+        <div class="trophy">
+            🏆
+        </div>
+
+        <div id="resultTitle" class="result-title">
+            انتهت المباراة
+        </div>
+
+        <div class="final-score">
+
+            <span id="finalMyScore">0</span>
+            -
+            <span id="finalAiScore">0</span>
+
+        </div>
+
+        <div id="resultSub" class="result-sub">
+            أحسنت!
+        </div>
+
+        <br>
+
+        <button class="main-btn" onclick="playAgain()">
+            🔄 العب تاني
+        </button>
+
+        <br>
+
+        <button class="secondary-btn" onclick="goHome()">
+            🏠 القائمة الرئيسية
+        </button>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =========================================================
+   PLAYERS
+========================================================= */
+
+const players = {
+
+GK:[
+["كاسياس","GK",94,"https://upload.wikimedia.org/wikipedia/commons/8/8e/Iker_Casillas_2017.jpg"],
+["بوفون","GK",96,"https://upload.wikimedia.org/wikipedia/commons/7/7b/Gianluigi_Buffon_2013.jpg"],
+["نوير","GK",95,"https://upload.wikimedia.org/wikipedia/commons/4/4e/Manuel_Neuer_2018.jpg"],
+["كورتوا","GK",94,"https://upload.wikimedia.org/wikipedia/commons/5/5e/Thibaut_Courtois_2018.jpg"],
+["أليسون","GK",93,"https://upload.wikimedia.org/wikipedia/commons/6/6f/Alisson_2022.jpg"],
+["تشيزني","GK",91,"https://upload.wikimedia.org/wikipedia/commons/2/2d/Wojciech_Szczesny_2018.jpg"]
+],
+
+LB:[
+["روبرتو كارلوس","LB",96,"https://upload.wikimedia.org/wikipedia/commons/4/41/Roberto_Carlos_2011.jpg"],
+["مارسيلو","LB",94,"https://upload.wikimedia.org/wikipedia/commons/6/6d/Marcelo_2018.jpg"],
+["أشلي كول","LB",94,"https://upload.wikimedia.org/wikipedia/commons/4/4c/Ashley_Cole_2012.jpg"],
+["ألابا","LB",92,"https://upload.wikimedia.org/wikipedia/commons/8/8d/David_Alaba_2019.jpg"],
+["ثيو هيرنانديز","LB",91,"https://upload.wikimedia.org/wikipedia/commons/6/6b/Theo_Hernandez_2019.jpg"],
+["إيفرا","LB",93,"https://upload.wikimedia.org/wikipedia/commons/6/69/Patrice_Evra_2018.jpg"]
+],
+
+CB:[
+["باولو مالديني","CB",97,"https://upload.wikimedia.org/wikipedia/commons/6/6d/Paolo_Maldini_2008.jpg"],
+["سيرجيو راموس","CB",96,"https://upload.wikimedia.org/wikipedia/commons/9/9e/Sergio_Ramos_2017.jpg"],
+["نيمانيا فيديتش","CB",95,"https://upload.wikimedia.org/wikipedia/commons/5/5e/Nemanja_Vidic_2014.jpg"],
+["جون تيري","CB",94,"https://upload.wikimedia.org/wikipedia/commons/8/8c/John_Terry_2013.jpg"],
+["كوردوبا","CB",93,"https://upload.wikimedia.org/wikipedia/commons/7/7b/Ivan_Cordoba_2010.jpg"],
+["فان دايك","CB",94,"https://upload.wikimedia.org/wikipedia/commons/5/5b/Virgil_van_Dijk_2019.jpg"]
+],
+
+RB:[
+["كافو","RB",96,"https://upload.wikimedia.org/wikipedia/commons/5/5c/Cafu_2006.jpg"],
+["كارفخال","RB",92,"https://upload.wikimedia.org/wikipedia/commons/2/2c/Dani_Carvajal_2018.jpg"],
+["لام","RB",95,"https://upload.wikimedia.org/wikipedia/commons/0/0f/Philipp_Lahm_2016.jpg"],
+["ترينت","RB",91,"https://upload.wikimedia.org/wikipedia/commons/0/0c/Trent_Alexander-Arnold_2018.jpg"],
+["أرنولد","RB",90,"https://upload.wikimedia.org/wikipedia/commons/7/7e/Trent_Alexander-Arnold_2019.jpg"],
+["زانتي","RB",94,"https://upload.wikimedia.org/wikipedia/commons/4/4e/Javier_Zanetti_2014.jpg"]
+],
+
+CM:[
+["تشافي","CM",96,"https://upload.wikimedia.org/wikipedia/commons/4/49/Xavi_2017.jpg"],
+["إنييستا","CM",97,"https://upload.wikimedia.org/wikipedia/commons/5/5d/Andres_Iniesta_2018.jpg"],
+["مودريتش","CM",96,"https://upload.wikimedia.org/wikipedia/commons/3/3f/Luka_Modric_2018.jpg"],
+["كروس","CM",95,"https://upload.wikimedia.org/wikipedia/commons/0/0d/Toni_Kroos_2018.jpg"],
+["لامبارد","CM",94,"https://upload.wikimedia.org/wikipedia/commons/2/25/Frank_Lampard_2010.jpg"],
+["بيرلو","CM",96,"https://upload.wikimedia.org/wikipedia/commons/8/8e/Andrea_Pirlo_2012.jpg"]
+],
+
+CAM:[
+["زيدان","CAM",98,"https://upload.wikimedia.org/wikipedia/commons/8/83/Zinedine_Zidane_2015.jpg"],
+["كاكا","CAM",96,"https://upload.wikimedia.org/wikipedia/commons/7/7c/Kaka_2012.jpg"],
+["رونالدينيو","CAM",98,"https://upload.wikimedia.org/wikipedia/commons/5/50/Ronaldinho_2019.jpg"],
+["أوزيل","CAM",93,"https://upload.wikimedia.org/wikipedia/commons/1/1c/Mesut_Ozil_2018.jpg"],
+["توتي","CAM",96,"https://upload.wikimedia.org/wikipedia/commons/2/2e/Francesco_Totti_2014.jpg"],
+["دي بروين","CAM",94,"https://upload.wikimedia.org/wikipedia/commons/6/6d/Kevin_De_Bruyne_2018.jpg"]
+],
+
+LW:[
+["رونالدو نازاريو","LW",98,"https://upload.wikimedia.org/wikipedia/commons/8/89/Ronaldo_2010.jpg"],
+["رونالدينيو","LW",97,"https://upload.wikimedia.org/wikipedia/commons/5/50/Ronaldinho_2019.jpg"],
+["نيمار","LW",95,"https://upload.wikimedia.org/wikipedia/commons/9/9d/Neymar_2018.jpg"],
+["هنري","LW",97,"https://upload.wikimedia.org/wikipedia/commons/1/12/Thierry_Henry_2011.jpg"],
+["هازارد","LW",93,"https://upload.wikimedia.org/wikipedia/commons/2/2e/Eden_Hazard_2018.jpg"],
+["ماني","LW",92,"https://upload.wikimedia.org/wikipedia/commons/9/9d/Sadio_Man%C3%A9_2018.jpg"]
+],
+
+ST:[
+["رونالدو","ST",99,"https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg"],
+["ميسي","ST",99,"https://upload.wikimedia.org/wikipedia/commons/8/8c/Lionel_Messi_2018.jpg"],
+["إبراهيموفيتش","ST",97,"https://upload.wikimedia.org/wikipedia/commons/8/8c/Zlatan_Ibrahimovic_2018.jpg"],
+["ليفاندوفسكي","ST",96,"https://upload.wikimedia.org/wikipedia/commons/7/7c/Robert_Lewandowski_2018.jpg"],
+["شيفشينكو","ST",96,"https://upload.wikimedia.org/wikipedia/commons/5/5e/Andriy_Shevchenko_2015.jpg"],
+["سواريز","ST",96,"https://upload.wikimedia.org/wikipedia/commons/8/8c/Luis_Suarez_2018.jpg"]
+],
+
+RW:[
+["محمد صلاح","RW",96,"https://upload.wikimedia.org/wikipedia/commons/2/2b/Mohamed_Salah_2018.jpg"],
+["مبابي","RW",96,"https://upload.wikimedia.org/wikipedia/commons/1/1e/Kylian_Mbappe_2018.jpg"],
+["فيغو","RW",96,"https://upload.wikimedia.org/wikipedia/commons/7/7e/Luis_Figo_2017.jpg"],
+["بيكهام","RW",95,"https://upload.wikimedia.org/wikipedia/commons/9/9a/David_Beckham_2012.jpg"],
+["روبين","RW",95,"https://upload.wikimedia.org/wikipedia/commons/3/31/Arjen_Robben_2014.jpg"],
+["رياض محرز","RW",91,"https://upload.wikimedia.org/wikipedia/commons/5/5e/Riyad_Mahrez_2018.jpg"]
+]
+
+};
+
+
+/* =========================================================
+   POSITIONS
+========================================================= */
+
+const positions = [
+["GK","حارس المرمى"],
+["LB","ظهير أيسر"],
+["CB1","قلب دفاع"],
+["CB2","قلب دفاع"],
+["RB","ظهير أيمن"],
+["CM1","وسط"],
+["CM2","وسط"],
+["CAM","صانع ألعاب"],
+["LW","جناح أيسر"],
+["ST","مهاجم"],
+["RW","جناح أيمن"]
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentPosition=0;
+
+let myTeam=[];
+
+let currentPacks=[];
+
+let selectedPackIndex=-1;
+
+let selectedPlayer=null;
+
+let myScore=0;
+
+let aiScore=0;
+
+let matchSeconds=0;
+
+let matchTimer=null;
+
+let simulationTimer=null;
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function show(id){
+
+    document.querySelectorAll(".screen").forEach(screen=>{
+        screen.classList.add("hidden");
+    });
+
+    document.getElementById(id).classList.remove("hidden");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+function progress(n){
+
+    for(let i=1;i<=5;i++){
+
+        const el=document.getElementById("pr"+i);
+
+        if(i<=n){
+            el.classList.add("active");
+        }else{
+            el.classList.remove("active");
+        }
+
+    }
+
+}
+
+
+function shuffle(arr){
+
+    return [...arr].sort(()=>Math.random()-.5);
+
+}
+
+
+function getPositionKey(){
+
+    const raw=positions[currentPosition][0];
+
+    if(raw.startsWith("CB")){
+        return "CB";
+    }
+
+    if(raw.startsWith("CM")){
+        return "CM";
+    }
+
+    return raw;
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+function startGame(){
+
+    clearInterval(matchTimer);
+    clearInterval(simulationTimer);
+
+    currentPosition=0;
+
+    myTeam=[];
+
+    myScore=0;
+    aiScore=0;
+
+    progress(1);
+
+    showPackSelection();
+
+}
+
+
+/* =========================================================
+   SHOW ONLY 3 PACKS
+========================================================= */
+
+function showPackSelection(){
+
+    if(currentPosition>=positions.length){
+
+        showCountdown();
+
+        return;
+    }
+
+    const [pos,name]=positions[currentPosition];
+
+    document.getElementById("packsTitle").textContent=
+        `المركز ${currentPosition+1} — ${name}`;
+
+    const key=getPositionKey();
+
+    const pool=shuffle(players[key]);
+
+    currentPacks=pool.slice(0,3);
+
+    selectedPackIndex=-1;
+
+    const grid=document.getElementById("packGrid");
+
+    grid.innerHTML="";
+
+    currentPacks.forEach((player,index)=>{
+
+        const pack=document.createElement("div");
+
+        pack.className="pack";
+
+        pack.innerHTML=`
+
+            <div class="pack-number">
+                <span>PLAYER PACK</span>
+                <strong>#0${index+1}</strong>
+            </div>
+
+            <div class="pack-logo">
+                L&S ULTIMATE
+            </div>
+
+            <div class="pack-player-photo">
+                <img
+                    src="${player[3]}"
+                    alt="${player[0]}"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
+                >
+                <div class="pack-fallback" style="display:none">⚽</div>
+            </div>
+
+            <div class="pack-center-copy">
+                <div class="season">SEASON 26</div>
+                <div class="pack-title">${index===0 ? "LEGENDARY" : index===1 ? "BEST TEAM" : "SUPER SQUAD"}</div>
+                <div class="pack-subtitle">PLAYER PACK</div>
+            </div>
+
+            <div class="pack-player-label">
+                ⭐ ${player[0]} — ${player[1]} ${player[2]}
+            </div>
+
+            <div class="pack-hint">
+                اضغط لفتح الباكة والسؤال عن اللاعب
+            </div>
+
+        `;
+
+        pack.onclick=()=>selectPackToQuestion(index);
+
+        grid.appendChild(pack);
+
+    });
+
+    show("packs");
+
+}
+
+
+/* =========================================================
+   FIFA CARD
+========================================================= */
+
+const EFOOTBALL_CARD_ART = {
+    EPIC: 'https://www.konami.com/efootball/s/img/page/dreamteam/card_epic.jpg',
+    LEGENDARY: 'https://www.konami.com/efootball/s/img/page/dreamteam/card_legendary.jpg',
+    TRENDING: 'https://www.konami.com/efootball/s/img/page/dreamteam/card_trend.jpg'
+};
+
+function getCardType(player){
+    const name=player[0];
+    const retired = [
+        'كاسياس','بوفون','نوير','روبرتو كارلوس','مارسيلو','أشلي كول','إيفرا',
+        'باولو مالديني','سيرجيو راموس','نيمانيا فيديتش','جون تيري','كوردوبا',
+        'كافو','لام','زانتي','تشافي','إنييستا','مودريتش','كروس','لامبارد','بيرلو',
+        'زيدان','كاكا','رونالدينيو','أوزيل','توتي','رونالدو نازاريو','هنري',
+        'إبراهيموفيتش','شيفشينكو','فيغو','بيكهام','روبين'
+    ];
+    if(retired.includes(name)) return 'LEGENDARY';
+    if(['ميسي','رونالدو','نيمار','مبابي','محمد صلاح','دي بروين','كورتوا','أليسون','فان دايك'].includes(name)) return 'EPIC';
+    return 'TRENDING';
+}
+
+function createFifaCard(player){
+
+    const name=player[0];
+    const pos=player[1];
+    const rating=player[2];
+    const img=player[3];
+    const cardType=getCardType(player);
+    const cardArt=EFOOTBALL_CARD_ART[cardType];
+
+    const pac=Math.max(70,rating-2);
+    const sho=Math.max(70,rating-1);
+    const pas=Math.max(70,rating-3);
+
+    return `
+
+        <div class="fifa-card efootball-card" style="--ef-card-art:url("${cardArt}")">
+
+            <div class="ef-shine"></div>
+            <div class="card-rating-big">${rating}</div>
+
+            <div class="card-position-big">${pos}</div>
+
+            <div class="card-type">${cardType}</div>
+
+            <div class="card-photo">
+
+                <img
+                    src="${img}"
+                    alt="${name}"
+                    loading="eager"
+                    referrerpolicy="no-referrer"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
+                >
+
+                <div class="photo-fallback" style="display:none">⚽</div>
+
+            </div>
+
+            <div class="card-player-name">${name}</div>
+
+            <div class="card-line"></div>
+
+            <div class="card-stats">
+                <span>${pac} PAC</span>
+                <span>${sho} SHO</span>
+                <span>${pas} PAS</span>
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   SMART PLAYER QUESTION ANSWER
+   Local answer engine — no API key required
+========================================================= */
+
+function normalizeArabic(value){
+
+    return value
+        .toLowerCase()
+        .replace(/[ًٌٍَُِّْـ]/g,"")
+        .replace(/[إأآ]/g,"ا")
+        .replace(/ى/g,"ي")
+        .replace(/ة/g,"ه")
+        .replace(/[؟?!.,،]/g," ")
+        .replace(/\s+/g," ")
+        .trim();
+
+}
+
+function getPlayerFacts(name,pos,rating){
+    const facts={
+        'ميسي':{country:'الأرجنتين',club:'إنتر ميامي',foot:'اليسرى',height:'170 سم',birth:'24 يونيو 1987',style:'صانع لعب ومراوغ',ballon:'7',worldcup:'نعم، كأس العالم 2022',ucl:'4 ألقاب دوري أبطال أوروبا'},
+        'رونالدو':{country:'البرتغال',club:'النصر',foot:'اليمنى',height:'187 سم',birth:'5 فبراير 1985',style:'مهاجم هداف',ballon:'5',worldcup:'لا',ucl:'5 ألقاب دوري أبطال أوروبا'},
+        'نيمار':{country:'البرازيل',club:'الهلال',foot:'اليمنى',height:'175 سم',birth:'5 فبراير 1992',style:'جناح ومراوغ',ballon:'0',worldcup:'لا',ucl:'لقب واحد'},
+        'مبابي':{country:'فرنسا',club:'ريال مدريد',foot:'اليمنى',height:'178 سم',birth:'20 ديسمبر 1998',style:'جناح/مهاجم سريع',ballon:'0',worldcup:'نعم، كأس العالم 2018',ucl:'0'},
+        'محمد صلاح':{country:'مصر',club:'ليفربول',foot:'اليسرى',height:'175 سم',birth:'15 يونيو 1992',style:'جناح هداف',ballon:'0',worldcup:'لا',ucl:'لقب واحد'},
+        'كاسياس':{country:'إسبانيا',club:'معتزل',foot:'اليمنى',height:'182 سم',birth:'20 مايو 1981',style:'حارس مرمى',ballon:'0',worldcup:'نعم، 2010',ucl:'3 ألقاب'},
+        'بوفون':{country:'إيطاليا',club:'معتزل',foot:'اليمنى',height:'192 سم',birth:'28 يناير 1978',style:'حارس مرمى',ballon:'0',worldcup:'نعم، 2006',ucl:'0'},
+        'نوير':{country:'ألمانيا',club:'بايرن ميونخ',foot:'اليمنى',height:'193 سم',birth:'27 مارس 1986',style:'حارس مرمى متقدم',ballon:'0',worldcup:'نعم، 2014',ucl:'لقبان'},
+        'كورتوا':{country:'بلجيكا',club:'ريال مدريد',foot:'اليسرى',height:'199 سم',birth:'11 مايو 1992',style:'حارس مرمى',ballon:'0',worldcup:'لا',ucl:'لقبان'},
+        'أليسون':{country:'البرازيل',club:'ليفربول',foot:'اليمنى',height:'191 سم',birth:'2 أكتوبر 1992',style:'حارس مرمى',ballon:'0',worldcup:'لا',ucl:'لقب واحد'},
+        'باولو مالديني':{country:'إيطاليا',club:'معتزل',foot:'اليمنى',height:'186 سم',birth:'26 يونيو 1968',style:'قلب دفاع/ظهير',ballon:'0',worldcup:'لا',ucl:'5 ألقاب'},
+        'سيرجيو راموس':{country:'إسبانيا',club:'معتزل',foot:'اليمنى',height:'184 سم',birth:'30 مارس 1986',style:'قلب دفاع',ballon:'0',worldcup:'نعم، 2010',ucl:'4 ألقاب'},
+        'فان دايك':{country:'هولندا',club:'ليفربول',foot:'اليمنى',height:'193 سم',birth:'8 يوليو 1991',style:'قلب دفاع',ballon:'0',worldcup:'لا',ucl:'لقب واحد'},
+        'تشافي':{country:'إسبانيا',club:'معتزل',foot:'اليمنى',height:'170 سم',birth:'25 يناير 1980',style:'وسط وصانع لعب',ballon:'0',worldcup:'نعم، 2010',ucl:'4 ألقاب'},
+        'إنييستا':{country:'إسبانيا',club:'معتزل',foot:'اليمنى',height:'171 سم',birth:'11 مايو 1984',style:'وسط وصانع لعب',ballon:'0',worldcup:'نعم، 2010',ucl:'4 ألقاب'},
+        'مودريتش':{country:'كرواتيا',club:'ميلان',foot:'اليمنى',height:'172 سم',birth:'9 سبتمبر 1985',style:'وسط وصانع لعب',ballon:'1',worldcup:'لا، وصيف 2018',ucl:'6 ألقاب'},
+        'زيدان':{country:'فرنسا',club:'معتزل',foot:'اليمنى',height:'185 سم',birth:'23 يونيو 1972',style:'صانع لعب',ballon:'1',worldcup:'نعم، 1998',ucl:'لقب واحد'},
+        'رونالدينيو':{country:'البرازيل',club:'معتزل',foot:'اليمنى',height:'182 سم',birth:'21 مارس 1980',style:'صانع لعب ومراوغ',ballon:'1',worldcup:'نعم، 2002',ucl:'لقب واحد'},
+        'رونالدو نازاريو':{country:'البرازيل',club:'معتزل',foot:'اليمنى',height:'183 سم',birth:'18 سبتمبر 1976',style:'مهاجم',ballon:'2',worldcup:'نعم، 1994 و2002',ucl:'0'},
+        'هنري':{country:'فرنسا',club:'معتزل',foot:'اليمنى',height:'188 سم',birth:'17 أغسطس 1977',style:'مهاجم/جناح',ballon:'0',worldcup:'نعم، 1998',ucl:'0'},
+        'إبراهيموفيتش':{country:'السويد',club:'معتزل',foot:'اليمنى',height:'195 سم',birth:'3 أكتوبر 1981',style:'مهاجم',ballon:'0',worldcup:'لا',ucl:'0'},
+        'شيفشينكو':{country:'أوكرانيا',club:'معتزل',foot:'اليمنى',height:'183 سم',birth:'29 سبتمبر 1976',style:'مهاجم',ballon:'1',worldcup:'لا',ucl:'لقب واحد'},
+        'بيكهام':{country:'إنجلترا',club:'معتزل',foot:'اليمنى',height:'183 سم',birth:'2 مايو 1975',style:'جناح/وسط',ballon:'0',worldcup:'لا',ucl:'لقب واحد'}
+    };
+    return facts[name] || {country:'غير محدد في بيانات اللعبة',club:'غير محدد في بيانات اللعبة',foot:'غير محدد',height:'غير محدد',birth:'غير محدد',style:'لاعب كرة قدم',ballon:'غير محدد',worldcup:'غير محدد',ucl:'غير محدد'};
+}
+
+function answerPlayerQuestion(question,player){
+    const q=normalizeArabic(question);
+    const name=player[0], pos=player[1], rating=player[2];
+    const pac=Math.max(70,rating-2), sho=Math.max(70,rating-1), pas=Math.max(70,rating-3);
+    const def=Math.max(70,rating-4), dri=Math.max(70,rating-1), phy=Math.max(70,rating-2);
+    const f=getPlayerFacts(name,pos,rating);
+
+    if(/مين|من هو|اسمه|اسم اللاعب/.test(q)) return `اللاعب الموجود في الباكة هو <b>${name}</b>.`;
+    if(/مركز|بيلعب فين|يلعب فين|مركزه/.test(q)) return `<b>${name}</b> مركزه <b>${pos}</b>.`;
+    if(/تقييم|اور|overall|قوته/.test(q)) return `تقييم <b>${name}</b> على الكرت هو <b>${rating}</b>.`;
+    if(/سرع|سريع|pace/.test(q)) return `سرعة <b>${name}</b> على كرت اللعبة: <b>${pac}</b>.`;
+    if(/تسديد|شوت|shoot|انهاء|تهديف/.test(q)) return `التسديد لـ <b>${name}</b>: <b>${sho}</b>.`;
+    if(/تمرير|باص|صناعه|صناعة|pass/.test(q)) return `التمرير لـ <b>${name}</b>: <b>${pas}</b>.`;
+    if(/مراوغه|مراوغة|دريبل|drib/.test(q)) return `المراوغة لـ <b>${name}</b>: <b>${dri}</b>.`;
+    if(/دفاع|يدافع|def/.test(q)) return `الدفاع لـ <b>${name}</b>: <b>${def}</b>.`;
+    if(/بدني|قوه|قوة|جسم|physical/.test(q)) return `القوة البدنية لـ <b>${name}</b>: <b>${phy}</b>.`;
+    if(/جنسيه|جنسية|بلد|منين|منتخب/.test(q)) return `<b>${name}</b> من <b>${f.country}</b>.`;
+    if(/نادي|فريقه|بيلعب في نادي|يلعب في نادي/.test(q)) return `النادي المذكور في بيانات اللعبة: <b>${f.club}</b>.`;
+    if(/قدم|يمين|شمال|يسرى|يمنى/.test(q)) return `القدم الأساسية لـ <b>${name}</b>: <b>${f.foot}</b>.`;
+    if(/طول|طوله|كام سم/.test(q)) return `طول <b>${name}</b>: <b>${f.height}</b>.`;
+    if(/مواليد|ميلاد|اتولد|ولد امتى|تاريخ ميلاد/.test(q)) return `تاريخ ميلاد <b>${name}</b>: <b>${f.birth}</b>.`;
+    if(/اسلوب|ستايل|يلعب ازاي|طريقة لعب/.test(q)) return `أسلوب <b>${name}</b>: <b>${f.style}</b>.`;
+    if(/بالون|كره ذهبيه|كرة ذهبية/.test(q)) return `عدد الكرات الذهبية: <b>${f.ballon}</b>.`;
+    if(/كاس العالم|كأس العالم|مونديال/.test(q)) return `كأس العالم: <b>${f.worldcup}</b>.`;
+    if(/دوري ابطال|دوري الأبطال|ابطال اوروبا|شامبيونز/.test(q)) return `دوري الأبطال: <b>${f.ucl}</b>.`;
+    if(/اسطوري|اسطوره|legendary/.test(q)) return `<b>${name}</b> مستخدم هنا كبطاقة <b>${getCardType(player)}</b> بطابع eFootball.`;
+    if(/كارت|كرت|نوع البطاقه|نوع البطاقة|card type/.test(q)) return `نوع بطاقة <b>${name}</b>: <b>${getCardType(player)}</b>، وهو أحد أنواع بطاقات Dream Team في eFootball.`;
+    if(/احصائيات|احصائي|stats/.test(q)) return `إحصائيات <b>${name}</b>: ⚡ PAC ${pac} — 🎯 SHO ${sho} — 🎯 PAS ${pas} — 🛡 DEF ${def} — 🌀 DRI ${dri} — 💪 PHY ${phy}.`;
+    return `اسألني عن <b>${name}</b> مثل: جنسيته، ناديه، مركزه، سرعته، تسديده، تمريره، قدمه، طوله، تاريخ ميلاده، كأس العالم، دوري الأبطال أو نوع الكرت.`;
+}
+
+/* =========================================================
+   SELECT PACK FOR QUESTION
+========================================================= */
+
+function selectPackToQuestion(index){
+
+    selectedPackIndex=index;
+
+    const player=currentPacks[index];
+
+    selectedPlayer=player;
+
+    document.getElementById("questionTitle").textContent=
+        `اسأل عن باكة ${index+1}`;
+
+    document.getElementById("selectedPackName").textContent=
+        `باكة ${index+1} — ${player[0]}`;
+
+    document.getElementById("selectedPackCard").innerHTML=
+        `<div class="small-card">${createFifaCard(player)}</div>`;
+
+    document.getElementById("userQuestion").value="";
+
+    document.getElementById("userAnswer").value="";
+
+    document.getElementById("answerArea").classList.add("hidden");
+
+    show("question");
+
+}
+
+
+/* =========================================================
+   USER WRITES QUESTION
+========================================================= */
+
+function sendQuestion(){
+
+    const question=
+        document.getElementById("userQuestion").value.trim();
+
+    if(!question){
+
+        alert("اكتب السؤال الأول يا بطل.");
+        return;
+
+    }
+
+    if(!selectedPlayer){
+
+        alert("اختار لاعب الأول.");
+        return;
+
+    }
+
+    const smartAnswer=answerPlayerQuestion(question,selectedPlayer);
+
+    document.getElementById("answerArea").classList.remove("hidden");
+
+    document.getElementById("userAnswer").value=
+        smartAnswer.replace(/<[^>]*>/g,"");
+
+    document.getElementById("userAnswer").focus();
+
+    // Show the generated answer as a small live preview above the editable box.
+    let preview=document.getElementById("smartAnswerPreview");
+
+    if(!preview){
+
+        preview=document.createElement("div");
+        preview.id="smartAnswerPreview";
+        preview.style.cssText=
+            "margin-bottom:12px;padding:13px 15px;border-radius:14px;background:linear-gradient(135deg,rgba(25,234,255,.08),rgba(139,77,255,.12));border:1px solid rgba(25,234,255,.18);color:#fff;line-height:1.8;text-align:right;";
+        document.getElementById("answerArea").prepend(preview);
+
+    }
+
+    preview.innerHTML=`🤖 <b style="color:#19eaff">إجابة اللعبة:</b> ${smartAnswer}`;
+
+}
+
+
+/* =========================================================
+   CONFIRM ANSWER
+========================================================= */
+
+function confirmAnswer(){
+
+    const answer=
+        document.getElementById("userAnswer").value.trim();
+
+    if(!answer){
+
+        alert("اكتب الإجابة الأول.");
+        return;
+
+    }
+
+    addPlayerToTeam(selectedPlayer);
+
+}
+
+
+/* =========================================================
+   ADD PLAYER
+========================================================= */
+
+function addPlayerToTeam(player){
+
+    const [position]=positions[currentPosition];
+
+    myTeam.push({
+
+        name:player[0],
+
+        pos:player[1],
+
+        rating:player[2],
+
+        img:player[3],
+
+        position:position
+
+    });
+
+    document.getElementById("teamSub").textContent=
+        `${player[0]} انضم لتشكيلتك`;
+
+    renderMyTeam();
+
+    show("team");
+
+    setTimeout(()=>{
+
+        currentPosition++;
+
+        progress(
+            Math.min(
+                5,
+                Math.ceil((currentPosition/positions.length)*5)
+            )
+        );
+
+        if(currentPosition<positions.length){
+
+            setTimeout(showPackSelection,1200);
+
+        }else{
+
+            setTimeout(showCountdown,1800);
+
+        }
+
+    },1200);
+
+}
+
+
+/* =========================================================
+   REAL FORMATION
+========================================================= */
+
+function renderMyTeam(){
+
+    const formation=
+        document.getElementById("formation");
+
+    formation.innerHTML="";
+
+    const positionClasses={
+
+        GK:"pos-gk",
+
+        LB:"pos-lb",
+
+        CB1:"pos-cb1",
+
+        CB2:"pos-cb2",
+
+        RB:"pos-rb",
+
+        CM1:"pos-cm1",
+
+        CM2:"pos-cm2",
+
+        CAM:"pos-cam",
+
+        LW:"pos-lw",
+
+        ST:"pos-st",
+
+        RW:"pos-rw"
+
+    };
+
+    myTeam.forEach(player=>{
+
+        const div=
+            document.createElement("div");
+
+        div.className=
+            `field-player ${positionClasses[player.position]}`;
+
+        div.innerHTML=`
+
+            <div class="field-card">
+
+                ${createFifaCard([
+                    player.name,
+                    player.pos,
+                    player.rating,
+                    player.img
+                ])}
+
+            </div>
+
+            <div class="field-name">
+                ${player.name}
+            </div>
+
+        `;
+
+        formation.appendChild(div);
+
+    });
+
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+function showCountdown(){
+
+    show("countdown");
+
+    const number=
+        document.getElementById("countNumber");
+
+    const ready=
+        document.getElementById("readyText");
+
+    number.classList.remove("hidden");
+
+    ready.classList.add("hidden");
+
+    let count=3;
+
+    number.textContent=count;
+
+    const timer=setInterval(()=>{
+
+        count--;
+
+        if(count>0){
+
+            number.textContent=count;
+
+        }else{
+
+            clearInterval(timer);
+
+            number.classList.add("hidden");
+
+            ready.classList.remove("hidden");
+
+            setTimeout(showPreMatch,1400);
+
+        }
+
+    },1000);
+
+}
+
+
+/* =========================================================
+   MATCH
+========================================================= */
+
+function showPreMatch(){
+
+    setupMatch();
+
+    show("match");
+
+}
+
+
+function setupMatch(){
+
+    myScore=0;
+
+    aiScore=0;
+
+    matchSeconds=0;
+
+    document.getElementById("myScore").textContent="0";
+
+    document.getElementById("aiScore").textContent="0";
+
+    document.getElementById("matchClock").textContent="00:00";
+
+    document.getElementById("events").innerHTML=`
+
+        <div class="event info">
+            🏟️ تشكيلتك اكتملت.
+        </div>
+
+        <div class="event info">
+            ⚽ المباراة جاهزة.
+        </div>
+
+        <div class="event info">
+            👑 المباراة تعتمد على تشكيلتك فقط.
+        </div>
+
+    `;
+
+    const list=
+        document.getElementById("myMiniList");
+
+    list.innerHTML="";
+
+    myTeam.forEach(player=>{
+
+        const item=
+            document.createElement("span");
+
+        item.className="mini-player";
+
+        item.textContent=
+            player.name;
+
+        list.appendChild(item);
+
+    });
+
+    document.getElementById("startMatchBtn").disabled=false;
+
+}
+
+
+/* =========================================================
+   MATCH SIMULATION
+   NO AI DECISIONS
+========================================================= */
+
+function startMatch(){
+
+    const button=
+        document.getElementById("startMatchBtn");
+
+    button.disabled=true;
+
+    button.textContent=
+        "⚽ المباراة جارية...";
+
+    addEvent(
+        "🔔 صافرة البداية!",
+        "info"
+    );
+
+    matchSeconds=0;
+
+    matchTimer=setInterval(()=>{
+
+        matchSeconds++;
+
+        updateClock();
+
+        if(matchSeconds>=180){
+
+            endMatch();
+
+        }
+
+    },1000);
+
+    simulationTimer=
+        setInterval(simulateEvent,5000);
+
+}
+
+
+function updateClock(){
+
+    const minutes=
+        Math.floor(matchSeconds/60);
+
+    const seconds=
+        matchSeconds%60;
+
+    document.getElementById("matchClock").textContent=
+        `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+}
+
+
+function addEvent(text,type="info"){
+
+    const box=
+        document.getElementById("events");
+
+    const div=
+        document.createElement("div");
+
+    div.className=
+        `event ${type}`;
+
+    div.innerHTML=text;
+
+    box.appendChild(div);
+
+    box.scrollTop=
+        box.scrollHeight;
+
+}
+
+
+/* =========================================================
+   MATCH EVENTS
+========================================================= */
+
+function simulateEvent(){
+
+    if(matchSeconds>=180){
+
+        return;
+
+    }
+
+    const roll=Math.random();
+
+    const player=
+        myTeam[
+            Math.floor(
+                Math.random()*myTeam.length
+            )
+        ];
+
+    if(roll<.18){
+
+        myScore++;
+
+        addEvent(
+            `⚽ <b>جول!</b> ${player.name} يسجل! 🔥`,
+            "goal"
+        );
+
+        document.getElementById("myScore").textContent=
+            myScore;
+
+    }
+
+    else if(roll<.36){
+
+        addEvent(
+            `🔥 ${player.name} صنع هجمة خطيرة!`,
+            "info"
+        );
+
+    }
+
+    else if(roll<.50){
+
+        addEvent(
+            `🎯 تسديدة قوية من ${player.name}!`,
+            "info"
+        );
+
+    }
+
+    else if(roll<.63){
+
+        addEvent(
+            `🧤 الحارس تصدى لهجمة خطيرة.`,
+            "info"
+        );
+
+    }
+
+    else if(roll<.74){
+
+        addEvent(
+            `🚩 تسلل وتم إيقاف الهجمة.`,
+            "info"
+        );
+
+    }
+
+    else{
+
+        addEvent(
+            `⚡ ضغط قوي من فريقك.`,
+            "info"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   END
+========================================================= */
+
+function endMatch(){
+
+    clearInterval(matchTimer);
+
+    clearInterval(simulationTimer);
+
+    updateClock();
+
+    setTimeout(()=>{
+
+        document.getElementById("finalMyScore").textContent=
+            myScore;
+
+        document.getElementById("finalAiScore").textContent=
+            aiScore;
+
+        const title=
+            document.getElementById("resultTitle");
+
+        const sub=
+            document.getElementById("resultSub");
+
+        if(myScore>aiScore){
+
+            title.textContent=
+                "فوز رائع! 🏆";
+
+            sub.textContent=
+                "تشكيلتك قدرت تحسم المباراة.";
+
+        }
+
+        else if(myScore<aiScore){
+
+            title.textContent=
+                "انتهت المباراة";
+
+            sub.textContent=
+                "المباراة انتهت بنتيجة مختلفة.";
+
+        }
+
+        else{
+
+            title.textContent=
+                "تعادل! 🤝";
+
+            sub.textContent=
+                "مباراة متكافئة.";
+
+        }
+
+        show("result");
+
+    },1000);
+
+}
+
+
+/* =========================================================
+   AGAIN
+========================================================= */
+
+function playAgain(){
+
+    clearInterval(matchTimer);
+
+    clearInterval(simulationTimer);
+
+    currentPosition=0;
+
+    myTeam=[];
+
+    myScore=0;
+
+    aiScore=0;
+
+    startGame();
+
+}
+
+
+function goHome(){
+
+    clearInterval(matchTimer);
+
+    clearInterval(simulationTimer);
+
+    currentPosition=0;
+
+    myTeam=[];
+
+    show("home");
+
+    progress(1);
+
+}
+
+</script>
+
+</body>
+</html>
