@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>كل باكة فيها اللي مكفيها</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#05050a;--panel:#10101a;--gold:#ffd34d;--cyan:#20d9ff;--purple:#8b4dff;--red:#ff3159;--green:#35ff9a}
+body{min-height:100vh;background:radial-gradient(circle at 50% 0%,rgba(100,40,255,.22),transparent 35%),#030307;color:#fff;font-family:Cairo,sans-serif;overflow-x:hidden}
+button,input{font-family:inherit}button{border:0;cursor:pointer}.hidden{display:none!important}
+.topbar{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:50;background:rgba(5,5,12,.9);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.08)}
+.logo{font-size:20px;font-weight:900}.logo span{color:var(--gold)}
+.progress{display:flex;gap:6px}.progress i{width:10px;height:10px;border-radius:50%;background:#333}.progress i.active{background:var(--gold);box-shadow:0 0 12px var(--gold)}
+.screen{min-height:calc(100vh - 72px);padding:30px 18px 60px}.center{max-width:1200px;margin:auto}
+.hero{text-align:center;padding:35px 10px}.hero h1{font-size:clamp(32px,6vw,68px);font-weight:900;background:linear-gradient(90deg,#fff,var(--gold),#fff);-webkit-background-clip:text;color:transparent}.hero p{margin-top:10px;color:#999}
+.start-box,.chat-window,.team-board,.scoreboard,.events,.mini-teams,.result-box{background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);box-shadow:0 25px 80px rgba(0,0,0,.45)}
+.start-box{max-width:650px;margin:25px auto;padding:38px;border-radius:28px;text-align:center}.start-icon{width:90px;height:90px;margin:auto auto 18px;border-radius:25px;display:grid;place-items:center;font-size:45px;background:linear-gradient(145deg,#fff0a5,#c88900);box-shadow:0 0 45px rgba(255,190,0,.35)}
+.main-btn{margin-top:24px;padding:15px 32px;border-radius:15px;font-size:17px;font-weight:900;background:linear-gradient(135deg,#fff09a,#ffb900);color:#080808;box-shadow:0 10px 35px rgba(255,190,0,.2)}
+.secondary-btn{margin-top:12px;padding:13px 25px;border-radius:14px;background:#20202c;color:#fff}
+.round-title{text-align:center;margin-bottom:25px}.round-title h2{font-size:29px;font-weight:900}.round-title p{color:#8e8e9e;margin-top:4px}
+.chat-wrap{max-width:850px;margin:auto}.chat-window{border-radius:28px;overflow:hidden;background:#0b0b13}
+.chat-head{padding:18px 22px;display:flex;gap:12px;align-items:center;border-bottom:1px solid rgba(255,255,255,.08)}.avatar{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--purple),#19d9ff);font-size:23px}.chat-name{font-weight:900}.chat-status{font-size:11px;color:#54ffad}
+.messages{padding:24px;min-height:250px;max-height:430px;overflow:auto}.msg{max-width:85%;padding:13px 16px;margin-bottom:12px;border-radius:17px;line-height:1.7;animation:in .25s}.msg.bot{background:#1b1b27;border-bottom-right-radius:4px}.msg.user{background:linear-gradient(135deg,#673dff,#9b43ff);margin-right:auto;border-bottom-left-radius:4px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.questions{padding:20px;border-top:1px solid rgba(255,255,255,.07)}.question-title{text-align:center;color:#aaa;margin-bottom:12px}
+.question-input{width:100%;min-height:90px;resize:vertical;padding:13px 15px;border-radius:14px;border:1px solid rgba(255,255,255,.1);outline:0;background:#171722;color:#fff;font-size:15px}.question-input:focus{border-color:var(--purple)}
+.question-actions{display:flex;gap:10px;margin-top:10px}.ask-btn,.finish-btn{flex:1;padding:13px;border-radius:13px;font-weight:900}.ask-btn{background:linear-gradient(135deg,#7449ff,#a13eff);color:#fff}.finish-btn{background:linear-gradient(135deg,#ffd84d,#ff9f00);color:#111}.ask-btn:disabled{opacity:.35;cursor:not-allowed}
+
+.pack-stage{max-width:1120px;margin:0 auto;display:flex;justify-content:center;align-items:flex-end;gap:25px;min-height:535px;padding:15px 5px 30px;perspective:1000px}
+.pack-wrap{width:270px;height:455px;position:relative;transition:.3s;cursor:pointer;filter:drop-shadow(0 25px 20px rgba(0,0,0,.45))}
+.pack-wrap:nth-child(1){transform:rotate(-3deg) translateY(16px)}.pack-wrap:nth-child(2){transform:translateY(-8px);z-index:2}.pack-wrap:nth-child(3){transform:rotate(3deg) translateY(18px)}
+.pack-wrap:hover{transform:translateY(-18px) rotate(0) scale(1.035)!important;z-index:5}
+.pack{position:absolute;inset:0;overflow:hidden;border-radius:25px 25px 20px 20px;border:1px solid rgba(255,255,255,.65);box-shadow:inset 0 0 35px rgba(255,255,255,.13),inset 0 -20px 45px rgba(0,0,0,.35)}
+.pack.white{background:linear-gradient(125deg,#fafafa 0%,#ddd 28%,#fff 48%,#c9c9c9 75%,#f4f4f4)}
+.pack.blue{background:linear-gradient(125deg,#071330,#132a62 28%,#071b49 52%,#0b0c22 85%)}
+.pack.red{background:linear-gradient(125deg,#21060b,#7c1521 25%,#3a0a13 53%,#11050a 86%)}
+.pack:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(118deg,transparent 0 26px,rgba(255,255,255,.11) 28px 31px,transparent 33px 58px);opacity:.55;mix-blend-mode:screen}
+.pack:after{content:"";position:absolute;inset:7px;border-radius:20px;border:1px solid rgba(255,255,255,.25);pointer-events:none}
+.pack-top-seal{position:absolute;top:12px;left:15px;right:15px;height:28px;border-radius:50%;border-top:2px solid rgba(255,255,255,.5);border-bottom:1px solid rgba(0,0,0,.25);opacity:.8}
+.pack-shine{position:absolute;top:-50px;right:-70px;width:210px;height:210px;border-radius:50%;background:rgba(255,255,255,.16);filter:blur(18px)}
+.pack-brand{position:absolute;top:52px;left:0;right:0;text-align:center;font-weight:900;font-size:17px;letter-spacing:1px;color:rgba(0,0,0,.72)}.blue .pack-brand,.red .pack-brand{color:#fff}
+.pack-title{position:absolute;top:92px;left:10px;right:10px;text-align:center;font-family:Orbitron,sans-serif;font-size:27px;font-weight:900;letter-spacing:1px;line-height:1.05;color:#8d6514;text-shadow:0 1px 0 #fff}
+.blue .pack-title{color:#f5d86b;text-shadow:0 0 12px rgba(255,210,75,.25)}.red .pack-title{color:#ffd447}
+.pack-ribbon{position:absolute;top:137px;left:-18%;width:136%;height:45px;transform:rotate(-7deg);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;letter-spacing:2px;background:rgba(255,255,255,.16);border-top:1px solid rgba(255,255,255,.3);border-bottom:1px solid rgba(0,0,0,.25)}
+.white .pack-ribbon{color:#624710;background:rgba(255,255,255,.42)}.blue .pack-ribbon{color:#fff}.red .pack-ribbon{color:#fff}
+.pack-player{position:absolute;left:50%;top:178px;transform:translateX(-50%);width:135px;height:155px;display:flex;align-items:flex-end;justify-content:center}
+.pack-player:before{content:"";position:absolute;width:125px;height:125px;border-radius:50%;background:rgba(255,255,255,.13);filter:blur(8px)}
+.pack-player img{position:relative;width:125px;height:145px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 12px 10px rgba(0,0,0,.45))}
+.pack-player .fallback{width:95px;height:95px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.22);font-size:45px;position:relative}
+.pack-bottom{position:absolute;bottom:22px;left:20px;right:20px;text-align:center;border-top:1px solid rgba(255,255,255,.3);padding-top:11px}
+.pack-bottom .pos{font-family:Orbitron;font-size:11px;font-weight:700;opacity:.9}.pack-bottom .hint{font-size:12px;font-weight:800;margin-top:3px}
+.white .pack-bottom{color:#2e2e2e}.blue .pack-bottom,.red .pack-bottom{color:#fff}
+.pack-corner{position:absolute;bottom:9px;left:15px;right:15px;height:15px;border-radius:50%;border-bottom:2px solid rgba(0,0,0,.25)}
+.pack.selected{outline:3px solid var(--gold);box-shadow:0 0 45px rgba(255,211,77,.45),inset 0 0 35px rgba(255,255,255,.18)}
+.pack.disabled{opacity:.45;cursor:default}
+.pack-note{text-align:center;color:#999;margin-top:-5px;font-size:13px}
+
+.opened-pack{max-width:900px;margin:15px auto;text-align:center}.opened-card{display:inline-block;width:245px;height:330px;position:relative;border-radius:18px;padding:15px;background:linear-gradient(145deg,#f8df7c,#a46b16 35%,#fff1a0 50%,#82500e);border:3px solid #fff0a3;box-shadow:0 0 20px #ffd34d,0 20px 45px #0008;overflow:hidden}
+.opened-card .rating{position:absolute;top:15px;left:18px;font:900 27px Orbitron}.opened-card .pos{position:absolute;top:52px;left:18px;font-weight:900}.opened-card img{width:180px;height:190px;object-fit:contain;margin-top:28px;filter:drop-shadow(0 10px 8px #0008)}.opened-card .name{font-size:21px;font-weight:900;margin-top:-2px}.opened-card .tag{font-size:11px;color:#5d3b00;font-weight:900}
+
+.team-board{max-width:980px;margin:20px auto;padding:22px;border-radius:30px;min-height:670px;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 40%,rgba(45,190,100,.28),transparent 50%),linear-gradient(180deg,#19733f,#07341e)}
+.field{position:relative;height:610px;border:3px solid rgba(255,255,255,.48);border-radius:8px;overflow:hidden;background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 55px,rgba(0,0,0,.035) 55px 110px)}
+.field:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px solid rgba(255,255,255,.65)}.field:after{content:"";position:absolute;width:150px;height:150px;border:2px solid rgba(255,255,255,.65);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
+.penalty{position:absolute;width:260px;height:120px;border:2px solid rgba(255,255,255,.65);left:50%;transform:translateX(-50%)}.penalty.top{top:-2px;border-top:0}.penalty.bottom{bottom:-2px;border-bottom:0}
+.goal-area{position:absolute;width:110px;height:45px;border:2px solid rgba(255,255,255,.65);left:50%;transform:translateX(-50%)}.goal-area.top{top:-2px;border-top:0}.goal-area.bottom{bottom:-2px;border-bottom:0}
+.center-dot{position:absolute;left:50%;top:50%;width:8px;height:8px;background:#fff;border-radius:50%;transform:translate(-50%,-50%)}
+.field-player{position:absolute;transform:translate(-50%,-50%);width:108px;text-align:center;z-index:3}.field-player .fifa-card{width:82px;height:105px;margin:auto;position:relative;border-radius:10px 10px 14px 14px;background:linear-gradient(145deg,#f7df7e,#a76d18 35%,#fff0a0 50%,#80500d);border:2px solid #fff1aa;box-shadow:0 5px 15px #0009;overflow:hidden}.fifa-card .rate{position:absolute;top:5px;left:6px;font:900 15px Orbitron}.fifa-card .position{position:absolute;top:25px;left:6px;font-size:8px;font-weight:900}.fifa-card img{width:58px;height:61px;object-fit:contain;position:absolute;left:12px;top:17px}.fifa-card .fcname{position:absolute;bottom:6px;left:3px;right:3px;font-size:8px;font-weight:900;white-space:nowrap;overflow:hidden}.field-player small{display:block;font-size:9px;font-weight:900;margin-top:3px;text-shadow:0 2px 3px #000}
+.pgk{left:50%;top:89%}.plb{left:17%;top:70%}.pcb1{left:38%;top:72%}.pcb2{left:62%;top:72%}.prb{left:83%;top:70%}.pcm1{left:37%;top:52%}.pcm2{left:63%;top:52%}.pcam{left:50%;top:39%}.plw{left:18%;top:23%}.pst{left:50%;top:19%}.prw{left:82%;top:23%}
+
+.countdown-screen{display:grid;place-items:center;text-align:center}.count-circle{width:220px;height:220px;border-radius:50%;display:grid;place-items:center;margin:auto;border:3px solid var(--gold);box-shadow:0 0 70px rgba(255,193,7,.3);background:radial-gradient(circle,#332a09,#080808 70%)}.count-number{font:900 100px Orbitron}.ready{font-size:60px;font-weight:900;color:var(--gold);animation:pulse .7s infinite alternate}@keyframes pulse{to{transform:scale(1.1);text-shadow:0 0 40px var(--gold)}}
+.match-header{max-width:1000px;margin:auto}.scoreboard{padding:24px;border-radius:25px;display:flex;align-items:center;justify-content:center;gap:35px;text-align:center}.team-name{min-width:130px;font-size:20px;font-weight:900}.score{font:900 54px Orbitron}.match-time{color:var(--gold);font:700 17px Orbitron}.match-content{max-width:1000px;margin:20px auto;display:grid;grid-template-columns:1fr 320px;gap:20px}.events{height:390px;overflow:auto;padding:18px;border-radius:22px;background:#0c0c14}.event{padding:12px 14px;margin-bottom:9px;border-radius:12px;background:#171722;font-size:13px}.event.goal{border-right:3px solid var(--gold)}.event.info{border-right:3px solid var(--cyan)}.mini-teams{padding:20px;border-radius:22px;background:#0c0c14}.mini-team{margin-bottom:20px}.mini-team h3{margin-bottom:10px;font-size:14px}.mini-list{display:flex;flex-wrap:wrap;gap:5px}.mini-player{font-size:9px;background:#1c1c28;padding:5px 7px;border-radius:6px}.match-actions{text-align:center;margin:25px auto}.start-match{padding:17px 50px;border-radius:16px;background:linear-gradient(135deg,#ffd94d,#ff9700);font-size:18px;font-weight:900}.result-box{max-width:750px;margin:50px auto;text-align:center;padding:45px 25px;border-radius:30px}.trophy{font-size:75px}.result-title{margin-top:15px;font-size:38px;font-weight:900}.final-score{font:900 55px Orbitron;margin:15px}.result-sub{color:#999}
+
+@media(max-width:800px){
+.topbar{padding:0 12px}.logo{font-size:15px}.pack-stage{gap:7px;min-height:430px;align-items:flex-end}.pack-wrap{width:31vw;max-width:190px;height:330px}.pack-brand{top:37px;font-size:10px}.pack-title{top:65px;font-size:15px}.pack-ribbon{top:97px;height:32px;font-size:8px}.pack-player{top:128px;width:90px;height:105px}.pack-player img{width:82px;height:100px}.pack-bottom{bottom:14px;padding-top:7px}.pack-bottom .pos{font-size:8px}.pack-bottom .hint{font-size:8px}.team-board{padding:8px;min-height:560px}.field{height:515px}.field-player{width:80px}.field-player .fifa-card{width:60px;height:78px}.fifa-card img{width:43px;height:45px;left:8px;top:14px}.fifa-card .rate{font-size:11px}.fifa-card .position{font-size:6px;top:21px}.fifa-card .fcname{font-size:6px}.field-player small{font-size:6px}.match-content{grid-template-columns:1fr}.scoreboard{gap:12px;padding:18px 8px}.team-name{min-width:70px;font-size:13px}.score{font-size:39px}.question-actions{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="logo">كل باكة فيها <span>اللي مكفيها</span></div>
+  <div class="progress"><i id="pr1" class="active"></i><i id="pr2"></i><i id="pr3"></i><i id="pr4"></i><i id="pr5"></i></div>
+</header>
+
+<section id="home" class="screen">
+<div class="center">
+  <div class="hero"><h1>كل باكة فيها اللي مكفيها</h1><p>اختار الباكة الصح وابني فريقك ثم شاهد المباراة.</p></div>
+  <div class="start-box">
+    <div class="start-icon">⚽</div>
+    <h2>جاهز للتحدي؟</h2>
+    <p style="color:#999;margin-top:8px">كل مركز له 3 باكات مختلفة. اختار باكة، اسأل عنها، وبعدها قرر.</p>
+    <button class="main-btn" onclick="startGame()">ابدأ اللعبة</button>
+  </div>
+</div>
+</section>
+
+<section id="packs" class="screen hidden">
+  <div class="round-title"><h2 id="packsTitle">اختار باكتك</h2><p>الثلاث باكات قدامك — اختار واحدة علشان تسأل عنها</p></div>
+  <div id="packStage" class="pack-stage"></div>
+  <div id="packNote" class="pack-note">اضغط على الباكة التي تريد معرفة محتواها</div>
+</section>
+
+<section id="chat" class="screen hidden">
+<div class="chat-wrap">
+  <div class="round-title"><h2 id="chatRoundTitle">اسأل عن الباكة</h2><p>اكتب السؤال بنفسك — بحد أقصى 5 أسئلة</p></div>
+  <div class="chat-window">
+    <div class="chat-head"><div class="avatar">📦</div><div><div class="chat-name">صاحب الباكة</div><div class="chat-status">جاهز للرد</div></div></div>
+    <div id="messages" class="messages"></div>
+    <div class="questions">
+      <div class="question-title">متبقي: <b id="questionsLeft">5</b> أسئلة</div>
+      <textarea id="questionInput" class="question-input" maxlength="250" placeholder="اكتب سؤالك هنا... مثال: اللاعب سريع؟"></textarea>
+      <div class="question-actions">
+        <button id="askBtn" class="ask-btn" onclick="askTypedQuestion()">اسأل</button>
+        <button class="finish-btn" onclick="finishQuestions()">تم — اختار الباكة</button>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="opened" class="screen hidden">
+<div class="round-title"><h2>الباكة التي اخترتها</h2><p>اللاعب الموجود بداخلها انضم إلى فريقك</p></div>
+<div id="openedPack" class="opened-pack"></div>
+<div style="text-align:center"><button class="main-btn" onclick="continueAfterOpen()">التالي</button></div>
+</section>
+
+<section id="team" class="screen hidden">
+<div class="round-title"><h2>تشكيلتك بتتبني</h2><p id="teamSub">اللاعب المختار انضم إلى فريقك</p></div>
+<div class="team-board">
+  <div class="field">
+    <div class="penalty top"></div><div class="penalty bottom"></div><div class="goal-area top"></div><div class="goal-area bottom"></div><div class="center-dot"></div>
+    <div id="formation"></div>
+  </div>
+</div>
+</section>
+
+<section id="countdown" class="screen hidden countdown-screen">
+<div><div class="count-circle"><div id="countNumber" class="count-number">3</div></div><div id="readyText" class="ready hidden">استعداد!</div><p style="color:#888;margin-top:20px">استعد للمواجهة...</p></div>
+</section>
+
+<section id="match" class="screen hidden">
+<div class="match-header"><div class="scoreboard">
+  <div class="team-name">L&S FC</div><div><div class="match-time" id="matchClock">00:00</div><div class="score"><span id="myScore">0</span> - <span id="aiScore">0</span></div></div><div class="team-name">AI FC</div>
+</div></div>
+<div class="match-content">
+  <div class="events" id="events"></div>
+  <div class="mini-teams"><div class="mini-team"><h3>👑 تشكيلتك</h3><div id="myMiniList" class="mini-list"></div></div><div class="mini-team"><h3>🤖 تشكيل الخصم</h3><div id="aiMiniList" class="mini-list"></div></div></div>
+</div>
+<div class="match-actions"><button id="startMatchBtn" class="start-match" onclick="startMatch()">▶ بداية المباراة</button></div>
+</section>
+
+<section id="result" class="screen hidden">
+<div class="result-box"><div class="trophy" id="resultIcon">🏆</div><div id="resultTitle" class="result-title">انتهت المباراة</div><div class="final-score"><span id="finalMyScore">0</span> - <span id="finalAiScore">0</span></div><div id="resultSub" class="result-sub">أحسنت!</div><br><button class="main-btn" onclick="playAgain()">🔄 العب تاني</button><br><button class="secondary-btn" onclick="goHome()">🏠 القائمة الرئيسية</button></div>
+</section>
+
+<script>
+const players={
+GK:[
+["كاسياس","GK",94,""],
+["بوفون","GK",96,""],
+["نوير","GK",95,""],
+["كورتوا","GK",94,""],
+["أليسون","GK",93,""],
+["تشيزني","GK",91,""]],
+LB:[
+["روبرتو كارلوس","LB",96,""],
+["مارسيلو","LB",94,""],
+["أشلي كول","LB",94,""],
+["ألابا","LB",92,""],
+["ثيو هيرنانديز","LB",91,""],
+["إيفرا","LB",93,""]],
+CB:[
+["باولو مالديني","CB",97,""],
+["سيرجيو راموس","CB",96,""],
+["نيمانيا فيديتش","CB",95,""],
+["جون تيري","CB",94,""],
+["كوردوبا","CB",93,""],
+["فان دايك","CB",94,""]],
+RB:[
+["كافو","RB",96,""],
+["كارفخال","RB",92,""],
+["لام","RB",95,""],
+["ترينت","RB",91,""],
+["زانتي","RB",94,""],
+["أرنولد","RB",90,""]],
+CM:[
+["تشافي","CM",96,""],
+["إنييستا","CM",97,""],
+["مودريتش","CM",96,""],
+["كروس","CM",95,""],
+["لامبارد","CM",94,""],
+["بيرلو","CM",96,""]],
+CAM:[
+["زيدان","CAM",98,""],
+["كاكا","CAM",96,""],
+["رونالدينيو","CAM",98,""],
+["أوزيل","CAM",93,""],
+["توتي","CAM",96,""],
+["دي بروين","CAM",94,""]],
+LW:[
+["رونالدو نازاريو","LW",98,""],
+["رونالدينيو","LW",97,""],
+["نيمار","LW",95,""],
+["هنري","LW",97,""],
+["هازارد","LW",93,""],
+["ماني","LW",92,""]],
+ST:[
+["رونالدو","ST",99,""],
+["ميسي","ST",99,""],
+["إبراهيموفيتش","ST",97,""],
+["ليفاندوفسكي","ST",96,""],
+["شيفشينكو","ST",96,""],
+["سواريز","ST",96,""]],
+RW:[
+["محمد صلاح","RW",96,""],
+["مبابي","RW",96,""],
+["فيغو","RW",96,""],
+["بيكهام","RW",95,""],
+["روبين","RW",95,""],
+["رياض محرز","RW",91,""]]
+};
+
+const positions=[
+["GK","حارس المرمى"],["LB","ظهير أيسر"],["CB1","قلب دفاع"],["CB2","قلب دفاع"],["RB","ظهير أيمن"],
+["CM1","وسط"],["CM2","وسط"],["CAM","صانع ألعاب"],["LW","جناح أيسر"],["ST","مهاجم"],["RW","جناح أيمن"]
+];
+
+let currentPosition=0,myTeam=[],aiTeam=[],currentPacks=[],selectedPackIndex=-1,selectedPlayer=null,questionsLeft=5;
+let myScore=0,aiScore=0,matchSeconds=0,matchTimer=null,simulationTimer=null;
+
+function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})}
+function progress(n){for(let i=1;i<=5;i++)document.getElementById("pr"+i).classList.toggle("active",i<=n)}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function posKey(){let p=positions[currentPosition][0];return p.startsWith("CB")?"CB":p.startsWith("CM")?"CM":p}
+function playerObj(p){return{name:p[0],pos:p[1],rating:p[2],img:p[3]}}
+
+// صور حقيقية من Wikipedia/Wikimedia: نطلب الـ thumbnail من صفحة اللاعب بدل روابط ملفات قديمة/مكسورة.
+const wikiAliases={
+  "كاسياس":"Iker Casillas","بوفون":"Gianluigi Buffon","نوير":"Manuel Neuer","كورتوا":"Thibaut Courtois","أليسون":"Alisson Becker","تشيزني":"Wojciech Szczesny",
+  "روبرتو كارلوس":"Roberto Carlos","مارسيلو":"Marcelo Vieira","أشلي كول":"Ashley Cole","ألابا":"David Alaba","ثيو هيرنانديز":"Theo Hernandez","إيفرا":"Patrice Evra",
+  "باولو مالديني":"Paolo Maldini","سيرجيو راموس":"Sergio Ramos","نيمانيا فيديتش":"Nemanja Vidic","جون تيري":"John Terry","كوردوبا":"Iván Córdoba","فان دايك":"Virgil van Dijk",
+  "كافو":"Cafu","كارفخال":"Dani Carvajal","لام":"Philipp Lahm","ترينت":"Trent Alexander-Arnold","زانتي":"Javier Zanetti","أرنولد":"Trent Alexander-Arnold",
+  "تشافي":"Xavi","إنييستا":"Andrés Iniesta","مودريتش":"Luka Modrić","كروس":"Toni Kroos","لامبارد":"Frank Lampard","بيرلو":"Andrea Pirlo",
+  "زيدان":"Zinedine Zidane","كاكا":"Kaká","رونالدينيو":"Ronaldinho","أوزيل":"Mesut Özil","توتي":"Francesco Totti","دي بروين":"Kevin De Bruyne",
+  "رونالدو نازاريو":"Ronaldo Nazário","نيمار":"Neymar","هنري":"Thierry Henry","هازارد":"Eden Hazard","ماني":"Sadio Mané",
+  "رونالدو":"Cristiano Ronaldo","ميسي":"Lionel Messi","إبراهيموفيتش":"Zlatan Ibrahimović","ليفاندوفسكي":"Robert Lewandowski","شيفشينكو":"Andriy Shevchenko","سواريز":"Luis Suárez",
+  "محمد صلاح":"Mohamed Salah","مبابي":"Kylian Mbappé","فيغو":"Luís Figo","بيكهام":"David Beckham","روبين":"Arjen Robben","رياض محرز":"Riyad Mahrez"
+};
+const wikiCache={};
+async function wikiImage(name){
+  if(wikiCache[name]) return wikiCache[name];
+  const title=encodeURIComponent(wikiAliases[name]||name);
+  try{
+    const r=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${title}`);
+    if(!r.ok) throw new Error('wiki');
+    const d=await r.json();
+    const url=d.thumbnail?.source||d.originalimage?.source||'';
+    wikiCache[name]=url; return url;
+  }catch(e){ wikiCache[name]=''; return ''; }
+}
+async function setWikiImage(img,name,fallback){
+  const url=await wikiImage(name);
+  if(url){img.src=url;img.style.display='block';img.style.opacity='1';}
+  else {img.style.display='none';if(fallback)fallback.classList.remove('hidden');}
+}
+
+// بيانات تساعد على إعطاء إجابة نعم/لا فعلية بدل تكرار "أيوه".
+const playerFacts={
+  "كاسياس":{speed:78,legend:true,retired:true,foot:"يمين",worldCup:true},"بوفون":{speed:72,legend:true,retired:true,foot:"يمين",worldCup:false},"نوير":{speed:85,legend:true,retired:false,foot:"يمين",worldCup:true},"كورتوا":{speed:74,legend:false,retired:false,foot:"يسار",worldCup:false},"أليسون":{speed:82,legend:false,retired:false,foot:"يمين",worldCup:false},"تشيزني":{speed:70,legend:false,retired:true,foot:"يمين",worldCup:false},
+  "روبرتو كارلوس":{speed:96,legend:true,retired:true,foot:"يسار",worldCup:true},"مارسيلو":{speed:88,legend:true,retired:true,foot:"يسار",worldCup:false},"أشلي كول":{speed:91,legend:true,retired:true,foot:"يسار",worldCup:false},"ألابا":{speed:88,legend:false,retired:false,foot:"يسار",worldCup:true},"ثيو هيرنانديز":{speed:97,legend:false,retired:false,foot:"يسار",worldCup:false},"إيفرا":{speed:90,legend:true,retired:true,foot:"يسار",worldCup:false},
+  "باولو مالديني":{speed:86,legend:true,retired:true,foot:"يسار",worldCup:false},"سيرجيو راموس":{speed:82,legend:true,retired:true,foot:"يمين",worldCup:true},"نيمانيا فيديتش":{speed:76,legend:true,retired:true,foot:"يمين",worldCup:false},"جون تيري":{speed:70,legend:true,retired:true,foot:"يمين",worldCup:false},"كوردوبا":{speed:91,legend:true,retired:true,foot:"يمين",worldCup:false},"فان دايك":{speed:84,legend:true,retired:false,foot:"يمين",worldCup:false},
+  "كافو":{speed:94,legend:true,retired:true,foot:"يمين",worldCup:true},"كارفخال":{speed:87,legend:false,retired:false,foot:"يمين",worldCup:false},"لام":{speed:91,legend:true,retired:true,foot:"يمين",worldCup:true},"ترينت":{speed:79,legend:false,retired:false,foot:"يمين",worldCup:false},"زانتي":{speed:86,legend:true,retired:true,foot:"يمين",worldCup:false},"أرنولد":{speed:79,legend:false,retired:false,foot:"يمين",worldCup:false},
+  "تشافي":{speed:76,legend:true,retired:true,foot:"يمين",worldCup:false},"إنييستا":{speed:82,legend:true,retired:true,foot:"يمين",worldCup:true},"مودريتش":{speed:86,legend:true,retired:false,foot:"يمين",worldCup:false},"كروس":{speed:68,legend:true,retired:true,foot:"يمين",worldCup:true},"لامبارد":{speed:78,legend:true,retired:true,foot:"يمين",worldCup:false},"بيرلو":{speed:65,legend:true,retired:true,foot:"يمين",worldCup:true},
+  "زيدان":{speed:85,legend:true,retired:true,foot:"يمين",worldCup:true},"كاكا":{speed:92,legend:true,retired:true,foot:"يمين",worldCup:false},"رونالدينيو":{speed:91,legend:true,retired:true,foot:"يمين",worldCup:true},"أوزيل":{speed:76,legend:true,retired:true,foot:"يسار",worldCup:false},"توتي":{speed:77,legend:true,retired:true,foot:"يمين",worldCup:true},"دي بروين":{speed:88,legend:true,retired:false,foot:"يمين",worldCup:false},
+  "رونالدو نازاريو":{speed:95,legend:true,retired:true,foot:"يمين",worldCup:true},"نيمار":{speed:93,legend:true,retired:false,foot:"يمين",worldCup:false},"هنري":{speed:94,legend:true,retired:true,foot:"يمين",worldCup:true},"هازارد":{speed:90,legend:true,retired:true,foot:"يمين",worldCup:false},"ماني":{speed:93,legend:true,retired:false,foot:"يمين",worldCup:false},
+  "رونالدو":{speed:96,legend:true,retired:false,foot:"يمين",worldCup:false},"ميسي":{speed:91,legend:true,retired:false,foot:"يسار",worldCup:true},"إبراهيموفيتش":{speed:72,legend:true,retired:true,foot:"يمين",worldCup:false},"ليفاندوفسكي":{speed:79,legend:true,retired:false,foot:"يمين",worldCup:false},"شيفشينكو":{speed:89,legend:true,retired:true,foot:"يمين",worldCup:false},"سواريز":{speed:84,legend:true,retired:false,foot:"يمين",worldCup:false},
+  "محمد صلاح":{speed:94,legend:true,retired:false,foot:"يسار",worldCup:false},"مبابي":{speed:99,legend:true,retired:false,foot:"يمين",worldCup:true},"فيغو":{speed:88,legend:true,retired:true,foot:"يمين",worldCup:false},"بيكهام":{speed:72,legend:true,retired:true,foot:"يمين",worldCup:false},"روبين":{speed:93,legend:true,retired:true,foot:"يسار",worldCup:false},"رياض محرز":{speed:86,legend:false,retired:false,foot:"يسار",worldCup:false}
+};
+function factsFor(p){return playerFacts[p[0]]||{speed:70,legend:p[2]>=96,retired:false,foot:"يمين",worldCup:false};}
+
+
+function startGame(){
+ currentPosition=0;myTeam=[];aiTeam=[];myScore=0;aiScore=0;progress(1);startRound();
+}
+
+function startRound(){
+ if(currentPosition>=positions.length){showCountdown();return}
+ const [pos,name]=positions[currentPosition];
+ currentPacks=shuffle(players[posKey()]).slice(0,3);
+ selectedPackIndex=-1;selectedPlayer=null;questionsLeft=5;
+ document.getElementById("packsTitle").textContent=`مركز ${currentPosition+1} — ${name}`;
+ renderPacks();show("packs");
+}
+
+function packClass(i){return ["white","blue","red"][i]}
+function renderPacks(){
+ const stage=document.getElementById("packStage");stage.innerHTML="";
+ currentPacks.forEach((p,i)=>{
+   const wrap=document.createElement("div");wrap.className="pack-wrap";
+   const c=packClass(i);
+   wrap.innerHTML=`
+   <div class="pack ${c}">
+    <div class="pack-top-seal"></div><div class="pack-shine"></div>
+    <div class="pack-brand">ULTIMATE</div>
+    <div class="pack-title">PLAYER<br>PACK</div>
+    <div class="pack-ribbon">SPECIAL SEASON</div>
+    <div class="pack-player"><img alt="${p[0]}" data-wiki="${p[0]}" onerror="this.style.display='none';this.nextElementSibling.classList.remove('hidden')"><div class="fallback hidden">⚽</div></div>
+    <div class="pack-bottom"><div class="pos">${p[1]} • ${p[2]}</div><div class="hint">اضغط للاختيار</div></div>
+    <div class="pack-corner"></div>
+   </div>`;
+   wrap.onclick=()=>selectPackToQuestion(i);stage.appendChild(wrap); const im=wrap.querySelector("img[data-wiki]"); setWikiImage(im,p[0],wrap.querySelector(".fallback"));
+ });
+}
+function selectPackToQuestion(i){
+ selectedPackIndex=i;
+ const p=currentPacks[i];
+ document.getElementById("chatRoundTitle").textContent=`اسأل عن الباكة ${i+1}`;
+ const box=document.getElementById("messages");box.innerHTML="";
+ addMessage(`اخترت الباكة رقم <b>${i+1}</b> 👀<br>اسأل براحتك عن اللاعب الموجود بداخلها. لديك 5 أسئلة.`,"bot");
+ document.getElementById("questionsLeft").textContent=5;
+ document.getElementById("questionInput").value="";
+ document.getElementById("askBtn").disabled=false;
+ show("chat");
+}
+function addMessage(t,type){const d=document.createElement("div");d.className="msg "+type;d.innerHTML=t;const b=document.getElementById("messages");b.appendChild(d);b.scrollTop=b.scrollHeight}
+function answerQuestion(q,p){
+  const s=q.toLowerCase().replace(/[؟?!.،]/g," ").replace(/\s+/g," ").trim();
+  const f=factsFor(p);
+  const yesNo=(v)=>v?"أيوه ✅":"لا ❌";
+  // أسئلة المركز
+  if(/حارس|حراسه|حارس مرمى/.test(s)) return yesNo(p[1]==="GK");
+  if(/ظهير أيسر|باك أيسر|lb/.test(s)) return yesNo(p[1]==="LB");
+  if(/قلب دفاع|دفاع|cb/.test(s)) return yesNo(p[1]==="CB");
+  if(/ظهير أيمن|باك أيمن|rb/.test(s)) return yesNo(p[1]==="RB");
+  if(/وسط|cm/.test(s)) return yesNo(p[1]==="CM");
+  if(/صانع ألعاب|cam/.test(s)) return yesNo(p[1]==="CAM");
+  if(/جناح أيسر|lw/.test(s)) return yesNo(p[1]==="LW");
+  if(/مهاجم|رأس حربة|سترايكر|st/.test(s)) return yesNo(p[1]==="ST");
+  if(/جناح أيمن|rw/.test(s)) return yesNo(p[1]==="RW");
+  // السرعة: لا نعتبر كل لاعب فوق 70 "سريع"؛ السؤال عن مستوى السرعة له معيار واضح.
+  if(/سريع جدا|سريع جدًا|سريع قوي/.test(s)) return yesNo(f.speed>=93);
+  if(/سريع|سرعته|سرعة/.test(s)) return yesNo(f.speed>=85);
+  // التقييم
+  if(/تقييمه|تقييمه عالي|اوفر|overall|تقييم عالي/.test(s)) return yesNo(p[2]>=95);
+  // الأسطورية
+  if(/اسطور|أسطور|legend|أسطوري/.test(s)) return yesNo(f.legend);
+  // الاعتزال
+  if(/معتزل|اعتزل|متقاعد/.test(s)) return yesNo(f.retired);
+  if(/لسه بيلعب|ما زال بيلعب|مازال بيلعب|حالي/.test(s)) return yesNo(!f.retired);
+  // القدم
+  if(/شمال|يساري|أيسر القدم/.test(s)) return yesNo(f.foot==="يسار");
+  if(/يمين|يميني|أيمن القدم/.test(s)) return yesNo(f.foot==="يمين");
+  // كأس العالم
+  if(/كأس العالم|كاس العالم|world cup/.test(s)) return yesNo(f.worldCup);
+  // الشهرة لا تُجاب بآلية ثابتة "أيوه" لكل لاعب؛ نربطها بتقييم/تصنيف معروف داخل بيانات اللعبة.
+  if(/مشهور|شهرة|معروف/.test(s)) return yesNo(p[2]>=90);
+  // أسئلة عن الاسم نفسه
+  if(/اسمه|اسم اللاعب|اللاعب ده/.test(s)) return "أيوه، السؤال عن اللاعب الموجود في الباكة صحيح، لكن مش هكشف اسمه 😉";
+  return "مش قادر أحدد السؤال ده من البيانات المتاحة للباكة ❓ جرّب سؤال نعم/لا عن المركز أو السرعة أو التقييم أو الأسطورية أو الاعتزال.";
+}
+
+function askTypedQuestion(){
+ if(questionsLeft<=0||selectedPackIndex<0)return;
+ const input=document.getElementById("questionInput"),q=input.value.trim();if(!q)return;
+ const p=currentPacks[selectedPackIndex];
+ addMessage(q,"user");questionsLeft--;document.getElementById("questionsLeft").textContent=questionsLeft;input.value="";
+ setTimeout(()=>addMessage(answerQuestion(q,p),"bot"),250);
+ if(questionsLeft===0)document.getElementById("askBtn").disabled=true;
+}
+document.getElementById("questionInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();askTypedQuestion()}});
+
+function finishQuestions(){
+ if(selectedPackIndex<0)return;
+ selectedPlayer=currentPacks[selectedPackIndex];
+ const remaining=currentPacks.filter((_,i)=>i!==selectedPackIndex);
+ const aiPlayer=remaining[Math.floor(Math.random()*remaining.length)];
+ const op=playerObj(selectedPlayer),ap=playerObj(aiPlayer);
+ myTeam.push({...op,position:positions[currentPosition][0]});
+ aiTeam.push({...ap,position:positions[currentPosition][0]});
+ document.getElementById("openedPack").innerHTML=`
+ <div class="opened-card">
+  <div class="rating">${selectedPlayer[2]}</div><div class="pos">${selectedPlayer[1]}</div>
+  <img id="openedWikiImg" alt="${selectedPlayer[0]}" style="opacity:0"><div class="name">${selectedPlayer[0]}</div><div class="tag">LEGENDARY PLAYER</div>
+ </div>`;
+ show("opened");
+}
+function continueAfterOpen(){
+ document.getElementById("teamSub").textContent=`${selectedPlayer[0]} انضم لتشكيلتك`;
+ renderTeam();show("team");
+ setTimeout(()=>{currentPosition++;progress(Math.min(5,Math.floor((currentPosition/positions.length)*5)+1));if(currentPosition<positions.length)startRound();else showCountdown()},1300);
+}
+function renderTeam(){
+ const f=document.getElementById("formation");f.innerHTML="";
+ const cls=["pgk","plb","pcb1","pcb2","prb","pcm1","pcm2","pcam","plw","pst","prw"];
+ myTeam.forEach((p,i)=>{
+  const d=document.createElement("div");d.className="field-player "+cls[i];
+  d.innerHTML=`<div class="fifa-card"><div class="rate">${p.rating}</div><div class="position">${p.pos}</div><img alt="${p.name}" data-wiki="${p.name}"><div class="fcname">${p.name}</div></div><small>${p.name}</small>`;
+  f.appendChild(d); const im=d.querySelector("img[data-wiki]"); setWikiImage(im,p.name,null);
+ });
+}
+function showCountdown(){
+ show("countdown");document.getElementById("readyText").classList.add("hidden");const n=document.getElementById("countNumber");n.classList.remove("hidden");let c=3;n.textContent=c;
+ const t=setInterval(()=>{c--;if(c>0)n.textContent=c;else{clearInterval(t);n.classList.add("hidden");document.getElementById("readyText").classList.remove("hidden");setTimeout(setupMatch,1300)}},1000);
+}
+function setupMatch(){
+ myScore=0;aiScore=0;matchSeconds=0;clearInterval(matchTimer);clearInterval(simulationTimer);
+ document.getElementById("myScore").textContent=0;document.getElementById("aiScore").textContent=0;document.getElementById("matchClock").textContent="00:00";
+ document.getElementById("events").innerHTML='<div class="event info">🏟️ التشكيلتان جاهزتان.</div><div class="event info">⚽ المباراة ستجري تلقائيًا.</div>';
+ fillMini("myMiniList",myTeam);fillMini("aiMiniList",aiTeam);document.getElementById("startMatchBtn").disabled=false;document.getElementById("startMatchBtn").textContent="▶ بداية المباراة";show("match");
+}
+function fillMini(id,team){const b=document.getElementById(id);b.innerHTML="";team.forEach(p=>{const x=document.createElement("span");x.className="mini-player";x.textContent=p.name;b.appendChild(x)})}
+function addEvent(t,type="info"){const d=document.createElement("div");d.className="event "+type;d.innerHTML=t;const b=document.getElementById("events");b.appendChild(d);b.scrollTop=b.scrollHeight}
+function startMatch(){
+ const b=document.getElementById("startMatchBtn");b.disabled=true;b.textContent="⚽ المباراة جارية...";
+ addEvent("🔔 الحكم أطلق صافرة البداية!","info");
+ matchTimer=setInterval(()=>{matchSeconds++;document.getElementById("matchClock").textContent=`${String(Math.floor(matchSeconds/60)).padStart(2,"0")}:${String(matchSeconds%60).padStart(2,"0")}`;if(matchSeconds>=300)endMatch()},1000);
+ simulationTimer=setInterval(simulateEvent,7000);
+}
+function simulateEvent(){
+ if(matchSeconds>=300)return;const r=Math.random();
+ if(r<.15){myScore++;const p=myTeam[Math.floor(Math.random()*myTeam.length)];addEvent(`⚽ <b>جول!</b> ${p.name} يسجل لـ L&S FC 🔥`,"goal");document.getElementById("myScore").textContent=myScore}
+ else if(r<.30){aiScore++;const p=aiTeam[Math.floor(Math.random()*aiTeam.length)];addEvent(`⚽ <b>جول للخصم!</b> ${p.name} يهز الشباك.`,"goal");document.getElementById("aiScore").textContent=aiScore}
+ else if(r<.43){const p=myTeam[Math.floor(Math.random()*myTeam.length)];addEvent(`🟨 ${p.name} حصل على بطاقة صفراء.`)}
+ else if(r<.50)addEvent("🚩 تسلل! الهجمة توقفت.")
+ else if(r<.57)addEvent("🧤 تصدي خرافي من الحارس!")
+ else if(r<.64)addEvent("🔥 هجمة خطيرة جدًا ولكن الكرة مرت بجوار القائم.")
+}
+function endMatch(){
+ clearInterval(matchTimer);clearInterval(simulationTimer);
+ setTimeout(()=>{
+  document.getElementById("finalMyScore").textContent=myScore;document.getElementById("finalAiScore").textContent=aiScore;
+  const title=document.getElementById("resultTitle"),sub=document.getElementById("resultSub"),icon=document.getElementById("resultIcon");
+  if(myScore>aiScore){icon.textContent="🏆";title.textContent="أنت الفائز!";sub.textContent="فريقك قدر يتغلب على الخصم 🔥"}
+  else if(aiScore>myScore){icon.textContent="🤖";title.textContent="الخصم فاز";sub.textContent="المباراة كانت قوية... جرب مرة تانية!"}
+  else{icon.textContent="🤝";title.textContent="تعادل!";sub.textContent="مباراة متكافئة جدًا."}show("result");
+ },900);
+}
+function playAgain(){startGame()}
+function goHome(){clearInterval(matchTimer);clearInterval(simulationTimer);currentPosition=0;myTeam=[];aiTeam=[];progress(1);show("home")}
+</script>
+</body>
+</html>
