@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الأصدقاء - L&S GAMES</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&family=Orbitron:wght@700;900&display=swap');
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;background:
+  radial-gradient(circle at 50% -10%,#40145f 0,#170822 35%,#07070d 72%);
+  color:#fff;font-family:Cairo,Arial,sans-serif;overflow-x:hidden
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;
+background:linear-gradient(135deg,rgba(170,0,255,.08),transparent 40%,rgba(0,150,255,.05))}
+.top{
+  width:min(1100px,94%);margin:22px auto 0;display:flex;align-items:center;
+  justify-content:space-between;gap:12px
+}
+.title{
+  font-size:28px;font-weight:900;text-shadow:0 0 18px rgba(190,70,255,.65)
+}
+.profile{
+  width:48px;height:48px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(145deg,#9a32ff,#35105e);border:2px solid #c46cff;
+  box-shadow:0 0 20px rgba(177,58,255,.35);font-weight:900
+}
+.search-row{
+  width:min(1100px,94%);margin:20px auto 0;display:grid;
+  grid-template-columns:1fr 62px 62px;gap:10px;direction:ltr
+}
+.search{
+  direction:rtl;height:58px;border-radius:18px;border:1px solid #55326d;
+  background:rgba(19,13,29,.9);color:white;padding:0 20px;font:700 16px Cairo;
+  outline:none;box-shadow:inset 0 0 20px rgba(0,0,0,.22)
+}
+.search:focus{border-color:#b44cff;box-shadow:0 0 0 3px rgba(180,76,255,.12)}
+.action{
+  height:58px;border:0;border-radius:18px;cursor:pointer;color:#fff;
+  font-size:29px;font-weight:900;display:grid;place-items:center;
+  background:linear-gradient(145deg,#8d24e8,#4d0b87);
+  box-shadow:0 7px 20px rgba(120,20,210,.25);transition:.18s
+}
+.action.mail{background:linear-gradient(145deg,#263bff,#16216f)}
+.action:hover{transform:translateY(-2px);filter:brightness(1.12)}
+.section{
+  width:min(1100px,94%);margin:18px auto 100px;padding:20px;border-radius:24px;
+  background:rgba(13,10,19,.72);border:1px solid #342240;min-height:360px
+}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
+.section-head h2{margin:0;font-size:20px}
+.count{font-size:13px;color:#a997b3}
+.empty{text-align:center;color:#8d8194;padding:90px 20px;font-size:16px}
+.card{
+  display:flex;align-items:center;gap:14px;padding:13px;margin:10px 0;
+  border-radius:17px;background:rgba(35,22,48,.72);border:1px solid #402950
+}
+.avatar{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;
+background:linear-gradient(145deg,#b32cff,#351064);font-weight:900;flex:none}
+.info{flex:1}.name{font-weight:900}.id{font-size:12px;color:#9b8ca4;margin-top:2px}
+.btn{border:0;border-radius:12px;padding:9px 15px;background:#8f27e8;color:white;
+font:800 13px Cairo;cursor:pointer}.btn:hover{filter:brightness(1.15)}
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;
+  justify-content:center;padding:20px;z-index:20
+}
+.modal.show{display:flex}
+.box{
+  width:min(500px,100%);background:#120d19;border:1px solid #5c3275;
+  border-radius:25px;padding:22px;box-shadow:0 25px 70px #000
+}
+.box h3{margin:0 0 8px;font-size:22px}.hint{color:#9f91a8;font-size:13px;margin-bottom:15px}
+.find-row{display:flex;gap:8px}.find-row input{flex:1;height:50px;border-radius:14px;
+border:1px solid #55326d;background:#08070c;color:#fff;padding:0 14px;font:700 15px Cairo;outline:none}
+.find-row button{border:0;border-radius:14px;padding:0 18px;background:#9a2cf0;color:#fff;font:900 14px Cairo;cursor:pointer}
+.close{margin-top:14px;width:100%;height:45px;border:0;border-radius:13px;background:#28212e;color:#fff;font:800 14px Cairo;cursor:pointer}
+.result{margin-top:14px}
+@media(max-width:600px){
+ .search-row{grid-template-columns:1fr 52px 52px}.action{height:54px}.search{height:54px}
+ .title{font-size:23px}.section{padding:14px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="title">الأصدقاء</div>
+  <div class="profile" id="profileAvatar">LS</div>
+</header>
+
+<div class="search-row">
+  <input id="mainSearch" class="search" placeholder="ابحث عن صديق بالاسم أو الـ ID..." autocomplete="off">
+  <button class="action" id="addBtn" title="إضافة صديق">＋</button>
+  <button class="action mail" id="requestsBtn" title="دعوات الأصدقاء">✉</button>
+</div>
+
+<section class="section">
+  <div class="section-head">
+    <h2>أصدقائي</h2>
+    <span class="count" id="friendsCount">0 أصدقاء</span>
+  </div>
+  <div id="friendsList" class="empty">مفيش أصدقاء لحد دلوقتي</div>
+</section>
+
+<div class="modal" id="addModal">
+  <div class="box">
+    <h3>إضافة صديق</h3>
+    <div class="hint">ابحث عن أي شخص باستخدام الـ ID أو البريد الإلكتروني</div>
+    <div class="find-row">
+      <input id="addSearch" placeholder="اكتب الـ ID أو البريد">
+      <button id="findBtn">بحث</button>
+    </div>
+    <div class="result" id="searchResult"></div>
+    <button class="close" id="closeAdd">إغلاق</button>
+  </div>
+</div>
+
+<div class="modal" id="requestsModal">
+  <div class="box">
+    <h3>دعوات الأصدقاء</h3>
+    <div id="requestsList" class="empty" style="padding:55px 10px">مفيش دعوات جديدة</div>
+    <button class="close" id="closeRequests">إغلاق</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase, ref, get, set, push, update, remove, onValue
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC_55Rv6wCni9EwQurtUILswB1WjkXp6hM",
+  authDomain: "mazad-noogom.firebaseapp.com",
+  databaseURL: "https://mazad-noogom-default-rtdb.firebaseio.com",
+  projectId: "mazad-noogom",
+  storageBucket: "mazad-noogom.firebasestorage.app",
+  messagingSenderId: "183884985831",
+  appId: "1:183884985831:web:db231949dace2b0798b942"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+function escapeHtml(s){
+  return String(s ?? "").replace(/[&<>"']/g,m=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[m]));
+}
+function initials(text){
+  const parts=String(text||"LS").trim().split(/\s+/).filter(Boolean);
+  return ((parts[0]?.[0]||"L")+(parts[1]?.[0]||"S")).toUpperCase();
+}
+function getMyEmail(){
+  return localStorage.getItem("email") ||
+         localStorage.getItem("userEmail") ||
+         localStorage.getItem("ls_email") || "";
+}
+function getMyName(){
+  return localStorage.getItem("name") ||
+         localStorage.getItem("displayName") ||
+         getMyEmail().split("@")[0] || "لاعب";
+}
+function getMyId(){
+  let id=localStorage.getItem("ls_games_unique_profile_id_v1");
+  if(id) return id;
+
+  const bytes=new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  const hex=Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("").toUpperCase();
+  id="LS-"+hex;
+  localStorage.setItem("ls_games_unique_profile_id_v1",id);
+  return id;
+}
+
+const myEmail=getMyEmail().toLowerCase().trim();
+const myId=getMyId();
+const myName=getMyName();
+
+document.getElementById("profileAvatar").textContent=initials(myName || myEmail);
+
+async function registerMyProfile(){
+  if(!myEmail){
+    console.warn("لم يتم العثور على إيميل المستخدم في localStorage.");
+    return;
+  }
+  await update(ref(db,"users/"+myId),{
+    id:myId,
+    email:myEmail,
+    name:myName,
+    updatedAt:Date.now()
+  });
+}
+
+async function findUsers(){
+  const q=document.getElementById("addSearch").value.trim().toLowerCase();
+  const result=document.getElementById("searchResult");
+
+  if(!q){
+    result.innerHTML='<div class="hint">اكتب الـ ID أو البريد الأول.</div>';
+    return;
+  }
+
+  result.innerHTML='<div class="hint">جاري البحث...</div>';
+
+  try{
+    const snap=await get(ref(db,"users"));
+    const users=snap.exists()?snap.val():{};
+    const found=[];
+
+    Object.keys(users).forEach(key=>{
+      const u=users[key]||{};
+      if(key===myId) return;
+      const id=String(u.id||key).toLowerCase();
+      const email=String(u.email||"").toLowerCase();
+      const name=String(u.name||"").toLowerCase();
+
+      if(id===q || email===q || id.includes(q) || email.includes(q) || name.includes(q)){
+        found.push({...u,id:u.id||key});
+      }
+    });
+
+    if(!found.length){
+      result.innerHTML='<div class="hint">مش لاقي لاعب بالبيانات دي.</div>';
+      return;
+    }
+
+    result.innerHTML=found.slice(0,10).map(u=>`
+      <div class="card">
+        <div class="avatar">${initials(u.name||u.email)}</div>
+        <div class="info">
+          <div class="name">${escapeHtml(u.name||"لاعب")}</div>
+          <div class="id">${escapeHtml(u.id||u.email||"")}</div>
+        </div>
+        <button class="btn" data-send="${escapeHtml(u.id)}">دعوة</button>
+      </div>
+    `).join("");
+
+    result.querySelectorAll("[data-send]").forEach(btn=>{
+      btn.onclick=()=>sendRequest(btn.dataset.send);
+    });
+
+  }catch(err){
+    console.error(err);
+    result.innerHTML='<div class="hint" style="color:#ff7373">حصل خطأ في الاتصال بقاعدة البيانات.</div>';
+  }
+}
+
+async function sendRequest(targetId){
+  if(!targetId || targetId===myId) return;
+
+  try{
+    const existing=await get(ref(db,`friendRequests/${targetId}/${myId}`));
+    if(existing.exists()){
+      document.getElementById("searchResult").innerHTML=
+        '<div class="hint">الدعوة اتبعت قبل كده ✓</div>';
+      return;
+    }
+
+    await set(ref(db,`friendRequests/${targetId}/${myId}`),{
+      fromId:myId,
+      fromEmail:myEmail,
+      fromName:myName,
+      createdAt:Date.now()
+    });
+
+    document.getElementById("searchResult").innerHTML=
+      '<div class="hint" style="color:#79e29a">تم إرسال الدعوة بنجاح ✓</div>';
+  }catch(err){
+    console.error(err);
+    alert("حصل خطأ أثناء إرسال الدعوة.");
+  }
+}
+
+function renderFriendsData(data){
+  const list=document.getElementById("friendsList");
+  const friends=data||{};
+  const arr=Object.values(friends);
+
+  document.getElementById("friendsCount").textContent=arr.length+" أصدقاء";
+
+  if(!arr.length){
+    list.className="empty";
+    list.innerHTML="مفيش أصدقاء لحد دلوقتي";
+    return;
+  }
+
+  list.className="";
+  list.innerHTML=arr.map(f=>`
+    <div class="card">
+      <div class="avatar">${initials(f.name||f.email)}</div>
+      <div class="info">
+        <div class="name">${escapeHtml(f.name||"لاعب")}</div>
+        <div class="id">${escapeHtml(f.id||f.email||"")}</div>
+      </div>
+      <button class="btn" data-remove="${escapeHtml(f.id)}">حذف</button>
+    </div>
+  `).join("");
+
+  list.querySelectorAll("[data-remove]").forEach(btn=>{
+    btn.onclick=()=>removeFriend(btn.dataset.remove);
+  });
+}
+
+function watchFriends(){
+  onValue(ref(db,`friends/${myId}`),snap=>{
+    renderFriendsData(snap.exists()?snap.val():{});
+  });
+}
+
+async function removeFriend(friendId){
+  if(!friendId) return;
+  if(!confirm("متأكد إنك عايز تحذف الصديق؟")) return;
+
+  try{
+    await remove(ref(db,`friends/${myId}/${friendId}`));
+    await remove(ref(db,`friends/${friendId}/${myId}`));
+  }catch(err){
+    console.error(err);
+    alert("حصل خطأ أثناء حذف الصديق.");
+  }
+}
+
+function renderRequestsData(data){
+  const box=document.getElementById("requestsList");
+  const requests=data||{};
+  const arr=Object.values(requests);
+
+  if(!arr.length){
+    box.className="empty";
+    box.style.padding="55px 10px";
+    box.innerHTML="مفيش دعوات جديدة";
+    return;
+  }
+
+  box.className="";
+  box.style.padding="";
+
+  box.innerHTML=arr.map(r=>`
+    <div class="card">
+      <div class="avatar">${initials(r.fromName||r.fromEmail)}</div>
+      <div class="info">
+        <div class="name">${escapeHtml(r.fromName||"لاعب")}</div>
+        <div class="id">${escapeHtml(r.fromId||r.fromEmail||"")}</div>
+      </div>
+      <button class="btn" data-accept="${escapeHtml(r.fromId)}">قبول</button>
+    </div>
+  `).join("");
+
+  box.querySelectorAll("[data-accept]").forEach(btn=>{
+    btn.onclick=()=>acceptRequest(btn.dataset.accept);
+  });
+}
+
+function watchRequests(){
+  onValue(ref(db,`friendRequests/${myId}`),snap=>{
+    renderRequestsData(snap.exists()?snap.val():{});
+  });
+}
+
+async function acceptRequest(fromId){
+  if(!fromId) return;
+
+  try{
+    const snap=await get(ref(db,`friendRequests/${myId}/${fromId}`));
+    if(!snap.exists()) return;
+
+    const request=snap.val();
+
+    const senderSnap=await get(ref(db,`users/${fromId}`));
+    const sender=senderSnap.exists()?senderSnap.val():{
+      id:fromId,
+      name:request.fromName||"لاعب",
+      email:request.fromEmail||""
+    };
+
+    const myData={
+      id:myId,
+      name:myName,
+      email:myEmail
+    };
+    const friendData={
+      id:sender.id||fromId,
+      name:sender.name||request.fromName||"لاعب",
+      email:sender.email||request.fromEmail||""
+    };
+
+    const updates={};
+    updates[`friends/${myId}/${fromId}`]=friendData;
+    updates[`friends/${fromId}/${myId}`]=myData;
+    updates[`friendRequests/${myId}/${fromId}`]=null;
+
+    await update(ref(db),updates);
+  }catch(err){
+    console.error(err);
+    alert("حصل خطأ أثناء قبول الدعوة.");
+  }
+}
+
+document.getElementById("addBtn").onclick=()=>{
+  document.getElementById("addModal").classList.add("show");
+  document.getElementById("addSearch").focus();
+};
+
+document.getElementById("closeAdd").onclick=()=>{
+  document.getElementById("addModal").classList.remove("show");
+};
+
+document.getElementById("requestsBtn").onclick=()=>{
+  document.getElementById("requestsModal").classList.add("show");
+};
+
+document.getElementById("closeRequests").onclick=()=>{
+  document.getElementById("requestsModal").classList.remove("show");
+};
+
+document.getElementById("findBtn").onclick=findUsers;
+document.getElementById("addSearch").addEventListener("keydown",e=>{
+  if(e.key==="Enter") findUsers();
+});
+
+document.getElementById("mainSearch").addEventListener("input",()=>{
+  const q=document.getElementById("mainSearch").value.trim().toLowerCase();
+  document.querySelectorAll("#friendsList .card").forEach(card=>{
+    card.style.display=card.innerText.toLowerCase().includes(q)?"flex":"none";
+  });
+});
+
+document.addEventListener("click",e=>{
+  if(e.target.classList.contains("modal") && e.target.classList.contains("show")){
+    e.target.classList.remove("show");
+  }
+});
+
+(async()=>{
+  try{
+    await registerMyProfile();
+    watchFriends();
+    watchRequests();
+  }catch(err){
+    console.error(err);
+  }
+})();
+</script>
+</body>
+</html>
