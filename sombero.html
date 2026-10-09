@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>السومبيرو | Ultimate Team</title>
+<style>
+:root{--gold:#f5c85b;--gold2:#fff0a6;--bg:#07101d;--panel:#101b2b;--line:#31435b;--muted:#9baac0}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#1d3b60 0,#0b1626 48%,#050a12 100%);color:#f7f8fc;font-family:Tahoma,Arial,sans-serif;min-height:100vh}
+button{font:inherit;cursor:pointer}button:disabled{opacity:.55;cursor:not-allowed}.app{max-width:1450px;margin:auto;padding:18px}
+header{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:17px 21px;margin-bottom:18px;border:1px solid #3d5068;border-radius:18px;background:linear-gradient(110deg,#14263cdd,#08111eeF);box-shadow:0 15px 35px #0005}
+.logo{font-size:29px;font-weight:1000;letter-spacing:.2px;color:var(--gold);text-shadow:0 2px 14px #f5c85b33}.sub{font-size:12px;color:var(--muted);margin-top:5px}.stats{display:flex;gap:8px}.stat{background:#080f1b;border:1px solid #34455c;border-radius:10px;padding:9px 13px;font-size:13px}.stat b{color:var(--gold);font-size:16px}
+.layout{display:grid;grid-template-columns:minmax(320px,1fr) minmax(340px,440px);gap:18px}.panel{min-width:0;background:linear-gradient(155deg,#142238f2,#091321f5);border:1px solid #2c4059;border-radius:20px;padding:19px;box-shadow:0 18px 55px #0005}
+h2{margin:0 0 7px;font-size:20px}.hint{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:15px}
+.wheel-wrap{display:flex;flex-direction:column;align-items:center;gap:15px}.wheel-area{position:relative;width:min(450px,80vw);aspect-ratio:1;filter:drop-shadow(0 10px 20px #0008)}
+.wheel{width:100%;height:100%;border-radius:50%;border:9px solid #e7bd4e;position:relative;overflow:hidden;background:conic-gradient(#d7444b 0deg 32.727deg,#e8b938 32.727deg 65.454deg,#2e9c67 65.454deg 98.181deg,#357fce 98.181deg 130.908deg,#8b55bd 130.908deg 163.635deg,#d86d37 163.635deg 196.362deg,#199e9b 196.362deg 229.089deg,#c74979 229.089deg 261.816deg,#6d963a 261.816deg 294.543deg,#6550b5 294.543deg 327.27deg,#cf8a2f 327.27deg 360deg);box-shadow:inset 0 0 0 4px #ffffff22,inset 0 0 45px #0008;transition:transform 5.2s cubic-bezier(.09,.78,.09,1)}
+.wheel:after{content:"";position:absolute;inset:7px;border:1px solid #ffffff60;border-radius:50%;pointer-events:none}
+.num{position:absolute;left:50%;top:50%;width:50%;height:50%;transform-origin:0 0;display:flex;justify-content:center;align-items:flex-start;font-size:clamp(17px,2.5vw,25px);font-weight:1000;padding-top:13px;color:#fff;text-shadow:0 2px 4px #000}
+.n1{transform:rotate(0deg)}.n2{transform:rotate(32.727deg)}.n3{transform:rotate(65.454deg)}.n4{transform:rotate(98.181deg)}.n5{transform:rotate(130.908deg)}.n6{transform:rotate(163.635deg)}.n7{transform:rotate(196.362deg)}.n8{transform:rotate(229.089deg)}.n9{transform:rotate(261.816deg)}.n10{transform:rotate(294.543deg)}.n11{transform:rotate(327.27deg)}
+.pointer{position:absolute;top:-6px;left:50%;transform:translateX(-50%);z-index:5;width:0;height:0;border-left:17px solid transparent;border-right:17px solid transparent;border-top:43px solid #fff;filter:drop-shadow(0 3px 5px #000)}
+.hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:50%;background:radial-gradient(circle at 35% 25%,#34445b,#070d16 70%);border:5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:27px;z-index:3;box-shadow:0 0 0 4px #0005}
+.spin{border:1px solid #ffe6a0;border-radius:11px;background:linear-gradient(180deg,#ffe89a,#e6ae37);padding:13px 40px;font-size:17px;font-weight:1000;color:#17130a;box-shadow:0 6px 0 #95681b,0 10px 25px #0005}.spin:active{transform:translateY(2px);box-shadow:0 4px 0 #95681b}
+.positions{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;margin-top:19px}.pos{background:#0a1422;border:1px solid #2c4057;border-radius:9px;padding:8px 3px;text-align:center;font-size:11px;color:#c4cfdd}.pos strong{display:block;color:var(--gold);font-size:15px;margin-bottom:3px}.pos.done{border-color:#eac35c;background:#3c3017;color:#fff}
+.team{min-height:600px;background:linear-gradient(180deg,#0c513d,#0a402f 47%,#073626);border:5px solid #c4a44c;border-radius:13px;position:relative;overflow:hidden;background-size:100% 100%;box-shadow:inset 0 0 0 2px #ffffff26,inset 0 0 35px #001b13}
+.team:before{content:"";position:absolute;inset:3%;border:2px solid #ffffff78}.line{position:absolute;top:50%;left:3%;width:94%;height:2px;background:#ffffff70}.circle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100px;height:100px;border:2px solid #ffffff70;border-radius:50%}.box18{position:absolute;left:19%;width:62%;height:14%;border:2px solid #ffffff70}.box18.top{top:3%}.box18.bottom{bottom:3%}
+.slot{position:absolute;transform:translate(-50%,-50%);text-align:center;width:83px;z-index:3}.slot.gk{left:50%;top:87%}.slot.lb{left:17%;top:70%}.slot.cb1{left:39%;top:74%}.slot.cb2{left:61%;top:74%}.slot.rb{left:83%;top:70%}.slot.cm1{left:27%;top:52%}.slot.cm2{left:50%;top:58%}.slot.cm3{left:73%;top:52%}.slot.lw{left:18%;top:28%}.slot.st{left:50%;top:21%}.slot.rw{left:82%;top:28%}
+.card{width:69px;height:91px;margin:auto;border-radius:5px;background:linear-gradient(135deg,#fff2b6 0,#cfa84a 28%,#fff0a0 45%,#987127 100%);border:2px solid #ffeb9c;position:relative;overflow:hidden;box-shadow:0 5px 12px #000b;clip-path:polygon(9% 0,91% 0,100% 8%,100% 91%,50% 100%,0 91%,0 8%);color:#30230a}
+.card:before{content:"";position:absolute;inset:4px;border:1px solid #fff6;pointer-events:none;z-index:3}.card img{height:65px;width:61px;position:absolute;bottom:0;left:50%;transform:translateX(-50%);object-fit:contain;object-position:center bottom;z-index:1}.rate{position:absolute;left:5px;top:4px;color:#211907;font-weight:1000;font-size:15px;z-index:2}.position-mini{position:absolute;left:5px;top:22px;font-size:7px;font-weight:1000;z-index:2}.flag{position:absolute;right:4px;top:4px;font-size:9px;z-index:2}.player-fallback{position:absolute;inset:26px 0 0;pointer-events:none;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:1000;color:#fff;text-shadow:0 2px 8px #000;z-index:0}.card-name{font-size:10px;font-weight:900;text-shadow:0 2px 4px #000;line-height:1.4;margin-top:4px}.empty{width:48px;height:48px;border-radius:5px;border:2px dashed #e9d38c;background:#081b16bb;display:flex;align-items:center;justify-content:center;font-weight:1000;font-size:17px;margin:auto;color:#ffe28a}.slotname{font-size:9px;font-weight:bold;margin-top:4px;text-shadow:0 2px 4px #000}
+.question,.picker{display:none;position:fixed;inset:0;background:#000c;backdrop-filter:blur(8px);z-index:20;align-items:center;justify-content:center;padding:14px}.question.show,.picker.show{display:flex}.qbox,.pickerbox{width:min(660px,96%);max-height:92vh;overflow:auto;background:linear-gradient(155deg,#17263a,#080f19);border:1px solid #536782;border-radius:18px;padding:23px;box-shadow:0 25px 100px #000}.qnumber{color:var(--gold);font-weight:1000;font-size:13px}.qtext{font-size:21px;font-weight:900;line-height:1.6;margin:14px 0}.answers{display:grid;grid-template-columns:1fr 1fr;gap:9px}.answer{border:1px solid #3b5068;background:#142238;color:white;border-radius:9px;padding:13px;text-align:right;font-size:14px}.answer:hover{border-color:var(--gold);background:#21344c}.answer.correct{border-color:#48d88a;background:#12432b}.answer.wrong{border-color:#ff6671;background:#4a1d26}.result{margin-top:13px;padding:12px;border-radius:10px;display:none;font-size:14px}.result.ok{display:block;background:#164d2e;color:#8bf5b0}.result.bad{display:block;background:#521e24;color:#ffabb1}.close{margin-top:13px;width:100%;padding:12px;border:0;border-radius:9px;background:linear-gradient(#ffe89a,#e6b13e);font-weight:1000;color:#211907}.pick-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.pick-head h2{color:var(--gold)}.player-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.pick-card{position:relative;overflow:hidden;border:1px solid #455a73;background:linear-gradient(155deg,#253951,#101b2a);border-radius:12px;padding:9px;color:#fff;text-align:center;transition:.15s}.pick-card:hover{border-color:var(--gold);transform:translateY(-2px)}.pick-card img{display:block;width:100%;height:120px;object-fit:contain;background:radial-gradient(circle,#34475d,#111c2a);border-radius:7px;margin-bottom:8px}.pick-card b{display:block;font-size:13px}.pick-card small{display:block;color:#b9c5d5;margin-top:5px}.pick-rating{color:var(--gold);font-weight:1000}.overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#000d;z-index:50}.overlay.show{display:flex}.winbox{text-align:center;background:#111b2a;border:2px solid var(--gold);border-radius:20px;padding:30px;width:min(500px,90%);animation:pop .5s}.winbox h1{font-size:38px;color:var(--gold)}@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}.conf{position:fixed;top:-20px;width:9px;height:18px;z-index:60;animation:fall 3s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(700deg);opacity:0}}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.team{order:-1;min-height:590px}}@media(max-width:600px){.app{padding:7px}header{padding:12px;flex-direction:column;align-items:stretch}.logo{font-size:24px}.stats{justify-content:center}.panel{padding:12px}.team{min-height:480px}.slot{transform:translate(-50%,-50%) scale(.75)}.slot.lb{left:14%}.slot.cb1{left:37%}.slot.cb2{left:63%}.slot.rb{left:86%}.slot.cm1{left:24%}.slot.cm3{left:76%}.slot.lw{left:15%}.slot.rw{left:85%}.positions{grid-template-columns:repeat(4,1fr)}.answers{grid-template-columns:1fr}.qtext{font-size:18px}.player-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pick-card img{height:100px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><div class="logo">🎩 السومبيرو</div><div class="sub">لف العجلة • جاوب عن رقم القميص • اختار أسطورتك وابنِ تشكيلتك</div></div><div class="stats"><div class="stat">المراكز <b id="done">0</b>/11</div><div class="stat">التقييم <b id="overall">0</b></div></div></header>
+<div class="layout">
+<section class="panel"><h2>🎡 عجلة أرقام القمصان</h2><div class="hint">الرقم اللي تقف عليه العجلة هو رقم القميص. جاوب السؤال صح عشان تختار لاعبًا لعب بهذا الرقم، ولو غلط هتاخد لاعبًا عشوائيًا في مركز الرقم.</div>
+<div class="wheel-wrap"><div class="wheel-area"><div class="pointer"></div><div class="wheel" id="wheel"><div class="num n1">1</div><div class="num n2">2</div><div class="num n3">3</div><div class="num n4">4</div><div class="num n5">5</div><div class="num n6">6</div><div class="num n7">7</div><div class="num n8">8</div><div class="num n9">9</div><div class="num n10">10</div><div class="num n11">11</div><div class="hub">⚽</div></div></div><button class="spin" id="spin">🎡 لف العجلة</button></div>
+<div class="positions" id="positions"></div></section>
+<section class="panel"><h2>👥 تشكيلتك 4-3-3</h2><div class="hint">كروت مستوحاة من أسلوب ألعاب Ultimate Team، مع التقييم والمركز وصورة اللاعب.</div><div class="team" id="team"><div class="line"></div><div class="circle"></div><div class="box18 top"></div><div class="box18 bottom"></div></div></section>
+</div></div>
+<div class="question" id="question"><div class="qbox"><div class="qnumber" id="qnum"></div><div class="qtext" id="qtext"></div><div class="answers" id="answers"></div><div class="result" id="result"></div><button class="close" id="continue" style="display:none">متابعة</button></div></div>
+<div class="picker" id="picker"><div class="pickerbox"><div class="pick-head"><h2 id="pickTitle">اختار لاعبك</h2><span id="pickSub" class="hint"></span></div><div id="playerGrid" class="player-grid"></div><button class="close" id="randomContinue" style="display:none">متابعة</button></div></div>
+<div class="overlay" id="finish"><div class="winbox"><div style="font-size:52px">🏆</div><h1>اكتملت التشكيلة!</h1><p id="finishText"></p><button class="close" onclick="location.reload()">🔄 لعب من جديد</button></div></div>
+<script>
+const positions=[
+ {name:"GK",ar:"حارس",slot:"gk"},{name:"RB",ar:"ظهير أيمن",slot:"rb"},{name:"LB",ar:"ظهير أيسر",slot:"lb"},
+ {name:"CB",ar:"قلب دفاع",slot:"cb1"},{name:"CB",ar:"قلب دفاع",slot:"cb2"},{name:"CDM",ar:"وسط دفاعي",slot:"cm1"},
+ {name:"RW",ar:"جناح أيمن",slot:"rw"},{name:"CM",ar:"وسط",slot:"cm2"},{name:"ST",ar:"مهاجم",slot:"st"},
+ {name:"CAM",ar:"وسط هجومي",slot:"cm3"},{name:"LW",ar:"جناح أيسر",slot:"lw"}
+];
+// اللاعب: الاسم، التقييم، المركز، الدولة/العلم، صورة
+const pools={
+1:[["مانويل نوير",90,"GK","🇩🇪","Manuel_Neuer_2019.jpg"],["إيكر كاسياس",91,"GK","🇪🇸","Iker_Casillas_2012.jpg"],["أليسون",89,"GK","🇧🇷","Alisson_Becker.jpg"],["تيبو كورتوا",90,"GK","🇧🇪","Thibaut_Courtois_2018.jpg"]],
+2:[["كافو",92,"RB","🇧🇷","Cafu_2019.jpg"],["داني ألفيس",90,"RB","🇧🇷","Dani_Alves_2019.jpg"],["أشرف حكيمي",88,"RB","🇲🇦","Achraf_Hakimi_2022.jpg"],["غاري نيفيل",87,"RB","🏴","Gary_Neville.jpg"]],
+3:[["روبرتو كارلوس",92,"LB","🇧🇷","Roberto_Carlos_2012.jpg"],["باولو مالديني",94,"LB","🇮🇹","Paolo_Maldini.jpg"],["جيرارد بيكيه",88,"CB","🇪🇸","Gerard_Pique_2017.jpg"],["مارسيلو",89,"LB","🇧🇷","Marcelo_2018.jpg"]],
+4:[["سيرجيو راموس",92,"CB","🇪🇸","Sergio_Ramos_2016.jpg"],["رونالد كومان",91,"CB","🇳🇱","Ronald_Koeman_2014.jpg"],["فرانز بيكنباور",96,"CB","🇩🇪","Franz_Beckenbauer_2019.jpg"],["فيرجيل فان دايك",90,"CB","🇳🇱","Virgil_van_Dijk_2018.jpg"]],
+5:[["كارليس بويول",91,"CB","🇪🇸","Carles_Puyol_2012.jpg"],["فابيو كانافارو",92,"CB","🇮🇹","Fabio_Cannavaro_2017.jpg"],["ريو فرديناند",90,"CB","🏴","Rio_Ferdinand_2015.jpg"],["جون تيري",90,"CB","🏴","John_Terry_2012.jpg"]],
+6:[["تشافي",94,"CM","🇪🇸","Xavi_Hernandez_2011.jpg"],["أندريا بيرلو",93,"CM","🇮🇹","Andrea_Pirlo_2012.jpg"],["تشابي ألونسو",91,"CDM","🇪🇸","Xabi_Alonso_2014.jpg"],["بول بوغبا",88,"CM","🇫🇷","Paul_Pogba_2018.jpg"]],
+7:[["كريستيانو رونالدو",97,"RW","🇵🇹","Cristiano_Ronaldo_2018.jpg"],["ديفيد بيكهام",93,"RM","🏴","David_Beckham_2019.jpg"],["لويس فيغو",91,"RW","🇵🇹","Luis_Figo_2017.jpg"],["سون هيونغ مين",89,"LW","🇰🇷","Son_Heung-min_2018.jpg"]],
+8:[["فرانك لامبارد",91,"CM","🏴","Frank_Lampard_2018.jpg"],["ستيفن جيرارد",92,"CM","🏴","Steven_Gerrard_2018.jpg"],["توني كروس",93,"CM","🇩🇪","Toni_Kroos_2018.jpg"],["كاكا",92,"CAM","🇧🇷","Kaka_2012.jpg"]],
+9:[["رونالدو نازاريو",96,"ST","🇧🇷","Ronaldo_2005.jpg"],["روبرت ليفاندوفسكي",92,"ST","🇵🇱","Robert_Lewandowski_2018.jpg"],["كريم بنزيما",92,"ST","🇫🇷","Karim_Benzema_2018.jpg"],["لويس سواريز",91,"ST","🇺🇾","Luis_Suarez_2018.jpg"]],
+10:[["ليونيل ميسي",98,"CAM","🇦🇷","Lionel_Messi_20180626.jpg"],["رونالدينيو",95,"CAM","🇧🇷","Ronaldinho_2019.jpg"],["زين الدين زيدان",97,"CAM","🇫🇷","Zinedine_Zidane_2015.jpg"],["نيمار",92,"LW","🇧🇷","Neymar_2018.jpg"]],
+11:[["محمد صلاح",92,"RW","🇪🇬","Mohamed_Salah_2018.jpg"],["روماريو",94,"ST","🇧🇷","Romario_2015.jpg"],["غاريث بيل",91,"RW","🏴","Gareth_Bale_2018.jpg"],["ديدييه دروغبا",92,"ST","🇨🇮","Didier_Drogba_2012.jpg"]]
+};
+// 50 أسئلة؛ كل سؤال مربوط برقم القميص واللاعب الصحيح
+const questions=[
+[1,"من الحارس الألماني المعروف بقدمه القوية وبقضائه سنوات طويلة مع بايرن ميونخ؟",["مانويل نوير","أوليفر كان","تير شتيغن","إيدرسون"],0],
+[1,"من الحارس الإسباني الذي رفع كأس العالم 2010 قائدًا لمنتخب بلاده؟",["دي خيا","إيكر كاسياس","بوفون","كورتوا"],1],
+[1,"أي حارس برازيلي لعب لليفربول واشتهر بتمريراته الطويلة؟",["أليسون","دوناروما","أوبلاك","نافاس"],0],
+[1,"من الحارس البلجيكي الذي تألق مع ريال مدريد؟",["كاسياس","نوير","تيبو كورتوا","أليسون"],2],
+[1,"من الحارس الإيطالي الأسطوري الذي لعب سنوات طويلة ليوفنتوس؟",["بوفون","كاسياس","نوير","فان دير سار"],0],
+[2,"من الظهير البرازيلي الذي فاز بكأس العالم مرتين وكان قائدًا؟",["داني ألفيس","كافو","مارسيلو","مايكون"],1],
+[2,"أي ظهير برازيلي حقق ألقابًا كثيرة مع برشلونة؟",["داني ألفيس","روبرتو كارلوس","كافو","مارسيلو"],0],
+[2,"من الظهير المغربي السريع الذي لعب لباريس سان جيرمان؟",["حكيمي","مزراوي","كانسيلو","ووكر"],0],
+[2,"من قائد مانشستر يونايتد السابق الذي لعب ظهيرًا أيمن؟",["أشلي كول","غاري نيفيل","كافو","أرنولد"],1],
+[2,"أي لاعب برازيلي اشتهر بالانطلاقات من الجهة اليمنى مع إنتر؟",["مايكون","داني ألفيس","مارسيلو","أليكس ساندرو"],0],
+[3,"من الظهير البرازيلي صاحب التسديدات الصاروخية والركلات الحرة؟",["مارسيلو","روبرتو كارلوس","كافو","داني ألفيس"],1],
+[3,"من أسطورة ميلان الإيطالي الذي اشتهر بالدفاع واللعب ظهيرًا وقلب دفاع؟",["نيستا","مالديني","كانافارو","باريزي"],1],
+[3,"من الظهير البرازيلي الذي تألق مع ريال مدريد وفاز بدوري الأبطال عدة مرات؟",["مارسيلو","روبرتو كارلوس","دانيلو","أليكس ساندرو"],0],
+[3,"من المدافع الإسباني الذي لعب لبرشلونة وفاز بكأس العالم؟",["بيكيه","راموس","بويول","ألبا"],0],
+[3,"من الظهير الإنجليزي الذي لعب لتشيلسي وأرسنال؟",["أشلي كول","غاري نيفيل","لوك شو","ريز جيمس"],0],
+[4,"من المدافع الإسباني الذي اشتهر بالأهداف الحاسمة مع ريال مدريد؟",["بويول","راموس","بيكيه","ألبا"],1],
+[4,"من المدافع الهولندي الذي كان هدافًا بارعًا ونجمًا مع برشلونة؟",["كومان","فان دايك","دي ليخت","ستان"],0],
+[4,"من أسطورة ألمانيا الذي قاد بلاده لاعبًا ومدربًا للفوز بكأس العالم؟",["ماتيوس","بيكنباور","كلوزه","مولر"],1],
+[4,"من قلب الدفاع الهولندي وقائد ليفربول؟",["دي ليخت","فان دايك","دي فري","أكي"],1],
+[4,"من المدافع الإيطالي الذي فاز بالكرة الذهبية عام 2006؟",["نيستا","مالديني","كانافارو","كيليني"],2],
+[5,"من قائد برشلونة السابق الملقب بقلب الأسد؟",["بويول","بيكيه","راموس","بوسكيتس"],0],
+[5,"من المدافع الإيطالي الذي فاز بكأس العالم 2006 والكرة الذهبية؟",["كانافارو","نيستا","باريزي","مالديني"],0],
+[5,"من قلب الدفاع الإنجليزي الذي لعب لمانشستر يونايتد وكان قائدًا؟",["جون تيري","ريو فرديناند","جون ستونز","كاراغر"],1],
+[5,"من قائد تشيلسي السابق وأحد أشهر المدافعين الإنجليز؟",["ريو فرديناند","جون تيري","سول كامبل","توني آدامز"],1],
+[5,"من المدافع الألماني الذي قاد بايرن ميونخ وكان قائد منتخب ألمانيا؟",["هوملز","ماتس هوملز","فرانز بيكنباور","جيروم بواتينغ"],2],
+[6,"من لاعب الوسط الإسباني الملقب بالمايسترو وصانع لعب برشلونة؟",["تشافي","إنييستا","بوسكيتس","فابريغاس"],0],
+[6,"من لاعب الوسط الإيطالي صاحب التمريرات الدقيقة والركلات الحرة؟",["غاتوزو","بيرلو","توتي","ماركيزيو"],1],
+[6,"من لاعب الوسط الإسباني الذي فاز بدوري الأبطال مع ريال مدريد وبايرن؟",["تشابي ألونسو","تشافي","إنييستا","سيلفا"],0],
+[6,"من لاعب الوسط الفرنسي القوي الذي لعب ليوفنتوس ومانشستر يونايتد؟",["كانتي","بوغبا","ماتوييدي","فييرا"],1],
+[6,"من لاعب الوسط الدفاعي الإسباني الذي تألق مع برشلونة؟",["بوسكيتس","تشافي","إنييستا","رودري"],0],
+[7,"من النجم البرتغالي الذي ارتدى الرقم 7 مع مانشستر يونايتد وريال مدريد؟",["لويس فيغو","كريستيانو رونالدو","برونو فيرنانديز","دي ماريا"],1],
+[7,"من لاعب إنجلترا الشهير بتمريراته العرضية والكرات الثابتة؟",["بيكهام","جيرارد","لامبارد","سكولز"],0],
+[7,"من النجم البرتغالي الذي فاز بالكرة الذهبية ولعب لبرشلونة وريال مدريد؟",["كريستيانو","لويس فيغو","ديكو","ناني"],1],
+[7,"من المهاجم الكوري الذي تألق مع توتنهام؟",["سون هيونغ مين","بارك جي سونغ","كاغاوا","ميتروفيتش"],0],
+[7,"من الجناح الفرنسي الذي لعب لبايرن ميونخ وارتدى الرقم 7؟",["ريبيري","روبين","كومان","غنابري"],0],
+[8,"من هداف تشيلسي التاريخي الذي لعب في خط الوسط؟",["لامبارد","تيري","دروغبا","هازارد"],0],
+[8,"من قائد ليفربول السابق المعروف بتسديداته القوية؟",["جيرارد","لامبارد","سكولز","كاريك"],0],
+[8,"من لاعب الوسط الألماني صاحب التمريرات الدقيقة الذي اعتزل بعد ريال مدريد؟",["أوزيل","توني كروس","شفاينشتايغر","خضيرة"],1],
+[8,"من النجم البرازيلي الفائز بالكرة الذهبية 2007؟",["كاكا","رونالدينيو","ريفالدو","روماريو"],0],
+[8,"من لاعب الوسط الإسباني الذي لعب لبرشلونة وفاز بكأس العالم؟",["إنييستا","تشافي","بوسكيتس","فابريغاس"],0],
+[9,"من المهاجم البرازيلي الأسطوري الملقب بالظاهرة؟",["روماريو","رونالدو نازاريو","ريفالدو","أدريانو"],1],
+[9,"من المهاجم البولندي الذي سجل أهدافًا كثيرة مع بايرن وبرشلونة؟",["هالاند","ليفاندوفسكي","سواريز","بنزيما"],1],
+[9,"من الفرنسي الذي فاز بالكرة الذهبية 2022 ولعب لريال مدريد؟",["مبابي","بنزيما","جيرو","غريزمان"],1],
+[9,"من المهاجم الأوروغوياني الذي لعب لبرشلونة وليفربول؟",["كافاني","سواريز","فورلان","داروين نونيز"],1],
+[9,"من المهاجم الإيطالي الذي لعب لميلان وإنتر وكان هدافًا بارزًا؟",["إنزاغي","فييري","توني","دي ناتالي"],1],
+[10,"من الأرجنتيني الفائز بالكرة الذهبية عدة مرات وأسطورة برشلونة؟",["ميسي","دي ماريا","أغويرو","باتيستوتا"],0],
+[10,"من البرازيلي الملقب بالساحر والذي فاز بالكرة الذهبية 2005؟",["كاكا","رونالدينيو","ريفالدو","نيمار"],1],
+[10,"من الفرنسي الذي سجل هدفين في نهائي كأس العالم 1998؟",["هنري","زيدان","بلان","تريزيغيه"],1],
+[10,"من النجم البرازيلي الذي لعب لبرشلونة وباريس سان جيرمان؟",["نيمار","رونالدينيو","كاكا","فينيسيوس"],0],
+[10,"من أسطورة الأرجنتين الذي قاد نابولي للفوز بالدوري الإيطالي؟",["ميسي","مارادونا","ريكيلمي","دي ماريا"],1],
+[11,"من النجم المصري الذي لعب لليفربول ويُعرف بالملك المصري؟",["محمد صلاح","تريزيجيه","مرموش","أبو تريكة"],0]
+];
+let team=Array(11).fill(null),spinning=false,rotation=0,current=null,used=new Set(),pendingPlayer=null,selectedNumber=null;
+function rand(a){return a[Math.floor(Math.random()*a.length)]}
+function buildPositions(){const box=document.getElementById("positions");positions.forEach((p,i)=>{const d=document.createElement("div");d.className="pos";d.id="p"+i;d.innerHTML=`<strong>${i+1}</strong>${p.ar}`;box.appendChild(d)})}
+function buildTeam(){const t=document.getElementById("team");positions.forEach((p,i)=>{const d=document.createElement("div");d.className="slot "+p.slot;d.id="slot"+i;d.innerHTML=`<div class="empty">${i+1}</div><div class="slotname">${p.ar}</div>`;t.appendChild(d)})}
+function spin(){
+ if(spinning||team.every(Boolean))return;
+ const available=[];for(let i=0;i<11;i++)if(!used.has(i))available.push(i);
+ if(!available.length)return;
+ spinning=true;document.getElementById("spin").disabled=true;
+ const index=rand(available);selectedNumber=index+1;
+ const step=360/11,sectorCenter=index*step+step/2;
+ const currentMod=((rotation%360)+360)%360;
+ const desired=((360-sectorCenter)%360);
+ const delta=((desired-currentMod)+360)%360;
+ rotation+=1800+delta;
+ document.getElementById("wheel").style.transform=`rotate(${rotation}deg)`;
+ setTimeout(()=>{spinning=false;used.add(index);document.getElementById("p"+index).classList.add("done");ask(index)},5350)
+}
+function ask(index){
+ current=index;selectedNumber=index+1;
+ const possible=questions.filter(q=>q[0]===selectedNumber);
+ const q=rand(possible);
+ document.getElementById("qnum").textContent=`رقم القميص ${selectedNumber} • ${positions[index].ar}`;
+ document.getElementById("qtext").textContent=q[1];
+ const answers=document.getElementById("answers");answers.innerHTML="";
+ const result=document.getElementById("result");result.className="result";result.style.display="none";document.getElementById("continue").style.display="none";
+ q[2].forEach((a,i)=>{const b=document.createElement("button");b.className="answer";b.textContent=a;b.onclick=()=>answer(i,q[3],q);answers.appendChild(b)});
+ document.getElementById("question").classList.add("show")
+}
+function answer(choice,correct,q){
+ document.querySelectorAll(".answer").forEach(b=>b.disabled=true);
+ const ok=choice===correct;const r=document.getElementById("result");
+ if(ok){
+  r.style.display="block";r.className="result ok";r.textContent="إجابة صحيحة! اختار لاعبًا لعب بالرقم "+selectedNumber+" عشان تضيفه لتشكيلتك.";
+  showPicker(current,selectedNumber,false);
+ }else{
+  // عند الخطأ: لاعب عشوائي من نفس المركز/خط اللعب، وليس لاعبًا من مركز مختلف.
+  const allPlayers=Object.values(pools).flat();
+  const slotPos=positions[current].name;
+  let list=allPlayers.filter(p=>p[2]===slotPos);
+  if(!list.length){
+    const family=(pos)=>["GK"].includes(pos)?"GK":
+      ["RB","LB","CB"].includes(pos)?"DEF":
+      ["CDM","CM","CAM","RM"].includes(pos)?"MID":"ATT";
+    list=allPlayers.filter(p=>family(p[2])===family(slotPos));
+  }
+  const player=rand(list);
+  team[current]=player;render(current,player);
+  r.style.display="block";r.className="result bad";r.textContent=`إجابة غلط! اللاعب العشوائي: ${player[0]}.`;
+  document.getElementById("continue").style.display="block";update()
+ }
+}
+function positionCompatible(playerPos,slotPos){
+ if(playerPos===slotPos)return true;
+ if(["RB","LB","CB","CDM","CM","CAM","RM","RW","LW","ST"].includes(playerPos)&&["RB","LB","CB","CDM","CM","CAM","RM","RW","LW","ST"].includes(slotPos))return true;
+ return false
+}
+function showPicker(index,number,isRandom){
+ const grid=document.getElementById("playerGrid");grid.innerHTML="";
+ const players=pools[number]||[];
+ document.getElementById("pickTitle").textContent=isRandom?"لاعب عشوائي":"اختار لاعبك";
+ document.getElementById("pickSub").textContent=`رقم القميص ${number}`;
+ document.getElementById("randomContinue").style.display="none";
+ players.forEach(p=>{
+  const card=document.createElement("button");card.className="pick-card";
+  card.innerHTML=`<img src="${imgUrl(p[4])}" alt="${p[0]}" onerror="imageFallback(this,'${p[0].replace(/'/g,"")}')"><b>${p[0]}</b><small>${p[2]} · ${p[3]}</small><span class="pick-rating">${p[1]} OVR</span>`;
+  card.onclick=()=>{team[index]=p;render(index,p);document.getElementById("picker").classList.remove("show");document.getElementById("question").classList.remove("show");update();document.getElementById("spin").disabled=false};
+  grid.appendChild(card)
+ });
+ document.getElementById("picker").classList.add("show");
+}
+function imgUrl(file){return "https://commons.wikimedia.org/wiki/Special:FilePath/"+encodeURIComponent(file)}
+function imageFallback(img,name){
+ img.style.display="none";const box=img.parentElement;if(!box.querySelector(".player-fallback")){const f=document.createElement("div");f.className="player-fallback";f.textContent=(name||"?").slice(0,1);box.insertBefore(f,img.nextSibling)}
+}
+function render(i,p){
+ const s=document.getElementById("slot"+i);
+ const file=p[4];s.innerHTML=`<div class="card"><span class="rate">${p[1]}</span><span class="position-mini">${p[2]}</span><span class="flag">${p[3]}</span><img src="${imgUrl(file)}" alt="${p[0]}" onerror="imageFallback(this,'${p[0].replace(/'/g,"")}')"></div><div class="card-name">${p[0]}</div><div class="slotname">${positions[i].ar}</div>`;
+}
+function update(){
+ const n=team.filter(Boolean).length;document.getElementById("done").textContent=n;
+ const avg=n?Math.round(team.filter(Boolean).reduce((a,p)=>a+p[1],0)/n):0;document.getElementById("overall").textContent=avg;
+ if(n===11){setTimeout(()=>{document.getElementById("finishText").innerHTML=`تقييم تشكيلتك <b>${avg}</b> ⭐<br>أحسنت! كملت فريق السومبيرو.`;document.getElementById("finish").classList.add("show");confetti()},400)}
+}
+function confetti(){for(let i=0;i<100;i++){const c=document.createElement("i");c.className="conf";c.style.left=Math.random()*100+"vw";c.style.background=["#f5c85b","#fff","#48df83","#4ca6ff","#ff5964"][Math.floor(Math.random()*5)];c.style.animationDelay=Math.random()*1.5+"s";document.body.appendChild(c);setTimeout(()=>c.remove(),4000)}}
+document.getElementById("spin").onclick=spin;
+document.getElementById("continue").onclick=()=>{document.getElementById("question").classList.remove("show");document.getElementById("spin").disabled=false};
+document.getElementById("randomContinue").onclick=()=>{document.getElementById("picker").classList.remove("show");document.getElementById("question").classList.remove("show");document.getElementById("spin").disabled=false};
+buildPositions();buildTeam();
+</script>
+</body>
+</html>
