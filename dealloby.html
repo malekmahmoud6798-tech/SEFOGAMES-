@@ -1,0 +1,781 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08090d">
+<title>DEAL OR NO DEAL | NEW EDITION</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --gold:#ffd36a;
+  --gold2:#eaa52b;
+  --bg:#07080d;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  color:white;
+  font-family:Cairo,sans-serif;
+  background:#07080d;
+  overflow-x:hidden;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+
+/* خلفية اللعبة */
+#app{
+  min-height:100vh;
+  background:
+    linear-gradient(180deg,rgba(3,5,12,.48),rgba(3,5,12,.92)),
+    url('https://i.postimg.cc/kqNNrXdS/AI-Football-Dream-Mbappe-Card-Reveal.png')
+    center/cover fixed no-repeat;
+}
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px clamp(14px,5vw,60px);
+  background:#05060bc9;
+  border-bottom:1px solid #ffd36a30;
+}
+.brand{
+  font-family:Orbitron,sans-serif;
+  font-size:clamp(14px,3vw,24px);
+  font-weight:900;
+  color:var(--gold);
+}
+.brand span{color:white}
+.edition{
+  font:10px Orbitron,sans-serif;
+  color:var(--gold);
+  border:1px solid #ffd36a66;
+  border-radius:20px;
+  padding:8px 12px;
+}
+main{
+  max-width:900px;
+  margin:auto;
+  padding:40px 18px;
+  text-align:center;
+}
+.tag{
+  display:inline-block;
+  color:var(--gold);
+  border:1px solid #ffd36a44;
+  background:#08090ca8;
+  border-radius:30px;
+  padding:7px 15px;
+  font-size:12px;
+}
+h1{
+  font:900 clamp(34px,8vw,76px)/1.2 Orbitron,sans-serif;
+  margin:20px 0 10px;
+  text-shadow:0 5px 30px #000;
+}
+h1 span{
+  display:block;
+  background:linear-gradient(90deg,#fff3bd,#ffbd37,#fff0a5);
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+}
+.subtitle{color:#ddd;margin:15px 0 28px}
+.cases{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:clamp(8px,2.5vw,22px);
+  margin:25px 0 35px;
+}
+.case{
+  width:clamp(58px,12vw,105px);
+  aspect-ratio:.82;
+  display:grid;
+  place-items:center;
+  position:relative;
+  border:2px solid #ffe7a0;
+  border-radius:12px;
+  background:linear-gradient(135deg,#fff0ae,#bd7a14 45%,#704006 65%,#f8c34e);
+  box-shadow:0 12px 28px #0009,0 0 18px #ffbb3020;
+  animation:float 2s ease-in-out infinite;
+}
+.case:nth-child(2){animation-delay:.2s}
+.case:nth-child(3){animation-delay:.4s}
+.case:nth-child(4){animation-delay:.6s}
+.case:nth-child(5){animation-delay:.8s}
+.case:before{
+  content:"";
+  position:absolute;
+  inset:7px;
+  border:1px solid #fff0b8aa;
+  border-radius:7px;
+}
+.case span{
+  font:900 clamp(17px,4vw,30px) Orbitron,sans-serif;
+  color:#fff5cf;
+  text-shadow:0 3px 5px #6a3900;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0) rotate(-2deg)}
+  50%{transform:translateY(-12px) rotate(2deg)}
+}
+.buttons{
+  max-width:440px;
+  margin:auto;
+  display:grid;
+  gap:12px;
+}
+.btn{
+  border-radius:13px;
+  min-height:59px;
+  border:1px solid #ffffff20;
+  font-weight:900;
+  font-size:15px;
+  transition:.2s;
+}
+.btn:hover{transform:translateY(-3px);filter:brightness(1.1)}
+.create{
+  color:#211601;
+  background:linear-gradient(100deg,#ffedaf,#ffc03d,#e89a1c);
+}
+.join{color:white;background:linear-gradient(100deg,#202637,#0d101a)}
+.ai{color:white;background:linear-gradient(100deg,#54228b,#8b31ae,#391b64)}
+footer{
+  text-align:center;
+  color:#ffffff70;
+  font:10px Orbitron,sans-serif;
+  padding:25px 10px;
+}
+
+/* النوافذ */
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:#000c;
+  backdrop-filter:blur(10px);
+}
+.modal.show{display:flex}
+.modal-box{
+  width:min(410px,100%);
+  padding:25px 20px;
+  text-align:center;
+  border:1px solid #ffd36a55;
+  border-radius:20px;
+  background:#10121b;
+  box-shadow:0 20px 70px #000b;
+}
+.modal-box h2{color:var(--gold);margin:5px 0}
+.modal-box p{color:#bbb;font-size:13px}
+.field{text-align:right;margin:13px 0}
+.field label{display:block;margin-bottom:6px;font-size:13px}
+.field input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #393d4b;
+  background:#080a11;
+  color:white;
+  outline:none;
+}
+.field input:focus{border-color:var(--gold)}
+.modal-actions{display:flex;gap:10px;margin-top:18px}
+.modal-actions button{
+  flex:1;
+  padding:11px 5px;
+  border:0;
+  border-radius:10px;
+  font-weight:900;
+}
+.confirm{background:linear-gradient(100deg,#ffedaf,#ffc03d);color:#211601}
+.cancel{background:#292c38;color:white}
+.notice{font-size:12px;color:#ff9797;margin-top:10px;line-height:1.7}
+.room-result{
+  display:none;
+  margin-top:15px;
+  padding:15px;
+  border:1px dashed #ffd36a77;
+  border-radius:12px;
+}
+.room-result strong{
+  display:block;
+  font:900 28px Orbitron,sans-serif;
+  color:var(--gold);
+  direction:ltr;
+  margin:10px;
+}
+.copy{background:#25202b;color:var(--gold);padding:9px;border:1px solid #ffd36a66;border-radius:8px}
+
+/* =====================================
+   شاشة التحميل الاحترافية
+===================================== */
+#loader{
+  position:fixed;
+  z-index:1000;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:#05060b;
+  opacity:1;
+  visibility:visible;
+  transition:opacity .8s,visibility .8s;
+}
+#loader.done{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.loader-bg{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg,#03040b66,#03040bf2),
+    url('https://i.postimg.cc/kqNNrXdS/AI-Football-Dream-Mbappe-Card-Reveal.png')
+    center/cover no-repeat;
+  transform:scale(1.06);
+  animation:bgZoom 9s ease-in-out infinite alternate;
+}
+@keyframes bgZoom{
+  from{transform:scale(1.02)}
+  to{transform:scale(1.13)}
+}
+.loader-glow{
+  position:absolute;
+  width:75vw;
+  height:75vw;
+  max-width:650px;
+  max-height:650px;
+  border-radius:50%;
+  background:#ffbd3610;
+  filter:blur(70px);
+  animation:glowPulse 3s infinite alternate;
+}
+@keyframes glowPulse{
+  from{opacity:.4;transform:scale(.8)}
+  to{opacity:1;transform:scale(1.1)}
+}
+.loader-content{
+  position:relative;
+  z-index:2;
+  width:min(460px,90%);
+  text-align:center;
+  animation:appear .8s ease both;
+}
+@keyframes appear{
+  from{opacity:0;transform:translateY(22px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.loader-label{
+  color:var(--gold);
+  font:700 10px Orbitron,sans-serif;
+  letter-spacing:5px;
+  margin-bottom:14px;
+}
+.loader-logo{
+  font:900 clamp(29px,8vw,55px)/1.2 Orbitron,sans-serif;
+  color:white;
+  text-shadow:0 0 35px #ffc34a55;
+}
+.loader-logo span{
+  display:block;
+  color:var(--gold);
+  margin-top:5px;
+}
+.loader-line{
+  width:70px;
+  height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:17px auto;
+  animation:linePulse 1.5s infinite;
+}
+@keyframes linePulse{
+  50%{width:140px;opacity:.5}
+}
+
+/* الشنطة المتحركة */
+.loader-case-wrap{
+  width:150px;
+  height:150px;
+  position:relative;
+  margin:5px auto 14px;
+  display:grid;
+  place-items:center;
+}
+.case-ring{
+  position:absolute;
+  inset:5px;
+  border:1px solid #ffd36a45;
+  border-radius:50%;
+  animation:spin 7s linear infinite;
+}
+.case-ring:before,.case-ring:after{
+  content:"";
+  position:absolute;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 15px var(--gold);
+}
+.case-ring:before{top:15px;left:24px}
+.case-ring:after{bottom:13px;right:25px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.big-case{
+  position:relative;
+  width:92px;
+  height:76px;
+  border-radius:9px;
+  border:2px solid #ffe4a0;
+  background:linear-gradient(120deg,#fff0ac,#d99b26 35%,#75420a 65%,#f5bf47);
+  box-shadow:0 0 28px #ffbc3940,inset 0 0 0 5px #6e420b55;
+  animation:caseBob 1.8s ease-in-out infinite;
+}
+.big-case:before{
+  content:"";
+  position:absolute;
+  width:34px;
+  height:17px;
+  top:-19px;
+  left:27px;
+  border:4px solid #f7d77e;
+  border-bottom:0;
+  border-radius:8px 8px 0 0;
+}
+.big-case:after{
+  content:"★";
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:#fff0bd;
+  font-size:34px;
+  text-shadow:0 0 12px #fff0bd;
+}
+@keyframes caseBob{
+  0%,100%{transform:translateY(0) rotate(-3deg)}
+  50%{transform:translateY(-9px) rotate(3deg)}
+}
+.loader-status{
+  font:700 11px Orbitron,sans-serif;
+  letter-spacing:2px;
+  color:#fff;
+  margin:12px 0 18px;
+  animation:statusPulse 1.2s infinite;
+}
+@keyframes statusPulse{50%{opacity:.55}}
+.progress-outer{
+  position:relative;
+  width:100%;
+  height:8px;
+  padding:1px;
+  border:1px solid #ffd36a80;
+  border-radius:20px;
+  background:#ffffff12;
+  overflow:hidden;
+  box-shadow:0 0 18px #ffbd3612;
+}
+#progress{
+  width:0%;
+  height:100%;
+  border-radius:20px;
+  background:linear-gradient(90deg,#a96a0c,#ffdf82,#fff2c0,#e6a324);
+  box-shadow:0 0 15px #ffca53;
+  transition:width .15s linear;
+}
+.loader-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  direction:ltr;
+  margin-top:11px;
+  font:700 11px Orbitron,sans-serif;
+}
+#percent{color:var(--gold);font-size:17px}
+#loadStatus{color:#aaa}
+.loader-note{
+  margin-top:24px;
+  color:#b9bac3;
+  font-size:11px;
+  line-height:1.9;
+}
+.loader-note strong{color:var(--gold)}
+.loader-corners{
+  position:absolute;
+  inset:18px;
+  pointer-events:none;
+  opacity:.5;
+}
+.corner{
+  position:absolute;
+  width:24px;height:24px;
+  border-color:#ffd36a;
+  border-style:solid;
+}
+.tl{top:0;left:0;border-width:1px 0 0 1px}
+.tr{top:0;right:0;border-width:1px 1px 0 0}
+.bl{bottom:0;left:0;border-width:0 0 1px 1px}
+.br{bottom:0;right:0;border-width:0 1px 1px 0}
+
+@media(max-width:480px){
+  header{padding:15px 12px}
+  main{padding-top:32px}
+  .loader-case-wrap{width:130px;height:130px}
+  .big-case{transform:scale(.9)}
+  .loader-corners{inset:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- شاشة التحميل تظهر أول ما الصفحة تفتح -->
+<div id="loader">
+  <div class="loader-bg"></div>
+  <div class="loader-glow"></div>
+  <div class="loader-corners">
+    <i class="corner tl"></i>
+    <i class="corner tr"></i>
+    <i class="corner bl"></i>
+    <i class="corner br"></i>
+  </div>
+
+  <div class="loader-content">
+    <div class="loader-label">L&amp;S GAMES PRESENTS</div>
+
+    <div class="loader-logo">
+      DEAL OR
+      <span>NO DEAL</span>
+    </div>
+
+    <div class="loader-line"></div>
+
+    <div class="loader-case-wrap">
+      <div class="case-ring"></div>
+      <div class="big-case"></div>
+    </div>
+
+    <div class="loader-status" id="loaderText">INITIALIZING GAME</div>
+
+    <div class="progress-outer">
+      <div id="progress"></div>
+    </div>
+
+    <div class="loader-bottom">
+      <span id="percent">0%</span>
+      <span id="loadStatus">STARTING</span>
+    </div>
+
+    <div class="loader-note">
+      جاري تجهيز التجربة الخاصة بك<br>
+      <strong>PLEASE WAIT</strong>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <header>
+    <div class="brand">DEAL <span>OR</span> NO DEAL</div>
+    <div class="edition">NEW EDITION</div>
+  </header>
+
+  <main>
+    <div class="tag">✦ THE ULTIMATE DEAL EXPERIENCE ✦</div>
+    <h1>DEAL OR <span>NO DEAL</span></h1>
+    <p class="subtitle">افتح الشنطة، واجه الحظ، وخد قرارك!</p>
+
+    <div class="cases">
+      <div class="case"><span>7</span></div>
+      <div class="case"><span>13</span></div>
+      <div class="case"><span>21</span></div>
+      <div class="case"><span>9</span></div>
+      <div class="case"><span>1</span></div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn create" onclick="openModal('createModal')">
+        💼 إنشاء غرفة جديدة
+      </button>
+      <button class="btn join" onclick="openModal('joinModal')">
+        🔑 دخول غرفة بالكود
+      </button>
+      <button class="btn ai" onclick="startAI()">
+        🤖 اللعب ضد الذكاء الاصطناعي
+      </button>
+    </div>
+  </main>
+
+  <footer>© L&amp;S GAMES · NEW EDITION</footer>
+</div>
+
+<div class="modal" id="createModal">
+  <div class="modal-box">
+    <h2>💼 إنشاء غرفة</h2>
+    <p>اكتب اسمك لتجهيز الغرفة.</p>
+    <div class="field">
+      <label for="createName">اسم اللاعب</label>
+      <input id="createName" maxlength="20" placeholder="اكتب اسمك">
+    </div>
+    <div class="modal-actions">
+      <button class="confirm" onclick="createRoom()">إنشاء</button>
+      <button class="cancel" onclick="closeModal('createModal')">إلغاء</button>
+    </div>
+    <div class="notice" id="createNotice"></div>
+    <div class="room-result" id="roomResult">
+      كود الغرفة التجريبي
+      <strong id="roomCodeDisplay">000000</strong>
+      <button class="copy" onclick="copyCode()">نسخ الكود</button>
+      <div class="notice" id="roomNotice"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="joinModal">
+  <div class="modal-box">
+    <h2>🔑 دخول غرفة</h2>
+    <p>اكتب اسمك وكود الغرفة.</p>
+    <div class="field">
+      <label for="joinName">اسم اللاعب</label>
+      <input id="joinName" maxlength="20" placeholder="اسمك">
+    </div>
+    <div class="field">
+      <label for="joinCode">كود الغرفة</label>
+      <input id="joinCode" maxlength="6" inputmode="numeric" placeholder="123456">
+    </div>
+    <div class="modal-actions">
+      <button class="confirm" onclick="joinRoom()">دخول</button>
+      <button class="cancel" onclick="closeModal('joinModal')">إلغاء</button>
+    </div>
+    <div class="notice" id="joinNotice"></div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+let roomCode = "";
+let pendingUrl = "";
+let loaderInterval = null;
+
+/*
+  شاشة التحميل الرئيسية:
+  تنتظر تحميل صورة الخلفية فعليًا أو انتهاء المهلة،
+  ثم تعرض حركة تجهيز واجهة اللعبة.
+*/
+function preloadBackground() {
+  return new Promise(resolve => {
+    const image = new Image();
+    let finished = false;
+
+    function done() {
+      if (finished) return;
+      finished = true;
+      resolve();
+    }
+
+    image.onload = done;
+    image.onerror = done;
+    image.src =
+      "https://i.postimg.cc/kqNNrXdS/AI-Football-Dream-Mbappe-Card-Reveal.png";
+
+    if (image.complete) done();
+
+    // حتى لا تظل الشاشة عالقة إذا كان اتصال الإنترنت بطيئًا
+    setTimeout(done, 5000);
+  });
+}
+
+function runInitialLoader() {
+  const bar = $("progress");
+  const percent = $("percent");
+  const status = $("loadStatus");
+  const title = $("loaderText");
+
+  const stages = [
+    [12, "INITIALIZING GAME", "STARTING"],
+    [30, "LOADING BACKGROUND", "LOADING ASSETS"],
+    [52, "PREPARING INTERFACE", "PREPARING"],
+    [74, "SETTING UP GAME", "PROCESSING"],
+    [90, "ALMOST READY", "FINALIZING"]
+  ];
+
+  let value = 0;
+  let stageIndex = 0;
+
+  loaderInterval = setInterval(async () => {
+    const target = stages[Math.min(stageIndex, stages.length - 1)][0];
+    value = Math.min(target, value + Math.max(.5, Math.random() * 2.5));
+
+    bar.style.width = value + "%";
+    percent.textContent = Math.floor(value) + "%";
+
+    const stage = stages[Math.min(stageIndex, stages.length - 1)];
+    title.textContent = stage[1];
+    status.textContent = stage[2];
+
+    if (value >= target && stageIndex < stages.length - 1) {
+      stageIndex++;
+    }
+
+    if (value >= 90) {
+      clearInterval(loaderInterval);
+
+      // انتظر اكتمال محاولة تحميل صورة الخلفية
+      await preloadBackground();
+
+      bar.style.width = "100%";
+      percent.textContent = "100%";
+      title.textContent = "GAME READY";
+      status.textContent = "COMPLETE";
+
+      setTimeout(() => {
+        $("loader").classList.add("done");
+      }, 450);
+    }
+  }, 100);
+}
+
+window.addEventListener("load", runInitialLoader);
+
+/* النوافذ */
+function openModal(id) {
+  $(id).classList.add("show");
+}
+function closeModal(id) {
+  $(id).classList.remove("show");
+}
+
+document.querySelectorAll(".modal").forEach(modal => {
+  modal.addEventListener("click", event => {
+    if (event.target === modal) modal.classList.remove("show");
+  });
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    document.querySelectorAll(".modal").forEach(m => m.classList.remove("show"));
+  }
+});
+
+function cleanName(name) {
+  return name.trim().replace(/[<>]/g, "").slice(0, 20);
+}
+
+function createRoom() {
+  const name = cleanName($("createName").value);
+  $("createNotice").textContent = "";
+  $("roomNotice").textContent = "";
+
+  if (!name) {
+    $("createNotice").textContent = "اكتب اسمك الأول.";
+    return;
+  }
+
+  roomCode = String(Math.floor(100000 + Math.random() * 900000));
+
+  sessionStorage.setItem("dealPlayerName", name);
+  sessionStorage.setItem("dealRoomCode", roomCode);
+  sessionStorage.setItem("dealRoomRole", "host");
+
+  $("roomCodeDisplay").textContent = roomCode;
+  $("roomResult").style.display = "block";
+  $("roomNotice").textContent =
+    "الكود محلي تجريبي؛ اللعب بين جهازين يحتاج قاعدة بيانات مشتركة.";
+}
+
+async function copyCode() {
+  try {
+    await navigator.clipboard.writeText(roomCode);
+    $("roomNotice").textContent = "تم نسخ الكود!";
+  } catch {
+    $("roomNotice").textContent = "انسخ الكود يدويًا: " + roomCode;
+  }
+}
+
+function joinRoom() {
+  const name = cleanName($("joinName").value);
+  const code = $("joinCode").value.trim();
+
+  $("joinNotice").textContent = "";
+
+  if (!name) {
+    $("joinNotice").textContent = "اكتب اسمك.";
+    return;
+  }
+  if (!/^\d{6}$/.test(code)) {
+    $("joinNotice").textContent = "اكتب كودًا مكونًا من 6 أرقام.";
+    return;
+  }
+
+  sessionStorage.setItem("dealPlayerName", name);
+  sessionStorage.setItem("dealRoomCode", code);
+  sessionStorage.setItem("dealRoomRole", "guest");
+
+  pendingUrl =
+    "dealornodeal.html?room=" + encodeURIComponent(code) +
+    "&name=" + encodeURIComponent(name) +
+    "&role=guest";
+
+  closeModal("joinModal");
+  showTransitionLoader("PREPARING ROOM");
+}
+
+function startAI() {
+  const name = sessionStorage.getItem("dealPlayerName") || "Player";
+  pendingUrl =
+    "dealornodeal.html?mode=ai&name=" + encodeURIComponent(name);
+
+  showTransitionLoader("PREPARING AI MATCH");
+}
+
+function showTransitionLoader(message) {
+  $("loader").classList.remove("done");
+  $("loaderText").textContent = message;
+  $("loadStatus").textContent = "LOADING";
+  $("progress").style.width = "0%";
+  $("percent").textContent = "0%";
+
+  if (loaderInterval) clearInterval(loaderInterval);
+
+  let p = 0;
+  loaderInterval = setInterval(() => {
+    p += Math.random() * 5 + 1;
+    p = Math.min(p, 100);
+
+    $("progress").style.width = p + "%";
+    $("percent").textContent = Math.floor(p) + "%";
+
+    if (p >= 100) {
+      clearInterval(loaderInterval);
+      if (pendingUrl) window.location.href = pendingUrl;
+    }
+  }, 90);
+}
+
+$("joinCode").addEventListener("input", e => {
+  e.target.value = e.target.value.replace(/\D/g, "").slice(0, 6);
+});
+
+const savedName = sessionStorage.getItem("dealPlayerName");
+if (savedName) {
+  $("createName").value = savedName;
+  $("joinName").value = savedName;
+}
+</script>
+</body>
+</html>

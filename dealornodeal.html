@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEAL OR NO DEAL — Ultimate Draft</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#f7d66b;--blue:#37b9ff;--red:#ff536b;--bg:#050b12;--panel:#0c1722}
+*{box-sizing:border-box}body{margin:0;padding:14px;background:radial-gradient(ellipse at top,#142d3b 0,#071019 42%,#03070b 100%);color:#fff;font-family:Cairo,sans-serif;min-height:100vh}
+button{font:inherit;cursor:pointer;border:0}.top{max-width:1250px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border:1px solid #ffffff20;border-radius:18px;background:#07111bdd;box-shadow:0 12px 40px #0008}
+.brand{font-weight:900;font-size:clamp(18px,3vw,29px);color:var(--gold);text-shadow:0 0 20px #ffbd3d55}.mini{display:flex;gap:10px;align-items:center;font-weight:900}.pill{background:#101f2c;border:1px solid #ffffff20;border-radius:12px;padding:8px 13px}.blue{color:var(--blue)}.red{color:var(--red)}
+.turn{max-width:1250px;margin:13px auto;padding:12px;text-align:center;border-radius:13px;background:linear-gradient(100deg,#c28b24,#ffed9a,#c28b24);color:#111;font-weight:900;font-size:clamp(16px,2.5vw,22px);box-shadow:0 0 24px #f7d66b25}
+.main{max-width:1250px;margin:auto;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.4fr);gap:14px;align-items:start}
+.panel{background:linear-gradient(145deg,#10202b,#071019);border:1px solid #ffffff1c;border-radius:18px;padding:13px;box-shadow:0 14px 32px #0005;min-width:0}.panel h2{font-size:17px;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}
+.choices{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}.vs{font-family:Orbitron;color:var(--gold);font-weight:900}
+.player-card{position:relative;overflow:hidden;isolation:isolate;min-height:260px;border-radius:16px;padding:12px 9px 14px;text-align:center;cursor:pointer;border:2px solid #c4a34d;background:radial-gradient(ellipse at 50% 28%,#f8df8c 0,#b98a2b 24%,#1c2934 25%,#0a121b 72%);box-shadow:inset 0 0 0 3px #fff2,0 10px 24px #0007;transition:transform .25s,border-color .25s}
+.player-card:before{content:"";position:absolute;inset:5px;border:1px solid #f9df8b80;border-radius:12px;pointer-events:none;z-index:-1}.player-card:hover{transform:translateY(-5px) scale(1.015);border-color:#fff2a7}.player-card.disabled{opacity:.55;filter:grayscale(.7);pointer-events:none}
+.card-top{display:flex;justify-content:space-between;align-items:start;color:#fff0b2;font-weight:900;text-shadow:0 2px 5px #000}.ovr{font:900 28px Orbitron;color:#fff0a2;line-height:1.1}.position{font-size:12px}.portrait{height:145px;width:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 8px 7px #0009);margin:2px auto 0;display:block}.player-name{font-size:clamp(13px,1.5vw,17px);font-weight:900;color:#fff6ce;text-shadow:0 2px 6px #000;margin-top:0}.card-type{font-size:10px;letter-spacing:2px;color:#f8d978;font-family:Orbitron;margin-top:3px}.card-stats{display:flex;justify-content:center;gap:9px;font-size:10px;font-weight:900;color:#e6edf2;margin-top:6px}.mystery .portrait{font-size:80px;display:flex;align-items:center;justify-content:center;color:#ffdc75}.mystery{background:radial-gradient(ellipse at center,#36465a,#101923 65%);border-color:#5b91a7}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.btn{padding:10px 15px;border-radius:11px;font-weight:900;flex:1;min-width:100px;transition:.2s}.btn:active{transform:scale(.97)}.btn.gold{background:linear-gradient(100deg,#b57a16,#ffe991,#d4a53b);color:#14100a}.btn.dark{background:#142431;color:#fff;border:1px solid #ffffff24}.btn:disabled{opacity:.4;cursor:not-allowed}
+.timerline{height:6px;background:#ffffff15;border-radius:99px;overflow:hidden;margin-top:13px}.timerbar{height:100%;width:100%;background:linear-gradient(90deg,#37d8ff,#f7d66b);transition:width 1s linear}.hint{text-align:center;color:#a8bac7;font-size:12px;margin-top:7px}.transition-timer{display:none;margin:10px auto 0;text-align:center;color:#ffe58b;font-weight:900;font-size:18px;padding:8px;border:1px solid #f7d66b55;border-radius:10px;background:#f7d66b0d}.transition-timer.show{display:block}.transition-timer b{font:900 24px Orbitron;margin:0 5px}
+.pitch-wrap{border-radius:15px;overflow:hidden;border:1px solid #4fc98770;background:#062b20}.pitch{position:relative;min-height:520px;background:repeating-linear-gradient(0deg,#0c5639 0,#0c5639 48px,#0e613f 48px,#0e613f 96px);overflow:hidden;padding:20px 9px}
+.pitch:before{content:"";position:absolute;inset:10px;border:2px solid #c4f3ce8c;border-radius:2px;pointer-events:none}.pitch:after{content:"";position:absolute;top:50%;left:10px;right:10px;border-top:2px solid #c4f3ce8c;pointer-events:none}.center-circle{position:absolute;width:110px;height:110px;border:2px solid #c4f3ce8c;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none}
+.formation{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:space-between;min-height:480px;gap:11px}.line{display:flex;justify-content:space-evenly;align-items:center;gap:5px}.line.attack{margin-top:6px}.line.defence{margin-bottom:6px}
+.footballer{width:78px;max-width:22%;display:flex;flex-direction:column;align-items:center;gap:3px;animation:rise .45s ease both}.mini-card{width:64px;height:81px;position:relative;border:1px solid #f5d778;border-radius:8px;background:linear-gradient(155deg,#f6e29a,#98702b 34%,#101b24 35%,#081018);padding:3px;box-shadow:0 4px 10px #0009;overflow:hidden}.mini-card img{width:100%;height:68px;object-fit:contain;object-position:center bottom}.mini-card .mini-ovr{position:absolute;top:3px;left:4px;font:900 10px Orbitron;color:#fff2ae;text-shadow:0 1px 3px #000}.mini-card .mini-pos{position:absolute;top:3px;right:4px;font-size:8px;font-weight:900;color:#fff}.mini-name{font-size:9px;font-weight:900;background:#061019d9;color:#fff;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:1px 2px;border-radius:3px}.mini-label{font-size:9px;color:#fff;text-shadow:0 1px 4px #000;font-weight:900}.empty-card{display:flex;align-items:center;justify-content:center;color:#e7d48b;font-size:24px;opacity:.6}
+.team-switch{display:flex;gap:8px;margin:0 0 10px}.team-tab{flex:1;border-radius:9px;padding:8px;font-weight:900;background:#10202b;color:#9db0be;border:1px solid #ffffff18}.team-tab.active{color:#fff;background:#173d32;border-color:#54d79a}
+.summary{display:none;max-width:1250px;margin:14px auto;background:linear-gradient(140deg,#152536,#071019);border:1px solid #f7d66b66;border-radius:18px;padding:18px;animation:rise .6s ease}.summary.show{display:block}.winner{text-align:center;color:var(--gold);font-size:clamp(25px,5vw,42px);font-weight:900;text-shadow:0 0 25px #ffdc6b44}.finalscores{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;text-align:center;gap:10px;margin:15px 0}.bigscore{font:900 clamp(28px,5vw,44px) Orbitron}.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.metric{background:#ffffff08;border:1px solid #ffffff13;border-radius:12px;padding:12px;text-align:center}.metric b{display:block;color:var(--gold);font:900 22px Orbitron}.metric span{font-size:11px;color:#b7c5ce}.summary-actions{display:flex;gap:10px;justify-content:center;margin-top:15px}
+.loading{position:fixed;inset:0;display:none;justify-content:center;align-items:center;flex-direction:column;gap:15px;background:#02070beF;z-index:20;text-align:center}.loading.show{display:flex}.spinner{font-size:60px;animation:spin 1.2s linear infinite}.loading h2{color:var(--gold)}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}@keyframes glow{50%{box-shadow:0 0 26px #f7d66b65}}
+@media(max-width:800px){body{padding:8px}.main{grid-template-columns:1fr}.panel.pitch-panel{order:2}.panel.choice-panel{order:1}.pitch{min-height:450px}.formation{min-height:410px}.player-card{min-height:240px}.portrait{height:112px}.metric-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:390px){.player-card{padding:8px 5px;min-height:220px}.portrait{height:95px}.mini-card{width:54px;height:72px}.mini-card img{height:49px}.footballer{width:62px}.pitch{padding:15px 4px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">⚽ DEAL OR NO DEAL <span style="color:#fff;font-size:12px">DRAFT ARENA</span></div>
+  <div class="mini"><span class="pill blue" id="headerName">انت</span><span class="pill">⏱ <span id="clock">30</span> ثانية</span><span class="pill red">AI</span></div>
+</header>
+<div class="turn" id="turn">جهّز تشكيلتك — اختر لاعبك الأول!</div>
+<main class="main">
+<section class="panel choice-panel">
+  <h2><span>🎴 اختار كارتك</span><span class="pill" id="round">1 / 11</span></h2>
+  <div class="choices">
+    <div class="player-card" id="choice1" onclick="pick(1)">
+      <div class="card-top"><span class="ovr" id="rate1">90</span><span class="position" id="pos1">GK</span></div>
+      <img class="portrait" id="img1" alt="صورة اللاعب" src="">
+      <div class="player-name" id="name1">...</div><div class="card-type">EPIC PLAYER</div>
+      <div class="card-stats" id="attrs1">PAC 88 · SHO 86 · PAS 89</div>
+    </div>
+    <div class="vs">VS</div>
+    <div class="player-card mystery" id="choice2" onclick="pick(2)">
+      <div class="card-top"><span class="ovr">?</span><span class="position" id="pos2">GK</span></div>
+      <div class="portrait">?</div><div class="player-name">كارت غامض</div><div class="card-type">HIDDEN PICK</div>
+      <div class="card-stats">اكشف اختيارك</div>
+    </div>
+  </div>
+  <div class="controls">
+    <button class="btn gold" id="chooseBtn" onclick="pick(1)">⭐ اختيار اللاعب</button>
+    <button class="btn dark" id="revealBtn" onclick="revealSecond()">👁 كشف الكارت</button>
+  </div>
+  <div class="timerline"><div class="timerbar" id="timerbar"></div></div>
+  <div class="hint" id="hint">اختار لاعب واحد من الكارتين. الـ AI هيختار في نفس الجولة.</div><div class="transition-timer" id="transitionTimer">المركز التالي خلال <b id="transitionCount">3</b> ثواني</div>
+</section>
+<section class="panel pitch-panel">
+  <h2><span>🏟️ التشكيلة الأساسية</span><span class="pill">4-3-3</span></h2>
+  <div class="team-switch"><button class="team-tab active" id="tab1" onclick="showTeam(1)">🔵 فريقك</button><button class="team-tab" id="tab2" onclick="showTeam(2)">🔴 فريق AI</button></div>
+  <div class="pitch-wrap"><div class="pitch"><div class="center-circle"></div><div class="formation" id="formation"></div></div></div>
+  <div class="mini" style="justify-content:space-between;margin-top:10px"><span class="blue">تقييم فريقك: <b id="score1">0</b></span><span class="red">تقييم AI: <b id="score2">0</b></span></div>
+</section>
+</main>
+<section class="summary" id="summary">
+  <div class="winner" id="winner">🏆 النتيجة النهائية</div>
+  <div class="finalscores"><div><div class="blue">فريقك</div><div class="bigscore blue" id="final1">0</div><div id="finalAvg1">OVR متوسط: 0</div></div><div class="vs">VS</div><div><div class="red">فريق AI</div><div class="bigscore red" id="final2">0</div><div id="finalAvg2">OVR متوسط: 0</div></div></div>
+  <h2 style="text-align:center">📊 إحصائيات المباراة</h2>
+  <div class="metric-grid" id="metrics"></div>
+  <div class="summary-actions"><button class="btn gold" onclick="restartGame()">🔄 العب من جديد</button></div>
+</section>
+<div class="loading" id="loading"><div class="spinner">⚽</div><h2>الـ AI بيجهّز التشكيلة...</h2><div>لحظات ونعلن النتيجة</div></div>
+<script>
+const params=new URLSearchParams(location.search);
+const myName=(params.get('name')||'انت').slice(0,18);
+document.getElementById('headerName').textContent=myName;
+const positions=["GK","LB","CB","CB","RB","CM","CM","CM","LW","ST","RW"];
+const posNames=["GK","LB","CB1","CB2","RB","CM1","CM2","CM3","LW","ST","RW"];
+const posArabic={GK:"حارس",LB:"ظهير أيسر",CB:"قلب دفاع",RB:"ظهير أيمن",CM:"وسط",LW:"جناح أيسر",ST:"مهاجم",RW:"جناح أيمن"};
+const playersDB={
+GK:[["مانويل نوير",91,"Manuel Neuer"],["جيانلويجي بوفون",90,"Gianluigi Buffon"],["يان أوبلاك",90,"Jan Oblak"],["إيدرسون",89,"Ederson (footballer)"],["تيبو كورتوا",91,"Thibaut Courtois"],["أليسون",90,"Alisson Becker"],["إيكر كاسياس",92,"Iker Casillas"],["ليف ياشين",94,"Lev Yashin"]],
+LB:[["مارسيلو",92,"Marcelo"],["أندي روبرتسون",88,"Andrew Robertson"],["ثيو هيرنانديز",89,"Theo Hernandez"],["ألفونسو ديفيز",89,"Alphonso Davies"],["لوك شو",86,"Luke Shaw"],["أشلي كول",91,"Ashley Cole"],["باولو مالديني",94,"Paolo Maldini"]],
+CB:[["بيبي",93,"Pepe"],["فيرجيل فان دايك",91,"Virgil van Dijk"],["روبن دياز",90,"Rúben Dias"],["سيرخيو راموس",92,"Sergio Ramos"],["ويليام ساليبا",89,"William Saliba"],["كارليس بويول",92,"Carles Puyol"],["أليساندرو نيستا",93,"Alessandro Nesta"],["فرانز بيكنباور",95,"Franz Beckenbauer"],["رونالد أراوخو",88,"Ronald Araújo"]],
+RB:[["أشرف حكيمي",90,"Achraf Hakimi"],["ترينت ألكسندر أرنولد",89,"Trent Alexander-Arnold"],["جواو كانسيلو",88,"João Cancelo"],["كايل ووكر",87,"Kyle Walker"],["كافو",93,"Cafu"],["داني ألفيس",92,"Dani Alves"]],
+CM:[["لوكا مودريتش",92,"Luka Modrić"],["كيفن دي بروين",93,"Kevin De Bruyne"],["توني كروس",92,"Toni Kroos"],["جود بيلينغهام",92,"Jude Bellingham"],["فالفيردي",90,"Federico Valverde"],["زين الدين زيدان",96,"Zinedine Zidane"],["أندريا بيرلو",93,"Andrea Pirlo"],["تشافي",94,"Xavi"],["أندريس إنييستا",94,"Andrés Iniesta"],["رودري",91,"Rodri (footballer, born 1996)"]],
+LW:[["محمد صلاح",92,"Mohamed Salah"],["فينيسيوس جونيور",92,"Vinícius Júnior"],["نيمار",93,"Neymar"],["سون هيونغ مين",90,"Son Heung-min"],["تييري هنري",95,"Thierry Henry"],["فرانك ريبيري",92,"Franck Ribéry"],["كريستيانو رونالدو",95,"Cristiano Ronaldo"]],
+ST:[["فرناندو توريس",89,"Fernando Torres"],["إيرلينغ هالاند",93,"Erling Haaland"],["روبرت ليفاندوفسكي",92,"Robert Lewandowski"],["هاري كين",91,"Harry Kane"],["رونالدو نازاريو",96,"Ronaldo (Brazilian footballer)"],["ديدييه دروغبا",92,"Didier Drogba"],["لويس سواريز",92,"Luis Suárez"],["بيليه",98,"Pelé"],["كيليان مبابي",94,"Kylian Mbappé"]],
+RW:[["ليونيل ميسي",98,"Lionel Messi"],["عثمان ديمبيلي",90,"Ousmane Dembélé"],["ليروي ساني",88,"Leroy Sané"],["غاريث بيل",92,"Gareth Bale"],["لويس فيغو",93,"Luís Figo"],["غارينشا",94,"Garrincha"],["رياض محرز",89,"Riyad Mahrez"]]
+};
+let currentPos=0,t1=Array(11).fill(null),t2=Array(11).fill(null),used=new Set(),myOptions=[],aiOptions=[],myPicked=false,aiPicked=false,activeTeam=1,timer=null,timeLeft=30,roundLocked=false;
+const portraitCache={};
+// Direct card artwork from eFootballDB's player-card database (not recreated artwork).
+const EFOOTBALL_CARD_ART={
+ 'Lionel Messi':'https://api.efootballdb.info/media/images/players/89136409091415.webp',
+ 'Vinícius Júnior':'https://api.efootballdb.info/media/images/players/52880442771767/primary.avif',
+ 'Marcelo':'https://api.efootballdb.info/media/images/players/88045755861084/primary.avif',
+ 'Pepe':'https://api.efootballdb.info/media/images/players/88045755835309/primary.avif',
+ 'Fernando Torres':'https://api.efootballdb.info/media/images/players/88035555283056/primary.avif',
+ 'Edmílson':'https://api.efootballdb.info/media/images/players/88046292831756/primary.avif',
+ 'Gerard Piqué':'https://api.efootballdb.info/media/images/players/88036897464767/primary.avif',
+ 'Lutsharel Geertruida':'https://api.efootballdb.info/media/images/players/105872554577784/primary.avif',
+ 'Maxence Lacroix':'https://api.efootballdb.info/media/images/players/105809740688234/primary.avif',
+ 'Arda Güler':'https://api.efootballdb.info/media/images/players/105802761382154/primary.avif',
+ 'Justin Kluivert':'https://api.efootballdb.info/media/images/players/105872554573981/primary.avif',
+ 'Quinten Timber':'https://api.efootballdb.info/media/images/players/105872554591292/primary.avif'
+};
+function imageUrl(p){return EFOOTBALL_CARD_ART[p.en]||p.img||`https://ui-avatars.com/api/?name=${encodeURIComponent(p.n)}&background=172b36&color=f8d978&bold=true&size=256`;}
+async function fetchPortrait(p){
+ if(EFOOTBALL_CARD_ART[p.en]){p.img=EFOOTBALL_CARD_ART[p.en];return p.img;}
+ if(portraitCache[p.en]!==undefined){p.img=portraitCache[p.en];return p.img;}
+ try{const r=await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(p.en));if(!r.ok)throw 0;const d=await r.json();p.img=d.thumbnail?.source||'';}catch(e){p.img='';}
+ portraitCache[p.en]=p.img;return p.img;
+}
+function normalizeDB(){Object.values(playersDB).forEach(arr=>arr.forEach(a=>{if(!a._obj){a._obj={n:a[0],r:a[1],en:a[2],img:''};}}));}
+normalizeDB();
+function getRandomPlayer(pos){
+ const all=playersDB[pos].map(a=>a._obj);
+ // Only a chosen player is marked used; unchosen cards may be offered again, but never repeat the picked mystery card.
+ let pool=all.filter(p=>!used.has(p.n));
+ if(pool.length<4){
+   const unused=pool.slice();
+   const extras=all.filter(p=>!unused.includes(p)).sort(()=>Math.random()-.5);
+   pool=unused.concat(extras);
+ }
+ const selected=[];
+ while(selected.length<Math.min(4,pool.length)&&pool.length){const idx=Math.floor(Math.random()*pool.length);selected.push(pool.splice(idx,1)[0]);}
+ while(selected.length<4){const p=all[Math.floor(Math.random()*all.length)];if(!selected.includes(p))selected.push(p);else if(all.length<4)break;}
+ return selected;
+}
+function startTimer(){clearInterval(timer);timeLeft=30;updateTimer();timer=setInterval(()=>{timeLeft--;updateTimer();if(timeLeft<=0){clearInterval(timer);if(!myPicked)pick(1);}},1000);}
+function updateTimer(){document.getElementById('clock').textContent=timeLeft;document.getElementById('timerbar').style.width=(timeLeft/30*100)+'%';}
+function newRound(){
+ if(currentPos>=11)return;
+ myPicked=false;aiPicked=false;roundLocked=false;
+ document.getElementById('choice1').classList.remove('disabled');document.getElementById('choice2').classList.remove('disabled');document.getElementById('choice2').classList.add('mystery');document.getElementById('choice2').onclick=()=>pick(2);
+ document.getElementById('choiceBox')?.classList.remove('waiting');
+ document.getElementById('chooseBtn').disabled=false;document.getElementById('revealBtn').disabled=false;
+ document.getElementById('turn').textContent=`دورك: اختار لاعب لمركز ${posArabic[positions[currentPos]]||positions[currentPos]}`;
+ document.getElementById('round').textContent=`${currentPos+1} / 11`;
+ const p=getRandomPlayer(positions[currentPos]);myOptions=[p[0],p[1]];aiOptions=[p[2],p[3]];
+ renderChoice(1,myOptions[0]);document.getElementById('pos2').textContent=posNames[currentPos];
+ document.getElementById('choice2').innerHTML=`<div class="card-top"><span class="ovr">?</span><span class="position" id="pos2">${posNames[currentPos]}</span></div><div class="portrait">?</div><div class="player-name">كارت غامض</div><div class="card-type">HIDDEN PICK</div><div class="card-stats">اكشف اختيارك</div>`;
+ document.getElementById('hint').textContent='اختار لاعب واحد من الكارتين. الـ AI هيختار في نفس الجولة.';document.getElementById('transitionTimer').classList.remove('show');
+ startTimer();showTeam(activeTeam);
+ setTimeout(()=>{if(!aiPicked&&!roundLocked)aiPick();},2200+Math.random()*1700);
+}
+function renderChoice(which,p){
+ const el=document.getElementById('choice'+which);
+ el.classList.remove('mystery');
+ el.innerHTML=`<div class="card-top"><span class="ovr">${p.r}</span><span class="position">${posNames[currentPos]}</span></div><img class="portrait" id="portrait${which}" alt="صورة ${p.n}" src="${imageUrl(p)}"><div class="player-name">${p.n}</div><div class="card-type">${p.r>=94?'EPIC / BIG TIME':p.r>=90?'LEGENDARY PLAYER':'FEATURED PLAYER'}</div><div class="card-stats">PAC ${Math.min(99,p.r-2)} · SHO ${Math.min(99,p.r)} · PAS ${Math.min(99,p.r-1)}</div>`;
+ el.onclick=()=>pick(which);
+ fetchPortrait(p).then(src=>{const im=document.getElementById('portrait'+which);if(im&&src)im.src=src;});
+}
+function revealSecond(){if(myPicked)return;renderChoice(2,myOptions[1]);document.getElementById('revealBtn').disabled=true;document.getElementById('hint').textContent='دلوقتي اختار الكارت اللي يناسب تشكيلتك!';}
+function pick(choice){
+ if(myPicked||roundLocked)return;myPicked=true;clearInterval(timer);roundLocked=true;
+ const p=myOptions[choice-1];used.add(p.n);t1[currentPos]=p;
+ document.getElementById('choice1').classList.add('disabled');document.getElementById('choice2').classList.add('disabled');
+ document.getElementById('turn').textContent=`✅ اخترت ${p.n} — الـ AI بيختار لاعبُه...`;
+ document.getElementById('chooseBtn').disabled=true;document.getElementById('revealBtn').disabled=true;
+ if(!aiPicked)setTimeout(aiPick,700);else checkNext();
+}
+function aiPick(){
+ if(aiPicked)return;aiPicked=true;
+ // اختيار ذكي نسبيًا: يميل للأعلى تقييمًا مع فرصة تنويع.
+ const a=aiOptions[0],b=aiOptions[1];t2[currentPos]=(Math.random()<.72?(a.r>=b.r?a:b):(Math.random()<.5?a:b));used.add(t2[currentPos].n);
+ document.getElementById('turn').textContent=`🤖 الـ AI اختار ${t2[currentPos].n}`;
+ if(myPicked)checkNext();
+}
+function checkNext(){
+ if(!myPicked||!aiPicked||checkNext.running)return;
+ checkNext.running=true;
+ updateScores();showTeam(activeTeam);
+ const box=document.getElementById('transitionTimer'),num=document.getElementById('transitionCount');
+ let left=3;box.classList.add('show');num.textContent=left;
+ document.getElementById('hint').textContent=`تم اختيار لاعبي الجولة ${currentPos+1}.`;
+ const countdown=setInterval(()=>{
+   left--;num.textContent=Math.max(0,left);
+   if(left<=0){clearInterval(countdown);box.classList.remove('show');checkNext.running=false;currentPos++;if(currentPos>=11)finishGame();else newRound();}
+ },1000);
+}
+function updateScores(){
+ const s1=t1.reduce((s,p)=>s+(p?p.r:0),0),s2=t2.reduce((s,p)=>s+(p?p.r:0),0);
+ document.getElementById('score1').textContent=s1;document.getElementById('score2').textContent=s2;
+}
+function showTeam(which){
+ activeTeam=which;document.getElementById('tab1').classList.toggle('active',which===1);document.getElementById('tab2').classList.toggle('active',which===2);
+ const team=which===1?t1:t2;const formation=document.getElementById('formation');formation.innerHTML='';
+ const rows=[[8,9,10],[5,6,7],[1,2,3,4],[0]];
+ rows.forEach((indices,ri)=>{const row=document.createElement('div');row.className='line '+(ri===0?'attack':ri===2?'defence':'');indices.forEach(i=>{const p=team[i],pos=posNames[i],player=document.createElement('div');player.className='footballer';player.innerHTML=p?`<div class="mini-card"><span class="mini-ovr">${p.r}</span><span class="mini-pos">${pos}</span><img alt="" src="${imageUrl(p)}"><div class="mini-name">${p.n}</div></div><div class="mini-label">${pos}</div>`:`<div class="mini-card empty-card"><span class="mini-ovr">—</span><span class="mini-pos">${pos}</span><div class="empty-card" style="height:100%">+</div></div><div class="mini-label">${pos}</div>`;
+ if(p)fetchPortrait(p).then(src=>{const im=player.querySelector('img');if(im&&src)im.src=src;});
+ row.appendChild(player);});formation.appendChild(row);});
+}
+function finishGame(){
+ clearInterval(timer);document.getElementById('loading').classList.add('show');
+ setTimeout(()=>{
+  document.getElementById('loading').classList.remove('show');
+  const s1=t1.reduce((s,p)=>s+(p?p.r:0),0),s2=t2.reduce((s,p)=>s+(p?p.r:0),0);
+  document.getElementById('winner').textContent=s1>s2?`🏆 ${myName} كسبت البطولة!`:s2>s1?'🤖 الـ AI كسب المباراة!':'🤝 تعادل أسطوري!';
+  document.getElementById('final1').textContent=s1;document.getElementById('final2').textContent=s2;
+  document.getElementById('finalAvg1').textContent='OVR متوسط: '+(s1/11).toFixed(1);document.getElementById('finalAvg2').textContent='OVR متوسط: '+(s2/11).toFixed(1);
+  const best1=Math.max(...t1.map(p=>p?.r||0)),best2=Math.max(...t2.map(p=>p?.r||0));
+  const wins1=t1.filter((p,i)=>p&&t2[i]&&p.r>t2[i].r).length,wins2=t2.filter((p,i)=>p&&t1[i]&&p.r>t1[i].r).length;
+  document.getElementById('metrics').innerHTML=`<div class="metric"><b>${wins1}</b><span>مراكز كسبتها</span></div><div class="metric"><b>${wins2}</b><span>مراكز كسبها AI</span></div><div class="metric"><b>${best1}</b><span>أعلى تقييم عندك</span></div><div class="metric"><b>${best2}</b><span>أعلى تقييم AI</span></div>`;
+  document.getElementById('summary').classList.add('show');document.getElementById('turn').textContent='انتهى الدرفت — شوف التشكيلتين والإحصائيات النهائية';updateScores();showTeam(1);
+  document.getElementById('summary').scrollIntoView({behavior:'smooth',block:'start'});
+ },1700);
+}
+function restartGame(){checkNext.running=false;document.getElementById('transitionTimer').classList.remove('show');currentPos=0;t1=Array(11).fill(null);t2=Array(11).fill(null);used.clear();document.getElementById('summary').classList.remove('show');document.getElementById('score1').textContent='0';document.getElementById('score2').textContent='0';newRound();window.scrollTo({top:0,behavior:'smooth'});}
+newRound();
+</script>
+</body>
+</html>
