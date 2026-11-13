@@ -2282,50 +2282,175 @@ now+.32
 /* =====================================================
 IMAGE
 ===================================================== */
+const auctionCardImages = [
+  'https://i.postimg.cc/ZBkz7CmC/IMG-20260914-WA0074.jpg',
+  'https://i.postimg.cc/gXdmcn7J/06ac997c-b190-4140-86e8-bd9447eb68bb.png',
+  'https://i.postimg.cc/bZDzmXbP/06e3191d-b4c0-4a52-8f25-1c158ec0919a.png',
+  'https://i.postimg.cc/67tmynBk/0840cf9f-c72a-4fe3-ac0a-2f7b308090db.png',
+  'https://i.postimg.cc/7GDwPfRJ/0d1e01c6-ad39-44bd-946e-e224a069ca9f.png',
+  'https://i.postimg.cc/mthRrxmS/12c055db-4c04-45c5-9d82-5705ec137e68.png',
+  'https://i.postimg.cc/d76Sd313/13491a1a-5c50-4539-b12c-a22ac797935d.png',
+  'https://i.postimg.cc/qzg07f1w/21dc3cbd-4680-4b18-bf40-0ea8b8afc3e6.png',
+  'https://i.postimg.cc/06nHmjQk/2619f04c-87ce-4014-9d9e-0eff46477c52.png',
+  'https://i.postimg.cc/8JtQ1wW2/30f3536f-b502-481e-8c03-a4f6809e3586.png',
+  'https://i.postimg.cc/0zM8Vgmk/3dece301-1fa0-478f-a36e-3e6fffdac5e9.png',
+  'https://i.postimg.cc/MXFNdnY1/508a4da4-cf6d-4e3b-a8fb-90c47fd72451.png',
+  'https://i.postimg.cc/RqDyXWTH/587aad1e-f7e4-4dea-81cf-9fb92195477e.png',
+  'https://i.postimg.cc/RJhrqfLr/64d898c8-ac17-49c3-ab7a-d25236271036.png',
+  'https://i.postimg.cc/sv1y2FT4/6a936a21-0c42-4ba3-bd1a-a74e4149f948.png',
+  'https://i.postimg.cc/Fkzt1cVR/72e4dad4-e0d8-424f-8d79-553069c84593.png',
+  'https://i.postimg.cc/z3GYdZZk/76bd6309-007e-4892-aad4-abd30edbe9b9.png',
+  'https://i.postimg.cc/WD8frz32/797798af-dccd-4c1f-9e7f-7e59fa61297c.png',
+  'https://i.postimg.cc/tYnff9rB/818e3a39-b9b6-4f38-95c8-34ba1c351211.png',
+  'https://i.postimg.cc/Whtj4R5D/8d943c54-14dd-4330-8522-4992195c21e8.png',
+  'https://i.postimg.cc/fkL1ccYb/97c56d22-df0b-48d4-b5e7-bf227fdbc1b7.png',
+  'https://i.postimg.cc/ZvBf1LLT/a011f6ae-f8b1-4e2e-86f0-c13e8ab0c933.png',
+  'https://i.postimg.cc/CnBvW44q/a395cc0e-20f7-4d6e-bcca-fa71e9f07938.png',
+  'https://i.postimg.cc/YjhyGpwp/a87b978f-26b6-4b8f-971d-bdd133c906f4.png',
+  'https://i.postimg.cc/c6r5gsNr/b2635f0a-9460-4459-9051-930ccc920c30.png',
+  'https://i.postimg.cc/t1qBXbzz/ba857120-555d-4ec8-83d6-85710f38fb0a.png',
+  'https://i.postimg.cc/YGVRfWBJ/c1800108-d01d-4035-9d3d-347830c11a50.png',
+  'https://i.postimg.cc/wy3FmkZ5/c3a01e83-d7ed-49c3-a5f7-62a1d5e3b3cb.png',
+  'https://i.postimg.cc/0Kwfty86/d87b4ffd-86e5-4103-9c88-bdb50a8274bf.png',
+  'https://i.postimg.cc/xcL5M8xg/db243de0-3772-4a89-8384-5581136d4cb7.png',
+  'https://i.postimg.cc/v4MzzyCB/dd5efc17-45ac-4471-bd9c-0936f484f8c7.png',
+  'https://i.postimg.cc/Yvk337Tx/df670d32-3545-4f4a-8c44-7fc31b9fdfc7.png',
+  'https://i.postimg.cc/75VNtcyS/e40bfc61-ea60-4669-9b1c-495f3cfb7f9b.png',
+  'https://i.postimg.cc/SXxfBrSR/efadc244-93bc-4405-b7f1-d952fe785b61.png',
+  'https://i.postimg.cc/sQB9XgGN/f31a9ae9-b397-4659-aec3-7e9515a58558.png',
+  'https://i.postimg.cc/1g7rsqX0/f5abdf34-284d-4c6c-af0b-81554e5d3f88.png',
+  'https://i.postimg.cc/vg1LBZxk/f815bf7e-95f6-48ff-8f51-dc8fb841ca21.png',
+  'https://i.postimg.cc/2q97rZyq/IMG-20260914-WA0027.jpg',
+  'https://i.postimg.cc/r0dCmwRJ/IMG-20260914-WA0029.jpg',
+  'https://i.postimg.cc/tZ1tT4nc/IMG-20260914-WA0031.jpg',
+  'https://i.postimg.cc/gXwqJ2Lf/IMG-20260914-WA0032.jpg',
+  'https://i.postimg.cc/xJkyC1b2/IMG-20260914-WA0033.jpg',
+  'https://i.postimg.cc/TLZjWvnZ/IMG-20260914-WA0034.jpg',
+  'https://i.postimg.cc/cgV78GQ6/IMG-20260914-WA0035.jpg',
+  'https://i.postimg.cc/tZLdVGhC/IMG-20260914-WA0036.jpg',
+  'https://i.postimg.cc/jwG6JYzD/IMG-20260914-WA0037.jpg',
+  'https://i.postimg.cc/dkzRTc8y/IMG-20260914-WA0038.jpg',
+  'https://i.postimg.cc/ZB1Pyzr6/IMG-20260914-WA0039.jpg',
+  'https://i.postimg.cc/4HV6625H/IMG-20260914-WA0047.jpg',
+  'https://i.postimg.cc/gL8VVtD6/IMG-20260914-WA0048.jpg',
+  'https://i.postimg.cc/hQTLLZrx/IMG-20260914-WA0049.jpg',
+  'https://i.postimg.cc/wRLXX4VL/IMG-20260914-WA0050.jpg',
+  'https://i.postimg.cc/p5zffcZZ/IMG-20260914-WA0051.jpg',
+  'https://i.postimg.cc/2LhQQ9wG/IMG-20260914-WA0052.jpg',
+  'https://i.postimg.cc/GTGFFgQg/IMG-20260914-WA0053.jpg',
+  'https://i.postimg.cc/1VwGG7Hd/IMG-20260914-WA0054.jpg',
+  'https://i.postimg.cc/SjMfbjh4/IMG-20260914-WA0055.jpg',
+  'https://i.postimg.cc/F1LVX14m/IMG-20260914-WA0056.jpg',
+  'https://i.postimg.cc/NLHkvLcB/IMG-20260914-WA0057.jpg',
+  'https://i.postimg.cc/8s6mgsSz/IMG-20260914-WA0058.jpg',
+  'https://i.postimg.cc/0rw01rsb/IMG-20260914-WA0059.jpg',
+  'https://i.postimg.cc/0rw01rs6/IMG-20260914-WA0060.jpg',
+  'https://i.postimg.cc/Z0dxz0S3/IMG-20260914-WA0061.jpg',
+  'https://i.postimg.cc/4n9QRngQ/IMG-20260914-WA0062.jpg',
+  'https://i.postimg.cc/SJb7SqSz/IMG-20260914-WA0063.jpg',
+  'https://i.postimg.cc/2VNFkmkF/IMG-20260914-WA0064.jpg',
+  'https://i.postimg.cc/svC9jyjn/IMG-20260914-WA0065.jpg',
+  'https://i.postimg.cc/ZCzFbZbg/IMG-20260914-WA0066.jpg',
+  'https://i.postimg.cc/rK2CVcV3/IMG-20260914-WA0067.jpg',
+  'https://i.postimg.cc/7frMHDPy/IMG-20260914-WA0068.jpg',
+  'https://i.postimg.cc/ppQQy7r1/IMG-20260914-WA0069.jpg',
+  'https://i.postimg.cc/GHPP9N90/IMG-20260914-WA0070.jpg',
+  'https://i.postimg.cc/2Vdd3J3Y/IMG-20260914-WA0071.jpg',
+  'https://i.postimg.cc/6yVVTSTB/IMG-20260914-WA0072.jpg',
+  'https://i.postimg.cc/GHPP9N92/IMG-20260914-WA0073.jpg'
+];
+let shuffledAuctionImages = [];
+function getRandomAuctionCardImage(){
+  if(!shuffledAuctionImages.length){
+    shuffledAuctionImages = [...auctionCardImages];
+    for(let i=shuffledAuctionImages.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [shuffledAuctionImages[i],shuffledAuctionImages[j]]=[shuffledAuctionImages[j],shuffledAuctionImages[i]];
+    }
+  }
+  return shuffledAuctionImages.pop();
+}
+
+
 
 const playerImageAliases={
-"Yashin":"Lev Yashin","T.Hernandez":"Theo Hernandez","R.Dias":"Ruben Dias","TAA":"Trent Alexander-Arnold","Cristiano":"Cristiano Ronaldo","Ronaldo Nazario":"Ronaldo Nazario","Messi RW":"Lionel Messi","Kaka":"Kaka","Mbappe":"Kylian Mbappe","Vinicius":"Vinicius Junior","Leao":"Rafael Leao","Davies":"Alphonso Davies","Courtois":"Thibaut Courtois","Donnarumma":"Gianluigi Donnarumma","Matthaus":"Lothar Matthaus","Van Basten":"Marco van Basten","Garrincha":"Garrincha"};
+"Yashin":"Lev Yashin","T.Hernandez":"Theo Hernandez","R.Dias":"Ruben Dias","TAA":"Trent Alexander-Arnold",
+"Cristiano":"Cristiano Ronaldo","Ronaldo Nazario":"Ronaldo Nazario","Messi RW":"Lionel Messi","Kaka":"Kaka",
+"Mbappe":"Kylian Mbappe","Vinicius":"Vinicius Junior","Leao":"Rafael Leao","Davies":"Alphonso Davies",
+"Courtois":"Thibaut Courtois","Donnarumma":"Gianluigi Donnarumma","Matthaus":"Lothar Matthaus",
+"Van Basten":"Marco van Basten","Garrincha":"Garrincha"
+};
+const playerImageCache=new Map();
 
 function fallbackPlayerImg(name){
-return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=111&color=ffd700&size=400&rounded=true&bold=true`;
+  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=111&color=ffd700&size=400&rounded=true&bold=true`;
+}
+
+function imageUrlLoads(url){
+  return new Promise(resolve=>{
+    const test=new Image();
+    test.onload=()=>resolve(true);
+    test.onerror=()=>resolve(false);
+    test.referrerPolicy='no-referrer';
+    test.src=url;
+  });
 }
 
 async function loadRealPlayerImage(name){
   const img=document.getElementById('playerImg');
   if(!img) return;
-  const query=playerImageAliases[name]||name;
-  const playerName=name;
+  const playerName=String(name||'').trim();
+  const query=playerImageAliases[playerName]||playerName;
   const isStillCurrent=()=>{
     const nameEl=document.getElementById('name');
     return nameEl && nameEl.innerText.trim()===playerName && document.getElementById('playerImg')===img;
   };
-  img.onerror=()=>{
-    img.onerror=null;
-    img.src=fallbackPlayerImg(playerName);
-  };
-  img.src=fallbackPlayerImg(playerName);
-  try{
-    // Search Wikipedia instead of relying on an exact page title; this handles
-    // short names, alternate spellings and players whose page title differs.
-    const api=`https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query+' footballer')}&gsrlimit=5&prop=pageimages&piprop=thumbnail&pithumbsize=700&format=json&origin=*`;
-    const res=await fetch(api,{mode:'cors',cache:'force-cache'});
-    if(!res.ok) throw new Error('Wikipedia image search failed');
-    const data=await res.json();
-    const pages=Object.values(data.query?.pages||{});
-    const page=pages.find(p=>p.thumbnail?.source) || pages[0];
-    const source=page?.thumbnail?.source;
-    if(source && isStillCurrent()){
-      img.onerror=()=>{img.onerror=null;img.src=fallbackPlayerImg(playerName);};
-      img.src=source.replace(/\/\d+px-/,'/700px-');
-    }
-  }catch(e){
-    // Keep the generated name card visible if Wikipedia is temporarily unavailable.
-    if(isStillCurrent()) img.src=fallbackPlayerImg(playerName);
+  const cached=playerImageCache.get(query);
+  if(cached){
+    img.onerror=()=>{img.onerror=null;img.src=fallbackPlayerImg(playerName);};
+    img.src=cached;
+    return;
   }
+  img.onerror=()=>{img.onerror=null;img.src=fallbackPlayerImg(playerName);};
+  img.src=fallbackPlayerImg(playerName);
+
+  // Try the Wikipedia image API with several relevant search results.
+  // The card itself is untouched; only its image source is updated.
+  const searches=[`${query} footballer`,`${query} football`];
+  for(const searchText of searches){
+    if(!isStillCurrent()) return;
+    try{
+      const api='https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch='+encodeURIComponent(searchText)+'&gsrnamespace=0&gsrlimit=8&prop=pageimages&piprop=thumbnail&pithumbsize=700&format=json&origin=*';
+      const res=await fetch(api,{mode:'cors',cache:'force-cache'});
+      if(!res.ok) continue;
+      const data=await res.json();
+      const pages=Object.values(data.query?.pages||{}).filter(p=>p.thumbnail?.source);
+      const tokens=query.toLowerCase().split(/\s+/).filter(t=>t.length>2);
+      pages.sort((a,b)=>{
+        const score=p=>{
+          const title=(p.title||'').toLowerCase();
+          return tokens.reduce((n,t)=>n+(title.includes(t)?2:0),0)+(title.includes('footballer')?1:0);
+        };
+        return score(b)-score(a);
+      });
+      for(const page of pages){
+        const source=page.thumbnail.source;
+        const loaded=await imageUrlLoads(source);
+        if(loaded && isStillCurrent()){
+          playerImageCache.set(query,source);
+          img.onerror=()=>{img.onerror=null;img.src=fallbackPlayerImg(playerName);};
+          img.src=source;
+          return;
+        }
+      }
+    }catch(e){
+      // Try the next search phrase; use the name fallback only if no real photo loads.
+    }
+  }
+  if(isStillCurrent()) img.src=fallbackPlayerImg(playerName);
 }
 
 function getPlayerImg(name){ return fallbackPlayerImg(name); }
-
 
 /* =====================================================
 CARD TYPE
@@ -2779,8 +2904,14 @@ info.title;
 document.getElementById('name').innerText=
 currentPlayer.n;
 
-document.getElementById('playerImg').src=getPlayerImg(currentPlayer.n);
-loadRealPlayerImage(currentPlayer.n);
+const playerPhoto=document.getElementById('playerImg');
+const randomCardImage=getRandomAuctionCardImage();
+playerPhoto.onerror=()=>{
+  playerPhoto.onerror=null;
+  playerPhoto.src=fallbackPlayerImg(currentPlayer?.n||'PLAYER');
+};
+playerPhoto.src=randomCardImage;
+playerPhoto.alt='كارت لاعب';
 
 document.getElementById('price').innerText=
 currentBid.toLocaleString()+' $';
