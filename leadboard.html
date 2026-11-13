@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>ترتيب اللاعبين | Trovex Games</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<style>
+:root{--gold:#ffd76a;--blue:#3e9cff;--panel:rgba(8,16,32,.88);--muted:#aab8cb}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Cairo,sans-serif;color:#fff;background:#030712 url('https://i.postimg.cc/k4vr9hfW/Anime-Football-Champion-in-Neon-Stadium.png') center/cover fixed no-repeat}body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,#020714c9,#020714ed);z-index:-1}
+.wrap{width:min(900px,94%);margin:auto;padding:20px 0 45px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.back{color:#fff;text-decoration:none;background:#ffffff16;border:1px solid #ffffff26;border-radius:12px;padding:8px 13px;font-weight:800}.brand{font-family:Orbitron,Cairo,sans-serif;color:var(--gold);font-size:12px;letter-spacing:1px}
+h1{font-size:clamp(26px,6vw,42px);margin:12px 0 2px;text-align:center;font-weight:900;background:linear-gradient(90deg,#fff,#ffdc70,#fff);-webkit-background-clip:text;color:transparent}.sub{text-align:center;color:#bdc9d9;font-size:13px;margin-bottom:20px}
+.hero{background:linear-gradient(135deg,#102a4aee,#091426ee);border:1px solid #ffffff22;border-radius:22px;padding:18px;box-shadow:0 15px 45px #0007}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}.tab{border:1px solid #ffffff25;background:#ffffff0d;color:#dbe8fa;border-radius:13px;padding:12px 5px;font:900 14px Cairo;cursor:pointer;transition:.2s}.tab.active{background:linear-gradient(135deg,#ffe58c,#c48c1b);color:#171000;border-color:#ffe58c;box-shadow:0 5px 18px #e4b33c44}
+.periodline{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:0 2px 13px;color:#d5e0ee;font-size:12px}.periodline b{color:var(--gold)}.search{width:100%;background:#030b18;border:1px solid #ffffff25;border-radius:12px;padding:12px 14px;color:white;font:700 14px Cairo;outline:none;margin-bottom:12px}.search:focus{border-color:var(--blue)}
+.tablehead,.player{display:grid;grid-template-columns:48px minmax(0,1fr) 75px 65px;align-items:center;gap:8px}.tablehead{padding:8px 12px;color:#91a5be;font-size:11px;font-weight:800}.list{display:grid;gap:8px}.player{background:linear-gradient(100deg,#ffffff0d,#ffffff06);border:1px solid #ffffff12;border-radius:14px;padding:11px 12px;min-height:64px}.player:nth-child(1){border-color:#f5d36c88;background:linear-gradient(100deg,#e5b93a26,#ffffff08)}.rank{font-family:Orbitron,sans-serif;font-weight:900;color:#d4deeb;text-align:center}.player:nth-child(1) .rank{color:#ffdf70}.player:nth-child(2) .rank{color:#d5e3f2}.player:nth-child(3) .rank{color:#d99b6b}.name{font-weight:900;overflow-wrap:anywhere}.stats{display:flex;gap:7px;flex-wrap:wrap;color:#9eb0c6;font-size:10px;margin-top:2px}.points{text-align:center;font-family:Orbitron,Cairo,sans-serif;color:var(--gold);font-weight:900;font-size:16px}.matches{text-align:center;color:#d7e2f0;font-weight:800;font-size:13px}.empty,.loading,.error{padding:28px 12px;text-align:center;color:#bdc9d9;background:#ffffff08;border:1px dashed #ffffff25;border-radius:14px}.empty strong{display:block;color:#fff;font-size:17px;margin-bottom:4px}.foot{text-align:center;color:#8293aa;font-size:11px;margin-top:15px;line-height:1.8}.refresh{border:0;background:#183b61;color:white;border-radius:10px;padding:8px 12px;font:800 12px Cairo;cursor:pointer}.goldtext{color:var(--gold)}
+@media(max-width:480px){.tablehead,.player{grid-template-columns:35px minmax(0,1fr) 62px 48px;gap:5px;padding-left:8px;padding-right:8px}.points{font-size:13px}.name{font-size:13px}.stats{font-size:9px}.tab{font-size:12px}.wrap{width:95%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="top"><a class="back" href="javascript:history.back()">→ رجوع</a><div class="brand">TROVEX GAMES</div></div>
+ <h1>🏆 ترتيب الأبطال</h1>
+ <div class="sub">نافس، اكسب نقاط، واثبت إنك الأفضل</div>
+ <section class="hero">
+  <div class="tabs">
+   <button class="tab active" data-period="daily">ترتيب اليوم</button>
+   <button class="tab" data-period="monthly">ترتيب الشهر</button>
+   <button class="tab" data-period="yearly">ترتيب السنة</button>
+  </div>
+  <div class="periodline"><span id="periodLabel">ترتيب اليوم</span><span>النقاط: <b>الفوز 3</b> · <b>التعادل 1</b></span></div>
+  <input class="search" id="search" type="search" placeholder="ابحث عن لاعب...">
+  <div class="tablehead"><span>المركز</span><span>اللاعب</span><span style="text-align:center">النقاط</span><span style="text-align:center">مباريات</span></div>
+  <div id="ranking" class="list"><div class="loading">⏳ جاري تحميل الترتيب...</div></div>
+  <div class="foot">يتم جلب الفائز أو التعادل مباشرة من نتائج مباريات صفحة online وتسجيل النقاط مرة واحدة لكل مباراة.<br>يبدأ اليوم الجديد والشهر الجديد والسنة الجديدة بترتيب مستقل تلقائيًا حسب توقيت مصر.</div>
+ </section>
+ <div style="text-align:center;margin-top:14px"><button class="refresh" id="refresh">↻ تحديث الترتيب</button></div>
+</div>
+<script>
+const firebaseConfig={databaseURL:'https://mazad-noogom-default-rtdb.firebaseio.com'};
+if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
+let activePeriod='daily',currentRows=[],activeRef=null;
+const $=id=>document.getElementById(id);
+const processedInSession=new Set();
+function periodKeys(timestamp=Date.now()){
+ const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Africa/Cairo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date(timestamp));
+ const v=t=>p.find(x=>x.type===t)?.value||'00';
+ return {daily:`${v('year')}-${v('month')}-${v('day')}`,monthly:`${v('year')}-${v('month')}`,yearly:v('year')};
+}
+function safeKey(s){return String(s??'player').trim().toLowerCase().replace(/[.#$\[\]\/]/g,'_').replace(/\s+/g,'_').slice(0,100)||'player';}
+function playerName(p,fallback){return p?.name||p?.displayName||p?.username||p?.email||fallback||'لاعب';}
+function playerKey(p,fallback){return safeKey(p?.uid||p?.id||p?.username||p?.email||p?.name||fallback||'player');}
+function esc(s){return String(s??'لاعب').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+async function addAward(player,award,stamp){
+ const key=playerKey(player,award.fallback),name=playerName(player,award.fallback);
+ const periods=periodKeys(stamp);
+ const refs=[db.ref('leadboard/'+key),db.ref(`leadboardPeriods/daily/${periods.daily}/${key}`),db.ref(`leadboardPeriods/monthly/${periods.monthly}/${key}`),db.ref(`leadboardPeriods/yearly/${periods.yearly}/${key}`)];
+ await Promise.all(refs.map(ref=>ref.transaction(old=>{
+  old=old||{name,points:0,wins:0,draws:0,losses:0,matches:0};
+  old.name=name||old.name||'لاعب';
+  old.points=(Number(old.points)||0)+(award.points||0);
+  old.wins=(Number(old.wins)||0)+(award.win||0);
+  old.draws=(Number(old.draws)||0)+(award.draw||0);
+  old.losses=(Number(old.losses)||0)+(award.loss||0);
+  old.matches=(Number(old.matches)||0)+1;
+  old.updatedAt=Date.now();
+  return old;
+ })));
+}
+async function claimMatch(type,roomCode,matchId,meta){
+ const claimRef=db.ref(`leadboardProcessedMatches/${safeKey(type)}/${safeKey(roomCode)}/${safeKey(matchId)}`);
+ const claim=await claimRef.transaction(old=>old?undefined:{processedAt:Date.now(),...meta});
+ return claim.committed;
+}
+async function processMatch(type,roomCode,roomData){
+ const result=roomData?.matchResult;
+ if(!result||!result.matchId)return; // New online game versions stamp each completed match.
+ const matchId=result.matchId;
+ const localKey=`${type}/${roomCode}/${matchId}`;
+ if(processedInSession.has(localKey))return;
+ processedInSession.add(localKey);
+ try{
+  const claimed=await claimMatch(type,roomCode,matchId,{kind:'match'});
+  if(!claimed)return;
+  const p1=roomData.player1||{name:'اللاعب الأول'};
+  const p2=roomData.player2||{name:'اللاعب الثاني'};
+  const g1=Number(result.goals1)||0,g2=Number(result.goals2)||0;
+  const draw=g1===g2;
+  const win1=!draw&&(Number(result.winner)===1||g1>g2);
+  const win2=!draw&&(Number(result.winner)===2||g2>g1);
+  const stamp=Number(result.finishedAt)||Date.now();
+  await Promise.all([
+   addAward(p1,{points:win1?3:draw?1:0,win:win1?1:0,draw:draw?1:0,loss:win2?1:0},stamp),
+   addAward(p2,{points:win2?3:draw?1:0,win:win2?1:0,draw:draw?1:0,loss:win1?1:0},stamp)
+  ]);
+  console.info('Leaderboard recorded',type,roomCode,matchId);
+ }catch(e){processedInSession.delete(localKey);console.error('Leaderboard match processing failed',e);}
+}
+function render(){
+ const q=$('search').value.trim().toLocaleLowerCase('ar');
+ const rows=currentRows.filter(x=>String(x.name||'').toLocaleLowerCase('ar').includes(q));
+ if(!rows.length){$('ranking').innerHTML=`<div class="empty"><strong>${q?'مفيش لاعب بالاسم ده':'لسه مفيش نتائج في الفترة دي'}</strong>${q?'جرب اسم تاني':'العب مباراة من صفحة online، والنتيجة هتتحسب تلقائيًا هنا.'}</div>`;return;}
+ $('ranking').innerHTML=rows.map((p,i)=>`<div class="player"><div class="rank">${String(i+1).padStart(2,'0')}</div><div><div class="name">${esc(p.name)}</div><div class="stats"><span>🏆 ${Number(p.wins)||0} فوز</span><span>🤝 ${Number(p.draws)||0} تعادل</span><span>❌ ${Number(p.losses)||0} خسارة</span></div></div><div class="points">${Number(p.points)||0}</div><div class="matches">${Number(p.matches)||0}</div></div>`).join('');
+}
+function loadPeriod(period){
+ activePeriod=period;
+ document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.period===period));
+ const labels={daily:'ترتيب اليوم',monthly:'ترتيب الشهر',yearly:'ترتيب السنة'};
+ $('periodLabel').textContent=labels[period];
+ $('ranking').innerHTML='<div class="loading">⏳ جاري تحميل الترتيب...</div>';
+ const key=periodKeys()[period];
+ if(activeRef){activeRef.off();activeRef=null;}
+ activeRef=db.ref(`leadboardPeriods/${period}/${key}`);
+ activeRef.on('value',snap=>{
+  const data=snap.val()||{};
+  currentRows=Object.entries(data).map(([id,p])=>({id,...p})).sort((a,b)=>(Number(b.points)||0)-(Number(a.points)||0)||(Number(b.wins)||0)-(Number(a.wins)||0)||(Number(b.draws)||0)-(Number(a.draws)||0)||(Number(b.matches)||0)-(Number(a.matches)||0)||String(a.name||'').localeCompare(String(b.name||''),'ar'));
+  render();
+ },err=>{$('ranking').innerHTML='<div class="error">تعذر تحميل الترتيب. تأكد من اتصال الإنترنت وصلاحيات Firebase.</div>';console.error(err);});
+}
+// Listen to the actual online game rooms. The winner/draw is taken from matchResult written by online(1) (1).
+function startOnlineResultsListener(){
+ db.ref('rooms').on('value',snapshot=>{
+  const all=snapshot.val()||{};
+  Object.entries(all).forEach(([type,rooms])=>{
+   if(!rooms||typeof rooms!=='object')return;
+   Object.entries(rooms).forEach(([roomCode,roomData])=>processMatch(type,roomCode,roomData));
+  });
+ },err=>{console.error('Online rooms listener failed',err);$('ranking').innerHTML='<div class="error">تعذر الاتصال بغرف المباريات على Firebase.</div>';});
+}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>loadPeriod(b.dataset.period)));
+$('search').addEventListener('input',render);
+$('refresh').addEventListener('click',()=>loadPeriod(activePeriod));
+loadPeriod('daily');
+startOnlineResultsListener();
+</script>
+</body>
+</html>
